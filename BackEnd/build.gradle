@@ -25,7 +25,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	annotationProcessor 'org.projectlombok:lombok'
@@ -34,6 +33,9 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 
 	// 원하는 dependency 를 추가하고 어떤 dependency 인지 주석으로 명시해주세요
+
+	// mysql
+	implementation 'mysql:mysql-connector-java'
 
 }
 
