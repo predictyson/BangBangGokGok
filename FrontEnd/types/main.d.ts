@@ -1,0 +1,3 @@
+interface dummy {
+  num: number;
+}
