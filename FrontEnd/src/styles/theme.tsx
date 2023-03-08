@@ -23,13 +23,16 @@ export const theme: DefaultTheme = {
 export const mtheme = createTheme({
   palette: {
     primary: {
-      main: "#386641",
+      main: "#33202F",
     },
     secondary: {
-      main: "#A7C957",
+      main: "#3E2133",
     },
     info: {
-      main: "#8E8E8E",
+      main: "#4A344A",
+    },
+    warning: {
+      main: "#fff",
     },
   },
 });
