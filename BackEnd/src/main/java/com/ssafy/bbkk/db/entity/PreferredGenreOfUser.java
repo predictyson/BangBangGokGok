@@ -5,16 +5,16 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name="user_preferred_genre")
+@Table(name="preferred_genre_of_user")
 @Getter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserPreferredGenre extends BaseTimeEntity{
+public class PreferredGenreOfUser extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_preferred_genre_id")
+    @Column(name = "preferred_genre_of_user_id")
     private int id;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)

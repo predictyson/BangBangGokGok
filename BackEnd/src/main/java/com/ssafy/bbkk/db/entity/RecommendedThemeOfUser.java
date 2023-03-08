@@ -1,26 +1,29 @@
 package com.ssafy.bbkk.db.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="interest")
+@Table(name="recommended_theme_of_user")
 @Getter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Interest extends BaseTimeEntity{
+public class RecommendedThemeOfUser extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "interest_id")
+    @Column(name = "recommended_theme_of_user_id")
     private int id;
+    @Column(nullable = false)
+    private int type; // 맞춤 추천 테마의 유형
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private User user; // 테마에 관심을 누를 유저
+    private User user; // 테마를 추천받는 유저
 
     @ManyToOne(targetEntity = Theme.class, fetch = FetchType.LAZY)
     @JoinColumn(name="theme_id")
-    private Theme theme; // 유저가 관심을 누른 테마
+    private Theme theme; // 유저의 추천 테마
 }
