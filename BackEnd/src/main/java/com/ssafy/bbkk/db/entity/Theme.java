@@ -56,13 +56,13 @@ public class Theme extends BaseTimeEntity{
     private Region region; // 매장 지역
 
     @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserRecommendedTheme> userRecommendedThemes = new ArrayList<>(); // 추천 테마
+    private List<RecommendedThemeOfUser> recommendedThemeOfUsers = new ArrayList<>(); // 해당 테마를 추천받은 유저들 (실제로는 사용되지 않을듯)
 
     @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GenreOfTheme> genreOfThemes = new ArrayList<>(); // 테마의 장르 목록
 
     @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Interest> interests = new ArrayList<>(); // 테마에 관심을 누른 유저 목록
+    private List<InterestedThemeOfUser> interestedThemeOfUsers = new ArrayList<>(); // 테마에 관심을 누른 유저 목록
 
     @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>(); // 테마의 리뷰 목록

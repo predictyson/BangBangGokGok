@@ -25,5 +25,5 @@ public class Genre extends BaseTimeEntity{
     private List<GenreOfTheme> genreOfThemes = new ArrayList<>(); // 해당 장르를 가지고 있는 테마
 
     @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserPreferredGenre> userPreferredGenres = new ArrayList<>(); // 해당 장르를 선호 장르로 가지고 있는 유저
+    private List<PreferredGenreOfUser> preferredGenreOfUsers = new ArrayList<>(); // 해당 장르를 선호 장르로 가지고 있는 유저
 }

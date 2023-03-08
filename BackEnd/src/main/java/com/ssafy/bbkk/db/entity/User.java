@@ -36,13 +36,13 @@ public class User extends BaseTimeEntity{
     private Region region; // 선호 지역
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserPreferredGenre> userPreferredGenres = new ArrayList<>(); // 선호 장르들
+    private List<PreferredGenreOfUser> preferredGenreOfUsers = new ArrayList<>(); // 선호 장르들
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserRecommendedTheme> userRecommendedThemes = new ArrayList<>(); // 추천 테마
+    private List<RecommendedThemeOfUser> recommendedThemeOfUsers = new ArrayList<>(); // 추천 테마
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Interest> interests = new ArrayList<>(); // 관심 테마 목록
+    private List<InterestedThemeOfUser> interestedThemeOfUsers = new ArrayList<>(); // 관심 테마 목록
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>(); // 작성한 테마 리뷰 목록
