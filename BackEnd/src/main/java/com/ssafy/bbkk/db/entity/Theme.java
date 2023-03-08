@@ -3,47 +3,67 @@ package com.ssafy.bbkk.db.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Clob;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name="theme")
+@Table(name="theme") // 테마 Entity
 @Getter
-@Setter
-@Builder
-@NoArgsConstructor
+@ToString
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Theme extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "theme_id")
     private int id;
     @Column(nullable = false)
-    private String title;
+    private String title; // 테마명
     @Column(nullable = false)
-    private String storeName;
+    private String storeName; // 매장명
     @Column(nullable = false)
-    private float difficulty;
+    private float difficulty; // 난이도 (제공된 난이도가 없으면 -1)
     @Column(nullable = false)
-    private int runningTime;
+    private int runningTime; // 제한 시간
     @Column(nullable = false)
-    private LocalDateTime openDate;
+    private String openDate; // 오픈일
     @Column(nullable = false)
-    private int minPeople;
+    private int minPeople; // 최소 인원
     @Column(nullable = false)
-    private int maxPeople;
+    private int maxPeople; // 최대 인원
     @Column(nullable = false)
-    private String imgUrl;
+    private String imgUrl; // 테마 포스터 사진
     @Column(nullable = false)
-    private String pageUrl;
+    private String pageUrl; // 테마 홈페이지 링크
+    @Column(nullable = false, length = 2000)
+    private String synopsis; // 테마 시놉시스
     @Column(nullable = false)
-    private String content;
+    private float userRating; // 유저 평점
     @Column(nullable = false)
-    private float userRating;
+    private float userActivity; // 체감 활동성
     @Column(nullable = false)
-    private float userActivity;
+    private float userFear; // 체감 공포도
     @Column(nullable = false)
-    private float userFear;
+    private float userDifficulty; // 체감 난이도
     @Column(nullable = false)
-    private float userDifficulty;
+    private int userCnt; // 참가한 유저 인원
 
+    @OneToOne
+    @JoinColumn(name = "region_id") // 선호 지역은 하나만 선택하며, 영속성 관리를 할 필요가 없다
+    private Region region; // 매장 지역
+
+    @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserRecommendedTheme> userRecommendedThemes = new ArrayList<>(); // 추천 테마
+
+    @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GenreOfTheme> genreOfThemes = new ArrayList<>(); // 테마의 장르 목록
+
+    @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Interest> interests = new ArrayList<>(); // 테마에 관심을 누른 유저 목록
+
+    @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>(); // 테마의 리뷰 목록
 }
