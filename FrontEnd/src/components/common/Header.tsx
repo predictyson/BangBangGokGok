@@ -74,9 +74,11 @@ const NavButton = styled.div`
   border: solid 1px ${theme.colors.pink};
   border-radius: 1.5rem;
   padding: 1rem 2rem;
+  transition: transform 0.3s ease-in-out;
   &:hover {
     border: solid 1px white;
     color: white;
     background-color: ${theme.colors.pink};
+    transform: scale(1.1);
   }
 `;

@@ -45,11 +45,11 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  width: 90%;
   margin: 3rem auto;
   font-size: 2.4rem;
   font-weight: bold;
   font-family: Pretendard;
+  margin-top: 3rem;
 `;
 
 const SliderItem = styled.div`
