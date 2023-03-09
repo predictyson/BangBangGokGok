@@ -28,11 +28,11 @@ export const mtheme = createTheme({
     secondary: {
       main: "#3E2133",
     },
-    info: {
-      main: "#4A344A",
-    },
     warning: {
       main: "#fff",
+    },
+    info: {
+      main: "#FF5B79",
     },
   },
 });
