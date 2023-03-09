@@ -1,5 +1,6 @@
 package com.ssafy.bbkk.api.controller;
 
+import com.ssafy.bbkk.api.dto.ReviewResponse;
 import com.ssafy.bbkk.api.dto.UserInfoResponse;
 import com.ssafy.bbkk.api.service.ProfileService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,11 +26,11 @@ public class ProfileController {
     private final ProfileService profileService;
 
     @GetMapping("{email}/info")
-    private ResponseEntity<Map<String, Object>> userInfo(
+    private ResponseEntity<Map<String, Object>> getUserInfo(
                                     @AuthenticationPrincipal User user,
                                     @PathVariable String email) throws Exception{
 
-        logger.info("[userInfo] request : email={}", email);
+        logger.info("[getUserInfo] request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -38,7 +40,23 @@ public class ProfileController {
         resultMap.put("isMe", isMe);
         resultMap.put("userInfo", userInfoResponse);
 
-        logger.info("[userInfo] response : isMe={}, userInfo={}", isMe, userInfoResponse);
+        logger.info("[getUserInfo] response : isMe={}, userInfo={}", isMe, userInfoResponse);
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+    }
+
+    @GetMapping("{email}/review")
+    private ResponseEntity<Map<String, Object>> getUserReview(
+            @PathVariable String email) throws Exception{
+
+        logger.info("[getUserReview] request : email={}", email);
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        List<ReviewResponse> reviewResponses = profileService.getUserReviews(email);
+        resultMap.put("reviews", reviewResponses);
+
+        logger.info("[getUserReview] response : reviews={}", reviewResponses);
 
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
