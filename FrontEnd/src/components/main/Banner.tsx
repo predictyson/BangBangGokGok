@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Gaonasi from "@/assets/common/Cuties.png";
 import Button from "@/assets/common/DistortedButton.png";
 import { theme } from "@/styles/theme";
+
 export default function Banner() {
   return (
     <Container>
