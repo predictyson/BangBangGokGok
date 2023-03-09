@@ -3,10 +3,6 @@ package com.ssafy.bbkk.api.dto;
 import com.ssafy.bbkk.db.entity.Theme;
 import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class PreviewThemeDto {
 

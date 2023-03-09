@@ -4,10 +4,6 @@ import com.ssafy.bbkk.db.entity.Region;
 import com.ssafy.bbkk.db.entity.User;
 import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class UserInfoResponse {
 
