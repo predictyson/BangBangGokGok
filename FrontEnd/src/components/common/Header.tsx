@@ -18,7 +18,7 @@ export default function Header() {
           src={Logo}
           alt="logo"
           style={{ width: "26rem", height: "3rem", cursor: "pointer" }}
-          onClick={() => navigate("/main")}
+          onClick={() => navigate("/")}
         />
       </div>
       <div className="middle-container"></div>
