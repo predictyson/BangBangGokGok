@@ -3,7 +3,9 @@ import styled from "styled-components";
 import Ghost from "@/assets/common/Ghost.png";
 import Logo from "@/assets/common/Logo.png";
 import { theme } from "@/styles/theme";
+import { useNavigate } from "react-router-dom";
 export default function Header() {
+  const navigate = useNavigate();
   return (
     <Container>
       <div className="left-container">
@@ -16,13 +18,14 @@ export default function Header() {
           src={Logo}
           alt="logo"
           style={{ width: "26rem", height: "3rem", cursor: "pointer" }}
+          onClick={() => navigate("/main")}
         />
       </div>
       <div className="middle-container"></div>
       <div className="right-container">
-        <NavItem>Group Set</NavItem>
-        <NavItem>Search</NavItem>
-        <NavButton>Login</NavButton>
+        <NavItem onClick={() => navigate("/groupset")}>Group Set</NavItem>
+        <NavItem onClick={() => navigate("/search")}>Search</NavItem>
+        <NavButton onClick={() => navigate("/login")}>Login</NavButton>
       </div>
     </Container>
   );
