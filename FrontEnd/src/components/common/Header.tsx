@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Ghost from "@/assets/common/Ghost.png";
 import Logo from "@/assets/common/Logo.png";
-import { height } from "@mui/system";
 import { theme } from "@/styles/theme";
 export default function Header() {
   return (
@@ -11,23 +10,70 @@ export default function Header() {
         <img
           src={Ghost}
           alt="ghost"
-          style={{ width: "5rem", height: " 7rem" }}
+          style={{ width: "5rem", height: " 5rem", marginBottom: "0.8rem" }}
         />
-        <img src={Logo} alt="logo" style={{ width: "26rem", height: "3rem" }} />
+        <img
+          src={Logo}
+          alt="logo"
+          style={{ width: "26rem", height: "3rem", cursor: "pointer" }}
+        />
+      </div>
+      <div className="middle-container"></div>
+      <div className="right-container">
+        <NavItem>Group Set</NavItem>
+        <NavItem>Search</NavItem>
+        <NavButton>Login</NavButton>
       </div>
     </Container>
   );
 }
 
 const Container = styled.div`
-  width: 100%;
-  height: 10.7rem;
+  height: 8.7rem;
   display: flex;
   background-color: ${theme.colors.background};
-
+  padding: 0 11rem;
+  align-items: center;
   .left-container {
+    width: 27%;
+    display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+  }
+  .middle-container {
+    width: 45%;
+  }
+  .right-container {
+    width: 28%;
+    height: 4.7rem;
+    float: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+`;
+
+const NavItem = styled.div`
+  color: ${theme.colors.pink};
+  font-size: 1.8rem;
+  cursor: pointer;
+  .button {
+    border: solid 1px ${theme.colors.pink};
+    border-radius: 10;
+  }
+`;
+
+const NavButton = styled.div`
+  color: ${theme.colors.pink};
+  font-size: 1.8rem;
+  cursor: pointer;
+  border: solid 1px ${theme.colors.pink};
+  border-radius: 1.5rem;
+  padding: 1rem 2rem;
+  &:hover {
     border: solid 1px white;
+    color: white;
+    background-color: ${theme.colors.pink};
   }
 `;

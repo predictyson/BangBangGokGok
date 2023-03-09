@@ -9,8 +9,7 @@ const router = createBrowserRouter([
   { path: "/", element: <Root /> },
   { path: "/signup", element: <SignUpPage /> },
   { path: "/login", element: <LoginPage /> },
-  { path: "/main", element: <MainPage /> }
+  { path: "/main", element: <MainPage /> },
 ]);
-
 
 export default router;
