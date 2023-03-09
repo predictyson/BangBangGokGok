@@ -3,7 +3,9 @@ import styled from "styled-components";
 import Gaonasi from "@/assets/common/Cuties.png";
 import Button from "@/assets/common/DistortedButton.png";
 import { theme } from "@/styles/theme";
+import { useNavigate } from "react-router-dom";
 export default function Banner() {
+  const navigate = useNavigate();
   return (
     <Container>
       <Cuties src={Gaonasi} alt="cutie-gaonasies" />
@@ -13,7 +15,11 @@ export default function Banner() {
         <span className="impact">추천 알고리즘</span>을 통한
         <span className="impact"> 맞춤 방탈출 테마</span>를 찾아보세요!
       </Message>
-      <JoinButton src={Button} alt="distorted button" />
+      <JoinButton
+        src={Button}
+        alt="distorted button"
+        onClick={() => navigate("/signup")}
+      />
     </Container>
   );
 }
@@ -47,4 +53,8 @@ const Message = styled.div`
 const JoinButton = styled.img`
   width: 16%;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

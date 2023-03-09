@@ -8,7 +8,8 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { normalize } from "styled-normalize";
 import { theme } from "@/styles/theme";
 import { RecoilRoot } from "recoil";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const GlobalStyle = createGlobalStyle`
   ${normalize}
   html{

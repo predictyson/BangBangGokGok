@@ -18,7 +18,7 @@ export default function Header() {
           src={Logo}
           alt="logo"
           style={{ width: "26rem", height: "3rem", cursor: "pointer" }}
-          onClick={() => navigate("/main")}
+          onClick={() => navigate("/")}
         />
       </div>
       <div className="middle-container"></div>
@@ -74,9 +74,11 @@ const NavButton = styled.div`
   border: solid 1px ${theme.colors.pink};
   border-radius: 1.5rem;
   padding: 1rem 2rem;
+  transition: transform 0.3s ease-in-out;
   &:hover {
     border: solid 1px white;
     color: white;
     background-color: ${theme.colors.pink};
+    transform: scale(1.1);
   }
 `;
