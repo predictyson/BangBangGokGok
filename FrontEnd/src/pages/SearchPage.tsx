@@ -1,10 +1,21 @@
 import React from "react";
-import Header from "@/components/common/Header";
-export default function MainPage() {
+import Container from "@mui/material/Container";
+import SearchInput from "@components/search/SearchInput";
+import SearchSortOptions from "@components/search/SearchSortOptions";
+import SearchFilter from "@components/search/SearchFilter";
+import SearchResult from "@components/search/SearchResult";
+import Header from "@components/common/Header";
+
+export default function SearchPage() {
   return (
     <>
       <Header />
-      <h3>Search</h3>
+      <Container>
+        <SearchInput />
+        <SearchSortOptions />
+        <SearchFilter />
+        <SearchResult />
+      </Container>
     </>
   );
 }
