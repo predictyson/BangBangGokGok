@@ -1,5 +1,6 @@
 package com.ssafy.bbkk.api.service;
 
+import com.ssafy.bbkk.api.dto.InterestThemeResponse;
 import com.ssafy.bbkk.api.dto.ReviewResponse;
 import com.ssafy.bbkk.api.dto.UserInfoResponse;
 import com.ssafy.bbkk.db.entity.User;
@@ -8,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +35,17 @@ public class ProfileServiceImpl implements ProfileService{
                         .stream()
                         .map(x->new ReviewResponse(x))
                         .collect(Collectors.toList());
+        return result;
+    }
+
+    @Override
+    public List<InterestThemeResponse> getUserInterestThemes(String email) throws Exception {
+        List<InterestThemeResponse> result = null;
+        User user = userRepository.findByEmail(email).orElseThrow(NullPointerException::new);
+        result = user.getInterestedThemeOfUsers()
+                .stream()
+                .map(x->new InterestThemeResponse(x))
+                .collect(Collectors.toList());
         return result;
     }
 }

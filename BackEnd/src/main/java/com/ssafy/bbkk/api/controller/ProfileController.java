@@ -1,5 +1,6 @@
 package com.ssafy.bbkk.api.controller;
 
+import com.ssafy.bbkk.api.dto.InterestThemeResponse;
 import com.ssafy.bbkk.api.dto.ReviewResponse;
 import com.ssafy.bbkk.api.dto.UserInfoResponse;
 import com.ssafy.bbkk.api.service.ProfileService;
@@ -45,18 +46,34 @@ public class ProfileController {
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
 
-    @GetMapping("{email}/review")
-    private ResponseEntity<Map<String, Object>> getUserReview(
+    @GetMapping("{email}/reviews")
+    private ResponseEntity<Map<String, Object>> getUserReviews(
             @PathVariable String email) throws Exception{
 
-        logger.info("[getUserReview] request : email={}", email);
+        logger.info("[getUserReviews] request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         List<ReviewResponse> reviewResponses = profileService.getUserReviews(email);
         resultMap.put("reviews", reviewResponses);
 
-        logger.info("[getUserReview] response : reviews={}", reviewResponses);
+        logger.info("[getUserReviews] response : reviews={}", reviewResponses);
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+    }
+
+    @GetMapping("{email}/interestThemes")
+    private ResponseEntity<Map<String, Object>> getUserInterestThemes(
+            @PathVariable String email) throws Exception{
+
+        logger.info("[getUserInterest] request : email={}", email);
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        List<InterestThemeResponse> interestThemeResponses = profileService.getUserInterestThemes(email);
+        resultMap.put("interestThemes", interestThemeResponses);
+
+        logger.info("[getUserInterest] response : interestThemes={}",interestThemeResponses);
 
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
