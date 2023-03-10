@@ -13,26 +13,38 @@ export default function LoginSection() {
       <TextField
         label="E-mail"
         autoComplete="current-password"
-        sx={{ width: 300 }}
+        sx={{ width: 300, input: { color: "white", fontSize: "15" } }}
+        color="warning"
+        focused
       />
       <TextField
         label="Password"
         type="password"
         autoComplete="current-password"
-        sx={{ width: 300 }}
+        sx={{ width: 300, input: { color: "white", fontSize: "15" } }}
         color="warning"
+        focused
       />
       <LoginButton>Login</LoginButton>
-      <h3>비밀번호를 잊으셨나요?</h3>
+      <TextBox>
+        <h3>비밀번호를 잊으셨나요?</h3>
+        <h3>회원가입 하러가기</h3>
+      </TextBox>
     </Container>
   );
 }
 
+const TextBox = styled.div`
+  width: 30rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Container = styled.div`
   width: 50rem;
-  height: 80vh;
+  height: 60rem;
   border-radius: 0.5rem;
-  margin: auto auto;
+  margin: 6rem auto;
   background-color: ${theme.colors.container};
   /* background-color: white; */
   display: flex;
@@ -56,7 +68,7 @@ const SubjectText = styled.div`
 const LoginButton = styled.div`
   width: 30rem;
   height: 2.5rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   text-align: center;
   font-size: 1.6rem;
   padding-top: 0.5rem;
