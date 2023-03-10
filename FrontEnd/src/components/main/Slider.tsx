@@ -8,7 +8,10 @@ import NextArrow from "@/assets/main/NextArrow.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function BasicSlider() {
+interface IProps {
+  data: ISliderData[];
+}
+export default function BasicSlider({ data }: IProps) {
   interface ArrowProps extends CustomArrowProps {
     onClick?: MouseEventHandler<HTMLDivElement>;
   }
@@ -49,28 +52,33 @@ export default function BasicSlider() {
   };
   return (
     <Container>
-      <TitleWrapper>
-        <Icon src={EyeIcon} alt="icon" />
-        <Title>지역 별 인기 테마</Title>
-      </TitleWrapper>
-      <Slider {...settings}>
-        {DUMMYLIST.map((item, idx) => (
-          <SliderItem key={idx}>
-            <img
-              src={DummyImg}
-              style={{ width: "26rem", height: "23rem" }}
-            ></img>
-          </SliderItem>
-        ))}
-      </Slider>
+      {data.map((item, idx) => (
+        <>
+          <TitleWrapper>
+            <Icon src={ICONLIST[idx]} alt="icon" />
+            <Title>{item.label}</Title>
+          </TitleWrapper>
+          <Slider {...settings}>
+            {item.themes.map((theme) => (
+              <SliderItem key={theme.themeId}>
+                <img
+                  src={theme.imgUrl}
+                  style={{ width: "26rem", height: "23rem", cursor: "pointer" }}
+                ></img>
+              </SliderItem>
+            ))}
+          </Slider>
+        </>
+      ))}
     </Container>
   );
 }
 
 const Container = styled.div`
-  height: 29.3rem;
   width: 90%;
-  margin: 0 auto;
+  margin: auto auto;
+  /* padding-bottom: 5rem; */
+  margin-top: 0;
   .slick-prev:before {
     display: none;
   }
@@ -81,7 +89,8 @@ const Container = styled.div`
 
 const TitleWrapper = styled.div`
   display: flex;
-  margin-bottom: 3rem;
+  margin-top: 10rem;
+  margin-bottom: 4rem;
 `;
 
 const Icon = styled.img`
@@ -102,32 +111,8 @@ const SliderItem = styled.div`
   height: 23rem;
 `;
 
-const DUMMYLIST = [
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
+const ICONLIST = [
+  "https://user-images.githubusercontent.com/55784772/224244356-4b23a520-1b98-4a5f-a0ab-08b2c2fa3685.png",
+  "https://user-images.githubusercontent.com/55784772/224244351-f487bf83-9e70-4a82-873b-57c5076abff6.png",
+  "https://user-images.githubusercontent.com/55784772/224244359-d37e4b92-49fc-4584-97b9-06147d5a3bb2.png",
 ];

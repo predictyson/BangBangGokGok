@@ -5,7 +5,11 @@ import DummyImg from "@/assets/common/DummyImg.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function RankSlider() {
+interface IProps {
+  data: ISliderData[];
+}
+
+export default function RankSlider({ data }: IProps) {
   const settings = {
     centerMode: true,
     dots: false,
@@ -20,14 +24,14 @@ export default function RankSlider() {
   };
   return (
     <Container>
-      <Title>🔥 이번주 Hot한 테마</Title>
+      <Title>{data[0].label}</Title>
       <Slider {...settings}>
-        {DUMMYLIST.map((item, idx) => (
+        {data[0].themes.map((item, idx) => (
           <>
             <SliderItem key={idx}>
-              <Rank>{idx + 1}</Rank>
+              <Rank>{item.themeId}</Rank>
               <img
-                src={DummyImg}
+                src={item.imgUrl}
                 alt="img"
                 style={{ width: "18rem", height: "23rem" }}
               />
@@ -58,6 +62,7 @@ const SliderItem = styled.div`
   justify-content: center;
   img {
     margin-left: 2rem;
+    cursor: pointer;
   }
 `;
 
@@ -67,32 +72,3 @@ const Rank = styled.div`
   font-size: 15rem;
   font-weight: bold;
 `;
-const DUMMYLIST = [
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-];
