@@ -36,8 +36,13 @@ public class ProfileController {
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        boolean isMe = email.equals(user.getUsername()) ? true : false;
-        UserInfoResponse userInfoResponse = profileService.getUserInfoByEmail(email);
+        boolean isMe = false;
+        UserInfoResponse userInfoResponse = null;
+
+        if(email.equals(user.getUsername())){
+            isMe = true;
+            userInfoResponse = profileService.getUserInfoByEmail(email);
+        }
 
         resultMap.put("isMe", isMe);
         resultMap.put("userInfo", userInfoResponse);
