@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface RegionRepository extends JpaRepository<Region, Integer> {
 
     Optional<Region> findByRegionBigAndRegionSmall(String regionBig, String regionSmall);
-    List<String> findAllDistinctRegionBig();
+    List<String> findRegionBigDistinctBy();
     List<String> findAllRegionSmallByRegionBig(String regionBig);
 }

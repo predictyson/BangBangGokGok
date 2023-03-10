@@ -35,7 +35,7 @@ public class OtherServiceImpl implements OtherService{
     public List<RegionResponse> getRegionList() throws Exception {
         List<RegionResponse> result = null;
         // 지역 목록 모두 찾아오기 및 Dto로 감싸기
-        result = regionRepository.findAllDistinctRegionBig()
+        result = regionRepository.findRegionBigDistinctBy()
                 .stream()
                 .map(x-> new RegionResponse(x, regionRepository.findAllRegionSmallByRegionBig(x)))
                 .collect(Collectors.toList());

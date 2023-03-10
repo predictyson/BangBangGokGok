@@ -20,7 +20,7 @@ public class GroupSetServiceImpl implements GroupSetService {
     public PreviewUserResponse getUserByEmailOrNickname(String emailOrNickname) throws Exception {
         PreviewUserResponse result = null;
         // email 또는 nickname으로 유저 찾아오기
-        Optional<User> user = userRepository.findByEmailOrNickname(emailOrNickname);
+        Optional<User> user = userRepository.findByEmailOrNickname(emailOrNickname,emailOrNickname);
         // 유저가 존재한다면
         if(user.isPresent()){
             // 유저를 Dto로 감싸기
