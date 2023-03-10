@@ -3,6 +3,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import OkButton from "@components/common/UI/OkButton";
 import CancelButton from "@components/common/UI/CancelButton";
+import LocationForm from "@components/search/filter/LocationForm";
+import GenreForm from "./filter/GenreForm";
+import PeopleForm from "./filter/PeopleForm";
 import { styled as mstyled } from "@mui/material/styles";
 import { theme } from "@/styles/theme";
 
@@ -11,9 +14,10 @@ export default function SearchFilter() {
     <>
       <FilterButton>필터</FilterButton>
       <FilterContainer>
-        <FilterItem>지역</FilterItem>
-        <FilterItem>장르</FilterItem>
+        <LocationForm />
+        <GenreForm />
         <FilterItem>난이도</FilterItem>
+        <PeopleForm />
         <FilterItem>인원</FilterItem>
         <FilterItem>시간</FilterItem>
         <OkButton>필터 적용</OkButton>
@@ -28,8 +32,9 @@ const FilterContainer = mstyled(Box)`
   flex-direction: column;
   gap: 0.5rem;
   padding: 2rem;
-  border: 1px solid white;
-  border-radius: 20px;
+  border: 0.2rem solid white;
+  border-radius: 1.5rem;
+  background-color: ${theme.colors.background};
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 `;
 
