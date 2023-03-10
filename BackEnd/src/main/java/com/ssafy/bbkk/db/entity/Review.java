@@ -1,6 +1,7 @@
 package com.ssafy.bbkk.db.entity;
 
 import com.ssafy.bbkk.api.dto.CreateReviewRequest;
+import com.ssafy.bbkk.api.dto.UpdateReviewRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -52,5 +53,15 @@ public class Review extends BaseTimeEntity{
 
         this.user = user;
         this.theme = theme;
+    }
+
+    public void updateReviewInfo(UpdateReviewRequest updateReviewRequest){
+        this.content = updateReviewRequest.getContent();
+        this.userRating = updateReviewRequest.getReviewId();
+        this.userActivity = updateReviewRequest.getReviewId();
+        this.userFear = updateReviewRequest.getFear();
+        this.userDifficulty = updateReviewRequest.getDifficulty();
+        this.isSuccess = updateReviewRequest.getIsSuccess();
+        this.record = updateReviewRequest.getIsSuccess() == 1 ? updateReviewRequest.getRecord() : 0;
     }
 }

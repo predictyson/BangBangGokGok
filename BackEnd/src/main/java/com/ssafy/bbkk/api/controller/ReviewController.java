@@ -1,7 +1,8 @@
 package com.ssafy.bbkk.api.controller;
 
 import com.ssafy.bbkk.api.dto.CreateReviewRequest;
-import com.ssafy.bbkk.api.dto.UserInfoResponse;
+import com.ssafy.bbkk.api.dto.ReviewResponse;
+import com.ssafy.bbkk.api.dto.UpdateReviewRequest;
 import com.ssafy.bbkk.api.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -39,4 +40,20 @@ public class ReviewController {
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
 
+    @PutMapping
+    private ResponseEntity<Map<String, Object>> setReview(
+            @AuthenticationPrincipal User user,
+            @RequestBody UpdateReviewRequest updateReviewRequest) throws Exception{
+
+        logger.info("[setReview] request : myEmail={}, updateReviewRequest={}", user.getUsername(), updateReviewRequest);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        reviewService.setReview(user.getUsername(), updateReviewRequest);
+        ReviewResponse reviewResponse = reviewService.getReview(updateReviewRequest.getReviewId());
+        resultMap.put("review", reviewResponse);
+
+        logger.info("[setReview] response : ");
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+    }
 }
