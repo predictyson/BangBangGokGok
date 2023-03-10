@@ -30,7 +30,7 @@ public class ProfileServiceImpl implements ProfileService{
     public UserInfoResponse getUserInfoByEmail(String email) throws Exception {
         UserInfoResponse result = null;
         // 이메일로 유저 찾아오기
-        User user = userRepository.findByEmail(email).orElseThrow(NullPointerException::new);
+        User user = userRepository.findByEmail(email).orElseThrow();
         // 유저를 Dto에 감싸기
         result = new UserInfoResponse(user);
         return result;
@@ -40,7 +40,7 @@ public class ProfileServiceImpl implements ProfileService{
     public UserInfoResponse getUserInfoByUserId(int userId) throws Exception {
         UserInfoResponse result = null;
         // 유저 id로 유저 찾아오기
-        User user = userRepository.findById(userId).orElseThrow(NullPointerException::new);
+        User user = userRepository.findById(userId).orElseThrow();
         // 유저를 Dto에 감싸기
         result = new UserInfoResponse(user);
         return result;
@@ -50,7 +50,7 @@ public class ProfileServiceImpl implements ProfileService{
     public List<ReviewResponse> getUserReviews(String email) throws Exception {
         List<ReviewResponse> result = null;
         // 이메일로 유저 찾아오기
-        User user = userRepository.findByEmail(email).orElseThrow(NullPointerException::new);
+        User user = userRepository.findByEmail(email).orElseThrow();
         // 유저의 리뷰들을 Dto에 감싸기
         result = user.getReviews()
                         .stream()
@@ -63,7 +63,7 @@ public class ProfileServiceImpl implements ProfileService{
     public List<InterestThemeResponse> getUserInterestThemes(String email) throws Exception {
         List<InterestThemeResponse> result = null;
         // 이메일로 유저 찾아오기
-        User user = userRepository.findByEmail(email).orElseThrow(NullPointerException::new);
+        User user = userRepository.findByEmail(email).orElseThrow();
         // 유저의 관심 테마 목록을 Dto에 감싸기
         result = user.getInterestedThemeOfUsers()
                 .stream()
@@ -76,15 +76,15 @@ public class ProfileServiceImpl implements ProfileService{
     public void setUserInfo(UpdateUserInfoRequest updateUserInfoRequest) throws Exception {
         int userId = updateUserInfoRequest.getUserId();
         // 유저 id로 유저 찾아오기
-        User user = userRepository.findById(userId).orElseThrow(NullPointerException::new);
+        User user = userRepository.findById(userId).orElseThrow();
         // 수정한 선호 지역 찾아오기
-        Region region = regionRepository.findByRegionBigAndRegionSmall(updateUserInfoRequest.getRegionBig(), updateUserInfoRequest.getRegionSmall()).orElseThrow(NullPointerException::new);
+        Region region = regionRepository.findByRegionBigAndRegionSmall(updateUserInfoRequest.getRegionBig(), updateUserInfoRequest.getRegionSmall()).orElseThrow();
         // 유저 정보 수정 (선호 장르들은 preferredGenreOfUser 에서 가져오는 것이므로 직접 수정할 필요없음)
         user.updateUserInfo(updateUserInfoRequest,region);
         user = userRepository.save(user);
         // 추가된 선호 장르를 추가
         for(int genreId : updateUserInfoRequest.getGenreIdAdd()){
-            Genre genre = genreRepository.findById(genreId).orElseThrow(NullPointerException::new);
+            Genre genre = genreRepository.findById(genreId).orElseThrow();
             preferredGenreOfUserRepository.save(new PreferredGenreOfUser(user,genre));
         }
         // 삭제된 선호 장르를 제거

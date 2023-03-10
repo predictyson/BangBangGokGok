@@ -21,14 +21,14 @@ public class InterestThemeServiceImpl implements InterestThemeService{
 
     @Override
     public void addInterestTheme(String email, int themeId) throws Exception {
-        User user = userRepository.findByEmail(email).orElseThrow(NullPointerException::new);
-        Theme theme = themeRepository.findById(themeId).orElseThrow(NullPointerException::new);
+        User user = userRepository.findByEmail(email).orElseThrow();
+        Theme theme = themeRepository.findById(themeId).orElseThrow();
         interestedThemeOfUserRepository.save(new InterestedThemeOfUser(user, theme));
     }
 
     @Override
     public void deleteInterestTheme(String email, int themeId) throws Exception {
-        User user = userRepository.findByEmail(email).orElseThrow(NullPointerException::new);
+        User user = userRepository.findByEmail(email).orElseThrow();
         interestedThemeOfUserRepository.deleteByUserIdAndThemeId(user.getId(), themeId);
     }
 }
