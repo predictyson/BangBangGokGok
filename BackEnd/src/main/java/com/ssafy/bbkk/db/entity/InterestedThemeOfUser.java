@@ -23,4 +23,9 @@ public class InterestedThemeOfUser extends BaseTimeEntity{
     @ManyToOne(targetEntity = Theme.class, fetch = FetchType.LAZY)
     @JoinColumn(name="theme_id")
     private Theme theme; // 유저가 관심을 누른 테마
+
+    public InterestedThemeOfUser(User user, Theme theme){
+        this.user = user;
+        this.theme = theme;
+    }
 }
