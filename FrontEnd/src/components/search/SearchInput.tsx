@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { styled as mstyled } from "@mui/material/styles";
+import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
 
 export default function SearchInput() {
@@ -11,17 +9,35 @@ export default function SearchInput() {
     setSearchText(event.target.value);
   };
 
-  console.log(searchText);
+  const handleSubmit = () => {
+    console.log(searchText);
+  };
 
   return (
     <Container>
-      <Input onChange={handleChange} placeholder="검색어를 입력하세요." />
+      <InputContainer>
+        <Input onChange={handleChange} placeholder="검색어를 입력하세요." />
+      </InputContainer>
+      <SearchButton onClick={handleSubmit}>
+        <SearchIcon fontSize="large" color="warning" />
+      </SearchButton>
     </Container>
   );
 }
 
 const Container = styled.div`
-  width: 50rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 60rem;
+  border-radius: 20px;
+  border: 1px solid white;
+`;
+
+const InputContainer = styled.div`
+  width: 85%;
+  cursor: pointer;
 `;
 
 const Input = styled.input`
@@ -29,10 +45,20 @@ const Input = styled.input`
   height: 5rem;
   padding: 0 1rem;
   font-size: 2rem;
-  border-radius: 20px;
-  border: 1px solid white;
+  border: none;
   background-color: transparent;
   color: white;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const SearchButton = styled.button`
+  width: 5rem;
+  height: 5rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
   &:focus {
     outline: none;
   }
