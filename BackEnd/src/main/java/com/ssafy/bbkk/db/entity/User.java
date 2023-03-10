@@ -1,5 +1,6 @@
 package com.ssafy.bbkk.db.entity;
 
+import com.ssafy.bbkk.api.dto.UpdateUserInfoRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -47,5 +48,12 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>(); // 작성한 테마 리뷰 목록
 
+    public void updateUserInfo(UpdateUserInfoRequest updateUserInfoRequest, Region region){
+        this.nickname = updateUserInfoRequest.getNickname();
+        this.age = updateUserInfoRequest.getAge();
+        this.gender = updateUserInfoRequest.getGender();
+        this.profileImageType = updateUserInfoRequest.getProfileImageType();
+        this.region = region;
+    }
 
 }
