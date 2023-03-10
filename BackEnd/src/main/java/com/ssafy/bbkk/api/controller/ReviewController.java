@@ -17,11 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("profile")
+@RequestMapping("review")
 @RequiredArgsConstructor
 public class ReviewController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
     private final ReviewService reviewService;
 
@@ -32,12 +32,11 @@ public class ReviewController {
 
         logger.info("[addReview] request : myEmail={}, createReviewRequest={}", user.getUsername(), createReviewRequest);
 
-        Map<String, Object> resultMap = new HashMap<>();
         reviewService.addReview(user.getUsername(), createReviewRequest);
 
         logger.info("[addReview] response : ");
 
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        return new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
     }
 
     @PutMapping
@@ -55,5 +54,19 @@ public class ReviewController {
         logger.info("[setReview] response : ");
 
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{reviewId}")
+    private ResponseEntity<Map<String, Object>> deleteReview(
+            @AuthenticationPrincipal User user,
+            @PathVariable int reviewId) throws Exception{
+
+        logger.info("[deleteReview] request : myEmail={}, reviewId={}", user.getUsername(), reviewId);
+
+        reviewService.deleteReview(user.getUsername(), reviewId);
+
+        logger.info("[deleteReview] response : ");
+
+        return new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
     }
 }

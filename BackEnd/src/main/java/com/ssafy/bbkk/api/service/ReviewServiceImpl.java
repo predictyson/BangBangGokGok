@@ -36,6 +36,16 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
+    public void deleteReview(String email, int reviewId) throws Exception {
+        // 리뷰 id를 통해 리뷰 찾아오기
+        Review review = reviewRepository.findById(reviewId).orElseThrow();
+        // 유저가 작성한 리뷰인지 확인하기
+        if(email != review.getUser().getEmail()) throw new NoSuchElementException();
+        // 리뷰 삭제하기
+        reviewRepository.deleteById(reviewId);
+    }
+
+    @Override
     public ReviewResponse getReview(int reviewId) throws Exception {
         ReviewResponse result = null;
         // 리뷰 id를 통해 리뷰 찾아오기
