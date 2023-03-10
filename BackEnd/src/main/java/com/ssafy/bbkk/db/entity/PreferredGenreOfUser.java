@@ -24,4 +24,9 @@ public class PreferredGenreOfUser extends BaseTimeEntity{
     @ManyToOne(targetEntity = Genre.class, fetch = FetchType.LAZY)
     @JoinColumn(name="genre_id")
     private Genre genre; // 유저가 선호하는 장르
+
+    public PreferredGenreOfUser(User user, Genre genre){
+        this.user = user;
+        this.genre = genre;
+    }
 }

@@ -2,6 +2,7 @@ package com.ssafy.bbkk.api.controller;
 
 import com.ssafy.bbkk.api.dto.InterestThemeResponse;
 import com.ssafy.bbkk.api.dto.ReviewResponse;
+import com.ssafy.bbkk.api.dto.UpdateUserInfoRequest;
 import com.ssafy.bbkk.api.dto.UserInfoResponse;
 import com.ssafy.bbkk.api.service.ProfileService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class ProfileController {
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isMe = email.equals(user.getUsername()) ? true : false;
-        UserInfoResponse userInfoResponse = profileService.getUserInfo(email);
+        UserInfoResponse userInfoResponse = profileService.getUserInfoByEmail(email);
 
         resultMap.put("isMe", isMe);
         resultMap.put("userInfo", userInfoResponse);
@@ -77,4 +78,22 @@ public class ProfileController {
 
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
+
+    @PutMapping
+    private ResponseEntity<Map<String, Object>> setUserInfo(
+            @RequestBody UpdateUserInfoRequest updateUserInfoRequest) throws Exception{
+
+        logger.info("[setUserInfo] request : updateUserInfoRequest={}", updateUserInfoRequest);
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        profileService.setUserInfo(updateUserInfoRequest);
+        UserInfoResponse userInfoResponse = profileService.getUserInfoByUserId(updateUserInfoRequest.getUserId());
+        resultMap.put("userInfo",userInfoResponse);
+
+        logger.info("[setUserInfo] response : userInfo={}",userInfoResponse);
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+    }
+
 }
