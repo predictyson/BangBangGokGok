@@ -60,12 +60,19 @@ export default function BasicSlider({ data }: IProps) {
           </TitleWrapper>
           <Slider {...settings}>
             {item.themes.map((theme) => (
-              <SliderItem key={theme.themeId}>
-                <img
-                  src={theme.imgUrl}
-                  style={{ width: "26rem", height: "23rem", cursor: "pointer" }}
-                ></img>
-              </SliderItem>
+              <>
+                <SliderItem key={theme.themeId}>
+                  <img
+                    src={theme.imgUrl}
+                    style={{
+                      width: "22.5rem",
+                      height: "29.75rem",
+                      cursor: "pointer",
+                    }}
+                  ></img>
+                </SliderItem>
+                <Hover className="card-hover">djfslkdj</Hover>
+              </>
             ))}
           </Slider>
         </>
@@ -107,8 +114,23 @@ const Title = styled.div`
 `;
 
 const SliderItem = styled.div`
+  position: relative;
+  border: solid 3px pink;
+  img:hover {
+    & > .card-hover {
+      opacity: 1;
+    }
+  }
+`;
+const Hover = styled.div`
   width: 10rem;
-  height: 23rem;
+  position: absolute;
+  opacity: 0;
+  background-color: rgba(243, 111, 32, 0.85);
+  top: 0;
+  left: 0;
+  transition: all 0.5s;
+  border-radius: 1rem;
 `;
 
 const ICONLIST = [
