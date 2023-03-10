@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { theme } from "@/styles/theme";
 
 export default function OkButton({ children }) {
-  return <Button>{children}</Button>;
+  return <Button value="ok">{children}</Button>;
 }
 
 const Button = styled.button`
@@ -15,8 +15,8 @@ const Button = styled.button`
   padding: 10px;
   transition: background-color 0.3s ease-in-out;
   cursor: pointer;
-
   &:hover {
     opacity: 0.9;
   }
+  width: 100%;
 `;

@@ -7,8 +7,6 @@ export default function SearchInput() {
   const [searchText, setSearchText] = useState("");
   return (
     <Box component="div">
-      <br />
-      <br />
       <CustomTextField fullWidth label="검색어를 입력하세요.">
         {searchText}
       </CustomTextField>

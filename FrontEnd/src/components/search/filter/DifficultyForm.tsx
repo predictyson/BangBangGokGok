@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import Slider from "@mui/material/Slider";
-import { theme } from "@/styles/theme";
 
 export default function DifficultyForm() {
   const [value, setValue] = useState([1, 5]);
-  console.log(value);
   const handleChange = (
     event: Event,
     newValue: number | number[],

@@ -49,6 +49,7 @@ const dummySearchResults = [
 ];
 
 const wrapperStyle = {
+  width: "100%",
   display: "flex",
   flexDirection: "column",
   gap: "2rem",
@@ -63,7 +64,7 @@ const containerStyle = {
 
 const boxStyle = {
   border: "1px solid white",
-  borderRadius: "20px",
+  borderRadius: "1rem",
   boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)",
   width: "15rem",
   height: "20rem",
