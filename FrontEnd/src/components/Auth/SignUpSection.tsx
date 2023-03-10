@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import TextField from "@mui/material/TextField";
+import { useNavigate } from "react-router";
 
 export default function LoginSection() {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <SubjectText>회원가입</SubjectText>
@@ -33,7 +36,9 @@ export default function LoginSection() {
         color="warning"
         focused
       />
-      <SignUpButton>회원가입</SignUpButton>
+      <SignUpButton onClick={() => navigate("/additional")}>
+        회원가입
+      </SignUpButton>
     </Container>
   );
 }
