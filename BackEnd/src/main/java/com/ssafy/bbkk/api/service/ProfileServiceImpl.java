@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,5 +88,10 @@ public class ProfileServiceImpl implements ProfileService{
         for(int genreId : updateUserInfoRequest.getGenreIdDel()){
             preferredGenreOfUserRepository.deleteByUserIdAndGenreId(userId,genreId);
         }
+    }
+
+    @Override
+    public void deleteUser(String email) throws Exception {
+        userRepository.deleteByEmail(email);
     }
 }

@@ -14,4 +14,5 @@ public interface ProfileService {
     List<ReviewResponse> getUserReviews(String email) throws Exception;
     List<InterestThemeResponse> getUserInterestThemes(String email) throws Exception;
     void setUserInfo(UpdateUserInfoRequest updateUserInfoRequest) throws Exception;
+    void deleteUser(String email) throws Exception;
 }

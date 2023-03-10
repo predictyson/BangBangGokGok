@@ -32,7 +32,7 @@ public class ProfileController {
                                     @AuthenticationPrincipal User user,
                                     @PathVariable String email) throws Exception{
 
-        logger.info("[getUserInfo] request : email={}", email);
+        logger.info("[getUserInfo] request : myEmail={}, email={}", user.getUsername(), email);
 
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -96,4 +96,17 @@ public class ProfileController {
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
 
+    @DeleteMapping
+    private ResponseEntity<Map<String, Object>> deleteUser(
+            @AuthenticationPrincipal User user) throws Exception{
+
+        logger.info("[deleteUser] request : myEmail={}", user.getUsername());
+
+        Map<String, Object> resultMap = new HashMap<>();
+        profileService.deleteUser(user.getUsername());
+
+        logger.info("[deleteUser] response : ");
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+    }
 }
