@@ -20,13 +20,13 @@ public class Review extends BaseTimeEntity{
     @Column(nullable = false)
     private String content; // 리뷰 내용
     @Column(nullable = false)
-    private float userRating; // 리뷰 평점
+    private double userRating; // 리뷰 평점
     @Column(nullable = false)
-    private float userActivity; // 체감 활동성
+    private double userActivity; // 체감 활동성
     @Column(nullable = false)
-    private float userFear; // 체감 공포도
+    private double userFear; // 체감 공포도
     @Column(nullable = false)
-    private float userDifficulty; // 체감 난이도
+    private double userDifficulty; // 체감 난이도
     @Column(nullable = false)
     private int isSuccess; // 성공 여부
     @Column(nullable = false)

@@ -41,13 +41,13 @@ public class Theme extends BaseTimeEntity{
     @Column(nullable = false, length = 2000)
     private String synopsis; // 테마 시놉시스
     @Column(nullable = false)
-    private float userRating; // 유저 평점
+    private double userRating; // 유저 평점
     @Column(nullable = false)
-    private float userActivity; // 체감 활동성
+    private double userActivity; // 체감 활동성
     @Column(nullable = false)
-    private float userFear; // 체감 공포도
+    private double userFear; // 체감 공포도
     @Column(nullable = false)
-    private float userDifficulty; // 체감 난이도
+    private double userDifficulty; // 체감 난이도
     @Column(nullable = false)
     private int userCnt; // 참가한 유저 인원
 
