@@ -102,16 +102,15 @@ public class ProfileController {
     }
 
     @DeleteMapping
-    private ResponseEntity<Map<String, Object>> deleteUser(
+    private ResponseEntity<Void> deleteUser(
             @AuthenticationPrincipal User user) throws Exception{
 
         logger.info("[deleteUser] request : myEmail={}", user.getUsername());
 
-        Map<String, Object> resultMap = new HashMap<>();
         profileService.deleteUser(user.getUsername());
 
         logger.info("[deleteUser] response : ");
 
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

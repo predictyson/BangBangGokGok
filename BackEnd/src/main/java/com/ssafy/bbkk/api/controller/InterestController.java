@@ -24,35 +24,31 @@ public class InterestController {
     private final InterestThemeService interestThemeService;
 
     @PostMapping("{themeId}")
-    private ResponseEntity<Map<String, Object>> addInterestTheme(
+    private ResponseEntity<Void> addInterestTheme(
             @AuthenticationPrincipal User user,
             @PathVariable int themeId) throws Exception{
 
         logger.info("[addInterestTheme] request : myEmail={}, themeId={}", user.getUsername(), themeId);
 
-        Map<String, Object> resultMap = new HashMap<>();
-
         interestThemeService.addInterestTheme(user.getUsername(), themeId);
 
         logger.info("[addInterestTheme] response : ");
 
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("{themeId}")
-    private ResponseEntity<Map<String, Object>> deleteInterestTheme(
+    private ResponseEntity<Void> deleteInterestTheme(
             @AuthenticationPrincipal User user,
             @PathVariable int themeId) throws Exception{
 
         logger.info("[deleteInterestTheme] request : myEmail={}, themeId={}", user.getUsername(), themeId);
 
-        Map<String, Object> resultMap = new HashMap<>();
-
         interestThemeService.deleteInterestTheme(user.getUsername(), themeId);
 
         logger.info("[deleteInterestTheme] response : ");
 
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

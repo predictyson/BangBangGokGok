@@ -26,7 +26,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping
-    private ResponseEntity<Map<String, Object>> addReview(
+    private ResponseEntity<Void> addReview(
             @AuthenticationPrincipal User user,
             @RequestBody CreateReviewRequest createReviewRequest) throws Exception{
 
@@ -36,7 +36,7 @@ public class ReviewController {
 
         logger.info("[addReview] response : ");
 
-        return new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
@@ -57,7 +57,7 @@ public class ReviewController {
     }
 
     @DeleteMapping("{reviewId}")
-    private ResponseEntity<Map<String, Object>> deleteReview(
+    private ResponseEntity<Void> deleteReview(
             @AuthenticationPrincipal User user,
             @PathVariable int reviewId) throws Exception{
 
@@ -67,6 +67,6 @@ public class ReviewController {
 
         logger.info("[deleteReview] response : ");
 
-        return new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
