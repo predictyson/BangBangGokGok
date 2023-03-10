@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class InterestController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
+    private static final Logger logger = LoggerFactory.getLogger(InterestController.class);
 
     private final InterestThemeService interestThemeService;
 
