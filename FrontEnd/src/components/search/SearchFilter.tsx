@@ -7,6 +7,7 @@ import GenreForm from "./filter/GenreForm";
 import DifficultyForm from "./filter/DifficultyForm";
 import PeopleForm from "./filter/PeopleForm";
 import TimeForm from "./filter/TimeForm";
+import TuneIcon from "@mui/icons-material/Tune";
 import { styled as mstyled } from "@mui/material/styles";
 import { theme } from "@/styles/theme";
 import { useRef, useEffect } from "react";
@@ -38,7 +39,10 @@ export default function SearchFilter() {
 
   return (
     <>
-      <FilterButton ref={buttonRef}>필터</FilterButton>
+      <FilterButton ref={buttonRef}>
+        <TuneIcon fontSize="inherit" />
+        <p>필터</p>
+      </FilterButton>
       <Modal ref={dialogRef}>
         <form method="dialog">
           <FilterContainer>
@@ -58,11 +62,16 @@ export default function SearchFilter() {
   );
 }
 
-const FilterButton = styled.button`
+const FilterButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 8rem;
   font-size: 1.8rem;
   border-radius: 10px;
   color: white;
-  border: none;
+  border: 1px solid white;
   background: none;
   cursor: pointer;
 `;
@@ -92,8 +101,8 @@ const FilterItem = mstyled(Box)`
 
 const Modal = styled.dialog`
   position: absolute;
-  top: -5rem;
-  left: 100rem;
+  top: 0rem;
+  left: 108rem;
   border: none;
   background: none;
   color: white;

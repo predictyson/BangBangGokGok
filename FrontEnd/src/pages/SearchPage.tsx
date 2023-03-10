@@ -13,9 +13,11 @@ export default function SearchPage() {
       <Header />
       <BackGround>
         <Content>
-          <SearchInput />
+          <FormContainer>
+            <SearchInput />
+            <SearchFilter />
+          </FormContainer>
           <SearchSortOptions />
-          <SearchFilter />
           <SearchResult />
         </Content>
       </BackGround>
@@ -31,12 +33,22 @@ const BackGround = styled.div`
 `;
 
 const Content = styled.div`
-  width: 79%;
+  width: 90%;
   margin: 2rem auto;
-  padding: 0px 8rem;
+  padding: 3rem;
+  gap: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-items: flex-start;
   background-color: ${theme.colors.containerLight};
   border-radius: 1.5rem;
+`;
+
+const FormContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 `;

@@ -27,6 +27,7 @@ export default function SearchSortOptions() {
 const OPTIONS: string[] = ["평점", "활동성", "공포도", "체감 난이도"];
 
 const OptionButton = mstyled(Button)`
+  font-size: 1.5rem;
   border-radius: 20px;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
   &.MuiButton-contained {
