@@ -1,5 +1,7 @@
 package com.ssafy.bbkk.db.entity;
 
+import com.ssafy.bbkk.api.dto.CreateReviewRequest;
+import com.ssafy.bbkk.api.dto.UpdateReviewRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,7 +31,7 @@ public class Review extends BaseTimeEntity{
     private double userDifficulty; // 체감 난이도
     @Column(nullable = false)
     private int isSuccess; // 성공 여부
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float record; // 탈출 시간 (분)
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
@@ -40,10 +42,26 @@ public class Review extends BaseTimeEntity{
     @JoinColumn(name="theme_id")
     private Theme theme; // 해당 테마
 
-    @PrePersist
-    public void prePersist(){
-        if(this.isSuccess == 0){
-            this.record = 0;
-        }
+    public Review(User user, Theme theme, CreateReviewRequest createReviewRequest){
+        this.content = createReviewRequest.getContent();
+        this.userRating = createReviewRequest.getRating();
+        this.userActivity = createReviewRequest.getActivity();
+        this.userFear = createReviewRequest.getFear();
+        this.userDifficulty = createReviewRequest.getDifficulty();
+        this.isSuccess = createReviewRequest.getIsSuccess();
+        this.record = createReviewRequest.getIsSuccess() == 1 ? createReviewRequest.getRecord() : 0;
+
+        this.user = user;
+        this.theme = theme;
+    }
+
+    public void updateReviewInfo(UpdateReviewRequest updateReviewRequest){
+        this.content = updateReviewRequest.getContent();
+        this.userRating = updateReviewRequest.getReviewId();
+        this.userActivity = updateReviewRequest.getReviewId();
+        this.userFear = updateReviewRequest.getFear();
+        this.userDifficulty = updateReviewRequest.getDifficulty();
+        this.isSuccess = updateReviewRequest.getIsSuccess();
+        this.record = updateReviewRequest.getIsSuccess() == 1 ? updateReviewRequest.getRecord() : 0;
     }
 }
