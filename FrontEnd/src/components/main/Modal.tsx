@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Line from "@/assets/common/Line.png";
+import styled from "styled-components";
+import { theme } from "@/styles/theme";
+import { useNavigate } from "react-router-dom";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -15,8 +19,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "118rem",
-  height: "60rem",
+  width: "60%",
+  height: "75%",
   bgcolor: "#3E2133",
   borderRadius: 10,
   boxShadow: 24,
@@ -87,6 +91,7 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
     console.log("button clicked");
   };
   const [data, setData] = useState(initData);
+  const navigate = useNavigate();
   return (
     <Modal
       open={open}
@@ -95,12 +100,45 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <h1>{label}</h1>
-        <h2>{themeId}</h2>
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+        <Header>
+          <div>
+            매장명 <span>{data.storeName}</span> | 지역
+            <span>
+              {data.regionBig} &nbsp;{data.regionSmall}
+            </span>
+          </div>
+          <span
+            className="reservation"
+            onClick={() => {
+              navigate(`/${data.pageUrl}`);
+            }}
+          >
+            예약하기
+          </span>
+        </Header>
+        <img
+          src={Line}
+          alt="line"
+          style={{ width: "100%", margin: "1rem auto" }}
+        />
         <Button onClick={handleClick}>button</Button>s
         <Button onClick={onClose}>close</Button>
       </Box>
     </Modal>
   );
 }
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.8rem;
+  font-family: Pretendard;
+  span {
+    margin: 0 1rem;
+    font-weight: bold;
+  }
+  .reservation {
+    color: ${theme.colors.pink};
+    cursor: pointer;
+  }
+`;
