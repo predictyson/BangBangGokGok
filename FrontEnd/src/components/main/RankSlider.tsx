@@ -21,6 +21,31 @@ export default function RankSlider({ data }: IProps) {
     speed: 2000,
     autoplaySpeed: 2000,
     pauseOnHover: true,
+    responsive: [
+      {
+        breakpoint: 1250,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
   return (
     <Container>
@@ -60,8 +85,11 @@ const SliderItem = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
+  @media (max-width: 1200px) {
+    width: 10rem;
+  }
   img {
-    margin-left: 2rem;
+    margin-left: 1.2rem;
     cursor: pointer;
   }
 `;
@@ -71,4 +99,10 @@ const Rank = styled.div`
   font-family: Pretendard;
   font-size: 15rem;
   font-weight: bold;
+  @media (max-width: 1300px) {
+    font-size: 12rem;
+  }
+  @media (max-width: 1100) {
+    font-size: 10rem;
+  }
 `;
