@@ -4,14 +4,31 @@ import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import ProfileSection from "@components/Auth/ProfileSection";
 
+const InitUserInfo = {
+  profileImageType: "",
+  nickname: "",
+  genreId: 0,
+  regionBig: "",
+  age: 0,
+  gender: "",
+};
+
 export default function AdditionalPage() {
+  const [userInfo, setUserInfo] = useState<IUserInfo>(InitUserInfo);
   const [chapter, setChapter] = useState<"genre" | "profile">("genre");
 
   const handleChapter = () => {
     if (chapter === "genre") setChapter("profile");
     else {
-      alert()
+      alert(userInfo.genreId);
     }
+  };
+
+  const changeUserInfo = (key: string, value: string | number | number[]) => {
+    setUserInfo((cur) => ({
+      ...cur,
+      [key]: value,
+    }));
   };
 
   return (
@@ -25,14 +42,17 @@ export default function AdditionalPage() {
               선호 장르를 한 개 이상 선택하시면, 방탈출 테마를 추천받으실 수
               있어요!
             </h2>
-            <GenreSection />
+            <GenreSection userInfo={userInfo} changeUserInfo={changeUserInfo} />
           </>
         ) : (
           <>
             <h2 className="desc">
               추가 정보를 입력해주시면, 방탈출 테마를 추천받을 수 있어요!
             </h2>
-            <ProfileSection />
+            <ProfileSection
+              userInfo={userInfo}
+              changeUserInfo={changeUserInfo}
+            />
           </>
         )}
       </InnerContainer>

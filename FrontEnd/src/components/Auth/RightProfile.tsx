@@ -8,22 +8,17 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { theme } from "@/styles/theme";
 
-interface RightProfileProps {
-  userInfo: IUserInfo;
-  setUserInfo: React.Dispatch<React.SetStateAction<IUserInfo>>;
-}
-
-export default function LeftPorfile(props: RightProfileProps) {
+export default function LeftPorfile(props: ProfileProps) {
   const handleInputChange = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
     console.log(target.name + " : " + target.value);
-    changeUserInfo(target.name, target.value);
+    props.changeUserInfo(target.name, target.value);
   };
 
   const handleSelectChange = (e: SelectChangeEvent<unknown>) => {
     const target = e.target as HTMLInputElement;
     // console.log(target.name + " : " + target.value);
-    changeUserInfo(target.name, target.value);
+    props.changeUserInfo(target.name, target.value);
   };
 
   const handleToggleChange = (
@@ -31,15 +26,8 @@ export default function LeftPorfile(props: RightProfileProps) {
     newAlignment: string
   ) => {
     if (newAlignment !== null) {
-      changeUserInfo("gender", newAlignment);
+      props.changeUserInfo("gender", newAlignment);
     }
-  };
-
-  const changeUserInfo = (key: string, value: string | number) => {
-    props.setUserInfo((cur) => ({
-      ...cur,
-      [key]: value,
-    }));
   };
 
   return (

@@ -18,3 +18,8 @@ interface IUserInfo {
   age: int; // 나이
   gender: string; // 성별
 }
+
+interface ProfileProps {
+  userInfo: IUserInfo;
+  changeUserInfo: (key: string, value: string | number | number[]) => void;
+}

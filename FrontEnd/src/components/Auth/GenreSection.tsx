@@ -3,36 +3,17 @@ import { styled as mstyled } from "@mui/material/styles";
 import styled from "styled-components";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 
-const values = [
-  "장르1",
-  "장르2",
-  "장르3",
-  "장르4",
-  "장르5",
-  "장르6",
-  "장르7",
-  "장르8",
-  "장르9",
-  "장르10",
-  "장르11",
-  "장르12",
-  "장르13",
-  "장르14",
-  "장르15",
-  "장르16",
-  "장르17",
-  "장르18",
-];
+const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
 
-export default function GenreSection() {
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+export default function GenreSection(props: ProfileProps) {
+  const [selectedValues, setSelectedValues] = useState<number[]>([]);
 
   const handleChange = (
     _event: React.MouseEvent<HTMLElement, MouseEvent>,
-    newAlignment: string[]
+    newAlignment: number[]
   ) => {
     setSelectedValues(newAlignment);
-    console.log(selectedValues);
+    props.changeUserInfo("genreId", selectedValues);
   };
 
   return (

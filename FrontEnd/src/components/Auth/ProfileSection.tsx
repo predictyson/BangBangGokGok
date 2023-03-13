@@ -1,20 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import LeftPorfile from "./LeftProfile";
 import RightProfile from "./RightProfile";
 
-const InitUserInfo = {
-  profileImageType: "",
-  nickname: "",
-  genreId: 0,
-  regionBig: "",
-  age: 0,
-  gender: "",
-};
-
-export default function ProfileSection() {
-  const [userInfo, setUserInfo] = useState<IUserInfo>(InitUserInfo);
-
+export default function ProfileSection(props: ProfileProps) {
   return (
     <>
       <ProfileBox>
@@ -22,7 +11,10 @@ export default function ProfileSection() {
           <LeftPorfile />
         </LeftBox>
         <RightBox>
-          <RightProfile userInfo={userInfo} setUserInfo={setUserInfo} />
+          <RightProfile
+            userInfo={props.userInfo}
+            changeUserInfo={props.changeUserInfo}
+          />
         </RightBox>
       </ProfileBox>
     </>
