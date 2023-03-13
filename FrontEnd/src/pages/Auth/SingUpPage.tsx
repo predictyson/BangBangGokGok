@@ -1,15 +1,10 @@
 import React from "react";
-import styled from "styled-components";
+import SignUpSection from "@/components/Auth/SignUpSection";
 
 export default function SignUpPage() {
   return (
-    <Container>
-      <h1>joinpage</h1>
-    </Container>
+    <>
+      <SignUpSection />
+    </>
   );
 }
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-`;
