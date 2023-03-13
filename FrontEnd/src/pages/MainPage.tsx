@@ -6,6 +6,7 @@ import BasicSlider from "@components/main/Slider";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 
+// TODO : 메인 슬라이더 크기 줄이기
 export default function MainPage() {
   const [hotData, setHotData] = useState<ISliderData[]>(HotThemesData);
   const [topData, setTopData] = useState<ISliderData[]>(TopThemesData);
