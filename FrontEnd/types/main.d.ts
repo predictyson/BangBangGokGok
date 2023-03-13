@@ -10,3 +10,11 @@ interface IThemeData {
   title: stirng;
   imgUrl: string;
 }
+interface IUserInfo {
+  profileImageType: int; // 프로필 이미지 타입
+  nickname: string; // 닉네임
+  genreId: int; // 선호 장르 id
+  regionBig: string; // 선호 지역(대분류)
+  age: int; // 나이
+  gender: string; // 성별
+}

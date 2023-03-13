@@ -9,7 +9,9 @@ export default function AdditionalPage() {
 
   const handleChapter = () => {
     if (chapter === "genre") setChapter("profile");
-    else alert("가입완료");
+    else {
+      alert()
+    }
   };
 
   return (
