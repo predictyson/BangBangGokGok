@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import GenreSection from "@/components/Auth/GenreSection";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
+import ProfileSection from "@components/Auth/ProfileSection";
 
 export default function AdditionalPage() {
   const [chapter, setChapter] = useState<"genre" | "profile">("genre");
 
   const handleChapter = () => {
     if (chapter === "genre") setChapter("profile");
-    else alert("다음단계로");
+    else alert("가입완료");
   };
 
   return (
@@ -29,10 +30,13 @@ export default function AdditionalPage() {
             <h2 className="desc">
               추가 정보를 입력해주시면, 방탈출 테마를 추천받을 수 있어요!
             </h2>
+            <ProfileSection />
           </>
         )}
       </InnerContainer>
-      <NextButton onClick={handleChapter}>다음 단계로</NextButton>
+      <NextButton onClick={handleChapter}>
+        {chapter === "genre" ? "다음 단계로" : "회원 가입 완료"}
+      </NextButton>
     </Container>
   );
 }
@@ -57,7 +61,7 @@ const Container = styled.div`
 
 const InnerContainer = styled.div`
   width: 110rem;
-  height: 37rem;
+  height: 44rem;
   border-radius: 1.5rem;
   padding: 1rem 2rem 2rem 2.5rem;
   background-color: ${theme.colors.containerLight};
