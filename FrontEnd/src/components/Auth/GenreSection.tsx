@@ -70,21 +70,36 @@ const Container = styled.div`
   }
 `;
 
-const CustomToggleButton = mstyled(ToggleButton)`
-  height: 9rem;
-  background-color: #FFF1F8;
-  border-radius: 1.5rem !important;
-  font-size: 3rem;
-  color: #58424D;
-  font-weight: bold;
-  
-  & .Mui-selcted  {
-    background-color: red ;
-  }
-  
-  :hover {
-    background-color: #58424D;
-    color: #FFF1F8;
+const CustomToggleButton = mstyled(ToggleButton)({
+  height: "9rem",
+  backgroundColor: "#FFF1F8",
+  borderRadius: "1.5rem !important",
+  fontSize: "3rem",
+  fontWeight: "medium",
+  color: "#58424D",
 
-  }
-`;
+  "&.Mui-selected, &:hover": {
+    backgroundColor: "#58424D",
+    fontWeight: "bold",
+    color: "#FFF1F8",
+  },
+});
+
+// const CustomToggleButton = mstyled(ToggleButton)`
+//   height: 9rem;
+//   background-color: #FFF1F8;
+//   border-radius: 1.5rem !important;
+//   font-size: 3rem;
+//   color: #58424D;
+//   font-weight: bold;
+
+//   &.Mui-selcted {
+//     background-color: red ;
+//   }
+
+//   :hover {
+//     background-color: #58424D;
+//     color: #FFF1F8;
+
+//   }
+// `;
