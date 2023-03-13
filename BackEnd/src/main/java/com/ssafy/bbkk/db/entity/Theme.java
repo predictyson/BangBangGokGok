@@ -35,7 +35,7 @@ public class Theme extends BaseTimeEntity{
     @Column(nullable = false)
     private int maxPeople; // 최대 인원
     @Column(nullable = false)
-    private String imgUrl; // 테마 포스터 사진
+    private Clob imgUrl; // 테마 포스터 사진
     @Column(nullable = false)
     private String pageUrl; // 테마 홈페이지 링크
     @Column(nullable = false, length = 2000)

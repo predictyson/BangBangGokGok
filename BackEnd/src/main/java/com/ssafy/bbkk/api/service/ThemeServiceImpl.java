@@ -13,10 +13,8 @@ import com.ssafy.bbkk.api.dto.ThemeResponse;
 import com.ssafy.bbkk.db.entity.QGenreOfTheme;
 import com.ssafy.bbkk.db.entity.QTheme;
 import com.ssafy.bbkk.db.entity.Theme;
-import com.ssafy.bbkk.db.repository.GenreRepository;
-import com.ssafy.bbkk.db.repository.RegionRepository;
 import com.ssafy.bbkk.db.repository.ThemeRepository;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -31,28 +29,26 @@ import org.springframework.transaction.annotation.Transactional;
 public class ThemeServiceImpl implements ThemeService {
 
     private final ThemeRepository themeRepository;
-    private final RegionRepository regionRepository;
-    private final GenreRepository genreRepository;
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     public List<ThemeBundleResponse> getRecommendedThemes(int userId) throws Exception {
-        List<ThemeBundleResponse> result = new ArrayList<>();
+        List<ThemeBundleResponse> result = null;
 
         return result;
     }
 
     @Override
     public List<ThemeBundleResponse> getTopThemes() throws Exception {
-        List<ThemeBundleResponse> result = new ArrayList<>();
+        List<ThemeBundleResponse> result = null;
 
         return result;
     }
 
     @Override
     public List<AwardThemeBundleResponse> getAwardThemes() throws Exception {
-        List<AwardThemeBundleResponse> result = new ArrayList<>();
+        List<AwardThemeBundleResponse> result = null;
 
         return result;
     }
@@ -111,7 +107,7 @@ public class ThemeServiceImpl implements ThemeService {
         List<Theme> target = jpaQueryFactory.selectFrom(qTheme)
                 .join(qTheme.genreOfThemes, qGenreOfTheme)
                 .where(builder)
-                .orderBy(new OrderSpecifier(order, sort))
+                .orderBy(new OrderSpecifier<>(order, sort))
                 .offset((page - 1) * size)
                 .limit(size)
                 .fetch();
