@@ -5,7 +5,11 @@ import DummyImg from "@/assets/common/DummyImg.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function RankSlider() {
+interface IProps {
+  data: ISliderData[];
+}
+
+export default function RankSlider({ data }: IProps) {
   const settings = {
     centerMode: true,
     dots: false,
@@ -17,17 +21,42 @@ export default function RankSlider() {
     speed: 2000,
     autoplaySpeed: 2000,
     pauseOnHover: true,
+    responsive: [
+      {
+        breakpoint: 1250,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
   return (
     <Container>
-      <Title>🔥 이번주 Hot한 테마</Title>
+      <Title>{data[0].label}</Title>
       <Slider {...settings}>
-        {DUMMYLIST.map((item, idx) => (
+        {data[0].themes.map((item, idx) => (
           <>
             <SliderItem key={idx}>
-              <Rank>{idx + 1}</Rank>
+              <Rank>{item.themeId}</Rank>
               <img
-                src={DummyImg}
+                src={item.imgUrl}
                 alt="img"
                 style={{ width: "18rem", height: "23rem" }}
               />
@@ -56,8 +85,12 @@ const SliderItem = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
+  @media (max-width: 1200px) {
+    width: 10rem;
+  }
   img {
-    margin-left: 2rem;
+    margin-left: 1.2rem;
+    cursor: pointer;
   }
 `;
 
@@ -66,33 +99,10 @@ const Rank = styled.div`
   font-family: Pretendard;
   font-size: 15rem;
   font-weight: bold;
+  @media (max-width: 1300px) {
+    font-size: 12rem;
+  }
+  @media (max-width: 1100) {
+    font-size: 10rem;
+  }
 `;
-const DUMMYLIST = [
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-  {
-    url: { DummyImg },
-  },
-];
