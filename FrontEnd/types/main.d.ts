@@ -67,5 +67,12 @@ interface IReviewData {
   isSuccess: int; // 성공 여부
   record: float; // 남은 시간 기록
 
-  theme: PreviewThemeDto; // 테마 정보
+  theme: PreviewThemeData; // 테마 정보
+}
+
+interface IPreviewThemeData {
+  themeId: int; // 테마 id
+  title: string; // 테마명
+  imgUrl: string; // 테마 포스터 링크
+  genres: string[]; // 테마 장르 목록
 }
