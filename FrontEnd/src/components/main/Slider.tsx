@@ -5,6 +5,7 @@ import PrevArrow from "@/assets/main/PrevArrow.png";
 import NextArrow from "@/assets/main/NextArrow.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { theme } from "@/styles/theme";
 
 interface IProps {
   data: ISliderData[];
@@ -74,8 +75,8 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
                       cursor: "pointer",
                     }}
                   ></img>
+                  <Hover className="card-hover">{theme.title}</Hover>
                 </SliderItem>
-                <Hover className="card-hover">djfslkdj</Hover>
               </>
             ))}
           </Slider>
@@ -88,7 +89,6 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
 const Container = styled.div`
   width: 90%;
   margin: auto auto;
-  /* padding-bottom: 5rem; */
   margin-top: 0;
   .slick-prev:before {
     display: none;
@@ -126,21 +126,28 @@ const Title = styled.div`
 
 const SliderItem = styled.div`
   position: relative;
-  img:hover {
+  :hover {
     & > .card-hover {
-      opacity: 1;
+      opacity: 0.9;
     }
   }
 `;
 const Hover = styled.div`
-  width: 10rem;
+  width: 22.5rem;
+  height: 29.75rem;
   position: absolute;
   opacity: 0;
-  background-color: rgba(243, 111, 32, 0.85);
+  background-color: ${theme.colors.containerLight};
   top: 0;
   left: 0;
   transition: all 0.5s;
   border-radius: 1rem;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
 `;
 
 const ICONLIST = [
