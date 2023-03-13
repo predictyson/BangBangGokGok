@@ -13,7 +13,7 @@ export default function MainPage() {
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
 
-  const isLogin = true;
+  const isLogin = false;
 
   const data = topData.concat(awardData);
   return (

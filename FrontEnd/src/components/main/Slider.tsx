@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler } from "react";
+import React, { FC, MouseEventHandler, useState } from "react";
 import styled from "styled-components";
 import Slider, { CustomArrowProps } from "react-slick";
 import PrevArrow from "@/assets/main/PrevArrow.png";
@@ -6,7 +6,7 @@ import NextArrow from "@/assets/main/NextArrow.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { theme } from "@/styles/theme";
-
+import Modal from "./Modal";
 interface IProps {
   data: ISliderData[];
   isRecommendSlider: boolean;
@@ -15,6 +15,18 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
   interface ArrowProps extends CustomArrowProps {
     onClick?: MouseEventHandler<HTMLDivElement>;
   }
+  const [open, setOpen] = useState(false);
+  const [themeId, setThemeId] = useState(0);
+  const [label, setLabel] = useState("");
+  const handleOpen = (themeId: number, label: string) => {
+    setThemeId(themeId);
+    setOpen(true);
+    setLabel(label);
+    console.log(label + " " + themeId);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const CustomPrevArrow: FC<ArrowProps> = ({ className, onClick }) => {
     return (
@@ -75,6 +87,7 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
       },
     ],
   };
+
   return (
     <Container>
       {data.map((item, idx) => (
@@ -91,7 +104,10 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
           <Slider {...settings}>
             {item.themes.map((theme) => (
               <>
-                <SliderItem key={theme.themeId}>
+                <SliderItem
+                  key={theme.themeId}
+                  onClick={() => handleOpen(theme.themeId, item.label)}
+                >
                   <img
                     src={theme.imgUrl}
                     style={{
@@ -100,11 +116,20 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
                       cursor: "pointer",
                     }}
                   ></img>
+
                   <Hover className="card-hover">{theme.title}</Hover>
                 </SliderItem>
               </>
             ))}
           </Slider>
+          {themeId && label && (
+            <Modal
+              open={open}
+              onClose={handleClose}
+              themeId={themeId}
+              label={label}
+            ></Modal>
+          )}
         </>
       ))}
     </Container>
