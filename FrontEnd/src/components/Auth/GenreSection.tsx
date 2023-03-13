@@ -6,14 +6,11 @@ import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
 
 export default function GenreSection(props: ProfileProps) {
-  const [selectedValues, setSelectedValues] = useState<number[]>([]);
-
   const handleChange = (
     _event: React.MouseEvent<HTMLElement, MouseEvent>,
     newAlignment: number[]
   ) => {
-    setSelectedValues(newAlignment);
-    props.changeUserInfo("genreId", selectedValues);
+    props.changeUserInfo("genreId", newAlignment);
   };
 
   return (
@@ -27,7 +24,7 @@ export default function GenreSection(props: ProfileProps) {
           width: "100%",
           borderRadius: "10px",
         }}
-        value={selectedValues}
+        value={props.userInfo.genreId}
         onChange={handleChange}
       >
         {values.map((item) => (
