@@ -13,7 +13,7 @@ export default function MainPage() {
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
 
-  const isLogin = false;
+  const isLogin = true;
 
   const data = topData.concat(awardData);
   return (
@@ -23,11 +23,11 @@ export default function MainPage() {
         <Banner />
       ) : (
         <RecommendWrapper>
-          <BasicSlider data={recommendData} />
+          <BasicSlider isRecommendSlider={true} data={recommendData} />
         </RecommendWrapper>
       )}
       <RankSlider data={hotData} />
-      <BasicSlider data={data} />
+      <BasicSlider isRecommendSlider={false} data={data} />
     </>
   );
 }
@@ -40,6 +40,7 @@ const RecommendWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border: solid 1px ${theme.colors.pink};
+  padding-bottom: 6rem;
 `;
 // api에서 가져올 데이터 (DUMMY)
 const HotThemesData: ISliderData[] = [

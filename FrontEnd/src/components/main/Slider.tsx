@@ -1,8 +1,6 @@
 import React, { FC, MouseEventHandler } from "react";
 import styled from "styled-components";
-import EyeIcon from "@/assets/main/EyeIcon.png";
 import Slider, { CustomArrowProps } from "react-slick";
-import DummyImg from "@/assets/main/SliderDummy.png";
 import PrevArrow from "@/assets/main/PrevArrow.png";
 import NextArrow from "@/assets/main/NextArrow.png";
 import "slick-carousel/slick/slick.css";
@@ -10,8 +8,9 @@ import "slick-carousel/slick/slick-theme.css";
 
 interface IProps {
   data: ISliderData[];
+  isRecommendSlider: boolean;
 }
-export default function BasicSlider({ data }: IProps) {
+export default function BasicSlider({ data, isRecommendSlider }: IProps) {
   interface ArrowProps extends CustomArrowProps {
     onClick?: MouseEventHandler<HTMLDivElement>;
   }
@@ -54,10 +53,15 @@ export default function BasicSlider({ data }: IProps) {
     <Container>
       {data.map((item, idx) => (
         <>
-          <TitleWrapper>
-            <Icon src={ICONLIST[idx]} alt="icon" />
-            <Title>{item.label}</Title>
-          </TitleWrapper>
+          {isRecommendSlider ? (
+            <RecommendTitle className="recommend">{item.label}</RecommendTitle>
+          ) : (
+            <TitleWrapper>
+              <Icon src={ICONLIST[idx]} alt="icon" />
+              <Title>{item.label}</Title>
+            </TitleWrapper>
+          )}
+
           <Slider {...settings}>
             {item.themes.map((theme) => (
               <>
@@ -94,12 +98,19 @@ const Container = styled.div`
   }
 `;
 
+const RecommendTitle = styled.div`
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: white;
+  font-family: Pretendard;
+  margin-top: 6rem;
+  margin-bottom: 3rem;
+`;
 const TitleWrapper = styled.div`
   display: flex;
   margin-top: 10rem;
   margin-bottom: 4rem;
 `;
-
 const Icon = styled.img`
   width: 3rem;
   height: 3rem;
@@ -115,7 +126,6 @@ const Title = styled.div`
 
 const SliderItem = styled.div`
   position: relative;
-  border: solid 3px pink;
   img:hover {
     & > .card-hover {
       opacity: 1;
