@@ -81,3 +81,8 @@ configurations {
     querydsl.extendsFrom compileClasspath
 }
 // Querydsl 빌드 옵션 끝
+
+// 실행파일 생성
+bootJar {
+    archiveFileName = "backend-0.0.1-SNAPSHOT.jar"
+}
