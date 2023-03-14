@@ -6,7 +6,6 @@ import BasicSlider from "@components/main/Slider";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 
-// TODO : 메인 슬라이더 크기 줄이기
 export default function MainPage() {
   const [hotData, setHotData] = useState<ISliderData[]>(HotThemesData);
   const [topData, setTopData] = useState<ISliderData[]>(TopThemesData);
@@ -14,7 +13,7 @@ export default function MainPage() {
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
 
-  const isLogin = false;
+  const isLogin = true;
 
   const data = topData.concat(awardData);
   return (
@@ -41,7 +40,7 @@ const RecommendWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border: solid 1px ${theme.colors.pink};
-  padding-bottom: 6rem;
+  padding-bottom: 3rem;
 `;
 // api에서 가져올 데이터 (DUMMY)
 const HotThemesData: ISliderData[] = [

@@ -56,8 +56,8 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
     centerMode: true,
     dots: false,
     infinite: true,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 4.5,
+    slidesToScroll: 4.5,
     arrows: true,
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,
@@ -149,12 +149,12 @@ const Container = styled.div`
 `;
 
 const RecommendTitle = styled.div`
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: bold;
   color: white;
   font-family: Pretendard;
-  margin-top: 6rem;
-  margin-bottom: 3rem;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
 `;
 const TitleWrapper = styled.div`
   display: flex;

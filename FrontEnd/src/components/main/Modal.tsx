@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Line from "@/assets/common/Line.png";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
+import Rating from "@mui/material/Rating";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -14,9 +14,6 @@ interface IProps {
 }
 
 export default function DetailModal({ open, onClose, themeId, label }: IProps) {
-  const handleClick = () => {
-    console.log("button clicked");
-  };
   const [data, setData] = useState(initData);
   return (
     <Modal
@@ -45,17 +42,154 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
           alt="line"
           style={{ width: "100%", margin: "1rem auto" }}
         />
-        <Button onClick={handleClick}>button</Button>s
-        <Button onClick={onClose}>close</Button>
+
+        <Container>
+          <div className="left-container">
+            <img
+              src={`${data.imgUrl}`}
+              alt="poster-img"
+              style={{ height: "100%" }}
+            />
+          </div>
+          <div className="right-container">
+            <DetailInfo className="title">{data.title}</DetailInfo>
+            <DetailInfo>
+              장르
+              <GenreBox>
+                {data.genre.map((item) => {
+                  return (
+                    <div className="item" key={item.genreId}>
+                      {item.category}
+                    </div>
+                  );
+                })}
+              </GenreBox>
+            </DetailInfo>
+            <DetailInfo>
+              인원수
+              <span className="info">
+                {data.minPeople}-{data.maxPeople}명
+              </span>{" "}
+              &nbsp; | &nbsp; 시간
+              <span className="info">{data.runningTime}min</span>
+            </DetailInfo>
+            <DetailInfo>
+              오픈일<span className="info">{data.openDate}</span>
+            </DetailInfo>
+            <DetailInfo>
+              난이도
+              <Rating
+                name="readonly"
+                value={data.userRating}
+                style={{ marginLeft: "1rem" }}
+                size="large"
+                readOnly
+              />
+              <LikeButton>+ 찜 추가하기</LikeButton>
+            </DetailInfo>
+          </div>
+        </Container>
+        <Synopsis>
+          <pre>{data.synopsis}</pre>
+        </Synopsis>
       </Box>
     </Modal>
   );
 }
 
+const LikeButton = styled.div`
+  border: solid 2px lightgray;
+  color: lightgray;
+  font-size: 1.6rem;
+  margin-left: auto;
+  border-radius: 1rem;
+  text-align: center;
+  padding: 1rem 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    color: ${theme.colors.container};
+    background-color: lightgray;
+    border: solid 2px ${theme.colors.container};
+  }
+`;
+const Synopsis = styled.div`
+  margin-top: 2rem;
+  font-size: 1.6rem;
+  text-align: center;
+  padding: 0 5%;
+  height: 12rem;
+  border: solid 1px white;
+  pre {
+    font-family: Pretendard;
+  }
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+  }
+`;
+const GenreBox = styled.div`
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  .item {
+    border-radius: 1.3rem;
+    font-weight: bold;
+    border: solid 2px white;
+    padding: 0.3rem 2rem;
+    margin-left: 1rem;
+  }
+`;
+const Container = styled.div`
+  display: flex;
+  height: 50%;
+  margin-top: 2rem;
+  .left-container {
+    width: 45%;
+    justify-content: center;
+    display: flex;
+  }
+  .right-container {
+    width: 55%;
+    font-family: Pretendard;
+    .title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+    .info {
+      margin-left: 1rem;
+      font-weight: bold;
+    }
+  }
+`;
+const DetailInfo = styled.div`
+  margin-top: 1rem;
+  font-family: Pretendard;
+  height: 4rem;
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  .info {
+    font-weight: bold;
+  }
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+`;
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-family: Pretendard;
   span {
     margin: 0 1rem;
@@ -72,7 +206,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "60%",
+  width: "55%",
   height: "75%",
   bgcolor: "#3E2133",
   borderRadius: 10,
@@ -118,7 +252,7 @@ const initData: IDetailData = {
   themeId: 1,
   regionBig: "서울", // 지역(대분류)
   regionSmall: "강남", // 지역(소분류)
-  storeName: "코드 케이 홍대점", // 매장명
+  storeName: "코드케이 홍대점", // 매장명
   title: "미스테리 거울의 방", // 테마명
   genre: GENREDUMMY, // 장르 목록
   difficulty: 3.2, // 난이도
@@ -129,9 +263,11 @@ const initData: IDetailData = {
   imgUrl:
     "https://user-images.githubusercontent.com/55784772/224640336-ec8412c3-f81b-4472-b6a5-9e56254004a3.jpg", // 테마 포스터 링크
   pageUrl: "http://www.code-k.co.kr/", // 테마 예약페이지 링크
-  synopsis:
-    "마법사는 언제나 예고한 시간에 나타나지.마법사 케라스에 붙잡힌 당신. 이제 당신의 영혼을 훔쳐 더욱 강력해지려 합니다. 마법사 케라스가 잠시 집을 비우는 사이 탈출할 수 있는 마지막 기회를 갖게 되었습니다. 반드시 탈출하셔서 후일을 도모하시기 바랍니다. ", // 테마 시놉시스
-  userRating: "4.6", // 평점
+  synopsis: `"몇 년 전부터 조직에 잠입해 있던 언더커버로부터 대량의 마약 거래 정보가 들어왔다.
+    지휘부에서는 나를 포함한 경찰 특공대를 이 마약 조직에 몇 달 전부터 침투 시켰다.
+    오늘이 지긋지긋한 마약조직을 끝장 내버릴 마지막 기회다!"
+    `, // 테마 시놉시스
+  userRating: "3", // 평점
   userActivity: "3.2", // 활동성
   userFear: "4.4", // 공포도
   userDifficulty: "3.3", // 체감 난이도
