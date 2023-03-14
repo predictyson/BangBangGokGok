@@ -4,10 +4,19 @@ import styled from "styled-components";
 import example from "@/assets/common/Cuties.png";
 import CloseIcon from "@mui/icons-material/Close";
 
-export default function UserSection({ user }: { user: GroupSetUer }) {
+export default function UserSection({
+  user,
+  handleDeleteUser,
+}: {
+  user: GroupSetUer;
+  handleDeleteUser: (nickname: string) => void;
+}) {
   return (
     <Container>
-      <CloseIcon className="close" />
+      <CloseIcon
+        className="close"
+        onClick={() => handleDeleteUser(user.nickname)}
+      />
       <ProfileImg src={example} />
       <p>{user.nickname}</p>
     </Container>

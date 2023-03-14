@@ -5,13 +5,19 @@ import UserSection from "./UserSection";
 
 export default function UserListSection({
   userList,
+  handleDeleteUser,
 }: {
   userList: GroupSetUer[];
+  handleDeleteUser: (nickname: string) => void;
 }) {
   return (
     <Container>
       {userList.map((user: GroupSetUer, idx: number) => (
-        <UserSection user={user} key={idx} />
+        <UserSection
+          user={user}
+          key={idx}
+          handleDeleteUser={handleDeleteUser}
+        />
       ))}
       {userList.length < 6 && (
         <AddButtonBox>

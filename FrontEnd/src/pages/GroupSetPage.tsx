@@ -17,6 +17,12 @@ const userData: GroupSetUer[] = [
 export default function GroupSetPage() {
   const [userList, setUserList] = useState<GroupSetUer[]>(userData);
 
+  const handleDeleteUser = (nickname: string) => {
+    setUserList((prev) => {
+      return prev.filter((user) => user.nickname !== nickname);
+    });
+  };
+
   return (
     <>
       <Header />
@@ -28,7 +34,7 @@ export default function GroupSetPage() {
             테마가 제공됩니다! (최대 6명)
           </p>
         </HeaderSection>
-        <UserSection userList={userList} />
+        <UserSection userList={userList} handleDeleteUser={handleDeleteUser} />
         <ThemeRecSection userList={userList} />
       </Container>
     </>
