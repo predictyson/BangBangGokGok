@@ -6,15 +6,30 @@ import Line from "@/assets/common/Line.png";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import Rating from "@mui/material/Rating";
+import Toast, { showToast } from "@/components/common/Toast";
+import "react-toastify/dist/ReactToastify.css";
 interface IProps {
   open: boolean;
   onClose: () => void;
   themeId: number;
   label: string;
 }
+interface IToastProps {
+  type: "success" | "error" | "info" | "action";
+  message?: string;
+}
 
 export default function DetailModal({ open, onClose, themeId, label }: IProps) {
   const [data, setData] = useState(initData);
+  const [isLiked, setIsLiked] = useState(data.isInterested);
+  const handleClick = (
+    type: IToastProps["type"],
+    message: IToastProps["message"]
+  ) => {
+    showToast({ type, message });
+    setIsLiked((prev) => !prev);
+  };
+
   return (
     <Modal
       open={open}
@@ -85,7 +100,24 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
                 size="large"
                 readOnly
               />
-              <LikeButton>+ 찜 추가하기</LikeButton>
+              {isLiked ? (
+                <LikeButton
+                  onClick={() =>
+                    handleClick("error", "찜 등록이 해제되었습니다.")
+                  }
+                >
+                  - 찜 해제하기
+                </LikeButton>
+              ) : (
+                <LikeButton
+                  onClick={() =>
+                    handleClick("success", "찜 등록이 완료되었습니다.")
+                  }
+                >
+                  + 찜 추가하기
+                </LikeButton>
+              )}
+              <Toast />
             </DetailInfo>
           </div>
         </Container>
@@ -119,17 +151,17 @@ const Synopsis = styled.div`
   text-align: center;
   padding: 0 5%;
   height: 12rem;
-  border: solid 1px white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   pre {
     font-family: Pretendard;
   }
   overflow-y: auto;
   overflow-x: hidden;
-
   ::-webkit-scrollbar {
     width: 12px;
   }
-
   ::-webkit-scrollbar-thumb {
     background-color: #888;
     border-radius: 6px;
@@ -273,4 +305,5 @@ const initData: IDetailData = {
   userDifficulty: "3.3", // 체감 난이도
   userCnt: 8, // 평가 인원
   reviews: REVIEWDUMMY, // 해당 테마의 리뷰들;
+  isInterested: false,
 };

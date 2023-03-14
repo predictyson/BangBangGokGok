@@ -49,6 +49,7 @@ interface IDetailData {
   userDifficulty: double; // 체감 난이도
   userCnt: int; // 평가 인원
   reviews: IReviewData[]; // 해당 테마의 리뷰들
+  isInterested: boolean;
 }
 
 interface IGenreData {
