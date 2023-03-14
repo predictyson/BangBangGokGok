@@ -13,7 +13,7 @@ export default function MainPage() {
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
 
-  const isLogin = true;
+  const isLogin = false;
 
   const data = topData.concat(awardData);
   return (
@@ -40,7 +40,8 @@ const RecommendWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border: solid 1px ${theme.colors.pink};
-  padding-bottom: 6rem;
+  margin-top: 10rem;
+  padding-bottom: 3rem;
 `;
 // api에서 가져올 데이터 (DUMMY)
 const HotThemesData: ISliderData[] = [
@@ -213,7 +214,7 @@ const AwardThemesData: ISliderData[] = [
     themes: [
       {
         themeId: 1,
-        title: "virus",
+        title: "VIRUS",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
       },

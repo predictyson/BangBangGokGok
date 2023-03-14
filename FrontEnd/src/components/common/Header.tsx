@@ -35,13 +35,17 @@ const Container = styled.div`
   height: 8.7rem;
   display: flex;
   background-color: ${theme.colors.background};
-  padding: 0 11rem;
+  padding: 0 10rem;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 87%;
+  z-index: 999;
   .left-container {
     width: 27%;
     display: flex;
     align-items: center;
-    justify-content: center;
     text-align: center;
   }
   .middle-container {
