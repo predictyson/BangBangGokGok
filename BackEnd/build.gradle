@@ -81,3 +81,8 @@ configurations {
     querydsl.extendsFrom compileClasspath
 }
 // Querydsl 빌드 옵션 끝
+
+// 실행파일 생성
+bootJar {
+    enabled = true
+}
