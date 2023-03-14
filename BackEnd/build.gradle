@@ -84,5 +84,5 @@ configurations {
 
 // 실행파일 생성
 bootJar {
-    enabled = true
+    archiveFileName = "backend-0.0.1-SNAPSHOT.jar"
 }
