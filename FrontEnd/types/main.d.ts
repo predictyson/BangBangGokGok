@@ -23,3 +23,8 @@ interface ProfileProps {
   userInfo: IUserInfo;
   changeUserInfo: (key: string, value: string | number | number[]) => void;
 }
+
+interface GroupSetUer {
+  profileImageType: string;
+  nickname: string;
+}
