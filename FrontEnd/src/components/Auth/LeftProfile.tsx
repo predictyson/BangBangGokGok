@@ -4,12 +4,21 @@ import Ghost from "@/assets/Auth/Gost.png";
 
 export default function LeftPorfile() {
   return (
-    <>
+    <LeftBox>
       <ProfileImg src={Ghost} />
       <SelectButton>캐릭터 선택</SelectButton>
-    </>
+    </LeftBox>
   );
 }
+
+const LeftBox = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5rem 0;
+`;
 
 const ProfileImg = styled.img`
   width: 20rem;

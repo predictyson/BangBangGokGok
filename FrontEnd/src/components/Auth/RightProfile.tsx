@@ -31,9 +31,8 @@ export default function LeftPorfile(props: ProfileProps) {
   };
 
   return (
-    <>
+    <RightBox>
       <CustomTextField
-        label="닉네임"
         autoComplete="current-password"
         color="warning"
         name="nickname"
@@ -42,6 +41,7 @@ export default function LeftPorfile(props: ProfileProps) {
         value={props.userInfo.nickname}
         placeholder="닉네임을 입력하세요"
         onChange={handleInputChange}
+        hiddenLabel
       />
       <SelectBox>
         <p>선호 방문 지역을 선택해주세요.</p>
@@ -51,6 +51,7 @@ export default function LeftPorfile(props: ProfileProps) {
           name="regionBig"
           color="warning"
           displayEmpty
+          autoFocus
         >
           <MenuItem value="">
             <em>선택하세요</em>
@@ -69,6 +70,7 @@ export default function LeftPorfile(props: ProfileProps) {
           onChange={handleSelectChange}
           color="warning"
           displayEmpty
+          autoFocus
         >
           <MenuItem value={0}>
             <em>선택하세요</em>
@@ -92,9 +94,17 @@ export default function LeftPorfile(props: ProfileProps) {
           <CustomToggleButton value="female">여</CustomToggleButton>
         </ToggleButtonGroup>
       </SelectBox>
-    </>
+    </RightBox>
   );
 }
+
+const RightBox = styled.div`
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 5rem 0;
+`;
 
 const SelectBox = styled.div`
   font-size: 1.5rem;
@@ -102,6 +112,10 @@ const SelectBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  p {
+    font-weight: ${theme.fontWeight.bold};
+  }
 `;
 
 const CustomTextField = mstyled(TextField)({
@@ -109,9 +123,6 @@ const CustomTextField = mstyled(TextField)({
   color: "white",
   input: {
     fontSize: "1.2rem",
-  },
-  feildset: {
-    fontSize: "1.2rem !important",
   },
 });
 
@@ -124,10 +135,6 @@ const CustomSelect = mstyled(Select)({
 
   svg: {
     color: "white",
-  },
-
-  div: {
-    border: "white",
   },
 });
 

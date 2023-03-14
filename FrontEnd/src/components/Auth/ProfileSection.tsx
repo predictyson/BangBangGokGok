@@ -7,15 +7,11 @@ export default function ProfileSection(props: ProfileProps) {
   return (
     <>
       <ProfileBox>
-        <LeftBox>
-          <LeftPorfile />
-        </LeftBox>
-        <RightBox>
-          <RightProfile
-            userInfo={props.userInfo}
-            changeUserInfo={props.changeUserInfo}
-          />
-        </RightBox>
+        <LeftPorfile />
+        <RightProfile
+          userInfo={props.userInfo}
+          changeUserInfo={props.changeUserInfo}
+        />
       </ProfileBox>
     </>
   );
