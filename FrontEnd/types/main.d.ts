@@ -25,6 +25,6 @@ interface ProfileProps {
 }
 
 interface GroupSetUer {
-  profileImageType: number;
+  profileImageType: string;
   nickname: string;
 }

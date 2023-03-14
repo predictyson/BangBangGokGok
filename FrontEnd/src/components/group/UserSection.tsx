@@ -1,8 +1,8 @@
 import { theme } from "@/styles/theme";
 import React from "react";
 import styled from "styled-components";
-import example from "@/assets/common/Cuties.png";
 import CloseIcon from "@mui/icons-material/Close";
+import { Avatar1, Avatar2, Avatar3 } from "@/assets/user";
 
 export default function UserSection({
   user,
@@ -11,13 +11,19 @@ export default function UserSection({
   user: GroupSetUer;
   handleDeleteUser: (nickname: string) => void;
 }) {
+  const handleAvatar = (t: string) => {
+    if (t === "Avatar1") return Avatar1;
+    else if (t === "Avatar2") return Avatar2;
+    else if (t === "Avatar3") return Avatar3;
+  };
+
   return (
     <Container>
       <CloseIcon
         className="close"
         onClick={() => handleDeleteUser(user.nickname)}
       />
-      <ProfileImg src={example} />
+      <ProfileImg src={handleAvatar(user.profileImageType)} />
       <p>{user.nickname}</p>
     </Container>
   );
