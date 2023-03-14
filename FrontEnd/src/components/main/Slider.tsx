@@ -111,8 +111,8 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
                   <img
                     src={theme.imgUrl}
                     style={{
-                      width: "22.5rem",
-                      height: "29.75rem",
+                      width: "20rem",
+                      height: "25rem",
                       cursor: "pointer",
                     }}
                   ></img>
@@ -183,8 +183,8 @@ const SliderItem = styled.div`
   }
 `;
 const Hover = styled.div`
-  width: 22.5rem;
-  height: 29.75rem;
+  width: 20rem;
+  height: 25rem;
   position: absolute;
   opacity: 0;
   background-color: ${theme.colors.containerLight};

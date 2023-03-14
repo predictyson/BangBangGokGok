@@ -6,13 +6,66 @@ import Button from "@mui/material/Button";
 import Line from "@/assets/common/Line.png";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
-import { useNavigate } from "react-router-dom";
 interface IProps {
   open: boolean;
   onClose: () => void;
   themeId: number;
   label: string;
 }
+
+export default function DetailModal({ open, onClose, themeId, label }: IProps) {
+  const handleClick = () => {
+    console.log("button clicked");
+  };
+  const [data, setData] = useState(initData);
+  return (
+    <Modal
+      open={open}
+      onClose={onClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Header>
+          <div>
+            매장명 <span>{data.storeName}</span> | 지역
+            <span>
+              {data.regionBig} &nbsp;{data.regionSmall}
+            </span>
+          </div>
+          <span
+            className="reservation"
+            onClick={() => window.open(`${data.pageUrl}`, "_blank")}
+          >
+            예약하기
+          </span>
+        </Header>
+        <img
+          src={Line}
+          alt="line"
+          style={{ width: "100%", margin: "1rem auto" }}
+        />
+        <Button onClick={handleClick}>button</Button>s
+        <Button onClick={onClose}>close</Button>
+      </Box>
+    </Modal>
+  );
+}
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.8rem;
+  font-family: Pretendard;
+  span {
+    margin: 0 1rem;
+    font-weight: bold;
+  }
+  .reservation {
+    color: ${theme.colors.pink};
+    cursor: pointer;
+  }
+`;
 
 const style = {
   position: "absolute" as "absolute",
@@ -85,60 +138,3 @@ const initData: IDetailData = {
   userCnt: 8, // 평가 인원
   reviews: REVIEWDUMMY, // 해당 테마의 리뷰들;
 };
-
-export default function DetailModal({ open, onClose, themeId, label }: IProps) {
-  const handleClick = () => {
-    console.log("button clicked");
-  };
-  const [data, setData] = useState(initData);
-  const navigate = useNavigate();
-  return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Header>
-          <div>
-            매장명 <span>{data.storeName}</span> | 지역
-            <span>
-              {data.regionBig} &nbsp;{data.regionSmall}
-            </span>
-          </div>
-          <span
-            className="reservation"
-            onClick={() => {
-              navigate(`/${data.pageUrl}`);
-            }}
-          >
-            예약하기
-          </span>
-        </Header>
-        <img
-          src={Line}
-          alt="line"
-          style={{ width: "100%", margin: "1rem auto" }}
-        />
-        <Button onClick={handleClick}>button</Button>s
-        <Button onClick={onClose}>close</Button>
-      </Box>
-    </Modal>
-  );
-}
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.8rem;
-  font-family: Pretendard;
-  span {
-    margin: 0 1rem;
-    font-weight: bold;
-  }
-  .reservation {
-    color: ${theme.colors.pink};
-    cursor: pointer;
-  }
-`;
