@@ -8,6 +8,7 @@ import { theme } from "@/styles/theme";
 import Rating from "@mui/material/Rating";
 import Toast, { showToast } from "@/components/common/Toast";
 import "react-toastify/dist/ReactToastify.css";
+import Review from "./Review";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -95,7 +96,7 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
               난이도
               <Rating
                 name="readonly"
-                value={data.userRating}
+                value={data.difficulty}
                 style={{ marginLeft: "1rem" }}
                 size="large"
                 readOnly
@@ -124,6 +125,7 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
         <Synopsis>
           <pre>{data.synopsis}</pre>
         </Synopsis>
+        <Review data={data} />
       </Box>
     </Modal>
   );
@@ -184,6 +186,7 @@ const Container = styled.div`
   display: flex;
   height: 50%;
   margin-top: 2rem;
+
   .left-container {
     width: 45%;
     justify-content: center;
@@ -246,6 +249,16 @@ const style = {
   padding: "4rem 8rem",
   color: "white",
   overflowY: "auto",
+  WebkitOverflowScrolling: "touch",
+  "&::-webkit-scrollbar": {
+    width: "8px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    borderRadius: "4px",
+  },
+  "&::-webkit-scrollbar-track": {
+    borderRadius: "4px",
+  },
 };
 
 const GENREDUMMY: IGenreData[] = [
