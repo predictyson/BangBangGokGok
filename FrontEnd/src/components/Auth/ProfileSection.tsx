@@ -23,20 +23,3 @@ const ProfileBox = styled.div`
   padding: 1rem 2rem;
   display: flex;
 `;
-
-const LeftBox = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  padding: 5rem 0;
-`;
-
-const RightBox = styled.div`
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: 5rem 0;
-`;
