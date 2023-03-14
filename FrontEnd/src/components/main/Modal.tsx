@@ -245,6 +245,7 @@ const style = {
   boxShadow: 24,
   padding: "4rem 8rem",
   color: "white",
+  overflowY: "auto",
 };
 
 const GENREDUMMY: IGenreData[] = [

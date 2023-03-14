@@ -37,6 +37,11 @@ const Container = styled.div`
   background-color: ${theme.colors.background};
   padding: 0 11rem;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
   .left-container {
     width: 27%;
     display: flex;

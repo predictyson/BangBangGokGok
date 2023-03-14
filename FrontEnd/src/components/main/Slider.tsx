@@ -140,6 +140,7 @@ const Container = styled.div`
   width: 90%;
   margin: auto auto;
   margin-top: 0;
+
   .slick-prev:before {
     display: none;
   }
@@ -178,7 +179,7 @@ const SliderItem = styled.div`
   position: relative;
   :hover {
     & > .card-hover {
-      opacity: 0.9;
+      opacity: 0.8;
     }
   }
 `;
@@ -187,7 +188,7 @@ const Hover = styled.div`
   height: 25rem;
   position: absolute;
   opacity: 0;
-  background-color: ${theme.colors.containerLight};
+  background-color: black;
   top: 0;
   left: 0;
   transition: all 0.5s;
