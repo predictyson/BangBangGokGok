@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,26 +30,23 @@ public class ThemeController {
 
     private static final Logger logger = LoggerFactory.getLogger(ThemeController.class);
 
-//    private final UserService userService;
-
     private final ThemeService themeService;
-
 
     /**
      * DB 추가 후 내용 추가 바람
      */
     @GetMapping("recommend")
-    public ResponseEntity<Map<String, Object>> recommendedTheme(Authentication authentication) throws Exception {
-        logger.info("[recommendedTheme] request : X");
+    public ResponseEntity<Map<String, Object>> recommendedTheme(
+            @AuthenticationPrincipal User user) throws Exception {
+        logger.info("[recommendedTheme] request : myEmail={}",user.getUsername());
+
         Map<String, Object> resultMap = new HashMap<>();
 
-        int userId = (int) authentication.getCredentials();
-        List<ThemeBundleResponse> themeBundleResponseList = null;
+        List<ThemeBundleResponse> themeBundleResponses = themeService.getRecommendedThemes(user.getUsername());
+        resultMap.put("recommendThemes", themeBundleResponses);
 
-        themeBundleResponseList = themeService.getRecommendedThemes(userId);
-        resultMap.put("recommendThemes", themeBundleResponseList);
+        logger.info("[recommendedTheme] response : recommendThemes={}", themeBundleResponses);
 
-        logger.info("[recommendedTheme] response : recommendThemes={}", themeBundleResponseList.toString());
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -56,46 +55,48 @@ public class ThemeController {
      */
     @GetMapping()
     public ResponseEntity<Map<String, Object>> topTheme() throws Exception {
-        logger.info("[topTheme] request : X");
+        logger.info("[topTheme] request : ");
+
         Map<String, Object> resultMap = new HashMap<>();
 
-        List<ThemeBundleResponse> themeBundleResponseList = null;
-        List<AwardThemeBundleResponse> AwardThemeBundleList = null;
+        List<ThemeBundleResponse> themeBundleResponseList = themeService.getTopThemes();
+        List<AwardThemeBundleResponse> AwardThemeBundleList = themeService.getAwardThemes();
 
-        themeBundleResponseList = themeService.getTopThemes();
-        AwardThemeBundleList = themeService.getAwardThemes();
         resultMap.put("topThemes", themeBundleResponseList);
         resultMap.put("awardThemes", AwardThemeBundleList);
 
-        logger.info("[topTheme] response : recommendThemes={}, awardThemes={}", themeBundleResponseList.toString(), AwardThemeBundleList.toString());
+        logger.info("[topTheme] response : recommendThemes={}, awardThemes={}", themeBundleResponseList, AwardThemeBundleList);
+
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @GetMapping("search")
-    public ResponseEntity<Map<String, Object>> searchedTheme(@ModelAttribute SearchThemeRequest searchThemeRequest) throws Exception {
+    public ResponseEntity<Map<String, Object>> searchedTheme(
+            @ModelAttribute SearchThemeRequest searchThemeRequest) throws Exception {
         logger.info("[searchedTheme] request : SearchThemeRequest={}", searchThemeRequest);
+
         Map<String, Object> resultMap = new HashMap<>();
 
-        List<PreviewThemeDto> previewThemeDtoList = null;
-
-        previewThemeDtoList = themeService.getSearchThemes(searchThemeRequest);
+        List<PreviewThemeDto> previewThemeDtoList = themeService.getSearchThemes(searchThemeRequest);
         resultMap.put("themes", previewThemeDtoList);
 
         logger.info("[searchedTheme] response : themes={}", previewThemeDtoList);
+
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @GetMapping("{themeId}")
-    public ResponseEntity<Map<String, Object>> themeInfo(@PathVariable("themeId") int themeId) throws Exception {
+    public ResponseEntity<Map<String, Object>> themeInfo(
+            @PathVariable("themeId") int themeId) throws Exception {
         logger.info("[themeInfo] request : themeId={}", themeId);
+
         Map<String, Object> resultMap = new HashMap<>();
 
-        ThemeResponse themeResponse = null;
-
-        themeResponse = themeService.getThemeInfo(themeId);
+        ThemeResponse themeResponse = themeService.getThemeInfo(themeId);
         resultMap.put("theme", themeResponse);
 
-        logger.info("[themeInfo] response : theme={}", themeResponse.toString());
+        logger.info("[themeInfo] response : theme={}", themeResponse);
+
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
