@@ -1,13 +1,12 @@
 package com.ssafy.bbkk.api.dto;
 
 import com.ssafy.bbkk.db.entity.Review;
-import com.ssafy.bbkk.db.entity.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
 @ToString
-public class ReviewResponse {
+public class ReviewOfUserResponse {
 
     private int reviewId; // 리뷰 id
     private String content; // 리뷰 내용
@@ -21,7 +20,7 @@ public class ReviewResponse {
 
     private PreviewThemeDto previewThemeDto; // 테마 간략 정보
 
-    public ReviewResponse(Review review){
+    public ReviewOfUserResponse(Review review){
         this.reviewId = review.getId();
         this.content = review.getContent();
         this.userRating = review.getUserRating();
