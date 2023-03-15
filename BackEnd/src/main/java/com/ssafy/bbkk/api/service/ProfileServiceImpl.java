@@ -1,7 +1,7 @@
 package com.ssafy.bbkk.api.service;
 
 import com.ssafy.bbkk.api.dto.InterestThemeResponse;
-import com.ssafy.bbkk.api.dto.ReviewResponse;
+import com.ssafy.bbkk.api.dto.ReviewOfUserResponse;
 import com.ssafy.bbkk.api.dto.UpdateUserInfoRequest;
 import com.ssafy.bbkk.api.dto.UserInfoResponse;
 import com.ssafy.bbkk.db.entity.*;
@@ -47,14 +47,14 @@ public class ProfileServiceImpl implements ProfileService{
     }
 
     @Override
-    public List<ReviewResponse> getUserReviews(String email) throws Exception {
-        List<ReviewResponse> result = null;
+    public List<ReviewOfUserResponse> getUserReviews(String email) throws Exception {
+        List<ReviewOfUserResponse> result = null;
         // 이메일로 유저 찾아오기
         User user = userRepository.findByEmail(email).orElseThrow();
         // 유저의 리뷰들을 Dto에 감싸기
         result = user.getReviews()
                         .stream()
-                        .map(x->new ReviewResponse(x))
+                        .map(x->new ReviewOfUserResponse(x))
                         .collect(Collectors.toList());
         return result;
     }

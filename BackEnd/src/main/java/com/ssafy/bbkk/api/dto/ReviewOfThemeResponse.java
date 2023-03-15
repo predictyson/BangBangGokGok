@@ -1,13 +1,10 @@
 package com.ssafy.bbkk.api.dto;
 
 import com.ssafy.bbkk.db.entity.Review;
-import com.ssafy.bbkk.db.entity.User;
-import lombok.*;
 
 import java.time.LocalDateTime;
 
-@ToString
-public class ReviewResponse {
+public class ReviewOfThemeResponse {
 
     private int reviewId; // 리뷰 id
     private String content; // 리뷰 내용
@@ -19,9 +16,9 @@ public class ReviewResponse {
     private int isSuccess; // 성공 여부 (0:실패, 1:성공)
     private double record; // 성공 기록
 
-    private PreviewThemeDto previewThemeDto; // 테마 간략 정보
+    private PreviewUserResponse previewUserResponse; // 작성자 간략 정보
 
-    public ReviewResponse(Review review){
+    public ReviewOfThemeResponse(Review review){
         this.reviewId = review.getId();
         this.content = review.getContent();
         this.userRating = review.getUserRating();
@@ -32,6 +29,8 @@ public class ReviewResponse {
         this.isSuccess = review.getIsSuccess();
         this.record = review.getRecord();
 
-        this.previewThemeDto = new PreviewThemeDto(review.getTheme());
+        this.previewUserResponse = new PreviewUserResponse(review.getUser());
     }
+
+
 }

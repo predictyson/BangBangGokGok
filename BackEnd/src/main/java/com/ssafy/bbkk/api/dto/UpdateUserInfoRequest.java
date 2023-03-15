@@ -15,7 +15,7 @@ public class UpdateUserInfoRequest {
     private String regionSmall; // 수정한 선호 지역(소분류)
     private int age; // 수정한 나이
     private String gender; // 수정한 성별
-    private int profileImageType; // 수정한 프로필 이미지 타입
+    private String profileImageType; // 수정한 프로필 이미지 타입
 
     private List<Integer> genreIdAdd; // 추가한 선호 장르 id 목록
     private List<Integer> genreIdDel; // 삭제한 선호 장르 id 목록

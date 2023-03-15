@@ -1,7 +1,7 @@
 package com.ssafy.bbkk.api.service;
 
 import com.ssafy.bbkk.api.dto.CreateReviewRequest;
-import com.ssafy.bbkk.api.dto.ReviewResponse;
+import com.ssafy.bbkk.api.dto.ReviewOfUserResponse;
 import com.ssafy.bbkk.api.dto.UpdateReviewRequest;
 import com.ssafy.bbkk.db.entity.Review;
 import com.ssafy.bbkk.db.entity.Theme;
@@ -46,12 +46,12 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public ReviewResponse getReview(int reviewId) throws Exception {
-        ReviewResponse result = null;
+    public ReviewOfUserResponse getReview(int reviewId) throws Exception {
+        ReviewOfUserResponse result = null;
         // 리뷰 id를 통해 리뷰 찾아오기
         Review review = reviewRepository.findById(reviewId).orElseThrow();
         // 리뷰를 Dto에 감싸기
-        result = new ReviewResponse(review);
+        result = new ReviewOfUserResponse(review);
         return result;
     }
 

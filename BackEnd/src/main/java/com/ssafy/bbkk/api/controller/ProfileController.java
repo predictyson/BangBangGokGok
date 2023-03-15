@@ -1,7 +1,7 @@
 package com.ssafy.bbkk.api.controller;
 
 import com.ssafy.bbkk.api.dto.InterestThemeResponse;
-import com.ssafy.bbkk.api.dto.ReviewResponse;
+import com.ssafy.bbkk.api.dto.ReviewOfUserResponse;
 import com.ssafy.bbkk.api.dto.UpdateUserInfoRequest;
 import com.ssafy.bbkk.api.dto.UserInfoResponse;
 import com.ssafy.bbkk.api.service.ProfileService;
@@ -60,10 +60,10 @@ public class ProfileController {
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        List<ReviewResponse> reviewResponses = profileService.getUserReviews(email);
-        resultMap.put("reviews", reviewResponses);
+        List<ReviewOfUserResponse> reviewOfThemeResponses = profileService.getUserReviews(email);
+        resultMap.put("reviews", reviewOfThemeResponses);
 
-        logger.info("[getUserReviews] response : reviews={}", reviewResponses);
+        logger.info("[getUserReviews] response : reviews={}", reviewOfThemeResponses);
 
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }

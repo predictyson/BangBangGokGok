@@ -14,7 +14,7 @@ public class UserInfoResponse {
     private String nickname; // 닉네임
     private int age; // 나이
     private String gender; // 성별 {'W', 'M'}
-    private int profileImageType; // 프로필 이미지
+    private String profileImageType; // 프로필 이미지
     private Region region; // 선호 지역
     private List<String> genres; // 선호 장르 목록
 

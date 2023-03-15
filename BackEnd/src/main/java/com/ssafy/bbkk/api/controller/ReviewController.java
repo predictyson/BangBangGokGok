@@ -1,7 +1,7 @@
 package com.ssafy.bbkk.api.controller;
 
 import com.ssafy.bbkk.api.dto.CreateReviewRequest;
-import com.ssafy.bbkk.api.dto.ReviewResponse;
+import com.ssafy.bbkk.api.dto.ReviewOfUserResponse;
 import com.ssafy.bbkk.api.dto.UpdateReviewRequest;
 import com.ssafy.bbkk.api.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +48,8 @@ public class ReviewController {
 
         Map<String, Object> resultMap = new HashMap<>();
         reviewService.setReview(user.getUsername(), updateReviewRequest);
-        ReviewResponse reviewResponse = reviewService.getReview(updateReviewRequest.getReviewId());
-        resultMap.put("review", reviewResponse);
+        ReviewOfUserResponse reviewOfUserResponse = reviewService.getReview(updateReviewRequest.getReviewId());
+        resultMap.put("review", reviewOfUserResponse);
 
         logger.info("[setReview] response : ");
 
