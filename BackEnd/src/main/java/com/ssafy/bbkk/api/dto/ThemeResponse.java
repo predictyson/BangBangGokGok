@@ -1,6 +1,5 @@
 package com.ssafy.bbkk.api.dto;
 
-import com.ssafy.bbkk.db.entity.Review;
 import com.ssafy.bbkk.db.entity.Theme;
 
 import java.sql.Clob;
@@ -17,7 +16,6 @@ public class ThemeResponse {
     private String regionSmall; // 지역 소분류
     private String storeName; // 매장명
     private String title; // 테마명
-    private List<GenreResponse> genre; // 장르 목록
     private float difficulty; // 난이도
     private int runningTime; // 시간
     private String openData; // 오픈일
@@ -31,7 +29,9 @@ public class ThemeResponse {
     private double userFear; // 공포도
     private double userDifficulty; // 체감 난이도
     private double userCnt; // 평가 인원
-    private List<Review> reviews; // 해당 테마의 리뷰들
+
+    private List<String> genre; // 장르 목록
+    private List<ReviewOfThemeResponse> reviews; // 해당 테마의 리뷰들
 
     public ThemeResponse(Theme theme) {
         this.themeId = theme.getId();
@@ -39,10 +39,6 @@ public class ThemeResponse {
         this.regionSmall = theme.getRegion().getRegionSmall();
         this.storeName = theme.getStoreName();
         this.title = theme.getTitle();
-        this.genre = theme.getGenreOfThemes()
-                .stream()
-                .map(x -> new GenreResponse(x.getGenre()))
-                .collect(Collectors.toList());
         this.difficulty = theme.getDifficulty();
         this.runningTime = theme.getRunningTime();
         this.openData = theme.getOpenDate();
@@ -56,9 +52,16 @@ public class ThemeResponse {
         this.userFear = theme.getUserFear();
         this.userDifficulty = theme.getUserDifficulty();
         this.userCnt = theme.getUserCnt();
-//        this.reviews = theme.getReviews().stream()
-//                .map(x -> new ReviewResponse(x))
-//                .collect(Collectors.toList());
+
+        this.genre = theme.getGenreOfThemes()
+                .stream()
+                .map(x -> x.getGenre().getCategory())
+                .collect(Collectors.toList());
+
+        this.reviews = theme.getReviews()
+                .stream()
+                .map(x -> new ReviewOfThemeResponse(x))
+                .collect(Collectors.toList());
     }
 
 }

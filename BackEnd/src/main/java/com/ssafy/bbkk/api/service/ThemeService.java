@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ThemeService {
 
-    List<ThemeBundleResponse> getRecommendedThemes(int userId) throws Exception;
+    List<ThemeBundleResponse> getRecommendedThemes(String email) throws Exception;
 
     List<ThemeBundleResponse> getTopThemes() throws Exception;
 

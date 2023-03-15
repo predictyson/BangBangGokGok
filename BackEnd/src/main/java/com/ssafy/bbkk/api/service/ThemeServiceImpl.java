@@ -33,7 +33,7 @@ public class ThemeServiceImpl implements ThemeService {
     private EntityManager entityManager;
 
     @Override
-    public List<ThemeBundleResponse> getRecommendedThemes(int userId) throws Exception {
+    public List<ThemeBundleResponse> getRecommendedThemes(String email) throws Exception {
         List<ThemeBundleResponse> result = null;
 
         return result;
@@ -54,8 +54,7 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public List<PreviewThemeDto> getSearchThemes(SearchThemeRequest searchThemeRequest)
-            throws Exception {
+    public List<PreviewThemeDto> getSearchThemes(SearchThemeRequest searchThemeRequest) throws Exception {
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(entityManager);
         QTheme qTheme = QTheme.theme;
         QGenreOfTheme qGenreOfTheme = QGenreOfTheme.genreOfTheme;
@@ -112,7 +111,8 @@ public class ThemeServiceImpl implements ThemeService {
                 .limit(size)
                 .fetch();
 
-        List<PreviewThemeDto> result = target.stream()
+        List<PreviewThemeDto> result = target
+                .stream()
                 .map(x -> new PreviewThemeDto(x))
                 .collect(Collectors.toList());
         return result;
@@ -121,7 +121,9 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public ThemeResponse getThemeInfo(int themeId) throws Exception {
-        ThemeResponse result = new ThemeResponse(themeRepository.findById(themeId).orElseThrow());
+        ThemeResponse result = null;
+        Theme theme = themeRepository.findById(themeId).orElseThrow();
+        result = new ThemeResponse(theme);
         return result;
     }
 
