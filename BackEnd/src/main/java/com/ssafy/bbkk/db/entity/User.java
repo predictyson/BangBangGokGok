@@ -30,7 +30,7 @@ public class User extends BaseTimeEntity{
     @Column(nullable = false, length = 1)
     private String gender; // 성별 {'W', 'M'}
     @Column(nullable = false)
-    private int profileImageType; // 프로필 이미지
+    private String profileImageType; // 프로필 이미지
 
     @OneToOne
     @JoinColumn(name = "region_id") // 선호 지역은 하나만 선택하며, 영속성 관리를 할 필요가 없다
