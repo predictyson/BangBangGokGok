@@ -6,9 +6,12 @@ declare module "styled-components" {
       background: string;
       container: string;
       containerLight: string;
+      white: string;
       pink: string;
       selectedItem: string;
+      selectedItemBackground: string;
       unselectedItem: string;
+      unselectedItemBackground: string;
     };
     fontWeight: {
       normal: number;

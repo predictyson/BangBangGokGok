@@ -26,6 +26,7 @@ export default function Header() {
       <div className="right-container">
         <NavItem onClick={() => navigate("/groupset")}>Group Set</NavItem>
         <NavItem onClick={() => navigate("/search")}>Search</NavItem>
+        <NavItem onClick={() => navigate("/mypage")}>마이페이지</NavItem>
         <NavButton onClick={() => navigate("/login")}>Login</NavButton>
       </div>
     </Container>
