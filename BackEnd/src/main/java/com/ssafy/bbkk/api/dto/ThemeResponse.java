@@ -28,10 +28,11 @@ public class ThemeResponse {
     private double userActivity; // 활동성
     private double userFear; // 공포도
     private double userDifficulty; // 체감 난이도
-    private double userCnt; // 평가 인원
+    private int userCnt; // 평가 참여 인원 수
 
     private List<String> genre; // 장르 목록
     private List<ReviewOfThemeResponse> reviews; // 해당 테마의 리뷰들
+
 
     public ThemeResponse(Theme theme) {
         this.themeId = theme.getId();
@@ -51,7 +52,7 @@ public class ThemeResponse {
         this.userActivity = theme.getUserActivity();
         this.userFear = theme.getUserFear();
         this.userDifficulty = theme.getUserDifficulty();
-        this.userCnt = theme.getUserCnt();
+        this.userCnt = theme.getUserCnt() + theme.getReviews().size();
 
         this.genre = theme.getGenreOfThemes()
                 .stream()
