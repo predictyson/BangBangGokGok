@@ -7,19 +7,26 @@ import ThemeRecSection from "@components/group/ThemeRecSection";
 
 const userData: GroupSetUer[] = [
   // { profileImageType: 1, nickname: "정개미" },
-  { profileImageType: "Avatar1", nickname: "이상해씨" },
-  { profileImageType: "Avatar2", nickname: "쉬운하나" },
-  { profileImageType: "Avatar2", nickname: "변덕쟁이" },
-  { profileImageType: "Avatar3", nickname: "정상수" },
-  { profileImageType: "Avatar1", nickname: "해피" },
+  { profileImageType: "Avatar1", nickname: "이상해씨", email: "example.com" },
+  { profileImageType: "Avatar2", nickname: "쉬운하나", email: "example.com" },
+  { profileImageType: "Avatar2", nickname: "변덕쟁이", email: "example.com" },
+  { profileImageType: "Avatar3", nickname: "정상수", email: "example.com" },
+  { profileImageType: "Avatar1", nickname: "해피", email: "example.com" },
 ];
 
 export default function GroupSetPage() {
-  const [userList, setUserList] = useState<GroupSetUer[]>(userData);
+  const [userList, setUserList] = useState<GroupSetUer[]>([]);
 
   const handleDeleteUser = (nickname: string) => {
     setUserList((prev) => {
       return prev.filter((user) => user.nickname !== nickname);
+    });
+  };
+
+  const handleAddUser = (user: GroupSetUer) => {
+    console.log(user);
+    setUserList((prev) => {
+      return [...prev, user];
     });
   };
 
@@ -34,7 +41,11 @@ export default function GroupSetPage() {
             테마가 제공됩니다! (최대 6명)
           </p>
         </HeaderSection>
-        <UserSection userList={userList} handleDeleteUser={handleDeleteUser} />
+        <UserSection
+          userList={userList}
+          handleDeleteUser={handleDeleteUser}
+          handleAddUser={handleAddUser}
+        />
         <ThemeRecSection userList={userList} />
       </Container>
     </>
