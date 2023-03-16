@@ -7,6 +7,10 @@ import GroupSetPage from "@/pages/GroupSetPage";
 import SearchPage from "@/pages/SearchPage";
 import FindPassword from "@/pages/Auth/FindPasswordPage";
 import AdditionalPage from "./pages/Auth/AdditionalPage";
+import MyPage from "./pages/MyPage";
+import ProfileInfoSection from "./pages/MyPage/ProfileInfoSection";
+import MyReviesSection from "./pages/MyPage/MyReviewsSection";
+import LikeThemesSection from "./pages/MyPage/LikeThemesSection";
 
 const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -14,9 +18,18 @@ const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
   { path: "/main", element: <MainPage /> },
   { path: "/groupset", element: <GroupSetPage /> },
-  { path: "/search", element: <SearchPage /> },
+  { path: "search", element: <SearchPage /> },
   { path: "/findpassword", element: <FindPassword /> },
   { path: "/additional", element: <AdditionalPage /> },
+  {
+    path: "mypage",
+    element: <MyPage />,
+    children: [
+      { path: "profile", element: <ProfileInfoSection /> },
+      { path: "reviews", element: <MyReviesSection /> },
+      { path: "likes", element: <LikeThemesSection /> },
+    ],
+  },
 ]);
 
 export default router;
