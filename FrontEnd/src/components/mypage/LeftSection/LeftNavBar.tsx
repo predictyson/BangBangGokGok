@@ -10,9 +10,9 @@ export default function LeftNavBar() {
     <Wrapper>
       <div>정개미, 방탈출 초보</div>
       <div>
-        <NavItem onClick={() => navigate("profile")}>Group Set</NavItem>
-        <NavItem onClick={() => navigate("reviews")}>Search</NavItem>
-        <NavItem onClick={() => navigate("likes")}>마이페이지</NavItem>
+        <NavItem onClick={() => navigate("")}>나의 프로필</NavItem>
+        <NavItem onClick={() => navigate("reviews")}>작성했던 리뷰</NavItem>
+        <NavItem onClick={() => navigate("likes")}>좋아하는 테마</NavItem>
       </div>
     </Wrapper>
   );

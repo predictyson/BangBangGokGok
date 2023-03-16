@@ -1,14 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
+import { Outlet } from "react-router-dom";
 
 export default function RightContent() {
   return (
     <Wrapper>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid ratione
-      nostrum numquam laboriosam eligendi veniam, modi amet quos expedita
-      excepturi odit, recusandae itaque aspernatur dolorum in quibusdam? Quod,
-      ad obcaecati.
+      <Outlet />
     </Wrapper>
   );
 }

@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     path: "mypage",
     element: <MyPage />,
     children: [
-      { path: "profile", element: <ProfileInfoSection /> },
+      { path: "", element: <ProfileInfoSection />, index: true },
       { path: "reviews", element: <MyReviesSection /> },
       { path: "likes", element: <LikeThemesSection /> },
     ],

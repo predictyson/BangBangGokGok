@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
 export default function SearchSortOptions() {
-  const [sortOption, setSortOption] = useState(OPTIONS[0]);
+  const [sortOption, setSortOption] = useState<string>(OPTIONS[0]);
   const handleSortOptionChange = (option: string) => {
     setSortOption(option);
   };
