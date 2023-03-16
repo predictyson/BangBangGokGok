@@ -19,6 +19,11 @@ interface IUserInfo {
   gender: string; // 성별
 }
 
+interface IToastProps {
+  type: "success" | "error" | "info" | "action";
+  message?: string;
+}
+
 interface ProfileProps {
   userInfo: IUserInfo;
   changeUserInfo: (key: string, value: string | number | number[]) => void;

@@ -15,10 +15,7 @@ interface IProps {
   themeId: number;
   label: string;
 }
-interface IToastProps {
-  type: "success" | "error" | "info" | "action";
-  message?: string;
-}
+
 
 export default function DetailModal({ open, onClose, themeId, label }: IProps) {
   const [data, setData] = useState(initData);

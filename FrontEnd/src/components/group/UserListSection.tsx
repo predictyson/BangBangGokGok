@@ -10,7 +10,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 const tempUserSearchList: GroupSetUer[] = [
   {
     profileImageType: "Avatar1",
-    nickname: "가",
+    nickname: "가비아",
     email: "jackid1103@naver.com",
   },
   {
@@ -40,20 +40,28 @@ export default function UserListSection({
   handleAddUser: (user: GroupSetUer) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {
+    setOpen(true);
+    setSearchTerm("");
+    setSearchResults([]);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    setSearchTerm("");
+    setSearchResults([]);
+  };
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<GroupSetUer[]>([]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
 
-    const results = tempUserSearchList.filter((user) =>
-      user.nickname.toLowerCase().includes(searchTerm.toLowerCase())
+    const results = tempUserSearchList.filter(
+      (user) =>
+        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.nickname.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    console.log("result: " + results);
     setSearchResults(results);
-    console.log("searchResult: " + searchResults);
   };
 
   return (
@@ -94,9 +102,15 @@ export default function UserListSection({
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="닉네임 혹은 이메일을 입력해주세요."
+                    placeholder="닉네임 혹은 이메일을 입력해주세요."
                     onChange={handleChange}
-                    sx={{ backgroundColor: "white", input: { fontSize: 14 } }}
+                    color="warning"
+                    focused
+                    hiddenLabel
+                    sx={{
+                      backgroundColor: "",
+                      input: { fontSize: 14, color: "white" },
+                    }}
                     inputProps={{
                       ...params.inputProps,
                       autoComplete: "new-password", // disable autocomplete and autofill
@@ -124,6 +138,12 @@ const ModalBox = styled.div`
   box-shadow: 24;
   color: black;
   padding: 2rem;
+
+  h1 {
+    color: white;
+    font-size: 3rem;
+    margin-top: 0;
+  }
 `;
 
 const Container = styled.div`

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import UserSection from "@components/group/UserListSection";
 import ThemeRecSection from "@components/group/ThemeRecSection";
+import Toast, { showToast } from "@/components/common/Toast";
 
 export default function GroupSetPage() {
   const [userList, setUserList] = useState<GroupSetUer[]>([]);
@@ -15,15 +16,22 @@ export default function GroupSetPage() {
   };
 
   const handleAddUser = (newUser: GroupSetUer) => {
-    console.log(newUser);
-    // if (userList.filter((user) => user.nickname == newUser.nickname)) {
     if (userList.includes(newUser)) {
-      alert("이미 추가되어있는 유저입니다!");
+      handleToastClick("error", "이미 추가된 유저입니다.");
       return;
     }
+
+    handleToastClick("success", "성공적으로 추가되었습니다.");
     setUserList((prev) => {
       return [...prev, newUser];
     });
+  };
+
+  const handleToastClick = (
+    type: IToastProps["type"],
+    message: IToastProps["message"]
+  ) => {
+    showToast({ type, message });
   };
 
   return (
@@ -44,6 +52,7 @@ export default function GroupSetPage() {
         />
         <ThemeRecSection userList={userList} />
       </Container>
+      <Toast />
     </>
   );
 }
