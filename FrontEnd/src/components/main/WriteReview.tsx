@@ -6,7 +6,9 @@ import styled from "styled-components";
 import Line from "@/assets/common/Line.png";
 import { theme } from "@/styles/theme";
 import Rating from "@mui/material/Rating";
-import TextField from "@mui/material/TextField";
+import ToggleButton from "@mui/material/ToggleButton";
+import { styled as mstyled } from "@mui/material/styles";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 interface IProps {
   childOpen: boolean;
   handleClose: () => void;
@@ -17,6 +19,16 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
   const [difficulty, setDifficulty] = useState<number | null>(0);
   const [fear, setFear] = useState<number | null>(0);
   const [activity, setActivity] = useState<number | null>(0);
+
+  const handleToggleChange = (
+    e: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    if (newAlignment !== null) {
+      // props.changeUserInfo("gender", newAlignment);
+    }
+  };
+
   return (
     <React.Fragment>
       <Modal
@@ -37,7 +49,18 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
           <InfoBox>
             테마명 :&nbsp; <div className="title">{data.title}</div>
           </InfoBox>
-          <InfoBox>성공 여부 &nbsp;</InfoBox>
+          <InfoBox>
+            성공 여부 &nbsp;
+            <ToggleButtonGroup
+              // value="success"
+              exclusive
+              onChange={handleToggleChange}
+              aria-label="Platform"
+            >
+              <CustomToggleButton value="success">성공</CustomToggleButton>
+              <CustomToggleButton value="fail">실패</CustomToggleButton>
+            </ToggleButtonGroup>{" "}
+          </InfoBox>
           <ReviewBox>
             <RatingWrapper>
               <div className="ratingItem">
@@ -107,7 +130,7 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
             </form>
           </ReviewBox>
           <ButtonWrapper>
-            <CancelButton>취소</CancelButton>
+            <CancelButton onClick={handleClose}>취소</CancelButton>
             <WriteButton>등록</WriteButton>
           </ButtonWrapper>
         </Box>
@@ -115,6 +138,19 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
     </React.Fragment>
   );
 }
+const CustomToggleButton = mstyled(ToggleButton)({
+  padding: "0.5rem 1.5rem",
+  fontSize: "1.5rem",
+  borderRadius: "0.8rem",
+  border: `solid 2px white`,
+  fontFamily: "Pretendard",
+  color: "white",
+  "&.Mui-selected, &.Mui-selected:hover": {
+    color: "white",
+    backgroundColor: `${theme.colors.pink}`,
+    fontWeight: "bold",
+  },
+});
 
 const CustomText = styled.textarea`
   width: 100%;
@@ -124,6 +160,7 @@ const CustomText = styled.textarea`
   border-radius: 1rem;
   background-color: transparent;
   margin-top: 1.3rem;
+  resize: none;
 `;
 const Header = styled.div`
   font-size: 1.6rem;
@@ -134,6 +171,7 @@ const InfoBox = styled.div`
   display: flex;
   font-size: 1.8rem;
   margin-top: 2rem;
+  align-items: center;
 `;
 const RatingWrapper = styled.div`
   display: flex;
