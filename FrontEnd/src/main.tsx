@@ -17,9 +17,9 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     background-color: #3E2133;
     color: white;
-    overflow-y: auto;
+    overflow-x: hidden;
   ::-webkit-scrollbar {
-    width: 12px;
+    width: 6px;
   }
   ::-webkit-scrollbar-thumb {
     background-color: #888;

@@ -34,7 +34,6 @@ const Container = styled.div`
   justify-content: space-between;
   background-color: ${theme.colors.containerLight};
   border-radius: 1.5rem;
-  margin-top: 10rem;
 `;
 
 const Cuties = styled.img`
