@@ -1,4 +1,5 @@
 import React from "react";
+
 import styled from "styled-components";
 import Line from "@/assets/common/Line.png";
 import { theme } from "@/styles/theme";
@@ -6,12 +7,21 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import Rating from "@mui/material/Rating";
-import Chart from "chart.js";
-
+import Chart from "@/components/main/Chart";
+import ReviewItem from "@/components/main/ReviewItem";
 interface IProps {
   data: IDetailData;
 }
-
+interface IBarData {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    backgroundColor: string;
+    borderColor: string;
+    borderWidth: number;
+  }[];
+}
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
     color: "#ff6d75",
@@ -22,8 +32,25 @@ const StyledRating = styled(Rating)({
 });
 
 export default function Review({ data }: IProps) {
+  data.reviews.map((item) => {
+    console.log("review :" + item.content);
+  });
+  const CHARTDATA = [data.userActivity, data.userFear, data.userDifficulty];
+  const BARDATA: IBarData = {
+    labels: ["활동성", "공포도", "체감 난이도"],
+    datasets: [
+      {
+        label: "유저 평점",
+        data: CHARTDATA,
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgba(255, 99, 132, 1)",
+        borderWidth: 2,
+      },
+    ],
+  };
+
   return (
-    <Container>
+    <>
       <Header>
         Reviews ( {data.reviews.length} ){" "}
         <WriteButton>
@@ -62,49 +89,23 @@ export default function Review({ data }: IProps) {
           </div>
         </InfoBox>
         <InfoBox>
-          <div className="title">평점 비율 </div>
+          <Chart data={BARDATA} />
         </InfoBox>
       </InfoWrapper>
-    </Container>
+      <ReviewItem data={data.reviews} />
+    </>
   );
 }
-
-const canvas = document.getElementById("myChart") as HTMLCanvasElement;
-const data = [10, 20, 30];
-// const chart = new Chart(canvas, {
-//   type: "bar",
-//   data: {
-//     labels: ["Label 1", "Label 2", "Label 3"],
-//     datasets: [
-//       {
-//         data: data,
-//         backgroundColor: "rgba(54, 162, 235, 0.2)",
-//         borderColor: "rgba(54, 162, 235, 1)",
-//         borderWidth: 1,
-//       },
-//     ],
-//   },
-//   options: {
-//     scales: {
-//       yAxes: [
-//         {
-//           ticks: {
-//             beginAtZero: true,
-//             max: 120,
-//           },
-//         },
-//       ],
-//     },
-//   },
-// });
 
 const InfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-family: Pretendard;
   color: white;
   height: 10rem;
   padding: 2rem 4rem;
+  border: solid 2px blue;
   .title {
     font-size: 1.6rem;
     text-align: center;
@@ -127,7 +128,6 @@ const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const Container = styled.div``;
 
 const Header = styled.div`
   display: flex;
