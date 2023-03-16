@@ -100,7 +100,6 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
               <Title>{item.label}</Title>
             </TitleWrapper>
           )}
-
           <Slider {...settings}>
             {item.themes.map((theme) => (
               <>
@@ -115,20 +114,20 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
                       height: "25rem",
                       cursor: "pointer",
                     }}
-                  ></img>
+                  />
 
                   <Hover className="card-hover">{theme.title}</Hover>
                 </SliderItem>
               </>
             ))}
           </Slider>
-          {themeId && label && (
+          {(themeId && label) !== undefined && (
             <Modal
               open={open}
               onClose={handleClose}
               themeId={themeId}
               label={label}
-            ></Modal>
+            />
           )}
         </>
       ))}

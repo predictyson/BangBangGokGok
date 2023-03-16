@@ -40,7 +40,6 @@ const RecommendWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border: solid 1px ${theme.colors.pink};
-  margin-top: 10rem;
   padding-bottom: 3rem;
 `;
 // api에서 가져올 데이터 (DUMMY)
