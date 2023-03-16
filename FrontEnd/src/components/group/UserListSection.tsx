@@ -16,17 +16,17 @@ const tempUserSearchList: GroupSetUer[] = [
   {
     profileImageType: "Avatar3",
     nickname: "가나",
-    email: "jackid1103@naver.com",
+    email: "happy3@naver.com",
   },
   {
     profileImageType: "Avatar3",
     nickname: "가나다",
-    email: "jackid1103@naver.com",
+    email: "example@naver.com",
   },
   {
     profileImageType: "Avatar1",
     nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
+    email: "angry1103@naver.com",
   },
 ];
 

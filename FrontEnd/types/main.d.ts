@@ -25,9 +25,9 @@ interface ProfileProps {
 }
 
 interface GroupSetUer {
-  profileImageType?: string;
+  profileImageType: string;
   nickname: string;
-  email?: string;
+  email: string;
 }
 interface IDetailData {
   themeId: int; // 테마 id
