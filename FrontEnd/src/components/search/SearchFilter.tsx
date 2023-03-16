@@ -58,9 +58,10 @@ const FilterButton = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  height: 4rem;
   width: 8rem;
-  height: 100%;
   font-size: 1.8rem;
+  font-weight: 600;
   border-radius: 10px;
   color: white;
   border: 1px solid white;
@@ -84,8 +85,8 @@ const FilterContainer = mstyled(Box)`
 
 const ModalStyle = {
   position: "absolute",
-  top: "20rem",
-  left: "90.5rem",
+  top: "17rem",
+  left: "107.5rem",
   border: "none",
   background: "none",
   color: "white",
@@ -97,6 +98,7 @@ const ButtonContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   gap: 1rem;
+  margin-top: 2rem;
 `;
 
 const OkButton = styled.button`

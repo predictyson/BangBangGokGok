@@ -3,28 +3,21 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import styled from "styled-components";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { styled as mstyled } from "@mui/material/styles";
 
 export default function PeopleForm() {
   const [people, setPeople] = useState("0");
-  const handlePeopleChange = (event: SelectChangeEvent) => {
+  const handlePeopleChange = (event: SelectChangeEvent<unknown>) => {
     setPeople(event.target.value as string);
   };
 
   return (
     <Wrapper>
-      <InputLabel id="people-select" sx={labelStyle}>
-        인원
-      </InputLabel>
-      <Select
-        variant="outlined"
+      <CustomInputLabel id="people-select">인원</CustomInputLabel>
+      <CustomSelect
         labelId="people-select"
-        id="people-select"
         value={people}
-        label="인원"
         onChange={handlePeopleChange}
-        sx={selectStyle}
-        IconComponent={() => <KeyboardArrowDownIcon sx={{ color: "white" }} />}
       >
         <MenuItem value="0">전체</MenuItem>
         <MenuItem value="1">1명</MenuItem>
@@ -33,7 +26,7 @@ export default function PeopleForm() {
         <MenuItem value="4">4명</MenuItem>
         <MenuItem value="5">5명</MenuItem>
         <MenuItem value="6">6명</MenuItem>
-      </Select>
+      </CustomSelect>
     </Wrapper>
   );
 }
@@ -49,14 +42,20 @@ const Wrapper = styled.div`
   color: white;
 `;
 
-const labelStyle = {
+const CustomInputLabel = mstyled(InputLabel)({
   fontSize: "1.7rem",
   fontWeight: "600",
   color: "white",
-};
+  marginRight: "1.5rem",
+});
 
-const selectStyle = {
-  width: "100",
-  color: "white",
+const CustomSelect = mstyled(Select)({
+  width: "10rem",
+  height: "4rem",
+  fontSize: "1.2rem",
   border: "1px solid white",
-};
+  color: "white",
+  svg: {
+    color: "white",
+  },
+});

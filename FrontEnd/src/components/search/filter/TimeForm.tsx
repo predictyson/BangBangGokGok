@@ -3,34 +3,27 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import styled from "styled-components";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { styled as mstyled } from "@mui/material/styles";
 
 export default function TimeForm() {
   const [time, setTime] = useState("0");
-  const handleTimeChange = (event: SelectChangeEvent) => {
+  const handleTimeChange = (event: SelectChangeEvent<unknown>) => {
     setTime(event.target.value as string);
   };
 
   return (
     <Wrapper>
-      <InputLabel id="time-select" sx={labelStyle}>
-        시간
-      </InputLabel>
-      <Select
-        variant="outlined"
+      <CustomInputLabel id="time-select">시간</CustomInputLabel>
+      <CustomSelect
         labelId="time-select"
-        id="time-select"
         value={time}
-        label="시간"
         onChange={handleTimeChange}
-        sx={selectStyle}
-        IconComponent={() => <KeyboardArrowDownIcon sx={{ color: "white" }} />}
       >
         <MenuItem value="0">전체</MenuItem>
         <MenuItem value="1">60분 이내</MenuItem>
         <MenuItem value="2">60분 ~ 90분</MenuItem>
         <MenuItem value="3">90분 이상</MenuItem>
-      </Select>
+      </CustomSelect>
     </Wrapper>
   );
 }
@@ -46,14 +39,20 @@ const Wrapper = styled.div`
   color: white;
 `;
 
-const labelStyle = {
+const CustomInputLabel = mstyled(InputLabel)({
   fontSize: "1.7rem",
   fontWeight: "600",
   color: "white",
-};
+  marginRight: "1.5rem",
+});
 
-const selectStyle = {
-  width: "100",
-  color: "white",
+const CustomSelect = mstyled(Select)({
+  width: "10rem",
+  height: "4rem",
+  fontSize: "1.2rem",
   border: "1px solid white",
-};
+  color: "white",
+  svg: {
+    color: "white",
+  },
+});

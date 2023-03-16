@@ -30,6 +30,7 @@ const OptionButton = mstyled(Button)`
   font-size: 1.5rem;
   border-radius: 20px;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
   &.MuiButton-contained {
     color: #FFF1F8;
     background-color: #58424D;

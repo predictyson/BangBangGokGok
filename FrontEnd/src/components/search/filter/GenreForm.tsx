@@ -3,35 +3,28 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import styled from "styled-components";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { styled as mstyled } from "@mui/material/styles";
 
 export default function GenreForm() {
   const [genre, setGenre] = useState("전체");
-  const handleGenreChange = (event: SelectChangeEvent) => {
+  const handleGenreChange = (event: SelectChangeEvent<unknown>) => {
     setGenre(event.target.value as string);
   };
 
   return (
     <Wrapper>
-      <InputLabel id="genre-select" sx={labelStyle}>
-        장르
-      </InputLabel>
-      <Select
-        variant="outlined"
+      <CustomInputLabel id="genre-select">장르</CustomInputLabel>
+      <CustomSelect
         labelId="genre-select"
-        id="genre-select"
         value={genre}
-        label="장르"
         onChange={handleGenreChange}
-        sx={selectStyle}
-        IconComponent={() => <KeyboardArrowDownIcon sx={{ color: "white" }} />}
       >
         <MenuItem value="전체">전체</MenuItem>
         <MenuItem value="공포">공포</MenuItem>
         <MenuItem value="추리">추리</MenuItem>
         <MenuItem value="스릴러">스릴러</MenuItem>
         <MenuItem value="판타지">판타지</MenuItem>
-      </Select>
+      </CustomSelect>
     </Wrapper>
   );
 }
@@ -47,14 +40,20 @@ const Wrapper = styled.div`
   color: white;
 `;
 
-const labelStyle = {
+const CustomInputLabel = mstyled(InputLabel)({
   fontSize: "1.7rem",
   fontWeight: "600",
   color: "white",
-};
+  marginRight: "1.5rem",
+});
 
-const selectStyle = {
-  width: "100",
-  color: "white",
+const CustomSelect = mstyled(Select)({
+  width: "10rem",
+  height: "4rem",
+  fontSize: "1.2rem",
   border: "1px solid white",
-};
+  color: "white",
+  svg: {
+    color: "white",
+  },
+});

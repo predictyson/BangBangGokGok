@@ -3,19 +3,19 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import styled from "styled-components";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { styled as mstyled } from "@mui/material/styles";
 
 const LocationForm = () => {
   const [city, setCity] = useState("전체"); // regionBig
   const [location, setLocation] = useState("전체"); // regionSmall
   console.log(city, location);
 
-  const handleCityChange = (event: SelectChangeEvent) => {
+  const handleCityChange = (event: SelectChangeEvent<unknown>) => {
     setCity(event.target.value as string);
     setLocation("전체");
   };
 
-  const handleLocationChange = (event: SelectChangeEvent) => {
+  const handleLocationChange = (event: SelectChangeEvent<unknown>) => {
     setLocation(event.target.value as string);
   };
 
@@ -41,39 +41,27 @@ const LocationForm = () => {
 
   return (
     <Wrapper>
-      <InputLabel id="city-select" sx={labelStyle}>
-        지역
-      </InputLabel>
-      <Select
-        variant="outlined"
+      <CustomInputLabel id="city-select">지역</CustomInputLabel>
+      <CustomSelect
         labelId="city-select"
-        id="city-select"
         value={city}
-        label="지역1"
         onChange={handleCityChange}
-        sx={selectStyle}
-        IconComponent={() => <KeyboardArrowDownIcon sx={{ color: "white" }} />}
       >
         <MenuItem value="전체">전체</MenuItem>
         <MenuItem value="서울">서울</MenuItem>
         <MenuItem value="부산">부산</MenuItem>
         <MenuItem value="제주">제주</MenuItem>
-      </Select>
-      <InputLabel id="location-select"></InputLabel>
-      <Select
-        variant="outlined"
+      </CustomSelect>
+      <CustomInputLabel id="location-select"></CustomInputLabel>
+      <CustomSelect
         labelId="location-select"
-        id="location-select"
         value={location}
-        label="지역2"
         onChange={handleLocationChange}
         disabled={!city}
-        sx={selectStyle}
-        IconComponent={() => <KeyboardArrowDownIcon sx={{ color: "white" }} />}
       >
         <MenuItem value="전체">전체</MenuItem>
         {renderLocationOptions()}
-      </Select>
+      </CustomSelect>
     </Wrapper>
   );
 };
@@ -91,14 +79,20 @@ const Wrapper = styled.div`
   color: white;
 `;
 
-const labelStyle = {
+const CustomInputLabel = mstyled(InputLabel)({
   fontSize: "1.7rem",
   fontWeight: "600",
   color: "white",
-};
+  marginRight: "1.5rem",
+});
 
-const selectStyle = {
-  width: "100",
-  color: "white",
+const CustomSelect = mstyled(Select)({
+  width: "10rem",
+  height: "4rem",
+  fontSize: "1.2rem",
   border: "1px solid white",
-};
+  color: "white",
+  svg: {
+    color: "white",
+  },
+});

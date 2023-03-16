@@ -26,7 +26,7 @@ export default function DifficultyForm() {
       <InputLabel id="difficulty-slider" sx={labelStyle}>
         난이도
       </InputLabel>
-      <div style={{ width: "75%" }}>
+      <div style={{ width: "70%" }}>
         <Slider
           id="difficulty-slider"
           color="info"
@@ -62,4 +62,5 @@ const labelStyle = {
   fontSize: "1.7rem",
   fontWeight: "600",
   color: "white",
+  marginRight: "1rem",
 };
