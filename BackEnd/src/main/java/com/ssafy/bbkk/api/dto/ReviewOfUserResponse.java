@@ -18,7 +18,7 @@ public class ReviewOfUserResponse {
     private int isSuccess; // 성공 여부 (0:실패, 1:성공)
     private double record; // 성공 기록
 
-    private PreviewThemeDto previewThemeDto; // 테마 간략 정보
+    private PreviewThemeResponse previewThemeResponse; // 테마 간략 정보
 
     public ReviewOfUserResponse(Review review){
         this.reviewId = review.getId();
@@ -31,6 +31,6 @@ public class ReviewOfUserResponse {
         this.isSuccess = review.getIsSuccess();
         this.record = review.getRecord();
 
-        this.previewThemeDto = new PreviewThemeDto(review.getTheme());
+        this.previewThemeResponse = new PreviewThemeResponse(review.getTheme());
     }
 }

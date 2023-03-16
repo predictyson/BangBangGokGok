@@ -1,7 +1,7 @@
 package com.ssafy.bbkk.api.service;
 
 import com.ssafy.bbkk.api.dto.AwardThemeBundleResponse;
-import com.ssafy.bbkk.api.dto.PreviewThemeDto;
+import com.ssafy.bbkk.api.dto.PreviewThemeResponse;
 import com.ssafy.bbkk.api.dto.SearchThemeRequest;
 import com.ssafy.bbkk.api.dto.ThemeBundleResponse;
 import com.ssafy.bbkk.api.dto.ThemeResponse;
@@ -15,7 +15,7 @@ public interface ThemeService {
 
     List<AwardThemeBundleResponse> getAwardThemes() throws Exception;
 
-    List<PreviewThemeDto> getSearchThemes(SearchThemeRequest searchThemeRequest) throws Exception;
+    List<PreviewThemeResponse> getSearchThemes(SearchThemeRequest searchThemeRequest) throws Exception;
 
     ThemeResponse getThemeInfo(int themeId) throws Exception;
 

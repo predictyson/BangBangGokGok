@@ -7,6 +7,6 @@ import lombok.ToString;
 public class ThemeBundleResponse {
 
     private String label; // 해당 테마 목록의 라벨
-    private List<PreviewThemeDto> themes; // 해당 테마 목록
+    private List<PreviewThemeResponse> themes; // 해당 테마 목록
 
 }

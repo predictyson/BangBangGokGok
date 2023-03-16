@@ -1,7 +1,7 @@
 package com.ssafy.bbkk.api.controller;
 
 import com.ssafy.bbkk.api.dto.AwardThemeBundleResponse;
-import com.ssafy.bbkk.api.dto.PreviewThemeDto;
+import com.ssafy.bbkk.api.dto.PreviewThemeResponse;
 import com.ssafy.bbkk.api.dto.SearchThemeRequest;
 import com.ssafy.bbkk.api.dto.ThemeBundleResponse;
 import com.ssafy.bbkk.api.dto.ThemeResponse;
@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,10 +76,10 @@ public class ThemeController {
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        List<PreviewThemeDto> previewThemeDtoList = themeService.getSearchThemes(searchThemeRequest);
-        resultMap.put("themes", previewThemeDtoList);
+        List<PreviewThemeResponse> previewThemeResponses = themeService.getSearchThemes(searchThemeRequest);
+        resultMap.put("themes", previewThemeResponses);
 
-        logger.info("[searchedTheme] response : themes={}", previewThemeDtoList);
+        logger.info("[searchedTheme] response : themes={}", previewThemeResponses);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
