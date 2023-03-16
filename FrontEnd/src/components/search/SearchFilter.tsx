@@ -1,8 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-// import OkButton from "@components/common/UI/OkButton";
-// import CancelButton from "@components/common/UI/CancelButton";
 import LocationForm from "@components/search/filter/LocationForm";
 import GenreForm from "./filter/GenreForm";
 import DifficultyForm from "./filter/DifficultyForm";
@@ -29,7 +27,7 @@ export default function SearchFilter() {
 
   return (
     <>
-      <FilterButton onClick={openFilter}>
+      <FilterButton onClick={filterButtonState ? closeFilter : openFilter}>
         <TuneIcon fontSize="inherit" />
         <p>필터</p>
       </FilterButton>
@@ -75,7 +73,7 @@ const FilterContainer = mstyled(Box)`
   flex-direction: column;
   font-size: 1.7rem;
   font-weight: 600;
-  width: 22rem;
+  width: 30rem;
   gap: 1.5rem;
   padding: 4rem;
   border: 0.2rem solid white;
@@ -87,7 +85,7 @@ const FilterContainer = mstyled(Box)`
 const ModalStyle = {
   position: "absolute",
   top: "20rem",
-  left: "115.5rem",
+  left: "90.5rem",
   border: "none",
   background: "none",
   color: "white",

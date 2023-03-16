@@ -1,75 +1,104 @@
 import React, { useState } from "react";
+import InputLabel from "@mui/material/InputLabel";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import styled from "styled-components";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const LocationForm = () => {
   const [city, setCity] = useState("전체"); // regionBig
   const [location, setLocation] = useState("전체"); // regionSmall
   console.log(city, location);
-  const handleCityChange = (event) => {
-    setCity(event.target.value);
+
+  const handleCityChange = (event: SelectChangeEvent) => {
+    setCity(event.target.value as string);
     setLocation("전체");
   };
 
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
+  const handleLocationChange = (event: SelectChangeEvent) => {
+    setLocation(event.target.value as string);
   };
 
   const renderLocationOptions = () => {
-    switch (city) {
-      case "서울":
-        return (
-          <>
-            <option value="강남">강남</option>
-            <option value="홍대">홍대</option>
-            <option value="건대">건대</option>
-          </>
-        );
-      case "부산":
-        return (
-          <>
-            <option value="동구">동구</option>
-            <option value="서구">서구</option>
-          </>
-        );
-      case "제주":
-        return (
-          <>
-            <option value="제주시">제주시</option>
-            <option value="서귀포">서귀포</option>
-          </>
-        );
-      default:
-        return null;
-    }
+    // regionBig을 기준으로 regionSmall을 불러오는 API를 사용
+    // response를 dummyData에 저장
+    const dummyData = [
+      "강남",
+      "홍대",
+      "건대",
+      "동구",
+      "서구",
+      "제주시",
+      "서귀포",
+    ];
+
+    return dummyData.map((data) => (
+      <MenuItem value={data} key={data}>
+        {data}
+      </MenuItem>
+    ));
   };
 
   return (
-    <div>
-      <label htmlFor="city-select">지역</label>
-      <select
+    <Wrapper>
+      <InputLabel id="city-select" sx={labelStyle}>
+        지역
+      </InputLabel>
+      <Select
+        variant="outlined"
+        labelId="city-select"
         id="city-select"
-        name="city"
         value={city}
+        label="지역1"
         onChange={handleCityChange}
+        sx={selectStyle}
+        IconComponent={() => <KeyboardArrowDownIcon sx={{ color: "white" }} />}
       >
-        <option value="전체">전체</option>
-        <option value="서울">서울</option>
-        <option value="부산">부산</option>
-        <option value="제주">제주</option>
-      </select>
-
-      <label htmlFor="location-select"></label>
-      <select
+        <MenuItem value="전체">전체</MenuItem>
+        <MenuItem value="서울">서울</MenuItem>
+        <MenuItem value="부산">부산</MenuItem>
+        <MenuItem value="제주">제주</MenuItem>
+      </Select>
+      <InputLabel id="location-select"></InputLabel>
+      <Select
+        variant="outlined"
+        labelId="location-select"
         id="location-select"
-        name="location"
         value={location}
+        label="지역2"
         onChange={handleLocationChange}
         disabled={!city}
+        sx={selectStyle}
+        IconComponent={() => <KeyboardArrowDownIcon sx={{ color: "white" }} />}
       >
-        <option value="전체">전체</option>
+        <MenuItem value="전체">전체</MenuItem>
         {renderLocationOptions()}
-      </select>
-    </div>
+      </Select>
+    </Wrapper>
   );
 };
 
 export default LocationForm;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.8rem;
+  border-radius: 10px;
+  color: white;
+`;
+
+const labelStyle = {
+  fontSize: "1.7rem",
+  fontWeight: "600",
+  color: "white",
+};
+
+const selectStyle = {
+  width: "100",
+  color: "white",
+  border: "1px solid white",
+};
