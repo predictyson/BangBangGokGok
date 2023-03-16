@@ -16,6 +16,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 62.5%; // percent of the font size of your browser // 1rem = 10px
     box-sizing: border-box;
     background-color: #3E2133;
+    /* background: linear-gradient(136.16deg, #3E2133 12.91%, rgba(32, 10, 43, 0.69) 87.68%); */
     color: white;
     overflow-x: hidden;
   ::-webkit-scrollbar {
