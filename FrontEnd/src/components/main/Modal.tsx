@@ -19,6 +19,7 @@ interface IProps {
 
 export default function DetailModal({ open, onClose, themeId, label }: IProps) {
   const [data, setData] = useState(initData);
+
   const [isLiked, setIsLiked] = useState(data.isInterested);
   const handleClick = (
     type: IToastProps["type"],

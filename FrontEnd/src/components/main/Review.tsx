@@ -1,5 +1,4 @@
 import React from "react";
-
 import styled from "styled-components";
 import Line from "@/assets/common/Line.png";
 import { theme } from "@/styles/theme";
@@ -9,6 +8,7 @@ import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import Rating from "@mui/material/Rating";
 import Chart from "@/components/main/Chart";
 import ReviewItem from "@/components/main/ReviewItem";
+import WriteReview from "./WriteReview";
 interface IProps {
   data: IDetailData;
 }
@@ -32,9 +32,6 @@ const StyledRating = styled(Rating)({
 });
 
 export default function Review({ data }: IProps) {
-  data.reviews.map((item) => {
-    console.log("review :" + item.content);
-  });
   const CHARTDATA = [data.userActivity, data.userFear, data.userDifficulty];
   const BARDATA: IBarData = {
     labels: ["활동성", "공포도", "체감 난이도"],
@@ -48,18 +45,29 @@ export default function Review({ data }: IProps) {
       },
     ],
   };
-
+  const [childOpen, setchildOpen] = React.useState(false);
+  const handleOpen = () => {
+    setchildOpen(true);
+  };
+  const handleClose = () => {
+    setchildOpen(false);
+  };
   return (
     <>
       <Header>
         Reviews ( {data.reviews.length} )
-        <WriteButton>
+        <WriteButton onClick={handleOpen}>
           <img
             src="https://user-images.githubusercontent.com/55784772/224926890-105d5d61-de32-47ca-ad36-5af4ee5fe137.png"
             style={{ width: "2rem", height: "2rem", marginRight: "0.5rem" }}
           />
           후기 작성하기
         </WriteButton>
+        <WriteReview
+          handleClose={handleClose}
+          childOpen={childOpen}
+          data={data}
+        />
       </Header>
       <img
         src={Line}
