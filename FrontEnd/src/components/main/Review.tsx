@@ -52,7 +52,7 @@ export default function Review({ data }: IProps) {
   return (
     <>
       <Header>
-        Reviews ( {data.reviews.length} ){" "}
+        Reviews ( {data.reviews.length} )
         <WriteButton>
           <img
             src="https://user-images.githubusercontent.com/55784772/224926890-105d5d61-de32-47ca-ad36-5af4ee5fe137.png"
@@ -92,7 +92,13 @@ export default function Review({ data }: IProps) {
           <Chart data={BARDATA} />
         </InfoBox>
       </InfoWrapper>
-      <ReviewItem data={data.reviews} />
+      {data.reviews.map((item) => {
+        return (
+          <>
+            <ReviewItem data={item} />
+          </>
+        );
+      })}
     </>
   );
 }
@@ -105,7 +111,6 @@ const InfoWrapper = styled.div`
   color: white;
   height: 10rem;
   padding: 2rem 4rem;
-  border: solid 2px blue;
   .title {
     font-size: 1.6rem;
     text-align: center;

@@ -16,12 +16,18 @@ interface Props {
 
 const BarChart: React.FC<Props> = ({ data }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
   useEffect(() => {
+    let chartInstance: Chart | undefined;
     if (canvasRef.current) {
       const ctx = canvasRef.current.getContext("2d");
       if (ctx) {
-        new Chart(ctx, {
+        chartInstance = Chart.getChart(ctx);
+
+        if (chartInstance) {
+          chartInstance.destroy();
+        }
+
+        chartInstance = new Chart(ctx, {
           type: "bar",
           data: data,
           options: {
