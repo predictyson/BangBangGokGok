@@ -4,23 +4,34 @@ import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import UserSection from "@components/group/UserListSection";
 import ThemeRecSection from "@components/group/ThemeRecSection";
-
-const userData: GroupSetUer[] = [
-  // { profileImageType: 1, nickname: "정개미" },
-  { profileImageType: "Avatar1", nickname: "이상해씨" },
-  { profileImageType: "Avatar2", nickname: "쉬운하나" },
-  { profileImageType: "Avatar2", nickname: "변덕쟁이" },
-  { profileImageType: "Avatar3", nickname: "정상수" },
-  { profileImageType: "Avatar1", nickname: "해피" },
-];
+import Toast, { showToast } from "@/components/common/Toast";
 
 export default function GroupSetPage() {
-  const [userList, setUserList] = useState<GroupSetUer[]>(userData);
+  const [userList, setUserList] = useState<GroupSetUer[]>([]);
 
   const handleDeleteUser = (nickname: string) => {
     setUserList((prev) => {
       return prev.filter((user) => user.nickname !== nickname);
     });
+  };
+
+  const handleAddUser = (newUser: GroupSetUer) => {
+    if (userList.includes(newUser)) {
+      handleToastClick("error", "이미 추가된 유저입니다.");
+      return;
+    }
+
+    handleToastClick("success", "성공적으로 추가되었습니다.");
+    setUserList((prev) => {
+      return [...prev, newUser];
+    });
+  };
+
+  const handleToastClick = (
+    type: IToastProps["type"],
+    message: IToastProps["message"]
+  ) => {
+    showToast({ type, message });
   };
 
   return (
@@ -34,9 +45,14 @@ export default function GroupSetPage() {
             테마가 제공됩니다! (최대 6명)
           </p>
         </HeaderSection>
-        <UserSection userList={userList} handleDeleteUser={handleDeleteUser} />
+        <UserSection
+          userList={userList}
+          handleDeleteUser={handleDeleteUser}
+          handleAddUser={handleAddUser}
+        />
         <ThemeRecSection userList={userList} />
       </Container>
+      <Toast />
     </>
   );
 }

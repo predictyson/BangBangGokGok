@@ -19,6 +19,11 @@ interface IUserInfo {
   gender: string; // 성별
 }
 
+interface IToastProps {
+  type: "success" | "error" | "info" | "action";
+  message?: string;
+}
+
 interface ProfileProps {
   userInfo: IUserInfo;
   changeUserInfo: (key: string, value: string | number | number[]) => void;
@@ -27,6 +32,7 @@ interface ProfileProps {
 interface GroupSetUer {
   profileImageType: string;
   nickname: string;
+  email: string;
 }
 interface IDetailData {
   themeId: int; // 테마 id

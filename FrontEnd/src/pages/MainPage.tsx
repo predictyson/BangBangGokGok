@@ -5,6 +5,7 @@ import RankSlider from "@components/main/RankSlider";
 import BasicSlider from "@components/main/Slider";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
+import Container from "@mui/material/Container";
 
 export default function MainPage() {
   const [hotData, setHotData] = useState<ISliderData[]>(HotThemesData);
@@ -17,7 +18,7 @@ export default function MainPage() {
 
   const data = topData.concat(awardData);
   return (
-    <>
+    <Container1>
       <Header />
       {!isLogin ? (
         <Banner />
@@ -28,9 +29,17 @@ export default function MainPage() {
       )}
       <RankSlider data={hotData} />
       <BasicSlider isRecommendSlider={false} data={data} />
-    </>
+    </Container1>
   );
 }
+
+const Container1 = styled.div`
+  background: linear-gradient(
+    136.16deg,
+    ${theme.colors.background} 35%,
+    rgb(146, 89, 124) 65%
+  );
+`;
 
 const RecommendWrapper = styled.div`
   width: 90%;

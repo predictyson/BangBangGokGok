@@ -25,6 +25,7 @@ export default function UserSection({
       />
       <ProfileImg src={handleAvatar(user.profileImageType)} />
       <p>{user.nickname}</p>
+      {user.email}
     </Container>
   );
 }

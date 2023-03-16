@@ -6,6 +6,7 @@ import { theme } from "@/styles/theme";
 import { useNavigate } from "react-router-dom";
 export default function Header() {
   const navigate = useNavigate();
+
   return (
     <Container>
       <div className="left-container">
@@ -32,8 +33,9 @@ export default function Header() {
 }
 
 const Container = styled.div`
-  height: 8.7rem;
+  height: 7rem;
   display: flex;
+  justify-content: space-between;
   background-color: ${theme.colors.background};
   padding: 0 10rem;
   align-items: center;
