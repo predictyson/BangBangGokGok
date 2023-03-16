@@ -1,7 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import OkButton from "@components/common/UI/OkButton";
-import CancelButton from "@components/common/UI/CancelButton";
+import Modal from "@mui/material/Modal";
+// import OkButton from "@components/common/UI/OkButton";
+// import CancelButton from "@components/common/UI/CancelButton";
 import LocationForm from "@components/search/filter/LocationForm";
 import GenreForm from "./filter/GenreForm";
 import DifficultyForm from "./filter/DifficultyForm";
@@ -10,53 +11,45 @@ import TimeForm from "./filter/TimeForm";
 import TuneIcon from "@mui/icons-material/Tune";
 import { styled as mstyled } from "@mui/material/styles";
 import { theme } from "@/styles/theme";
-import { useRef, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 export default function SearchFilter() {
-  const buttonRef = useRef();
-  const dialogRef = useRef();
-
-  useEffect(() => {
-    const button = buttonRef.current;
-    const dialog = dialogRef.current;
-
-    const handleButtonClick = () => {
-      dialog.showModal();
-    };
-    const handleDialogClose = () => {
-      console.log(dialog.returnValue);
-    };
-
-    button.addEventListener("click", handleButtonClick);
-    dialog.addEventListener("close", handleDialogClose);
-
-    return () => {
-      button.removeEventListener("click", handleButtonClick);
-      dialog.removeEventListener("close", handleDialogClose);
-    };
-  });
+  const [filterButtonState, setFilterButtonState] = useState(false);
+  const openFilter = () => {
+    setFilterButtonState(true);
+  };
+  const closeFilter = () => {
+    setFilterButtonState(false);
+  };
+  // 필터 적용 API를 사용
+  const setFilter = () => {
+    setFilterButtonState(false);
+  };
 
   return (
     <>
-      <FilterButton ref={buttonRef}>
+      <FilterButton onClick={openFilter}>
         <TuneIcon fontSize="inherit" />
         <p>필터</p>
       </FilterButton>
-      <Modal ref={dialogRef}>
-        <form method="dialog">
-          <FilterContainer>
-            <LocationForm />
-            <GenreForm />
-            <DifficultyForm />
-            <PeopleForm />
-            <TimeForm />
-            <ButtonContainer>
-              <OkButton>필터 적용</OkButton>
-              <CancelButton>취소</CancelButton>
-            </ButtonContainer>
-          </FilterContainer>
-        </form>
+      <Modal
+        open={filterButtonState}
+        onClose={setFilterButtonState}
+        sx={ModalStyle}
+        hideBackdrop={true}
+      >
+        <FilterContainer>
+          <LocationForm />
+          <GenreForm />
+          <DifficultyForm />
+          <PeopleForm />
+          <TimeForm />
+          <ButtonContainer>
+            <OkButton onClick={setFilter}>필터 적용</OkButton>
+            <CancelButton onClick={closeFilter}>취소</CancelButton>
+          </ButtonContainer>
+        </FilterContainer>
       </Modal>
     </>
   );
@@ -68,6 +61,7 @@ const FilterButton = styled.div`
   justify-content: space-evenly;
   align-items: center;
   width: 8rem;
+  height: 100%;
   font-size: 1.8rem;
   border-radius: 10px;
   color: white;
@@ -90,26 +84,14 @@ const FilterContainer = mstyled(Box)`
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 `;
 
-const FilterItem = mstyled(Box)`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 3rem;
-`;
-
-const Modal = styled.dialog`
-  position: absolute;
-  top: 0rem;
-  left: 108rem;
-  border: none;
-  background: none;
-  color: white;
-  ::backdrop {
-    background-color: rgba(0, 0, 0, 0);
-  }
-`;
+const ModalStyle = {
+  position: "absolute",
+  top: "20rem",
+  left: "115.5rem",
+  border: "none",
+  background: "none",
+  color: "white",
+};
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -117,4 +99,34 @@ const ButtonContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   gap: 1rem;
+`;
+
+const OkButton = styled.button`
+  color: ${theme.colors.white};
+  background-color: ${theme.colors.pink};
+  border-radius: 10px;
+  border: none;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+  }
+  width: 100%;
+`;
+
+const CancelButton = styled.button`
+  color: ${theme.colors.pink};
+  background-color: ${theme.colors.white};
+  border-radius: 10px;
+  border: none;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+  }
+  width: 100%;
 `;

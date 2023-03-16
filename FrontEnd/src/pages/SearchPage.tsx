@@ -36,7 +36,7 @@ const Content = styled.div`
   width: 90%;
   margin: 2rem auto;
   padding: 3rem;
-  gap: 1rem;
+  gap: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,6 +49,6 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   width: 100%;
 `;

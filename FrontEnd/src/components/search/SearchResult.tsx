@@ -1,33 +1,31 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import styled from "styled-components";
+import { theme } from "@/styles/theme";
 
 export default function SearchResult() {
   return (
-    <Box sx={wrapperStyle}>
-      <Box sx={containerStyle}>
+    <Wrapper>
+      <Container>
         {[
           ...dummySearchResults.slice(
             0,
             Math.floor(dummySearchResults.length / 2)
           ),
         ].map((result) => (
-          <Box key={result.id} sx={boxStyle}>
-            {result.title}
-          </Box>
+          <ThemeItem key={result.id}>{result.title}</ThemeItem>
         ))}
-      </Box>
-      <Box sx={containerStyle}>
+      </Container>
+      <Container>
         {[
           ...dummySearchResults.slice(
             Math.floor(dummySearchResults.length / 2)
           ),
         ].map((result) => (
-          <Box key={result.id} sx={boxStyle}>
-            {result.title}
-          </Box>
+          <ThemeItem key={result.id}>{result.title}</ThemeItem>
         ))}
-      </Box>
-    </Box>
+      </Container>
+    </Wrapper>
   );
 }
 
@@ -48,24 +46,24 @@ const dummySearchResults = [
   { id: 14, title: "Result 14" },
 ];
 
-const wrapperStyle = {
-  width: "100%",
-  display: "flex",
-  flexDirection: "column",
-  gap: "2rem",
-};
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  justifyContent: "space-between",
-};
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
 
-const boxStyle = {
-  border: "1px solid white",
-  borderRadius: "1rem",
-  boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)",
-  width: "15rem",
-  height: "20rem",
-};
+const ThemeItem = styled.div`
+  border-radius: 1rem;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  width: 15rem;
+  height: 20rem;
+  background-color: #3e2133;
+`;

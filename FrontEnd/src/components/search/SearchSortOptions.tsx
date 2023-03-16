@@ -31,11 +31,11 @@ const OptionButton = mstyled(Button)`
   border-radius: 20px;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
   &.MuiButton-contained {
-    color: white;
-    background-color: black;
+    color: #FFF1F8;
+    background-color: #58424D;
   }
   &.MuiButton-outlined {
     color: black;
-    background-color: white;
+    background-color: #FFF1F8;
   }
 `;
