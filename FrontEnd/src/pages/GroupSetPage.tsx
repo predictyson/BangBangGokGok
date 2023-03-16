@@ -5,15 +5,6 @@ import { theme } from "@/styles/theme";
 import UserSection from "@components/group/UserListSection";
 import ThemeRecSection from "@components/group/ThemeRecSection";
 
-const userData: GroupSetUer[] = [
-  // { profileImageType: 1, nickname: "정개미" },
-  { profileImageType: "Avatar1", nickname: "이상해씨", email: "example.com" },
-  { profileImageType: "Avatar2", nickname: "쉬운하나", email: "example.com" },
-  { profileImageType: "Avatar2", nickname: "변덕쟁이", email: "example.com" },
-  { profileImageType: "Avatar3", nickname: "정상수", email: "example.com" },
-  { profileImageType: "Avatar1", nickname: "해피", email: "example.com" },
-];
-
 export default function GroupSetPage() {
   const [userList, setUserList] = useState<GroupSetUer[]>([]);
 
@@ -23,10 +14,15 @@ export default function GroupSetPage() {
     });
   };
 
-  const handleAddUser = (user: GroupSetUer) => {
-    console.log(user);
+  const handleAddUser = (newUser: GroupSetUer) => {
+    console.log(newUser);
+    // if (userList.filter((user) => user.nickname == newUser.nickname)) {
+    if (userList.includes(newUser)) {
+      alert("이미 추가되어있는 유저입니다!");
+      return;
+    }
     setUserList((prev) => {
-      return [...prev, user];
+      return [...prev, newUser];
     });
   };
 

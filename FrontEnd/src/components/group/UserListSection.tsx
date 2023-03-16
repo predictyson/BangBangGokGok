@@ -9,7 +9,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 const tempUserSearchList: GroupSetUer[] = [
   {
-    profileImageType: "Avatar2",
+    profileImageType: "Avatar1",
     nickname: "가",
     email: "jackid1103@naver.com",
   },
@@ -21,76 +21,6 @@ const tempUserSearchList: GroupSetUer[] = [
   {
     profileImageType: "Avatar3",
     nickname: "가나다",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
-    email: "jackid1103@naver.com",
-  },
-  {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
     email: "jackid1103@naver.com",
   },
   {
@@ -113,8 +43,7 @@ export default function UserListSection({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [searchResults, setSearchResults] =
-    useState<GroupSetUer[]>(tempUserSearchList);
+  const [searchResults, setSearchResults] = useState<GroupSetUer[]>([]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -122,7 +51,9 @@ export default function UserListSection({
     const results = tempUserSearchList.filter((user) =>
       user.nickname.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    console.log("result: " + results);
     setSearchResults(results);
+    console.log("searchResult: " + searchResults);
   };
 
   return (
