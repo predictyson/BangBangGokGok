@@ -36,8 +36,8 @@ export default function MainPage() {
 const Container1 = styled.div`
   background: linear-gradient(
     136.16deg,
-    ${theme.colors.background} 20.91%,
-    ${theme.colors.containerLight} 80%
+    ${theme.colors.background} 35%,
+    rgb(146, 89, 124) 65%
   );
 `;
 
