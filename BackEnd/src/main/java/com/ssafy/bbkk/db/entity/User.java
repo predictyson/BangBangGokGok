@@ -1,5 +1,6 @@
 package com.ssafy.bbkk.db.entity;
 
+import com.ssafy.bbkk.api.dto.JoinRequest;
 import com.ssafy.bbkk.api.dto.UpdateUserInfoRequest;
 import lombok.*;
 
@@ -56,4 +57,17 @@ public class User extends BaseTimeEntity{
         this.region = region;
     }
 
+    public User(JoinRequest joinRequest, Region region){
+        this.email = joinRequest.getEmail();
+        this.password = joinRequest.getPassword();
+        this.nickname = joinRequest.getNickname();
+        this.age = joinRequest.getAge();
+        this.gender = joinRequest.getGender();
+        this.profileImageType = joinRequest.getProfileImageType();
+        this.region = region;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
 }
