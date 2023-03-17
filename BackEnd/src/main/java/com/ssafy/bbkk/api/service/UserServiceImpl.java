@@ -16,4 +16,9 @@ public class UserServiceImpl implements UserService{
     public boolean existsByEmail(String email) throws Exception {
         return userRepository.existsByEmail(email);
     }
+
+    @Override
+    public boolean existsByNickname(String nickname) throws Exception {
+        return userRepository.existsByNickname(nickname);
+    }
 }

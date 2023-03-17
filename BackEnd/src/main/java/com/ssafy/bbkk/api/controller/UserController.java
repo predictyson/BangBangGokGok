@@ -37,4 +37,18 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
+    @GetMapping("check/nickname/{nickname}")
+    public ResponseEntity<Map<String, Object>> checkNickname(@PathVariable String nickname) throws Exception {
+        logger.info("[checkNickname] request : nickname={}",nickname);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        boolean isDuplicated = userService.existsByNickname(nickname);
+
+        resultMap.put("isDuplicated",isDuplicated);
+
+        logger.info("[checkNickname] response : isDuplicated={}", isDuplicated);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
 }
