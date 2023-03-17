@@ -1,26 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GenreSection from "@components/Auth/signup/additional/GenreSection";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import ProfileSection from "@components/Auth/signup/additional/ProfileSection";
+import { IUserInfo } from "types/auction";
+import { useLocation } from "react-router-dom";
 
-const InitUserInfo = {
-  profileImageType: 1,
+const InitUserInfo: IUserInfo = {
+  email: "",
+  password: "",
   nickname: "",
-  genreId: 0,
+  genreId: [],
   regionBig: "",
+  regionSmall: "",
   age: 0,
   gender: "",
+  profileImageType: 1,
 };
 
 export default function AdditionalPage() {
+  const userData = useLocation().state;
   const [userInfo, setUserInfo] = useState<IUserInfo>(InitUserInfo);
   const [chapter, setChapter] = useState<"genre" | "profile">("genre");
 
   const handleChapter = () => {
     if (chapter === "genre") setChapter("profile");
     else {
-      alert(userInfo.genreId);
+      console.log(userInfo);
     }
   };
 
@@ -30,6 +36,11 @@ export default function AdditionalPage() {
       [key]: value,
     }));
   };
+
+  useEffect(() => {
+    changeUserInfo("email", userData.email);
+    changeUserInfo("password", userData.password);
+  }, []);
 
   return (
     <Container>

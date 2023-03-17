@@ -7,6 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { theme } from "@/styles/theme";
+import { ProfileProps } from "types/auction";
 
 export default function LeftPorfile(props: ProfileProps) {
   const handleInputChange = (e: React.SyntheticEvent) => {
@@ -55,10 +56,25 @@ export default function LeftPorfile(props: ProfileProps) {
           <MenuItem value="">
             <em>선택하세요</em>
           </MenuItem>
-          <MenuItem value={1}>서울</MenuItem>
-          <MenuItem value={2}>어디</MenuItem>
-          <MenuItem value={3}>어디</MenuItem>
-          <MenuItem value={4}>워디</MenuItem>
+          <MenuItem value={"서울"}>서울</MenuItem>
+          <MenuItem value={"어디"}>경기/인천</MenuItem>
+          <MenuItem value={"어디1"}>어디1</MenuItem>
+          <MenuItem value={"워디"}>워디</MenuItem>
+        </CustomSelect>
+        <CustomSelect
+          onChange={handleSelectChange}
+          value={props.userInfo.regionSmall}
+          name="regionSmall"
+          color="warning"
+          displayEmpty
+        >
+          <MenuItem value="">
+            <em>선택하세요</em>
+          </MenuItem>
+          <MenuItem value={"서울"}>서울</MenuItem>
+          <MenuItem value={"어디"}>서울대입구</MenuItem>
+          <MenuItem value={"어디1"}>어디1</MenuItem>
+          <MenuItem value={"워디"}>워디</MenuItem>
         </CustomSelect>
       </SelectBox>
       <SelectBox>
@@ -125,7 +141,7 @@ const CustomTextField = mstyled(TextField)({
 });
 
 const CustomSelect = mstyled(Select)({
-  width: "15rem",
+  width: "11rem",
   height: "4rem",
   fontSize: "1.2rem",
   border: "1px solid white",
