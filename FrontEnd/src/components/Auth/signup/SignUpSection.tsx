@@ -1,12 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
 import { theme } from "@/styles/theme";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router";
 
-export default function LoginSection() {
+export default function SignUpSection() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [passwordValid, setPasswordValid] = useState<string>("");
+  const [showHelperText, setShowHelperText] = useState(false);
+
+  const handleSignUpData = (e: React.SyntheticEvent) => {
+    const target = e.target as HTMLInputElement;
+    const name = target.name;
+    const value = target.value;
+
+    if (name === "email") setEmail(value);
+    else if (name === "password") setPassword(value);
+    else if (name === "passwordValid") {
+      if (password !== value) {
+        console.log(password);
+        console.log(value);
+        setShowHelperText(true);
+        setPasswordValid(value);
+      } else {
+        console.log(password);
+        console.log(value);
+        setShowHelperText(false);
+        setPasswordValid(value);
+      }
+    }
+  };
+
+  const SendNextPage = () =>
+    navigate("/additional", { state: { email: email, password: password } });
 
   return (
     <Container>
@@ -17,7 +46,10 @@ export default function LoginSection() {
           autoComplete="current-password"
           color="warning"
           focused
+          value={email}
+          name="email"
           placeholder="example123@naver.com"
+          onChange={handleSignUpData}
         />
         <ValidCheckButton>중복확인</ValidCheckButton>
       </EmailCheckBox>
@@ -28,6 +60,9 @@ export default function LoginSection() {
         sx={{ width: 420 }}
         color="warning"
         focused
+        value={password}
+        name="password"
+        onChange={handleSignUpData}
       />
       <CustomTextField
         label="비밀번호 확인"
@@ -36,10 +71,12 @@ export default function LoginSection() {
         sx={{ width: 420 }}
         color="warning"
         focused
+        value={passwordValid}
+        name="passwordValid"
+        onChange={handleSignUpData}
+        helperText={showHelperText ? "비밀번호와 일치하지 않습니다." : ""}
       />
-      <SignUpButton onClick={() => navigate("/additional")}>
-        회원가입
-      </SignUpButton>
+      <SignUpButton onClick={SendNextPage}>회원가입</SignUpButton>
     </Container>
   );
 }
@@ -50,6 +87,11 @@ const CustomTextField = mstyled(TextField)({
   input: {
     color: "white",
     fontSize: "1.2rem",
+  },
+
+  "& p": {
+    color: "red",
+    marginLeft: "5px",
   },
 });
 
