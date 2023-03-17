@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Slider from "@mui/material/Slider";
 import InputLabel from "@mui/material/InputLabel";
 import styled from "styled-components";
+import { styled as mstyled } from "@mui/material/styles";
+import { theme } from "@/styles/theme";
 
 export default function DifficultyForm() {
   const [value, setValue] = useState([1, 5]);
@@ -27,9 +29,9 @@ export default function DifficultyForm() {
         난이도
       </InputLabel>
       <div style={{ width: "70%" }}>
-        <Slider
+        <CustomSlider
           id="difficulty-slider"
-          color="info"
+          // color="info"
           size="small"
           min={1}
           max={5}
@@ -64,3 +66,7 @@ const labelStyle = {
   color: "white",
   marginRight: "1rem",
 };
+
+const CustomSlider = mstyled(Slider)({
+  color: `${theme.colors.pink}`,
+});
