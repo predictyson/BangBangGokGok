@@ -78,6 +78,21 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
+    @GetMapping("check/emailCode/{email}/{code}")
+    public ResponseEntity<Map<String, Object>> checkEmailCode(@PathVariable String email,
+                                                              @PathVariable String code) throws Exception {
+        logger.info("[checkEmailCode] request : email={}, code={}",email,code);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        boolean isCheck = emailService.checkEmailCode(email,code);
+
+        resultMap.put("isCheck",isCheck);
+
+        logger.info("[checkEmailCode] response : isCheck={}",isCheck);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
     @PostMapping("password")
     public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) throws Exception {
         logger.info("[changePassword] request : changePasswordRequest={}",changePasswordRequest);

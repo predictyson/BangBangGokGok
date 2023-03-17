@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
@@ -34,6 +35,19 @@ public class EmailServiceImpl implements EmailService{
         ConfirmationToken confirmationToken = ConfirmationToken.createEmailConfirmationToken(to, ePw);
         confirmationTokenRepository.save(confirmationToken);
         return ePw;
+    }
+
+    @Override
+    public boolean checkEmailCode(String email, String code) throws Exception {
+        boolean result = false;
+        // 이메일과 코드을 통해 토큰을 조회
+        ConfirmationToken confirmationToken = confirmationTokenRepository.findByUserEmailAndCode(email, code).orElseThrow();
+        if(!confirmationToken.isExpired() // 토큰을 사용하지 않았고
+                && LocalDateTime.now().isBefore(confirmationToken.getExpirationDate())){ // 유효 기간이 지나지 않았다면
+            confirmationToken.useToken(); // 토큰을 사용했다고 변경하고
+            result = true; // 결과값 true
+        }
+        return result;
     }
 
     private MimeMessage createMessage(String ePw, String to)throws Exception{
