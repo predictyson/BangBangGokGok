@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import GenreSection from "@/components/Auth/GenreSection";
+import GenreSection from "@components/Auth/signup/additional/GenreSection";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
-import ProfileSection from "@components/Auth/ProfileSection";
+import ProfileSection from "@components/Auth/signup/additional/ProfileSection";
 
 const InitUserInfo = {
-  profileImageType: "",
+  profileImageType: 1,
   nickname: "",
   genreId: 0,
   regionBig: "",

@@ -1,6 +1,7 @@
 import { theme } from "@/styles/theme";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { styled as mstyled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 
 export default function FPSection() {
@@ -11,20 +12,21 @@ export default function FPSection() {
       <SubjectText>비밀번호 찾기</SubjectText>
       <HegihtHalfBox1>
         <InputBox>
-          <TextField
+          <CustomTextField
             label="이메일"
             autoComplete="current-password"
-            sx={{ width: 300, input: { color: "white" } }}
+            sx={{ width: 300 }}
             color="warning"
             focused
+            placeholder="example123@naver.com"
           />
           <ValidCheckButton>코드 전송</ValidCheckButton>
         </InputBox>
         <InputBox>
-          <TextField
+          <CustomTextField
             label="인증코드"
             autoComplete="current-password"
-            sx={{ width: 300, input: { color: "white" } }}
+            sx={{ width: 300 }}
             color="warning"
             focused
           />
@@ -35,18 +37,19 @@ export default function FPSection() {
         {isValid ? (
           <>
             <SubjectText>새 비밀번호 설정</SubjectText>
-            <TextField
+            <CustomTextField
               label="새 비밀번호"
               autoComplete="current-password"
-              sx={{ width: 420, input: { color: "white" } }}
+              sx={{ width: 420 }}
               color="warning"
               type="password"
               focused
+              placeholder="새 비밀번호를 입력해주세요."
             />
-            <TextField
+            <CustomTextField
               label="새 비밀번호 확인"
               autoComplete="current-password"
-              sx={{ width: 420, input: { color: "white" } }}
+              sx={{ width: 420 }}
               color="warning"
               type="password"
               focused
@@ -60,6 +63,15 @@ export default function FPSection() {
     </Container>
   );
 }
+
+const CustomTextField = mstyled(TextField)({
+  width: "70%",
+  color: "white",
+  input: {
+    color: "white",
+    fontSize: "1.2rem",
+  },
+});
 
 const HegihtHalfBox1 = styled.div`
   width: 100%;

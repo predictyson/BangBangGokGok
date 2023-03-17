@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { styled as mstyled } from "@mui/material/styles";
 import Gost from "@/assets/Auth/Gost.png";
 import { theme } from "@/styles/theme";
 import TextField from "@mui/material/TextField";
@@ -18,22 +19,20 @@ export default function LoginSection() {
       <LoginImg src={Gost} />
       <SubjectText>BangBang</SubjectText>
       <SubjectText>GokGok</SubjectText>
-      <TextField
+      <CustomTextField
         label="E-mail"
         autoComplete="current-password"
-        sx={{ width: 300, input: { color: "white", fontSize: "15" } }}
+        sx={{ width: 300 }}
         color="warning"
         focused
         onChange={handleInputValue}
       />
-      <TextField
+      <CustomTextField
         label="Password"
         type="password"
         autoComplete="current-password"
         sx={{
           width: 300,
-          fontSize: "20",
-          input: { color: "white", fontSize: "20" },
         }}
         color="warning"
         focused
@@ -48,6 +47,15 @@ export default function LoginSection() {
     </Container>
   );
 }
+
+const CustomTextField = mstyled(TextField)({
+  width: "70%",
+  color: "white",
+  input: {
+    color: "white",
+    fontSize: "1.2rem",
+  },
+});
 
 const NavText = styled.div`
   cursor: pointer;
