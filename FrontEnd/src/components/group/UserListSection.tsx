@@ -9,7 +9,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 const tempUserSearchList: GroupSetUer[] = [
   {
-    profileImageType: "Avatar1",
+    profileImageType: "Avatar2",
     nickname: "가비아",
     email: "jackid1103@naver.com",
   },
@@ -110,6 +110,7 @@ export default function UserListSection({
                     sx={{
                       backgroundColor: "",
                       input: { fontSize: 14, color: "white" },
+                      svg: { color: "white" },
                     }}
                     inputProps={{
                       ...params.inputProps,

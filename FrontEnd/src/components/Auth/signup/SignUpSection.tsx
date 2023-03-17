@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { styled as mstyled } from "@mui/material/styles";
 import { theme } from "@/styles/theme";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router";
@@ -11,28 +12,28 @@ export default function LoginSection() {
     <Container>
       <SubjectText>회원가입</SubjectText>
       <EmailCheckBox>
-        <TextField
+        <CustomTextField
           label="이메일"
           autoComplete="current-password"
-          sx={{ width: 300, input: { color: "white", fontSize: "15" } }}
           color="warning"
           focused
+          placeholder="example123@naver.com"
         />
         <ValidCheckButton>중복확인</ValidCheckButton>
       </EmailCheckBox>
-      <TextField
+      <CustomTextField
         label="비밀번호"
         type="password"
         autoComplete="current-password"
-        sx={{ width: 420, input: { color: "white", fontSize: "15" } }}
+        sx={{ width: 420 }}
         color="warning"
         focused
       />
-      <TextField
+      <CustomTextField
         label="비밀번호 확인"
         type="password"
         autoComplete="current-password"
-        sx={{ width: 420, input: { color: "white", fontSize: "15" } }}
+        sx={{ width: 420 }}
         color="warning"
         focused
       />
@@ -42,6 +43,15 @@ export default function LoginSection() {
     </Container>
   );
 }
+
+const CustomTextField = mstyled(TextField)({
+  width: "70%",
+  color: "white",
+  input: {
+    color: "white",
+    fontSize: "1.2rem",
+  },
+});
 
 const Container = styled.div`
   width: 60rem;

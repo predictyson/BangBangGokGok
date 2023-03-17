@@ -51,7 +51,6 @@ export default function LeftPorfile(props: ProfileProps) {
           name="regionBig"
           color="warning"
           displayEmpty
-          autoFocus
         >
           <MenuItem value="">
             <em>선택하세요</em>
@@ -70,7 +69,6 @@ export default function LeftPorfile(props: ProfileProps) {
           onChange={handleSelectChange}
           color="warning"
           displayEmpty
-          autoFocus
         >
           <MenuItem value={0}>
             <em>선택하세요</em>
@@ -130,7 +128,7 @@ const CustomSelect = mstyled(Select)({
   width: "15rem",
   height: "4rem",
   fontSize: "1.2rem",
-  border: "white",
+  border: "1px solid white",
   color: "white",
 
   svg: {
