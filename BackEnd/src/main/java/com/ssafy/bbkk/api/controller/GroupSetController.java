@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -32,13 +33,10 @@ public class GroupSetController {
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        PreviewUserResponse previewUserResponse = groupSetService.getUserByEmailOrNickname(emailOrNickname);
-        boolean isExists = previewUserResponse!=null ? true : false;
+        List<PreviewUserResponse> previewUserResponses = groupSetService.getUserListByEmailOrNickname(emailOrNickname);
+        resultMap.put("users",previewUserResponses);
 
-        resultMap.put("isExists", isExists);
-        resultMap.put("user",previewUserResponse);
-
-        logger.info("[getUserInterest] response : isExists={}, user={}", isExists,previewUserResponse);
+        logger.info("[getUserInterest] response : users={}", previewUserResponses);
 
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }

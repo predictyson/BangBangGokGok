@@ -8,6 +8,6 @@ public class AwardThemeBundleResponse {
 
     private String label; // 수상 테마 목록의 라벨
     private String year; // 수상 연도
-    private List<PreviewThemeDto> theme; // 수상 테마 목록
+    private List<PreviewThemeResponse> theme; // 수상 테마 목록
 
 }

@@ -6,7 +6,7 @@ import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.bbkk.api.dto.AwardThemeBundleResponse;
-import com.ssafy.bbkk.api.dto.PreviewThemeDto;
+import com.ssafy.bbkk.api.dto.PreviewThemeResponse;
 import com.ssafy.bbkk.api.dto.SearchThemeRequest;
 import com.ssafy.bbkk.api.dto.ThemeBundleResponse;
 import com.ssafy.bbkk.api.dto.ThemeResponse;
@@ -54,7 +54,7 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public List<PreviewThemeDto> getSearchThemes(SearchThemeRequest searchThemeRequest) throws Exception {
+    public List<PreviewThemeResponse> getSearchThemes(SearchThemeRequest searchThemeRequest) throws Exception {
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(entityManager);
         QTheme qTheme = QTheme.theme;
         QGenreOfTheme qGenreOfTheme = QGenreOfTheme.genreOfTheme;
@@ -111,9 +111,9 @@ public class ThemeServiceImpl implements ThemeService {
                 .limit(size)
                 .fetch();
 
-        List<PreviewThemeDto> result = target
+        List<PreviewThemeResponse> result = target
                 .stream()
-                .map(x -> new PreviewThemeDto(x))
+                .map(x -> new PreviewThemeResponse(x))
                 .collect(Collectors.toList());
         return result;
     }

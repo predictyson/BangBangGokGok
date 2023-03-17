@@ -2,7 +2,9 @@ package com.ssafy.bbkk.api.service;
 
 import com.ssafy.bbkk.api.dto.PreviewUserResponse;
 
+import java.util.List;
+
 public interface GroupSetService {
 
-    PreviewUserResponse getUserByEmailOrNickname(String emailOrNickname) throws Exception;
+    List<PreviewUserResponse> getUserListByEmailOrNickname(String emailOrNickname) throws Exception;
 }
