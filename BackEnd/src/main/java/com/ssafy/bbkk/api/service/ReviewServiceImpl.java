@@ -13,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,6 +25,29 @@ public class ReviewServiceImpl implements ReviewService{
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final ThemeRepository themeRepository;
+
+    @Override
+    public ReviewOfUserResponse getReview(int reviewId) throws Exception {
+        ReviewOfUserResponse result = null;
+        // 리뷰 id를 통해 리뷰 찾아오기
+        Review review = reviewRepository.findById(reviewId).orElseThrow();
+        // 리뷰를 Dto에 감싸기
+        result = new ReviewOfUserResponse(review);
+        return result;
+    }
+
+    @Override
+    public List<ReviewOfUserResponse> getReviews(int themeId) throws Exception {
+        List<ReviewOfUserResponse> result = null;
+        // 테마 id를 통해 테마 불러오기
+        Theme theme = themeRepository.findById(themeId).orElseThrow();
+        // 리뷰를 Dto에 감싸기
+        result = theme.getReviews()
+                .stream()
+                .map(x->new ReviewOfUserResponse(x))
+                .collect(Collectors.toList());
+        return result;
+    }
 
     @Override
     public void addReview(String email, CreateReviewRequest createReviewRequest) throws Exception {
@@ -43,16 +68,6 @@ public class ReviewServiceImpl implements ReviewService{
         if(email != review.getUser().getEmail()) throw new NoSuchElementException();
         // 리뷰 삭제하기
         reviewRepository.deleteById(reviewId);
-    }
-
-    @Override
-    public ReviewOfUserResponse getReview(int reviewId) throws Exception {
-        ReviewOfUserResponse result = null;
-        // 리뷰 id를 통해 리뷰 찾아오기
-        Review review = reviewRepository.findById(reviewId).orElseThrow();
-        // 리뷰를 Dto에 감싸기
-        result = new ReviewOfUserResponse(review);
-        return result;
     }
 
     @Override

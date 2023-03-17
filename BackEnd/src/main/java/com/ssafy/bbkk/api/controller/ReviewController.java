@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,6 +25,20 @@ public class ReviewController {
     private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
     private final ReviewService reviewService;
+
+    @GetMapping("{themeId}")
+    private ResponseEntity<Map<String, Object>> getReviews(@PathVariable int themeId) throws Exception{
+        logger.info("[getReviews] request : themeId={}", themeId);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        List<ReviewOfUserResponse> reviewOfUserResponses = reviewService.getReviews(themeId);
+
+        resultMap.put("reviews", reviewOfUserResponses);
+
+        logger.info("[getReviews] response : reviews={}",reviewOfUserResponses);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
 
     @PostMapping
     private ResponseEntity<Void> addReview(
