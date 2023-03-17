@@ -31,8 +31,7 @@ public class ThemeResponse {
     private int userCnt; // 평가 참여 인원 수
 
     private List<String> genre; // 장르 목록
-    private List<ReviewOfThemeResponse> reviews; // 해당 테마의 리뷰들
-
+//    private List<ReviewOfThemeResponse> reviews; // 해당 테마의 리뷰들
 
     public ThemeResponse(Theme theme) {
         this.themeId = theme.getId();
@@ -59,10 +58,10 @@ public class ThemeResponse {
                 .map(x -> x.getGenre().getCategory())
                 .collect(Collectors.toList());
 
-        this.reviews = theme.getReviews()
-                .stream()
-                .map(x -> new ReviewOfThemeResponse(x))
-                .collect(Collectors.toList());
+//        this.reviews = theme.getReviews()
+//                .stream()
+//                .map(x -> new ReviewOfThemeResponse(x))
+//                .collect(Collectors.toList());
     }
 
 }
