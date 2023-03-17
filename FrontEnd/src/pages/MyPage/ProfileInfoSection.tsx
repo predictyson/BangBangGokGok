@@ -83,6 +83,9 @@ const ChartWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 1rem 2rem;
+  /* height: 28.5rem; */
   background-color: ${theme.colors.containerLight};
   border-radius: 1.5rem;
 `;

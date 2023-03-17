@@ -51,6 +51,11 @@ export default function LeftNavBar() {
 }
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-sizing: border-box;
+  padding: 1rem;
   width: 23%;
   height: 100%;
   background-color: ${theme.colors.container};
@@ -62,7 +67,7 @@ const ProfileWrapper = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   background-color: ${theme.colors.containerLight};
-  margin: 1rem;
+  /* margin: 1rem; */
   padding: 2rem 1rem;
   border-radius: 1.5rem;
 `;
@@ -98,7 +103,7 @@ const NavWrapper = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   background-color: ${theme.colors.containerLight};
-  margin: 1rem;
+  /* margin: 1rem; */
   padding: 0.5rem;
   border-radius: 1.5rem;
 `;

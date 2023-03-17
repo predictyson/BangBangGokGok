@@ -12,6 +12,7 @@ export default function RightContent() {
 }
 
 const Wrapper = styled.div`
+  box-sizing: border-box;
   width: 77%;
   height: 100%;
   padding: 2rem;

@@ -28,6 +28,7 @@ const BackGround = styled.div`
 
 const ContentWrapper = styled.div`
   width: 90%;
+  height: 58rem;
   margin: 2rem auto;
   padding: 3rem;
   gap: 1rem;
