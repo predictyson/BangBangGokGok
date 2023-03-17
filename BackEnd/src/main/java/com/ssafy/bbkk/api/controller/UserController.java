@@ -69,11 +69,16 @@ public class UserController {
         logger.info("[sendEmailCode] request : email={}",email);
 
         Map<String, Object> resultMap = new HashMap<>();
-        String code = emailService.sendMessage(email);
+        boolean isExisted = false;
 
-        resultMap.put("code",code);
+        if(userService.existsByEmail(email)){
+            isExisted = true;
+            emailService.sendMessage(email);
+        }
 
-        logger.info("[sendEmailCode] response : code={}",code);
+        resultMap.put("isExisted",isExisted);
+
+        logger.info("[sendEmailCode] response : isExisted={}",isExisted);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
