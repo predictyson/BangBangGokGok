@@ -1,5 +1,6 @@
 package com.ssafy.bbkk.api.controller;
 
+import com.ssafy.bbkk.api.dto.ChangePasswordRequest;
 import com.ssafy.bbkk.api.dto.JoinRequest;
 import com.ssafy.bbkk.api.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,17 @@ public class UserController {
         logger.info("[checkNickname] response : isDuplicated={}", isDuplicated);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @PostMapping("password")
+    public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) throws Exception {
+        logger.info("[changePassword] request : changePasswordRequest={}",changePasswordRequest);
+
+        userService.setPassword(changePasswordRequest);
+
+        logger.info("[changePassword] response : ");
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

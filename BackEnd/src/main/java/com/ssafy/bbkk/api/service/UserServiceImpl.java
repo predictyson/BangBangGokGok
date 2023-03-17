@@ -1,5 +1,6 @@
 package com.ssafy.bbkk.api.service;
 
+import com.ssafy.bbkk.api.dto.ChangePasswordRequest;
 import com.ssafy.bbkk.api.dto.JoinRequest;
 import com.ssafy.bbkk.db.entity.Genre;
 import com.ssafy.bbkk.db.entity.PreferredGenreOfUser;
@@ -10,6 +11,7 @@ import com.ssafy.bbkk.db.repository.PreferredGenreOfUserRepository;
 import com.ssafy.bbkk.db.repository.RegionRepository;
 import com.ssafy.bbkk.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,8 @@ public class UserServiceImpl implements UserService{
     private final RegionRepository regionRepository;
     private final GenreRepository genreRepository;
     private final PreferredGenreOfUserRepository preferredGenreOfUserRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void join(JoinRequest joinRequest) throws Exception {
@@ -51,5 +55,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean existsByNickname(String nickname) throws Exception {
         return userRepository.existsByNickname(nickname);
+    }
+
+    @Override
+    public void setPassword(ChangePasswordRequest changePasswordRequest) throws Exception {
+        // 이메일을 통해 유저 조회
+        User user = userRepository.findByEmail(changePasswordRequest.getEmail()).orElseThrow();
+        // 비밀번호 암호화 및 변경
+        user.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
+        // 유저 저장
+        userRepository.save(user);
     }
 }

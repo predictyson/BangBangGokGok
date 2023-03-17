@@ -66,4 +66,8 @@ public class User extends BaseTimeEntity{
         this.profileImageType = joinRequest.getProfileImageType();
         this.region = region;
     }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
 }
