@@ -10,23 +10,10 @@ interface IThemeData {
   title: stirng;
   imgUrl: string;
 }
-interface IUserInfo {
-  profileImageType: int; // 프로필 이미지 타입
-  nickname: string; // 닉네임
-  genreId: int; // 선호 장르 id
-  regionBig: string; // 선호 지역(대분류)
-  age: int; // 나이
-  gender: string; // 성별
-}
 
 interface IToastProps {
   type: "success" | "error" | "info" | "action";
   message?: string;
-}
-
-interface ProfileProps {
-  userInfo: IUserInfo;
-  changeUserInfo: (key: string, value: string | number | number[]) => void;
 }
 
 interface GroupSetUer {
@@ -34,6 +21,7 @@ interface GroupSetUer {
   nickname: string;
   email: string;
 }
+
 interface IDetailData {
   themeId: int; // 테마 id
   regionBig: string; // 지역(대분류)

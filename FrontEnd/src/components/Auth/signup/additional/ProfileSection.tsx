@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import LeftPorfile from "./LeftProfile";
 import RightProfile from "./RightProfile";
+import { ProfileProps } from "types/auction";
 
 export default function ProfileSection(props: ProfileProps) {
   return (
