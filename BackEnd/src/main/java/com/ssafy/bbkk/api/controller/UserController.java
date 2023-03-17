@@ -1,15 +1,13 @@
 package com.ssafy.bbkk.api.controller;
 
+import com.ssafy.bbkk.api.dto.JoinRequest;
 import com.ssafy.bbkk.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +20,17 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
+
+    @PostMapping("join")
+    public ResponseEntity<Void> join(@RequestBody JoinRequest joinRequest) throws Exception {
+        logger.info("[join] request : joinRequest={}",joinRequest);
+
+        userService.join(joinRequest);
+
+        logger.info("[join] response : ");
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @GetMapping("check/email/{email}")
     public ResponseEntity<Map<String, Object>> checkEmail(@PathVariable String email) throws Exception {
