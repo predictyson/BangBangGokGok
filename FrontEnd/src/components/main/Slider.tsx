@@ -63,6 +63,14 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
     nextArrow: <CustomNextArrow />,
     responsive: [
       {
+        breakpoint: 1850,
+        settings: {
+          slidesToShow: 5.5,
+          slidesToScroll: 5.5,
+          infinite: true,
+        },
+      },
+      {
         breakpoint: 1250,
         settings: {
           slidesToShow: 3,
