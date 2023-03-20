@@ -9,6 +9,9 @@ import Rating from "@mui/material/Rating";
 import Toast, { showToast } from "@/components/common/Toast";
 import "react-toastify/dist/ReactToastify.css";
 import Review from "./Review";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import LikesModal from "./LikesModal";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -18,7 +21,7 @@ interface IProps {
 
 export default function DetailModal({ open, onClose, themeId, label }: IProps) {
   const [data, setData] = useState(initData);
-
+  const [childOpen, setchildOpen] = React.useState(false);
   const [isLiked, setIsLiked] = useState(data.isInterested);
   const handleClick = (
     type: IToastProps["type"],
@@ -27,7 +30,13 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
     showToast({ type, message });
     setIsLiked((prev) => !prev);
   };
-
+  const handleOpen = () => {
+    setchildOpen(true);
+  };
+  const handleClose = () => {
+    console.log("cLOSE");
+    setchildOpen(false);
+  };
   return (
     <Modal
       open={open}
@@ -101,19 +110,23 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
               {isLiked ? (
                 <LikeButton
                   onClick={() =>
-                    handleClick("error", "찜 등록이 해제되었습니다.")
+                    handleClick("error", "관심 등록이 해제되었습니다.")
                   }
                 >
-                  - 찜 해제하기
+                  <FavoriteIcon />
+                  <span> 관심 해제하기</span>
                 </LikeButton>
               ) : (
-                <LikeButton
-                  onClick={() =>
-                    handleClick("success", "찜 등록이 완료되었습니다.")
-                  }
-                >
-                  + 찜 추가하기
-                </LikeButton>
+                <>
+                  <LikeButton onClick={handleOpen}>
+                    <FavoriteBorderIcon /> <span> 관심 등록하기</span>
+                  </LikeButton>
+                  <LikesModal
+                    childOpen={childOpen}
+                    handleClose={handleClose}
+                    handleClick={handleClick}
+                  />
+                </>
               )}
               <Toast />
             </DetailInfo>
@@ -136,8 +149,13 @@ const LikeButton = styled.div`
   border-radius: 1rem;
   text-align: center;
   padding: 1rem 1.8rem;
+  display: flex;
+  align-items: center;
   font-weight: bold;
   cursor: pointer;
+  span {
+    margin-left: 1rem;
+  }
   &:hover {
     color: ${theme.colors.container};
     background-color: lightgray;
