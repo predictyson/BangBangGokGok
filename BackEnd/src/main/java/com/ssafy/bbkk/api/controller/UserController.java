@@ -31,7 +31,6 @@ public class UserController {
         logger.info("[login] request : loginRequest={}",loginRequest);
 
         Map<String, Object> resultMap = new HashMap<>();
-
         TokenResponse tokenResponse = userService.login(loginRequest);
         LoginResponse loginResponse = userService.getLoginUser(loginRequest.getEmail());
 
@@ -43,7 +42,6 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-
     @PostMapping("join")
     public ResponseEntity<Void> join(@RequestBody JoinRequest joinRequest) throws Exception {
         logger.info("[join] request : joinRequest={}",joinRequest);
@@ -53,6 +51,22 @@ public class UserController {
         logger.info("[join] response : ");
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/reissue")
+    private ResponseEntity<Map<String, Object>> reissue(
+            @RequestBody TokenRequest tokenRequest) throws Exception {
+
+        logger.info("[reissue] request : tokenRequest={}",tokenRequest);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        TokenResponse tokenResponse = userService.reissue(tokenRequest);
+
+        resultMap.put("token", tokenResponse);
+
+        logger.info("[reissue] response : token={}", tokenResponse);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @GetMapping("check/email/{email}")
