@@ -83,6 +83,7 @@ export default function SignUpSection() {
 
 const CustomTextField = mstyled(TextField)({
   width: "70%",
+  height: "5rem",
   color: "white",
   input: {
     color: "white",
@@ -96,8 +97,8 @@ const CustomTextField = mstyled(TextField)({
 });
 
 const Container = styled.div`
-  width: 60rem;
-  height: 45rem;
+  width: 40%;
+  height: 60%;
   border-radius: 0.5rem;
   margin: 12rem auto;
   background-color: ${theme.colors.container};
@@ -121,10 +122,11 @@ const EmailCheckBox = styled.div`
 `;
 
 const ValidCheckButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 10rem;
   border-radius: 0.5rem;
-  padding-top: 1.3rem;
-  text-align: center;
   font-size: 1.7rem;
   background-color: ${theme.colors.pink};
   cursor: pointer;

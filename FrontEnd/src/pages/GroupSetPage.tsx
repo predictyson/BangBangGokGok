@@ -37,31 +37,43 @@ export default function GroupSetPage() {
   return (
     <>
       <Header />
-      <Container>
-        <HeaderSection>
-          <h1>G r o u p S e t &nbsp; M a k e r</h1>
-          <p>
-            그룹 유저들을 추가하면, 모두가 공통으로 방문하지 않은 맞춤 추천
-            테마가 제공됩니다! (최대 6명)
-          </p>
-        </HeaderSection>
-        <UserSection
-          userList={userList}
-          handleDeleteUser={handleDeleteUser}
-          handleAddUser={handleAddUser}
-        />
-        <ThemeRecSection userList={userList} />
-      </Container>
-      <Toast />
+      <RootContainer>
+        <Container>
+          <HeaderSection>
+            <h1>G r o u p S e t &nbsp; M a k e r</h1>
+            <p>
+              그룹 유저들을 추가하면, 모두가 공통으로 방문하지 않은 맞춤 추천
+              테마가 제공됩니다! (최대 6명)
+            </p>
+          </HeaderSection>
+          <UserSection
+            userList={userList}
+            handleDeleteUser={handleDeleteUser}
+            handleAddUser={handleAddUser}
+          />
+          <ThemeRecSection userList={userList} />
+        </Container>
+        <Toast />
+      </RootContainer>
     </>
   );
 }
 
+const RootContainer = styled.div`
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
 const Container = styled.div`
-  width: 95%;
-  height: 60rem;
+  width: 90%;
+  height: 90%;
   margin: auto auto;
-  padding: 1rem;
+  padding: 3rem;
+  padding-top: 1rem;
   border-radius: 1rem;
   background-color: ${theme.colors.container};
   display: flex;
@@ -71,6 +83,7 @@ const Container = styled.div`
 const HeaderSection = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   p {
     color: ${theme.colors.pink};
     font-size: 1.5rem;
@@ -78,6 +91,5 @@ const HeaderSection = styled.div`
   h1 {
     font-size: 3.2rem;
     font-weight: ${theme.fontWeight.extraBold};
-    margin: 0;
   }
 `;

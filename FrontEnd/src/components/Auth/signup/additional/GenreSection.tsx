@@ -50,7 +50,7 @@ const Container = styled.div`
 `;
 
 const CustomToggleButton = mstyled(ToggleButton)({
-  height: "9rem",
+  height: "12rem",
   backgroundColor: "#FFF1F8",
   borderRadius: "1.5rem !important",
   fontSize: "3rem",

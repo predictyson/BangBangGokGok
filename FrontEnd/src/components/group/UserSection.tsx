@@ -38,7 +38,7 @@ const ProfileBox = styled.div`
 `;
 
 const Container = styled.div`
-  width: 18rem;
+  width: 13%;
   margin-right: 1rem;
   background-color: ${theme.colors.containerLight};
   border-radius: 1rem;
