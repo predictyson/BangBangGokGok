@@ -19,13 +19,13 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
   const [difficulty, setDifficulty] = useState<number | null>(0);
   const [fear, setFear] = useState<number | null>(0);
   const [activity, setActivity] = useState<number | null>(0);
-
-  const handleToggleChange = (
-    e: React.MouseEvent<HTMLElement>,
-    newAlignment: string
+  const [isSuccess, setIsSuccess] = useState<string>("false");
+  const handleValueChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newValue: string | null
   ) => {
-    if (newAlignment !== null) {
-      // props.changeUserInfo("gender", newAlignment);
+    if (newValue !== null) {
+      setIsSuccess(newValue);
     }
   };
 
@@ -50,16 +50,16 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
             테마명 :&nbsp; <div className="title">{data.title}</div>
           </InfoBox>
           <InfoBox>
-            성공 여부 &nbsp;
+            성공 여부 &nbsp;&nbsp;
             <ToggleButtonGroup
-              // value="success"
+              value={isSuccess}
               exclusive
-              onChange={handleToggleChange}
+              onChange={handleValueChange}
               aria-label="Platform"
             >
               <CustomToggleButton value="success">성공</CustomToggleButton>
               <CustomToggleButton value="fail">실패</CustomToggleButton>
-            </ToggleButtonGroup>{" "}
+            </ToggleButtonGroup>
           </InfoBox>
           <ReviewBox>
             <RatingWrapper>
@@ -70,6 +70,7 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
                     "& .MuiRating-iconEmpty": {
                       stroke: "white",
                     },
+                    fontSize: "1.8rem",
                   }}
                   name="simple-controlled"
                   value={rating}
@@ -85,6 +86,7 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
                     "& .MuiRating-iconEmpty": {
                       stroke: "white",
                     },
+                    fontSize: "1.8rem",
                   }}
                   name="simple-controlled"
                   value={difficulty}
@@ -100,6 +102,7 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
                     "& .MuiRating-iconEmpty": {
                       stroke: "white",
                     },
+                    fontSize: "1.8rem",
                   }}
                   name="simple-controlled"
                   value={fear}
@@ -116,6 +119,7 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
                     "& .MuiRating-iconEmpty": {
                       stroke: "white",
                     },
+                    fontSize: "1.8rem",
                   }}
                   name="simple-controlled"
                   value={activity}
@@ -153,13 +157,15 @@ const CustomToggleButton = mstyled(ToggleButton)({
 });
 
 const CustomText = styled.textarea`
-  width: 100%;
-  height: 12rem;
+  font-size: 1.4rem;
+  padding: 2rem;
+  width: 95%;
+  height: 10rem;
   border: solid 2px white;
   color: white;
   border-radius: 1rem;
   background-color: transparent;
-  margin-top: 1.3rem;
+  margin-top: 2rem;
   resize: none;
 `;
 const Header = styled.div`
@@ -200,7 +206,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "48%",
-  height: "50%",
+  height: "55%",
   bgcolor: "#3E2133",
   borderRadius: 10,
   boxShadow: 24,
@@ -210,7 +216,7 @@ const style = {
 
 const ButtonWrapper = styled.div`
   display: flex;
-  margin-top: 1rem;
+  margin-top: 2rem;
 `;
 const CancelButton = styled.div`
   border: solid 2px white;
