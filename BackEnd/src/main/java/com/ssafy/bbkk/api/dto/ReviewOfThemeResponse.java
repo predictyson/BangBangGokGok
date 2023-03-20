@@ -3,6 +3,7 @@ package com.ssafy.bbkk.api.dto;
 import com.ssafy.bbkk.db.entity.Review;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class ReviewOfThemeResponse {
 
@@ -14,7 +15,7 @@ public class ReviewOfThemeResponse {
     private double userDifficulty; // 체감 난이도
     private LocalDateTime createTime; // 리뷰 작성 날짜
     private int isSuccess; // 성공 여부 (0:실패, 1:성공)
-    private double record; // 성공 기록
+    private LocalTime record; // 성공 기록 (hh:mm:ss)
 
     private PreviewUserResponse previewUserResponse; // 작성자 간략 정보
 
