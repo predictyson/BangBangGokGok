@@ -24,9 +24,11 @@ export default function LikeThemesSection() {
     <>
       <SectionTitle>Likes List</SectionTitle>
       <SectionContentWrapper>
-        {dummyLikes.map((like) => (
-          <ThemeItem key={like.id}>{like.title}</ThemeItem>
-        ))}
+        <OverlapWrapper>
+          {dummyLikes.map((like) => (
+            <ThemeItem key={like.id}>{like.title}</ThemeItem>
+          ))}
+        </OverlapWrapper>
       </SectionContentWrapper>
     </>
   );
@@ -40,17 +42,22 @@ const SectionTitle = styled.h1`
 `;
 
 const SectionContentWrapper = styled.div`
+  height: 49.2rem;
+  border-radius: 1.5rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: ${theme.colors.containerLight};
+`;
+
+const OverlapWrapper = styled.div`
+  height: 100%;
   overflow: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 1.5rem;
-  height: 49.2rem;
-  border-radius: 1.5rem;
-  margin: 1rem 0;
-  padding: 1rem;
-  background-color: ${theme.colors.containerLight};
+  border-radius: 0.5rem;
 `;
 
 const ThemeItem = styled.div`
