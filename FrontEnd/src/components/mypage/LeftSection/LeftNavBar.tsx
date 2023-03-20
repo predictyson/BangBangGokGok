@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Avatar1, Avatar2, Avatar3 } from "@/assets/user";
 import { UserProfileProps } from "types/mypage";
+// import { ProfileIcon, ReviewIcon, LikesIcon } from "@/assets/mypage.Profile";
+import ProfileIcon from "@/assets/mypage/ProfileIcon.svg";
+import ReviewIcon from "@/assets/mypage/ReviewIcon.svg";
+import LikesIcon from "@/assets/mypage/LikesIcon.svg";
 
 interface StringMapByNumber {
   [key: number]: string;
@@ -34,9 +38,18 @@ export default function LeftNavBar({ userProfile }: UserProfileProps) {
         {/* <ProfileTitle>{userProfile.title}</ProfileTitle> */}
       </ProfileWrapper>
       <NavWrapper>
-        <NavItem onClick={() => navigate("")}>Profile</NavItem>
-        <NavItem onClick={() => navigate("reviews")}>Reviews</NavItem>
-        <NavItem onClick={() => navigate("likes")}>Likes</NavItem>
+        <NavItem onClick={() => navigate("")}>
+          <img src={ProfileIcon} />
+          <span> Profile</span>
+        </NavItem>
+        <NavItem onClick={() => navigate("reviews")}>
+          <img src={ReviewIcon} />
+          <span> Reviews</span>
+        </NavItem>
+        <NavItem onClick={() => navigate("likes")}>
+          <img src={LikesIcon} />
+          <span> Likes</span>
+        </NavItem>
       </NavWrapper>
     </Wrapper>
   );
@@ -82,13 +95,13 @@ const ProfileName = styled.h1`
   margin: 0;
 `;
 
-const ProfileTitle = styled.h2`
-  color: ${theme.colors.white};
-  font-size: 2rem;
-  text-align: center;
-  font-weight: ${theme.fontWeight.bold};
-  margin: 0;
-`;
+// const ProfileTitle = styled.h2`
+//   color: ${theme.colors.white};
+//   font-size: 2rem;
+//   text-align: center;
+//   font-weight: ${theme.fontWeight.bold};
+//   margin: 0;
+// `;
 
 const NavWrapper = styled.div`
   display: flex;
@@ -96,17 +109,15 @@ const NavWrapper = styled.div`
   gap: 0.5rem;
   height: 100%;
   background-color: ${theme.colors.containerLight};
-  /* margin: 1rem; */
   padding: 0.5rem;
   border-radius: 1.5rem;
 `;
 
 const NavItem = styled.div`
   color: ${theme.colors.white};
-  font-size: 2.2rem;
-  text-align: center;
+  font-size: 3rem;
   font-weight: ${theme.fontWeight.bold};
-  padding: 1rem;
+  padding: 2rem;
   cursor: pointer;
   border: none;
   border-radius: 1.5rem;
