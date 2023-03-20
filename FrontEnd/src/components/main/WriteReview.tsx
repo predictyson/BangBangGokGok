@@ -65,16 +65,21 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
             테마명 :&nbsp; <div className="title">{data.title}</div>
           </InfoBox>
           <InfoBox>
-            성공 여부 &nbsp;&nbsp;
-            <ToggleButtonGroup
-              value={isSuccess}
-              exclusive
-              onChange={handleValueChange}
-              aria-label="Platform"
-            >
-              <CustomToggleButton value="success">성공</CustomToggleButton>
-              <CustomToggleButton value="fail">실패</CustomToggleButton>
-            </ToggleButtonGroup>
+            <div className="info">
+              성공 여부 &nbsp;&nbsp;
+              <ToggleButtonGroup
+                value={isSuccess}
+                exclusive
+                onChange={handleValueChange}
+                aria-label="Platform"
+              >
+                <CustomToggleButton value="success">성공</CustomToggleButton>
+                <CustomToggleButton value="fail">실패</CustomToggleButton>
+              </ToggleButtonGroup>
+            </div>
+            <div className="info">
+              남은 시간 &nbsp; <div className="title">{data.title}</div>
+            </div>
           </InfoBox>
           <ReviewBox>
             <RatingWrapper>
@@ -158,6 +163,7 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
     </React.Fragment>
   );
 }
+
 const CustomToggleButton = mstyled(ToggleButton)({
   padding: "0.5rem 1.5rem",
   fontSize: "1.5rem",
@@ -190,10 +196,17 @@ const Header = styled.div`
 `;
 
 const InfoBox = styled.div`
+  border: solid 1px white;
   display: flex;
   font-size: 1.8rem;
   margin-top: 2rem;
   align-items: center;
+  .info {
+    align-items: center;
+
+    width: 50%;
+    display: flex;
+  }
 `;
 const RatingWrapper = styled.div`
   display: flex;
