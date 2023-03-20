@@ -15,7 +15,7 @@ const InitUserInfo: IUserInfo = {
   regionSmall: "",
   age: 0,
   gender: "",
-  profileImageType: 1,
+  profileImageType: "Avatar1",
 };
 
 export default function AdditionalPage() {
