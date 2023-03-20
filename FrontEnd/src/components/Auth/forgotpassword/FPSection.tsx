@@ -5,7 +5,7 @@ import { styled as mstyled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 
 export default function FPSection() {
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(false);
 
   return (
     <Container>
@@ -57,7 +57,9 @@ export default function FPSection() {
             <ValidCheckButton>변경하기</ValidCheckButton>
           </>
         ) : (
-          <SubjectText>이메일 인증을 완료해주세요!</SubjectText>
+          <SubjectText>
+            이메일 인증완료 후, 비밀번호 변경이 가능합니다.
+          </SubjectText>
         )}
       </HegihtHalfBox2>
     </Container>

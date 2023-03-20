@@ -75,12 +75,10 @@ const TextBox = styled.div`
 `;
 
 const Container = styled.div`
-  width: 50rem;
-  height: 60rem;
+  width: 30%;
+  height: 70%;
   border-radius: 0.5rem;
-  margin: 6rem auto;
   background-color: ${theme.colors.container};
-  /* background-color: white; */
   display: flex;
   flex-direction: column;
   align-items: center;
