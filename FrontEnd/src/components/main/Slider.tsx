@@ -103,10 +103,7 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
           <Slider {...settings}>
             {item.themes.map((theme) => (
               <>
-                <SliderItem
-                  key={theme.themeId}
-                  onClick={() => handleOpen(theme.themeId, item.label)}
-                >
+                <SliderItem key={theme.themeId}>
                   <img
                     src={theme.imgUrl}
                     style={{
@@ -116,7 +113,12 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
                     }}
                   />
 
-                  <Hover className="card-hover">{theme.title}</Hover>
+                  <Hover
+                    className="card-hover"
+                    onClick={() => handleOpen(theme.themeId, item.label)}
+                  >
+                    {theme.title}
+                  </Hover>
                 </SliderItem>
               </>
             ))}
@@ -198,6 +200,7 @@ const Hover = styled.div`
   align-items: center;
   font-size: 2rem;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 const ICONLIST = [
