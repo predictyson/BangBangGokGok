@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name="review")
@@ -32,7 +33,7 @@ public class Review extends BaseTimeEntity{
     @Column(nullable = false)
     private int isSuccess; // 성공 여부
     @Column(nullable = true)
-    private float record; // 탈출 시간 (분)
+    private LocalTime record; // 탈출 시간 (HH:MM:SS)
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
@@ -49,7 +50,11 @@ public class Review extends BaseTimeEntity{
         this.userFear = createReviewRequest.getFear();
         this.userDifficulty = createReviewRequest.getDifficulty();
         this.isSuccess = createReviewRequest.getIsSuccess();
-        this.record = createReviewRequest.getIsSuccess() == 1 ? createReviewRequest.getRecord() : 0;
+        if(createReviewRequest.getIsSuccess() == 1){
+            this.record = LocalTime.of(createReviewRequest.getRecordHH(),
+                                        createReviewRequest.getRecordMM(),
+                                        createReviewRequest.getRecordSS());
+        }
 
         this.user = user;
         this.theme = theme;
@@ -62,6 +67,11 @@ public class Review extends BaseTimeEntity{
         this.userFear = updateReviewRequest.getFear();
         this.userDifficulty = updateReviewRequest.getDifficulty();
         this.isSuccess = updateReviewRequest.getIsSuccess();
-        this.record = updateReviewRequest.getIsSuccess() == 1 ? updateReviewRequest.getRecord() : 0;
+
+        if(updateReviewRequest.getIsSuccess() == 1){
+            this.record = LocalTime.of(updateReviewRequest.getRecordHH(),
+                    updateReviewRequest.getRecordMM(),
+                    updateReviewRequest.getRecordSS());
+        }
     }
 }
