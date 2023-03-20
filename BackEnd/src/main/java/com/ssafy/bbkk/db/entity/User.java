@@ -3,6 +3,7 @@ package com.ssafy.bbkk.db.entity;
 import com.ssafy.bbkk.api.dto.JoinRequest;
 import com.ssafy.bbkk.api.dto.UpdateUserInfoRequest;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,6 +33,13 @@ public class User extends BaseTimeEntity{
     private String gender; // 성별 {'W', 'M'}
     @Column(nullable = false)
     private String profileImageType; // 프로필 이미지
+    @Column(nullable = false)
+    @ColumnDefault("ROLE_USER")
+    private String roles; // ROLE_USER, ROLE_ADMIN
+    @Column(nullable = true)
+    private String provider;
+    @Column(nullable = true)
+    private String providerId;
 
     @OneToOne
     @JoinColumn(name = "region_id") // 선호 지역은 하나만 선택하며, 영속성 관리를 할 필요가 없다
