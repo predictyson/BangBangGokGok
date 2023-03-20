@@ -1,15 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Ghost from "@/assets/Auth/Gost.png";
+import Modal from "@mui/material/Modal";
+import { ProfileProps } from "types/auction";
+import { handleAvatar } from "@/api/api";
+import { theme } from "@/styles/theme";
+import Grid from "@mui/material/Grid";
 
-export default function LeftPorfile() {
+export default function LeftPorfile(props: ProfileProps) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSetAvatar = (idx: string) => {
+    props.changeUserInfo("profileImageType", `Avatar${idx}`);
+    handleClose();
+  };
+
   return (
     <LeftBox>
-      <ProfileImg src={Ghost} />
-      <SelectButton>캐릭터 선택</SelectButton>
+      <ProfileBox>
+        <ProfileImg src={handleAvatar(props.userInfo.profileImageType)} />
+      </ProfileBox>
+      <SelectButton onClick={handleOpen}>아바타 선택</SelectButton>
+      <Modal open={open} onClose={handleClose}>
+        <ModalBox>
+          <h1>아바타 선택</h1>
+          <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
+            {Array.from(Array(10), (_, idx) => (
+              <AvatarBox
+                key={idx}
+                onClick={() => handleSetAvatar((idx + 1).toString())}
+              >
+                <AvatarImg src={handleAvatar(`Avatar${idx + 1}`)} />
+              </AvatarBox>
+            ))}
+          </Grid>
+        </ModalBox>
+      </Modal>
     </LeftBox>
   );
 }
+
+const AvatarBox = styled.div`
+  width: 20rem;
+  height: 20rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  :hover {
+    background-color: ${theme.colors.containerLight};
+  }
+`;
+
+const ProfileBox = styled.div`
+  width: 20rem;
+  height: 20rem;
+  border-radius: 50rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${theme.colors.background};
+`;
+
+const AvatarImg = styled.img`
+  width: 10rem;
+`;
 
 const LeftBox = styled.div`
   flex: 1;
@@ -21,9 +84,7 @@ const LeftBox = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 20rem;
-  height: 20rem;
-  border-radius: 50rem;
+  width: 10rem;
 `;
 
 const SelectButton = styled.div`
@@ -34,3 +95,56 @@ const SelectButton = styled.div`
   font-weight: 800;
   cursor: pointer;
 `;
+
+const ModalBox = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100rem;
+  height: 50rem;
+  background-color: ${theme.colors.background};
+  border-radius: 1rem;
+  box-shadow: 24;
+  color: white;
+  padding: 2rem;
+
+  h1 {
+    color: white;
+    font-size: 3rem;
+    margin-top: 0;
+  }
+`;
+
+{
+  /* <AvatarBox>
+              <AvatarImg src={handleAvatar("Avatar1")} />
+            </AvatarBox>
+            <AvatarBox>
+              <AvatarImg src={handleAvatar("Avatar2")} />
+            </AvatarBox>
+            <AvatarBox>
+              <AvatarImg src={handleAvatar("Avatar3")} />
+            </AvatarBox>
+            <AvatarBox>
+              <AvatarImg src={handleAvatar("Avatar4")} />
+            </AvatarBox>
+            <AvatarBox>
+              <AvatarImg src={handleAvatar("Avatar5")} />
+            </AvatarBox>
+            <AvatarBox>
+              <AvatarImg src={handleAvatar("Avatar6")} />
+            </AvatarBox>
+            <AvatarBox>
+              <AvatarImg src={handleAvatar("Avatar7")} />
+            </AvatarBox>
+            <AvatarBox>
+              <AvatarImg src={handleAvatar("Avatar8")} />
+            </AvatarBox>
+            <AvatarBox>
+              <AvatarImg src={handleAvatar("Avatar9")} />
+            </AvatarBox>
+            <AvatarBox>
+              <AvatarImg src={handleAvatar("Avatar10")} />
+            </AvatarBox> */
+}

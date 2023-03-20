@@ -8,7 +8,10 @@ export default function ProfileSection(props: ProfileProps) {
   return (
     <>
       <ProfileBox>
-        <LeftPorfile />
+        <LeftPorfile
+          userInfo={props.userInfo}
+          changeUserInfo={props.changeUserInfo}
+        />
         <RightProfile
           userInfo={props.userInfo}
           changeUserInfo={props.changeUserInfo}

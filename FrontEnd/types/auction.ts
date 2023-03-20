@@ -12,5 +12,5 @@ export interface IUserInfo {
   regionSmall: string; // 선호 지역(대분류)
   age: number; // 나이
   gender: string; // 성별
-  profileImageType: number; // 프로필 이미지 타입
+  profileImageType: string; // 프로필 이미지 타입
 }
