@@ -8,6 +8,12 @@ interface ReviewCardProps {
   review: Review;
 }
 
+interface Theme {
+  themeId: number;
+  title: string;
+  imgUrl: string;
+}
+
 interface Review {
   reviewId: number;
   content: string;
@@ -16,11 +22,7 @@ interface Review {
   fear: number;
   difficulty: number;
   isSuccess: number;
-  theme: {
-    themeId: number;
-    title: string;
-    imgUrl: string;
-  };
+  theme: Theme;
 }
 
 export default function ReviewCard({ review }: ReviewCardProps) {

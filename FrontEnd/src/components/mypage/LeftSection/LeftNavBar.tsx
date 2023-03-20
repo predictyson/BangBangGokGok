@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Avatar1, Avatar2, Avatar3 } from "@/assets/user";
 
-interface tempType {
+interface StringMapByNumber {
   [key: number]: string;
 }
 
-const imageSrcMap: tempType = {
+const imageSrcMap: StringMapByNumber = {
   1: Avatar1,
   2: Avatar2,
   3: Avatar3,
