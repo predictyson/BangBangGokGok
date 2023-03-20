@@ -9,34 +9,40 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 const tempUserSearchList: GroupSetUer[] = [
   {
-    profileImageType: "Avatar2",
+    userId: 123,
     nickname: "정상기",
     email: "jackid1103@naver.com",
+    profileImageType: "Avatar2",
   },
   {
-    profileImageType: "Avatar6",
+    userId: 123,
     nickname: "손예지",
     email: "happy3@naver.com",
+    profileImageType: "Avatar6",
   },
   {
-    profileImageType: "Avatar1",
+    userId: 123,
     nickname: "이상민",
     email: "example@naver.com",
+    profileImageType: "Avatar1",
   },
   {
-    profileImageType: "Avatar4",
+    userId: 123,
     nickname: "우상빈",
     email: "angry1103@naver.com",
+    profileImageType: "Avatar4",
   },
   {
-    profileImageType: "Avatar3",
+    userId: 123,
     nickname: "이지원",
     email: "angry1103@naver.com",
+    profileImageType: "Avatar3",
   },
   {
-    profileImageType: "Avatar8",
+    userId: 123,
     nickname: "김성수",
     email: "angry1103@naver.com",
+    profileImageType: "Avatar8",
   },
 ];
 
@@ -71,6 +77,8 @@ export default function UserListSection({
         user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.nickname.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    console.log(searchTerm);
+    console.log(searchResults);
     setSearchResults(results);
   };
 
@@ -104,7 +112,11 @@ export default function UserListSection({
                     component="li"
                     sx={{ fontSize: 14 }}
                     {...props}
-                    onClick={() => handleAddUser(option)}
+                    onClick={() => {
+                      handleAddUser(option);
+                      setSearchTerm("");
+                      setSearchResults([]);
+                    }}
                   >
                     {option.nickname} ({option.email})
                   </Box>

@@ -17,9 +17,10 @@ interface IToastProps {
 }
 
 interface GroupSetUer {
-  profileImageType: string;
+  userId: number;
   nickname: string;
   email: string;
+  profileImageType: string;
 }
 
 interface IDetailData {
