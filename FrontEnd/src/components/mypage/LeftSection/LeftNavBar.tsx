@@ -118,6 +118,9 @@ const NavItem = styled.div`
   font-size: 3rem;
   font-weight: ${theme.fontWeight.bold};
   padding: 2rem;
+  @media (max-height: 800px) {
+    padding: 1rem;
+  }
   cursor: pointer;
   border: none;
   border-radius: 1.5rem;
