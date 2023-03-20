@@ -55,7 +55,7 @@ export default function Review({ data }: IProps) {
   return (
     <>
       <Header>
-        Reviews ( {data.reviews.length} )
+        Reviews
         <WriteButton onClick={handleOpen}>
           <img
             src="https://user-images.githubusercontent.com/55784772/224926890-105d5d61-de32-47ca-ad36-5af4ee5fe137.png"
@@ -76,7 +76,7 @@ export default function Review({ data }: IProps) {
       />
       <InfoWrapper>
         <InfoBox>
-          <div className="title">사용자 총 평점</div>
+          <div className="title">사용자 총 평점 ( {data.userCnt} )</div>
           <div className="content-wrapper">
             <StyledRating
               name="customized-color"

@@ -16,7 +16,6 @@ interface IProps {
   label: string;
 }
 
-
 export default function DetailModal({ open, onClose, themeId, label }: IProps) {
   const [data, setData] = useState(initData);
 
@@ -284,7 +283,7 @@ const REVIEWDUMMY: IReviewData[] = [
     difficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 0, // 1: 성공 0 : 실파
-    record: 20.2, // 분.초
+    record: "0:12:50", // 분.초
   },
   {
     user: USERDUMMY,
@@ -296,7 +295,7 @@ const REVIEWDUMMY: IReviewData[] = [
     difficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 1, // 1: 성공 0 : 실파
-    record: 20.2, // 분.초
+    record: "0:12:50", // 분.초
   },
 ];
 const initData: IDetailData = {
@@ -318,7 +317,7 @@ const initData: IDetailData = {
     지휘부에서는 나를 포함한 경찰 특공대를 이 마약 조직에 몇 달 전부터 침투 시켰다.
     오늘이 지긋지긋한 마약조직을 끝장 내버릴 마지막 기회다!"
     `, // 테마 시놉시스
-  userRating: "3", // 평점
+  userRating: "3.3", // 평점
   userActivity: "3.2", // 활동성
   userFear: "4.4", // 공포도
   userDifficulty: "3.3", // 체감 난이도

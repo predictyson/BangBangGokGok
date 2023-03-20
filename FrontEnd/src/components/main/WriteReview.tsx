@@ -20,6 +20,7 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
   const [fear, setFear] = useState<number | null>(0);
   const [activity, setActivity] = useState<number | null>(0);
   const [isSuccess, setIsSuccess] = useState<string>("false");
+  const [postdata, setPostdata] = useState<IPostData>(initData);
   const handleValueChange = (
     event: React.MouseEvent<HTMLElement>,
     newValue: string | null
@@ -29,6 +30,20 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
     }
   };
 
+  const handleSubmit = () => {
+    // setPostdata(() => ({
+    //   "themeId" : 1, // 테마 id
+    //   "content":, // 리뷰 내용
+    //   rating: 0.0, // 평점
+    //   activity: 0.0, // 활동성
+    //   fear: 0.0, // 공포도
+    //   difficulty: 0.0, // 체감 난이도
+    //   isSuccess: 0, // 성공 여부 (0:실패, 1:성공)
+    //   record: 0.0, // 성공 기록 (분.초)
+    // }));
+
+    handleClose();
+  };
   return (
     <React.Fragment>
       <Modal
@@ -135,7 +150,8 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
           </ReviewBox>
           <ButtonWrapper>
             <CancelButton onClick={handleClose}>취소</CancelButton>
-            <WriteButton>등록</WriteButton>
+
+            <WriteButton onClick={handleSubmit}>등록</WriteButton>
           </ButtonWrapper>
         </Box>
       </Modal>
@@ -252,3 +268,14 @@ const WriteButton = styled.div`
     border: solid 2px white;
   }
 `;
+
+const initData: IPostData = {
+  themeId: 1, // 테마 id
+  content: "", // 리뷰 내용
+  rating: 0.0, // 평점
+  activity: 0.0, // 활동성
+  fear: 0.0, // 공포도
+  difficulty: 0.0, // 체감 난이도
+  isSuccess: 0, // 성공 여부 (0:실패, 1:성공)
+  record: 0.0, // 성공 기록 (분.초)
+};

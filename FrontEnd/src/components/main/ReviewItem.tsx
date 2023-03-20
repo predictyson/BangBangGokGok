@@ -6,7 +6,9 @@ import Line from "@/assets/common/Line.png";
 interface IProps {
   data: IReviewData;
 }
+
 export default function ReviewItem({ data }: IProps) {
+  const time = data.record.split(":");
   return (
     <>
       <img
@@ -19,7 +21,13 @@ export default function ReviewItem({ data }: IProps) {
           <div className="left-wrapper">
             {data.user.nickname}
             {data.isSuccess ? (
-              <Badge className="green">성공</Badge>
+              <>
+                <Badge className="green">성공</Badge>
+                <div className="time-left">
+                  남은 시간 {time[0] != "0" && <span>{time[0]}시</span>}
+                  {time[1]}분 {time[2]}초
+                </div>
+              </>
             ) : (
               <Badge className="red">실패</Badge>
             )}
@@ -102,6 +110,9 @@ const Header = styled.div`
   justify-content: space-between;
   font-size: 1.6rem;
   align-items: center;
+  .time-left {
+    margin-left: 1.5rem;
+  }
   .left-wrapper {
     display: flex;
     align-items: center;

@@ -66,7 +66,7 @@ interface IReviewData {
   difficulty: double; // 체감 난이도
   createTime: localDateTime; // 생성 날짜
   isSuccess: int; // 성공 여부
-  record: float; // 남은 시간 기록
+  record: string; // 남은 시간 기록
 }
 
 interface IPreviewThemeData {
@@ -74,4 +74,15 @@ interface IPreviewThemeData {
   title: string; // 테마명
   imgUrl: string; // 테마 포스터 링크
   genres: string[]; // 테마 장르 목록
+}
+
+interface IPostData {
+  themeId: int; // 테마 id
+  content: string; // 리뷰 내용
+  rating: double; // 평점
+  activity: double; // 활동성
+  fear: double; // 공포도
+  difficulty: double; // 체감 난이도
+  isSuccess: int; // 성공 여부 (0:실패, 1:성공)
+  record: float; // 성공 기록 (분.초)
 }
