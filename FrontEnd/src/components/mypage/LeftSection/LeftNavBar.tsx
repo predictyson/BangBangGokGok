@@ -102,6 +102,7 @@ const NavWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  height: 100%;
   background-color: ${theme.colors.containerLight};
   /* margin: 1rem; */
   padding: 0.5rem;
