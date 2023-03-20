@@ -5,6 +5,7 @@ import { ProfileProps } from "types/auction";
 import { handleAvatar } from "@/api/api";
 import { theme } from "@/styles/theme";
 import Grid from "@mui/material/Grid";
+import Toast, { showToast } from "@/components/common/Toast";
 
 export default function LeftPorfile(props: ProfileProps) {
   const [open, setOpen] = useState(false);
@@ -18,7 +19,15 @@ export default function LeftPorfile(props: ProfileProps) {
 
   const handleSetAvatar = (idx: string) => {
     props.changeUserInfo("profileImageType", `Avatar${idx}`);
+    handleToastClick("success", "아바타가 성공적으로 변경되었습니다.");
     handleClose();
+  };
+
+  const handleToastClick = (
+    type: IToastProps["type"],
+    message: IToastProps["message"]
+  ) => {
+    showToast({ type, message });
   };
 
   return (
@@ -42,6 +51,7 @@ export default function LeftPorfile(props: ProfileProps) {
           </Grid>
         </ModalBox>
       </Modal>
+      <Toast />
     </LeftBox>
   );
 }
