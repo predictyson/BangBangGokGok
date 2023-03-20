@@ -1,5 +1,6 @@
 package com.ssafy.bbkk.db.entity;
 
+import com.ssafy.bbkk.api.common.oauth.OAuth2UserInfo;
 import com.ssafy.bbkk.api.dto.JoinRequest;
 import com.ssafy.bbkk.api.dto.UpdateUserInfoRequest;
 import lombok.*;
@@ -23,15 +24,15 @@ public class User extends BaseTimeEntity{
     private int id;
     @Column(nullable = false)
     private String email; // 이메일
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password; // 비밀번호
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String nickname; // 닉네임
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int age; // 나이
-    @Column(nullable = false, length = 1)
+    @Column(nullable = true, length = 1)
     private String gender; // 성별 {'W', 'M'}
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String profileImageType; // 프로필 이미지
     @Column(nullable = false)
     @ColumnDefault("ROLE_USER")
@@ -73,6 +74,16 @@ public class User extends BaseTimeEntity{
         this.gender = joinRequest.getGender();
         this.profileImageType = joinRequest.getProfileImageType();
         this.region = region;
+    }
+
+    public User(OAuth2UserInfo user){
+        this.email = user.getEmail();
+        this.provider = user.getProvider();
+        this.providerId = user.getProviderId();
+    }
+
+    public void setEmail(String email){
+        this.email = email;
     }
 
     public void setPassword(String password){

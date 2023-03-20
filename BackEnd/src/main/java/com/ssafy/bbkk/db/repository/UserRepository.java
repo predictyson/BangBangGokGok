@@ -13,4 +13,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByEmailContaining(String email);
     List<User> findByNicknameContaining(String nickname);
     void deleteByEmail(String email);
+    Optional<User> findByProviderAndProviderId(String provider, String providerId);
 }
