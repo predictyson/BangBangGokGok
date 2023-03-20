@@ -16,9 +16,9 @@ interface IProps {
   label: string;
 }
 
-
 export default function DetailModal({ open, onClose, themeId, label }: IProps) {
   const [data, setData] = useState(initData);
+
   const [isLiked, setIsLiked] = useState(data.isInterested);
   const handleClick = (
     type: IToastProps["type"],
@@ -69,10 +69,10 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
             <DetailInfo>
               장르
               <GenreBox>
-                {data.genre.map((item) => {
+                {data.genre.map((item, idx) => {
                   return (
-                    <div className="item" key={item.genreId}>
-                      {item.category}
+                    <div className="item" key={idx}>
+                      {item}
                     </div>
                   );
                 })}
@@ -258,27 +258,23 @@ const style = {
   },
 };
 
-const GENREDUMMY: IGenreData[] = [
-  {
-    genreId: 1,
-    category: "공포",
-  },
-  {
-    genreId: 2,
-    category: "추리",
-  },
-];
+// const PREVIEWDIMMY: IPreviewThemeData = {
+//   themeId: 1,
+//   title: "미스테리 거울의 방",
+//   imgUrl:
+//     " https://user-images.githubusercontent.com/55784772/224640336-ec8412c3-f81b-4472-b6a5-9e56254004a3.jpg",
+//   genres: ["공포", "추리"], // 테마 장르 목록
+// };
 
-const PREVIEWDIMMY: IPreviewThemeData = {
-  themeId: 1,
-  title: "미스테리 거울의 방",
-  imgUrl:
-    " https://user-images.githubusercontent.com/55784772/224640336-ec8412c3-f81b-4472-b6a5-9e56254004a3.jpg",
-  genres: ["공포", "추리"], // 테마 장르 목록
+const USERDUMMY: IUserData = {
+  userId: 1,
+  nickname: "gigi",
+  email: "yllydev@gmail.com",
+  profileImageType: "dumdumdum",
 };
-
-const REVIEWDUMMY = [
+const REVIEWDUMMY: IReviewData[] = [
   {
+    user: USERDUMMY,
     reviewId: 1,
     content: "너무너무 재밌어요 눈물나요",
     rating: 4.2,
@@ -287,8 +283,19 @@ const REVIEWDUMMY = [
     difficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 0, // 1: 성공 0 : 실파
-    record: 20.2, // 분.초
-    theme: PREVIEWDIMMY, // 테마 정보
+    record: "0:12:50", // 분.초
+  },
+  {
+    user: USERDUMMY,
+    reviewId: 1,
+    content: "너무너무 재밌어요 눈물나요",
+    rating: 4.2,
+    activity: 3.3,
+    fear: 4.4,
+    difficulty: 2.2,
+    createTime: "2023-03-13",
+    isSuccess: 1, // 1: 성공 0 : 실파
+    record: "0:12:50", // 분.초
   },
 ];
 const initData: IDetailData = {
@@ -297,7 +304,7 @@ const initData: IDetailData = {
   regionSmall: "강남", // 지역(소분류)
   storeName: "코드케이 홍대점", // 매장명
   title: "미스테리 거울의 방", // 테마명
-  genre: GENREDUMMY, // 장르 목록
+  genre: ["공포", "추리"], // 장르 목록
   difficulty: 3.2, // 난이도
   runningTime: 60, // 시간 (분단위)
   openDate: "2023.03.13", // 오픈일
@@ -310,7 +317,7 @@ const initData: IDetailData = {
     지휘부에서는 나를 포함한 경찰 특공대를 이 마약 조직에 몇 달 전부터 침투 시켰다.
     오늘이 지긋지긋한 마약조직을 끝장 내버릴 마지막 기회다!"
     `, // 테마 시놉시스
-  userRating: "3", // 평점
+  userRating: "3.3", // 평점
   userActivity: "3.2", // 활동성
   userFear: "4.4", // 공포도
   userDifficulty: "3.3", // 체감 난이도

@@ -6,12 +6,22 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import Rating from "@mui/material/Rating";
-import Chart from "chart.js";
-
+import Chart from "@/components/main/Chart";
+import ReviewItem from "@/components/main/ReviewItem";
+import WriteReview from "./WriteReview";
 interface IProps {
   data: IDetailData;
 }
-
+interface IBarData {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    backgroundColor: string;
+    borderColor: string;
+    borderWidth: number;
+  }[];
+}
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
     color: "#ff6d75",
@@ -22,17 +32,42 @@ const StyledRating = styled(Rating)({
 });
 
 export default function Review({ data }: IProps) {
+  const CHARTDATA = [data.userActivity, data.userFear, data.userDifficulty];
+  const BARDATA: IBarData = {
+    labels: ["활동성", "공포도", "체감 난이도"],
+    datasets: [
+      {
+        label: "유저 평점",
+        data: CHARTDATA,
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgba(255, 99, 132, 1)",
+        borderWidth: 2,
+      },
+    ],
+  };
+  const [childOpen, setchildOpen] = React.useState(false);
+  const handleOpen = () => {
+    setchildOpen(true);
+  };
+  const handleClose = () => {
+    setchildOpen(false);
+  };
   return (
-    <Container>
+    <>
       <Header>
-        Reviews ( {data.reviews.length} ){" "}
-        <WriteButton>
+        Reviews
+        <WriteButton onClick={handleOpen}>
           <img
             src="https://user-images.githubusercontent.com/55784772/224926890-105d5d61-de32-47ca-ad36-5af4ee5fe137.png"
             style={{ width: "2rem", height: "2rem", marginRight: "0.5rem" }}
           />
           후기 작성하기
         </WriteButton>
+        <WriteReview
+          handleClose={handleClose}
+          childOpen={childOpen}
+          data={data}
+        />
       </Header>
       <img
         src={Line}
@@ -41,7 +76,7 @@ export default function Review({ data }: IProps) {
       />
       <InfoWrapper>
         <InfoBox>
-          <div className="title">사용자 총 평점</div>
+          <div className="title">사용자 총 평점 ( {data.userCnt} )</div>
           <div className="content-wrapper">
             <StyledRating
               name="customized-color"
@@ -62,45 +97,24 @@ export default function Review({ data }: IProps) {
           </div>
         </InfoBox>
         <InfoBox>
-          <div className="title">평점 비율 </div>
+          <Chart data={BARDATA} />
         </InfoBox>
       </InfoWrapper>
-    </Container>
+      {data.reviews.map((item) => {
+        return (
+          <>
+            <ReviewItem data={item} />
+          </>
+        );
+      })}
+    </>
   );
 }
-
-const canvas = document.getElementById("myChart") as HTMLCanvasElement;
-const data = [10, 20, 30];
-// const chart = new Chart(canvas, {
-//   type: "bar",
-//   data: {
-//     labels: ["Label 1", "Label 2", "Label 3"],
-//     datasets: [
-//       {
-//         data: data,
-//         backgroundColor: "rgba(54, 162, 235, 0.2)",
-//         borderColor: "rgba(54, 162, 235, 1)",
-//         borderWidth: 1,
-//       },
-//     ],
-//   },
-//   options: {
-//     scales: {
-//       yAxes: [
-//         {
-//           ticks: {
-//             beginAtZero: true,
-//             max: 120,
-//           },
-//         },
-//       ],
-//     },
-//   },
-// });
 
 const InfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-family: Pretendard;
   color: white;
   height: 10rem;
@@ -127,7 +141,6 @@ const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const Container = styled.div``;
 
 const Header = styled.div`
   display: flex;

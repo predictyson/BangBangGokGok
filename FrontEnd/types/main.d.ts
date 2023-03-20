@@ -28,7 +28,7 @@ interface IDetailData {
   regionSmall: string; // 지역(소분류)
   storeName: string; // 매장명
   title: string; // 테마명
-  genre: IGenreData[]; // 장르 목록
+  genre: string[]; // 장르 목록
   difficulty: float; // 난이도
   runningTime: int; // 시간
   openDate: string; // 오픈일
@@ -50,8 +50,14 @@ interface IGenreData {
   genreId: int; // 장르 id
   category: string; // 장르 종류
 }
-
+interface IUserData {
+  userId: int; // 유저 id
+  nickname: string; // 닉네임
+  email: string; // 이메일
+  profileImageType: string; // 프로필 이미지 타입
+}
 interface IReviewData {
+  user: IUserData;
   reviewId: int; // 리뷰 id
   content: string; // 리뷰 내용
   rating: double; // 평점
@@ -60,9 +66,7 @@ interface IReviewData {
   difficulty: double; // 체감 난이도
   createTime: localDateTime; // 생성 날짜
   isSuccess: int; // 성공 여부
-  record: float; // 남은 시간 기록
-
-  theme: PreviewThemeData; // 테마 정보
+  record: string; // 남은 시간 기록
 }
 
 interface IPreviewThemeData {
@@ -70,4 +74,15 @@ interface IPreviewThemeData {
   title: string; // 테마명
   imgUrl: string; // 테마 포스터 링크
   genres: string[]; // 테마 장르 목록
+}
+
+interface IPostData {
+  themeId: int; // 테마 id
+  content: string; // 리뷰 내용
+  rating: double; // 평점
+  activity: double; // 활동성
+  fear: double; // 공포도
+  difficulty: double; // 체감 난이도
+  isSuccess: int; // 성공 여부 (0:실패, 1:성공)
+  record: float; // 성공 기록 (분.초)
 }
