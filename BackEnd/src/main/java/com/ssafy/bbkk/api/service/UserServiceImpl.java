@@ -73,6 +73,16 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public LoginResponse getLoginUser(String email) throws Exception {
+        LoginResponse result = null;
+        // email을 통해 유저 조회
+        User user = userRepository.findByEmail(email).orElseThrow();
+        // 유저를 Dto에 감싸기
+        result = new LoginResponse(user);
+        return result;
+    }
+
+    @Override
     public boolean existsByEmail(String email) throws Exception {
         return userRepository.existsByEmail(email);
     }
