@@ -10,22 +10,32 @@ import Autocomplete from "@mui/material/Autocomplete";
 const tempUserSearchList: GroupSetUer[] = [
   {
     profileImageType: "Avatar2",
-    nickname: "가비아",
+    nickname: "정상기",
     email: "jackid1103@naver.com",
   },
   {
-    profileImageType: "Avatar3",
-    nickname: "가나",
+    profileImageType: "Avatar6",
+    nickname: "손예지",
     email: "happy3@naver.com",
   },
   {
-    profileImageType: "Avatar3",
-    nickname: "가나다",
+    profileImageType: "Avatar1",
+    nickname: "이상민",
     email: "example@naver.com",
   },
   {
-    profileImageType: "Avatar1",
-    nickname: "가나다라마바사",
+    profileImageType: "Avatar4",
+    nickname: "우상빈",
+    email: "angry1103@naver.com",
+  },
+  {
+    profileImageType: "Avatar3",
+    nickname: "이지원",
+    email: "angry1103@naver.com",
+  },
+  {
+    profileImageType: "Avatar8",
+    nickname: "김성수",
     email: "angry1103@naver.com",
   },
 ];

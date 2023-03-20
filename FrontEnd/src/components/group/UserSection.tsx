@@ -18,12 +18,24 @@ export default function UserSection({
         className="close"
         onClick={() => handleDeleteUser(user.nickname)}
       />
-      <ProfileImg src={handleAvatar(user.profileImageType)} />
+      <ProfileBox>
+        <ProfileImg src={handleAvatar(user.profileImageType)} />
+      </ProfileBox>
       <p>{user.nickname}</p>
       {user.email}
     </Container>
   );
 }
+
+const ProfileBox = styled.div`
+  width: 13rem;
+  height: 13rem;
+  border-radius: 50rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${theme.colors.background};
+`;
 
 const Container = styled.div`
   width: 18rem;
@@ -56,8 +68,5 @@ const Container = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 13rem;
-  height: 13rem;
-  border-radius: 50rem;
-  background-color: ${theme.colors.container};
+  width: 6.3rem;
 `;
