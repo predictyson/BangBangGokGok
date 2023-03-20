@@ -4,7 +4,7 @@ import { theme } from "@/styles/theme";
 
 export default function ProfileInfoSection() {
   return (
-    <>
+    <ProfileWrapper>
       <SectionTitle>Infomation</SectionTitle>
       <SectionContentWrapper>
         <ContentWrapper>
@@ -33,11 +33,17 @@ export default function ProfileInfoSection() {
         <div>차트1</div>
         <div>차트2</div>
       </ChartWrapper>
-    </>
+    </ProfileWrapper>
   );
 }
 
-// const ProfileWrapper = styled.div`
+const ProfileWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+`;
 
 const SectionTitle = styled.h1`
   font-size: 3rem;
@@ -55,7 +61,7 @@ const SectionContentWrapper = styled.div`
   background-color: ${theme.colors.containerLight};
   padding: 1rem 2rem;
   border-radius: 1.5rem;
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
 `;
 
 const ContentWrapper = styled.div`
@@ -83,11 +89,10 @@ const Content = styled.div`
 const ChartWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
   gap: 0.5rem;
-  margin: 1rem 0;
+  /* margin: 1rem 0 0 0; */
   padding: 1rem 2rem;
-  /* height: 28.5rem; */
+  height: 100%;
   background-color: ${theme.colors.containerLight};
   border-radius: 1.5rem;
 `;
