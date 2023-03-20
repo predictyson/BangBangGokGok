@@ -1,7 +1,6 @@
 package com.ssafy.bbkk.api.controller;
 
-import com.ssafy.bbkk.api.dto.ChangePasswordRequest;
-import com.ssafy.bbkk.api.dto.JoinRequest;
+import com.ssafy.bbkk.api.dto.*;
 import com.ssafy.bbkk.api.service.EmailService;
 import com.ssafy.bbkk.api.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +23,26 @@ public class UserController {
 
     private final UserService userService;
     private final EmailService emailService;
+
+    @PostMapping("login")
+    private ResponseEntity<Map<String, Object>> login(
+            @RequestBody LoginRequest loginRequest)  throws Exception {
+
+        logger.info("[login] request : loginRequest={}",loginRequest);
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        TokenResponse tokenResponse = userService.login(loginRequest);
+        LoginResponse loginResponse = userService.getLoginUser(loginRequest.getEmail());
+
+        resultMap.put("token", tokenResponse);
+        resultMap.put("user", loginResponse);
+
+        logger.info("[login] response : token={}, user={}", tokenResponse, loginResponse);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
 
     @PostMapping("join")
     public ResponseEntity<Void> join(@RequestBody JoinRequest joinRequest) throws Exception {
