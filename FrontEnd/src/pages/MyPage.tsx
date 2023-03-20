@@ -62,16 +62,15 @@ export default function MyPage() {
 }
 
 const BackGround = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 90vh;
   background-color: ${theme.colors.background};
 `;
 
 const ContentWrapper = styled.div`
   width: 90%;
-  height: 58rem;
-  margin: 2rem auto;
+  box-sizing: border-box;
+  height: 95%;
+  margin: 0 auto;
   padding: 3rem;
   gap: 1rem;
   display: flex;

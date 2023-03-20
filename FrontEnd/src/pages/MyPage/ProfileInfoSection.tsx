@@ -37,6 +37,8 @@ export default function ProfileInfoSection() {
   );
 }
 
+// const ProfileWrapper = styled.div`
+
 const SectionTitle = styled.h1`
   font-size: 3rem;
   font-weight: ${theme.fontWeight.bold};

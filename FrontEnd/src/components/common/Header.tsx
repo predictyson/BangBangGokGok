@@ -34,7 +34,6 @@ export default function Header() {
 }
 
 const Container = styled.div`
-  /* height: 7rem; */
   height: 10vh;
   display: flex;
   justify-content: space-between;
