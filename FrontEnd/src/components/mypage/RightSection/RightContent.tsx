@@ -12,8 +12,10 @@ export default function RightContent() {
 }
 
 const Wrapper = styled.div`
-  width: 70%;
+  box-sizing: border-box;
+  width: 77%;
   height: 100%;
+  padding: 2rem;
   background-color: ${theme.colors.container};
   border-radius: 1.5rem;
 `;
