@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { theme } from "@/styles/theme";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Avatar1, Avatar2, Avatar3 } from "@/assets/user";
+import { UserProfileProps } from "types/mypage";
 
 interface StringMapByNumber {
   [key: number]: string;
@@ -14,32 +15,23 @@ const imageSrcMap: StringMapByNumber = {
   3: Avatar3,
 };
 
-export default function LeftNavBar() {
-  // API 연결 후 사용
+export default function LeftNavBar({ userProfile }: UserProfileProps) {
+  // // API 연결 후 사용
   const [imageNumber, setImageNumber] = useState<number>(3); // 프로필 이미지 번호
-  const [nickname, setNickname] = useState<string>("정개미"); // 닉네임
-  const [title, setTitle] = useState<string>("방탈출 초보"); // 칭호
-
-  useEffect(() => {
-    // API 연결
-    // const getUserInfo = async () => {
-    //   const response = await axios.get("/api/user");
-    //   const { data } = response;
-    //   setImageNumber(data.imageNumber);
-    //   setNickname(data.nickname);
-    //   setTitle(data.title);
-    // };
-    // getUserInfo();
-  }, []);
 
   const navigate = useNavigate();
 
   return (
     <Wrapper>
       <ProfileWrapper>
-        <ProfileImage src={imageSrcMap[imageNumber]} alt="profile image" />
-        <ProfileName>{nickname}</ProfileName>
-        <ProfileTitle>{title}</ProfileTitle>
+        <ProfileImage
+          // src={imageSrcMap[userProfile.profileImageType]}
+          src={imageSrcMap[imageNumber]}
+          alt="profile image"
+        />
+        <ProfileName>{userProfile.nickname}</ProfileName>
+        {/* 칭호(?)는 아직 정해진 바가 없음! */}
+        {/* <ProfileTitle>{userProfile.title}</ProfileTitle> */}
       </ProfileWrapper>
       <NavWrapper>
         <NavItem onClick={() => navigate("")}>Profile</NavItem>
@@ -65,7 +57,7 @@ const Wrapper = styled.div`
 const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.5rem;
   background-color: ${theme.colors.containerLight};
   /* margin: 1rem; */
   padding: 2rem 1rem;
