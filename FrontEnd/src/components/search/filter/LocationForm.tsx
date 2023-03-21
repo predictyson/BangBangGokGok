@@ -41,27 +41,39 @@ const LocationForm = () => {
 
   return (
     <Wrapper>
-      <CustomInputLabel id="city-select">지역</CustomInputLabel>
-      <CustomSelect
-        labelId="city-select"
-        value={city}
-        onChange={handleCityChange}
+      <div style={{ flexBasis: "15%" }}>
+        <CustomInputLabel id="city-select">지역</CustomInputLabel>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexBasis: "85%",
+        }}
       >
-        <MenuItem value="전체">전체</MenuItem>
-        <MenuItem value="서울">서울</MenuItem>
-        <MenuItem value="부산">부산</MenuItem>
-        <MenuItem value="제주">제주</MenuItem>
-      </CustomSelect>
-      <CustomInputLabel id="location-select"></CustomInputLabel>
-      <CustomSelect
-        labelId="location-select"
-        value={location}
-        onChange={handleLocationChange}
-        disabled={!city}
-      >
-        <MenuItem value="전체">전체</MenuItem>
-        {renderLocationOptions()}
-      </CustomSelect>
+        <CustomSelect
+          labelId="city-select"
+          value={city}
+          color="warning"
+          onChange={handleCityChange}
+        >
+          <MenuItem value="전체">전체</MenuItem>
+          <MenuItem value="서울">서울</MenuItem>
+          <MenuItem value="부산">부산</MenuItem>
+          <MenuItem value="제주">제주</MenuItem>
+        </CustomSelect>
+        <CustomInputLabel id="location-select"></CustomInputLabel>
+        <CustomSelect
+          labelId="location-select"
+          value={location}
+          color="warning"
+          onChange={handleLocationChange}
+          disabled={!city}
+        >
+          <MenuItem value="전체">전체</MenuItem>
+          {renderLocationOptions()}
+        </CustomSelect>
+      </div>
     </Wrapper>
   );
 };
@@ -87,7 +99,7 @@ const CustomInputLabel = mstyled(InputLabel)({
 });
 
 const CustomSelect = mstyled(Select)({
-  width: "10rem",
+  width: "11.5rem",
   height: "4rem",
   fontSize: "1.2rem",
   border: "1px solid white",

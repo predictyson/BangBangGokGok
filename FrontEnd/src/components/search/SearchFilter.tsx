@@ -1,6 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import { useMediaQuery } from "@mui/material";
 import LocationForm from "@components/search/filter/LocationForm";
 import GenreForm from "./filter/GenreForm";
 import DifficultyForm from "./filter/DifficultyForm";
@@ -25,6 +26,8 @@ export default function SearchFilter() {
     setFilterButtonState(false);
   };
 
+  const isLabtop = useMediaQuery("(max-height: 800px)");
+
   return (
     <>
       <FilterButton onClick={filterButtonState ? closeFilter : openFilter}>
@@ -34,7 +37,7 @@ export default function SearchFilter() {
       <Modal
         open={filterButtonState}
         onClose={setFilterButtonState}
-        sx={ModalStyle}
+        sx={isLabtop ? ModalStyleOnLabtop768p : ModalStyleOnDesktop1080p}
         hideBackdrop={true}
       >
         <FilterContainer>
@@ -74,7 +77,7 @@ const FilterContainer = mstyled(Box)`
   flex-direction: column;
   font-size: 1.7rem;
   font-weight: 600;
-  width: 30rem;
+  width: 31rem;
   gap: 1.5rem;
   padding: 4rem;
   border: 0.2rem solid white;
@@ -83,10 +86,19 @@ const FilterContainer = mstyled(Box)`
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 `;
 
-const ModalStyle = {
+const ModalStyleOnLabtop768p = {
   position: "absolute",
-  top: "17rem",
-  left: "107.5rem",
+  top: "21vh",
+  left: "66vw",
+  border: "none",
+  background: "none",
+  color: "white",
+};
+
+const ModalStyleOnDesktop1080p = {
+  position: "absolute",
+  top: "20vh",
+  left: "73vw",
   border: "none",
   background: "none",
   color: "white",

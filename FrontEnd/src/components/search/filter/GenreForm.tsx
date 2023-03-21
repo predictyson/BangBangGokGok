@@ -13,18 +13,23 @@ export default function GenreForm() {
 
   return (
     <Wrapper>
-      <CustomInputLabel id="genre-select">장르</CustomInputLabel>
-      <CustomSelect
-        labelId="genre-select"
-        value={genre}
-        onChange={handleGenreChange}
-      >
-        <MenuItem value="전체">전체</MenuItem>
-        <MenuItem value="공포">공포</MenuItem>
-        <MenuItem value="추리">추리</MenuItem>
-        <MenuItem value="스릴러">스릴러</MenuItem>
-        <MenuItem value="판타지">판타지</MenuItem>
-      </CustomSelect>
+      <div style={{ flexBasis: "15%" }}>
+        <CustomInputLabel id="genre-select">장르</CustomInputLabel>
+      </div>
+      <div style={{ flexBasis: "85%" }}>
+        <CustomSelect
+          labelId="genre-select"
+          value={genre}
+          color="warning"
+          onChange={handleGenreChange}
+        >
+          <MenuItem value="전체">전체</MenuItem>
+          <MenuItem value="공포">공포</MenuItem>
+          <MenuItem value="추리">추리</MenuItem>
+          <MenuItem value="스릴러">스릴러</MenuItem>
+          <MenuItem value="판타지">판타지</MenuItem>
+        </CustomSelect>
+      </div>
     </Wrapper>
   );
 }
@@ -48,7 +53,7 @@ const CustomInputLabel = mstyled(InputLabel)({
 });
 
 const CustomSelect = mstyled(Select)({
-  width: "10rem",
+  width: "11.5rem",
   height: "4rem",
   fontSize: "1.2rem",
   border: "1px solid white",
