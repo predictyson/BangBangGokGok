@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { theme } from "@/styles/theme";
-import { ProfileProps } from "types/auction";
+import { ProfileProps } from "types/auth";
 
 export default function LeftPorfile(props: ProfileProps) {
   const handleInputChange = (e: React.SyntheticEvent) => {
@@ -39,7 +39,7 @@ export default function LeftPorfile(props: ProfileProps) {
         name="nickname"
         focused
         sx={{ input: { color: "white" } }}
-        value={props.userInfo.nickname}
+        value={props.userAdditionalInfo.nickname}
         placeholder="닉네임을 입력하세요"
         onChange={handleInputChange}
         hiddenLabel
@@ -48,7 +48,7 @@ export default function LeftPorfile(props: ProfileProps) {
         <p>선호 방문 지역을 선택해주세요.</p>
         <CustomSelect
           onChange={handleSelectChange}
-          value={props.userInfo.regionBig}
+          value={props.userAdditionalInfo.regionBig}
           name="regionBig"
           color="warning"
           displayEmpty
@@ -63,7 +63,7 @@ export default function LeftPorfile(props: ProfileProps) {
         </CustomSelect>
         <CustomSelect
           onChange={handleSelectChange}
-          value={props.userInfo.regionSmall}
+          value={props.userAdditionalInfo.regionSmall}
           name="regionSmall"
           color="warning"
           displayEmpty
@@ -80,7 +80,7 @@ export default function LeftPorfile(props: ProfileProps) {
       <SelectBox>
         <p>나이를 입력해주세요.</p>
         <CustomSelect
-          value={props.userInfo.age}
+          value={props.userAdditionalInfo.age}
           name="age"
           onChange={handleSelectChange}
           color="warning"
@@ -99,7 +99,7 @@ export default function LeftPorfile(props: ProfileProps) {
       <SelectBox>
         <p>성별을 선택해주세요.</p>
         <ToggleButtonGroup
-          value={props.userInfo.gender}
+          value={props.userAdditionalInfo.gender}
           exclusive
           onChange={handleToggleChange}
           aria-label="Platform"

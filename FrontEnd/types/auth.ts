@@ -1,11 +1,15 @@
 export interface ProfileProps {
-  userInfo: IUserInfo;
+  userAdditionalInfo: IAdditionalInfo;
   changeUserInfo: (key: string, value: string | number | number[]) => void;
 }
 
 export interface IUserInfo {
   email: string; // 이메일
   password: string; // 비밀번호
+}
+
+export interface IAdditionalInfo {
+  userId: number; // 유저 고유 아이디
   nickname: string; // 닉네임
   genreId: number[]; // 선호 장르 id
   regionBig: string; // 선호 지역(대분류)

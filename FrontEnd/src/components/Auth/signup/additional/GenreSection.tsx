@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled as mstyled } from "@mui/material/styles";
 import styled from "styled-components";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
-import { ProfileProps } from "types/auction";
+import { ProfileProps } from "types/auth";
 
 const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
 
@@ -25,7 +25,7 @@ export default function GenreSection(props: ProfileProps) {
           width: "100%",
           borderRadius: "10px",
         }}
-        value={props.userInfo.genreId}
+        value={props.userAdditionalInfo.genreId}
         onChange={handleChange}
       >
         {values.map((item) => (

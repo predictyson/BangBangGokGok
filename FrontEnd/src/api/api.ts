@@ -1,28 +1,21 @@
 import axios from "axios";
 
-import {
-  Avatar1,
-  Avatar2,
-  Avatar3,
-  Avatar4,
-  Avatar5,
-  Avatar6,
-  Avatar7,
-  Avatar8,
-  Avatar9,
-  Avatar10,
-} from "@/assets/user";
+const VITE_SERVER_DOMAIN = import.meta.env.VITE_REST_API_KEY;
 
-export const handleAvatar = (t: string) => {
-  if (t === "Avatar1") return Avatar1;
-  else if (t === "Avatar2") return Avatar2;
-  else if (t === "Avatar3") return Avatar3;
-  else if (t === "Avatar4") return Avatar4;
-  else if (t === "Avatar5") return Avatar5;
-  else if (t === "Avatar6") return Avatar6;
-  else if (t === "Avatar7") return Avatar7;
-  else if (t === "Avatar8") return Avatar8;
-  else if (t === "Avatar9") return Avatar9;
-  else if (t === "Avatar10") return Avatar10;
-};
+const instance = axios.create({
+  baseURL: VITE_SERVER_DOMAIN,
+});
 
+// interceptors를 통해
+instance.interceptors.request.use(
+  function (config) {
+    // 요청 바로 직전
+    config.headers["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+export default instance;

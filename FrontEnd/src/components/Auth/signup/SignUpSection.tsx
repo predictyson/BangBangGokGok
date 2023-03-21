@@ -4,6 +4,8 @@ import { styled as mstyled } from "@mui/material/styles";
 import { theme } from "@/styles/theme";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router";
+import { requestSignUp } from "@/api/auth";
+import { IUserInfo } from "types/auth";
 
 export default function SignUpSection() {
   const navigate = useNavigate();
@@ -21,21 +23,25 @@ export default function SignUpSection() {
     else if (name === "password") setPassword(value);
     else if (name === "passwordValid") {
       if (password !== value) {
-        console.log(password);
-        console.log(value);
         setShowHelperText(true);
         setPasswordValid(value);
       } else {
-        console.log(password);
-        console.log(value);
         setShowHelperText(false);
         setPasswordValid(value);
       }
     }
   };
 
-  const SendNextPage = () =>
-    navigate("/additional", { state: { email: email, password: password } });
+  const SendNextPage = () => {
+    const userData: IUserInfo = {
+      email: email,
+      password: password,
+    };
+    let userId = "";
+
+    requestSignUp(userData).then((res) => (userId = res.data.userId));
+    navigate("/additional", { state: { userId: userId } });
+  };
 
   return (
     <Container>

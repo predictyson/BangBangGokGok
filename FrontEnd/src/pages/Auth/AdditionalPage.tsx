@@ -3,12 +3,11 @@ import GenreSection from "@components/Auth/signup/additional/GenreSection";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import ProfileSection from "@components/Auth/signup/additional/ProfileSection";
-import { IUserInfo } from "types/auction";
+import { IAdditionalInfo } from "types/auth";
 import { useLocation } from "react-router-dom";
 
-const InitUserInfo: IUserInfo = {
-  email: "",
-  password: "",
+const InitAdditionalInfo: IAdditionalInfo = {
+  userId: -1,
   nickname: "",
   genreId: [],
   regionBig: "",
@@ -19,27 +18,29 @@ const InitUserInfo: IUserInfo = {
 };
 
 export default function AdditionalPage() {
-  const userData = useLocation().state;
-  const [userInfo, setUserInfo] = useState<IUserInfo>(InitUserInfo);
+  const userId = useLocation().state.userId;
+  const [userAdditionalInfo, setUserAdditionalInfo] =
+    useState<IAdditionalInfo>(InitAdditionalInfo);
   const [chapter, setChapter] = useState<"genre" | "profile">("genre");
 
   const handleChapter = () => {
     if (chapter === "genre") setChapter("profile");
     else {
-      console.log(userInfo);
+      //TODO : request additonalInfo API 연결
+      console.log(userAdditionalInfo);
     }
   };
 
   const changeUserInfo = (key: string, value: string | number | number[]) => {
-    setUserInfo((cur) => ({
+    setUserAdditionalInfo((cur) => ({
       ...cur,
       [key]: value,
     }));
   };
 
   useEffect(() => {
-    changeUserInfo("email", userData.email);
-    changeUserInfo("password", userData.password);
+    // 넘어오면서 회원가입 페이지의 고유 유저 ID를 넘겨준다. (식별자)
+    changeUserInfo("userId", userId);
   }, []);
 
   return (
@@ -55,7 +56,7 @@ export default function AdditionalPage() {
                 있어요!
               </h2>
               <GenreSection
-                userInfo={userInfo}
+                userAdditionalInfo={userAdditionalInfo}
                 changeUserInfo={changeUserInfo}
               />
             </>
@@ -65,7 +66,7 @@ export default function AdditionalPage() {
                 추가 정보를 입력해주시면, 방탈출 테마를 추천받을 수 있어요!
               </h2>
               <ProfileSection
-                userInfo={userInfo}
+                userAdditionalInfo={userAdditionalInfo}
                 changeUserInfo={changeUserInfo}
               />
             </>
