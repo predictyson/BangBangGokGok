@@ -14,6 +14,8 @@ public class UpdateReviewRequest {
     private double fear; // 공포도
     private double difficulty; // 체감 난이도
     private int isSuccess; // 성공 여부 (0,1)
-    private float record; // 성공 기록 (분.초)
+    private int recordHH; // 성공 기록 (시)
+    private int recordMM; // 성공 기록 (분)
+    private int recordSS; // 성공 기록 (초)
 
 }
