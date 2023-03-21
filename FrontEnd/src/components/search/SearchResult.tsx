@@ -63,7 +63,11 @@ const Container = styled.div`
 const ThemeItem = styled.div`
   border-radius: 1rem;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  width: 15rem;
-  height: 20rem;
+  width: 20rem;
+  height: 25rem;
+  @media (max-height: 800px) {
+    width: 15rem;
+    height: 20rem;
+  }
   background-color: #3e2133;
 `;

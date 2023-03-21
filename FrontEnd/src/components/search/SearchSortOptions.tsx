@@ -5,7 +5,14 @@ import Button from "@mui/material/Button";
 
 export default function SearchSortOptions() {
   const [sortOption, setSortOption] = useState<string>(OPTIONS[0]);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
   const handleSortOptionChange = (option: string) => {
+    if (sortOption === option) {
+      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortOrder("desc");
+    }
     setSortOption(option);
   };
 
@@ -15,9 +22,12 @@ export default function SearchSortOptions() {
         <OptionButton
           key={option}
           onClick={() => handleSortOptionChange(option)}
-          variant={sortOption === option ? "contained" : "outlined"}
+          variant={sortOption === option ? "outlined" : "contained"}
         >
           {option} 순 정렬
+          {sortOption === option && sortOrder === "desc" && "▼"}
+          {sortOption === option && sortOrder === "asc" && "▲"}
+          {sortOption !== option && ""}
         </OptionButton>
       ))}
     </Stack>
