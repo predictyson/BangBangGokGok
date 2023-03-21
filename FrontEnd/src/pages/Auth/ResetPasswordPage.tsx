@@ -1,11 +1,12 @@
 import React from "react";
-import FPSection from "@components/Auth/forgotpassword/FPSection";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import ResetPassword from "@/components/Auth/forgotpassword/ResetPassword";
 
-export default function FindPasswordPage() {
+export default function ResetPasswordPage() {
   return (
     <Container>
-      <FPSection />
+      <ResetPassword />
     </Container>
   );
 }
@@ -15,4 +16,5 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  flex-direction: column;
 `;

@@ -76,7 +76,7 @@ const TextBox = styled.div`
 
 const Container = styled.div`
   width: 30%;
-  height: 70%;
+  height: 80%;
   border-radius: 0.5rem;
   background-color: ${theme.colors.container};
   display: flex;

@@ -5,12 +5,13 @@ import LoginPage from "./pages/Auth/LoginPage";
 import MainPage from "@/pages/MainPage";
 import GroupSetPage from "@/pages/GroupSetPage";
 import SearchPage from "@/pages/SearchPage";
-import FindPassword from "@/pages/Auth/FindPasswordPage";
+import FindPassword from "@/pages/Auth/ForgotPasswordPage";
 import AdditionalPage from "./pages/Auth/AdditionalPage";
 import MyPage from "./pages/MyPage";
 import ProfileInfoSection from "./pages/MyPage/ProfileInfoSection";
 import MyReviesSection from "./pages/MyPage/MyReviewsSection";
 import LikeThemesSection from "./pages/MyPage/LikeThemesSection";
+import ResetPasswordPage from "./pages/Auth/ResetPasswordPage";
 
 const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
   { path: "search", element: <SearchPage /> },
   { path: "/findpassword", element: <FindPassword /> },
   { path: "/additional", element: <AdditionalPage /> },
+  { path: "/resetpassword", element: <ResetPasswordPage /> },
   {
     path: "mypage",
     element: <MyPage />,
