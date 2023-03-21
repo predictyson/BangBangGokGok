@@ -60,11 +60,11 @@ public class UserController {
         logger.info("[reissue] request : tokenRequest={}",tokenRequest);
 
         Map<String, Object> resultMap = new HashMap<>();
-        TokenResponse tokenResponse = userService.reissue(tokenRequest);
+        String accessToken = userService.reissue(tokenRequest);
 
-        resultMap.put("token", tokenResponse);
+        resultMap.put("accessToken", accessToken);
 
-        logger.info("[reissue] response : token={}", tokenResponse);
+        logger.info("[reissue] response : accessToken={}", accessToken);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }

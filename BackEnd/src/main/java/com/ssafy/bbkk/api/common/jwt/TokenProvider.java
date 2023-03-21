@@ -40,7 +40,7 @@ public class TokenProvider {
         return REFRESH_TOKEN_EXPIRE_TIME;
     }
 
-    public TokenResponse generateToken(Authentication authentication) {
+    public String generateAccessToken(Authentication authentication) {
         // 권한들 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -57,18 +57,19 @@ public class TokenProvider {
                 .signWith(key, SignatureAlgorithm.HS512)    // header "alg": "HS512"
                 .compact();
 
+        return accessToken;
+    }
+
+    public String generateRefreshToken() {
+        long now = (new Date()).getTime();
+
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
                 .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
-        return TokenResponse.builder()
-                .grantType(BEARER_TYPE)
-                .accessToken(accessToken)
-                .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
-                .refreshToken(refreshToken)
-                .build();
+        return refreshToken;
     }
 
     public Authentication getAuthentication(String accessToken) {

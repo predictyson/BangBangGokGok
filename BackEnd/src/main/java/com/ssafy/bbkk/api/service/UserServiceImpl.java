@@ -38,18 +38,24 @@ public class UserServiceImpl implements UserService{
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenResponse tokenDto = tokenProvider.generateToken(authentication);
+        String accessToken = tokenProvider.generateAccessToken(authentication);
+        String refreshToken = tokenProvider.generateRefreshToken();
 
-        // 4. RefreshToken 저장
-        RefreshToken refreshToken = RefreshToken.builder()
-                .key(authentication.getName())
-                .value(tokenDto.getRefreshToken())
+        TokenResponse tokenResponse = TokenResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
 
-        refreshTokenRepository.save(refreshToken);
+        // 4. RefreshToken 저장
+        RefreshToken rfToken = RefreshToken.builder()
+                .key(authentication.getName())
+                .value(refreshToken)
+                .build();
+
+        refreshTokenRepository.save(rfToken);
 
         // 5. 토큰 발급
-        return tokenDto;
+        return tokenResponse;
     }
 
     @Override
@@ -73,7 +79,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public TokenResponse reissue(TokenRequest tokenRequest) throws Exception {
+    public String reissue(TokenRequest tokenRequest) throws Exception {
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRequest.getRefreshToken())) {
             throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
@@ -91,15 +97,11 @@ public class UserServiceImpl implements UserService{
             throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
         }
 
-        // 5. 새로운 토큰 생성
-        TokenResponse tokenDto = tokenProvider.generateToken(authentication);
-
-        // 6. 저장소 정보 업데이트
-        RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
-        refreshTokenRepository.save(newRefreshToken);
+        // 5. 새로운 accessToken 생성
+        String accessToken = tokenProvider.generateAccessToken(authentication);
 
         // 토큰 발급
-        return tokenDto;
+        return accessToken;
     }
 
     @Override
