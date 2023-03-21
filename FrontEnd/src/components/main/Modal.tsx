@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-as-const */
 import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -135,7 +134,7 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
         <Synopsis>
           <pre>{data.synopsis}</pre>
         </Synopsis>
-        <Review data={data} />
+        <Review data={data} themeId={themeId} label={label} />
       </Box>
     </Modal>
   );
@@ -250,9 +249,8 @@ const Header = styled.div`
     cursor: pointer;
   }
 `;
-
 const style = {
-  position: "absolute" as "absolute",
+  position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",

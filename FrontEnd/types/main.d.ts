@@ -85,5 +85,7 @@ interface IPostData {
   fear: double; // 공포도
   difficulty: double; // 체감 난이도
   isSuccess: int; // 성공 여부 (0:실패, 1:성공)
-  record: float; // 성공 기록 (분.초)
+  recordHH?: int; // 성공 기록 (시)
+  recordMM?: int; // 성공 기록 (분)
+  recordSS?: int; // 성공 기록 (초)
 }

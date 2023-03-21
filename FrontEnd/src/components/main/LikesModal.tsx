@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-as-const */
 import React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -98,7 +97,7 @@ const Container = styled.div`
   }
 `;
 const style = {
-  position: "absolute" as "absolute",
+  position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
