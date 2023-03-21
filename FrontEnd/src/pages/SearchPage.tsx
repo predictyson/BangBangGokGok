@@ -12,29 +12,29 @@ export default function SearchPage() {
     <>
       <Header />
       <BackGround>
-        <Content>
+        <ContentWrapper>
           <FormContainer>
             <SearchInput />
             <SearchFilter />
           </FormContainer>
           <SearchSortOptions />
           <SearchResult />
-        </Content>
+        </ContentWrapper>
       </BackGround>
     </>
   );
 }
 
 const BackGround = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 90vh;
   background-color: ${theme.colors.background};
 `;
 
-const Content = styled.div`
+const ContentWrapper = styled.div`
   width: 90%;
-  margin: 2rem auto;
+  box-sizing: border-box;
+  height: 95%;
+  margin: 0 auto;
   padding: 3rem;
   gap: 2rem;
   display: flex;

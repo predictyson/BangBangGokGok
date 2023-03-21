@@ -21,18 +21,26 @@ export default function LikeThemesSection() {
   ]);
 
   return (
-    <>
+    <SectionWrapper>
       <SectionTitle>Likes List</SectionTitle>
       <SectionContentWrapper>
-        <OverlapWrapper>
+        <OverflowWrapper>
           {dummyLikes.map((like) => (
             <ThemeItem key={like.id}>{like.title}</ThemeItem>
           ))}
-        </OverlapWrapper>
+        </OverflowWrapper>
       </SectionContentWrapper>
-    </>
+    </SectionWrapper>
   );
 }
+
+const SectionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+`;
 
 const SectionTitle = styled.h1`
   font-size: 3rem;
@@ -42,28 +50,34 @@ const SectionTitle = styled.h1`
 `;
 
 const SectionContentWrapper = styled.div`
-  height: 49.2rem;
   border-radius: 1.5rem;
-  margin: 1rem 0;
-  padding: 1rem;
+  height: 91%;
+  @media (max-height: 800px) {
+    height: 87%;
+  }
+  padding: 1.5rem;
   background-color: ${theme.colors.containerLight};
 `;
 
-const OverlapWrapper = styled.div`
-  height: 100%;
+const OverflowWrapper = styled.div`
   overflow: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 1.5rem;
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
+  height: 100%;
 `;
 
 const ThemeItem = styled.div`
   border-radius: 1rem;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  width: 15rem;
-  height: 20rem;
+  width: 22rem;
+  height: 29.3rem;
+  @media (max-height: 800px) {
+    width: 15rem;
+    height: 20rem;
+  }
   background-color: #3e2133;
 `;
