@@ -9,6 +9,7 @@ import Rating from "@mui/material/Rating";
 import ToggleButton from "@mui/material/ToggleButton";
 import { styled as mstyled } from "@mui/material/styles";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import InputBase from "@mui/material/InputBase";
 interface IProps {
   childOpen: boolean;
   handleClose: () => void;
@@ -78,9 +79,15 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
               </ToggleButtonGroup>
             </div>
             <div className="info">
-              남은 시간 &nbsp; <div className="title">{data.title}</div>
+              남은 시간 &nbsp;{" "}
+              <div className="title">
+                <CustomIput />시
+                <CustomIput />분
+                <CustomIput />초
+              </div>
             </div>
           </InfoBox>
+          {/* 별점 input 받는 코드  */}
           <ReviewBox>
             <RatingWrapper>
               <div className="ratingItem">
@@ -164,6 +171,19 @@ export default function WriteReview({ childOpen, handleClose, data }: IProps) {
   );
 }
 
+const CustomIput = mstyled(InputBase)`
+width: 4rem;
+border: solid 2px white;
+border-radius: 0.5rem;
+color: white;
+height: 85%;
+font-size: 1.4rem;
+padding: 0 1rem;
+margin: 0 0.5rem;
+max-width: 4rem;
+box-sizing: border-box;
+`;
+
 const CustomToggleButton = mstyled(ToggleButton)({
   padding: "0.5rem 1.5rem",
   fontSize: "1.5rem",
@@ -182,6 +202,7 @@ const CustomText = styled.textarea`
   font-size: 1.4rem;
   padding: 2rem;
   width: 95%;
+  padding: 1rem;
   height: 10rem;
   border: solid 2px white;
   color: white;
@@ -196,7 +217,6 @@ const Header = styled.div`
 `;
 
 const InfoBox = styled.div`
-  border: solid 1px white;
   display: flex;
   font-size: 1.8rem;
   margin-top: 2rem;
