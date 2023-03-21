@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "@mui/material/Modal";
-import { ProfileProps } from "types/auction";
-import { handleAvatar } from "@/api/api";
+import { ProfileProps } from "types/auth";
+import { handleAvatar } from "@/api/user";
 import { theme } from "@/styles/theme";
 import Grid from "@mui/material/Grid";
 import Toast, { showToast } from "@/components/common/Toast";
@@ -33,7 +33,9 @@ export default function LeftPorfile(props: ProfileProps) {
   return (
     <LeftBox>
       <ProfileBox>
-        <ProfileImg src={handleAvatar(props.userInfo.profileImageType)} />
+        <ProfileImg
+          src={handleAvatar(props.userAdditionalInfo.profileImageType)}
+        />
       </ProfileBox>
       <SelectButton onClick={handleOpen}>아바타 선택</SelectButton>
       <Modal open={open} onClose={handleClose}>

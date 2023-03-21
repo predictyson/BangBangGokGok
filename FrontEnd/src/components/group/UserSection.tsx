@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { handleAvatar } from "@/api/api";
+import { handleAvatar } from "@/api/user";
 
 export default function UserSection({
   user,

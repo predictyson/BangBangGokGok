@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
-import Gost from "@/assets/Auth/Gost.png";
+import Ghost from "@/assets/Auth/Gost.png";
 import { theme } from "@/styles/theme";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
+import Google from "@/assets/Auth/GoogleLogin.png";
+import Kakao from "@/assets/Auth/KakaoLogin.png";
 
 export default function LoginSection() {
   const navigate = useNavigate();
@@ -16,9 +18,9 @@ export default function LoginSection() {
 
   return (
     <Container>
-      <LoginImg src={Gost} />
-      <SubjectText>BangBang</SubjectText>
-      <SubjectText>GokGok</SubjectText>
+      <LoginImg src={Ghost} />
+      <SubjectText>BangBang GokGok</SubjectText>
+      {/* <SubjectText>GokGok</SubjectText> */}
       <CustomTextField
         label="E-mail"
         autoComplete="current-password"
@@ -44,9 +46,18 @@ export default function LoginSection() {
         </NavText>
         <NavText onClick={() => navigate("/signup")}>회원가입 하러가기</NavText>
       </TextBox>
+      <TextBox>
+        <SNSbtn src={Google} />
+        <SNSbtn src={Kakao} />
+      </TextBox>
     </Container>
   );
 }
+
+const SNSbtn = styled.img`
+  width: 14.5rem;
+  cursor: pointer;
+`;
 
 const CustomTextField = mstyled(TextField)({
   width: "70%",
@@ -76,7 +87,7 @@ const TextBox = styled.div`
 
 const Container = styled.div`
   width: 30%;
-  height: 80%;
+  height: 70%;
   border-radius: 0.5rem;
   background-color: ${theme.colors.container};
   display: flex;
@@ -86,14 +97,13 @@ const Container = styled.div`
 `;
 
 const LoginImg = styled.img`
-  width: 15rem;
-  height: 17.8rem;
+  height: 15rem;
   margin: 0 auto;
 `;
 
 const SubjectText = styled.div`
   margin: 0 auto;
-  font-size: 4.6rem;
+  font-size: 4rem;
   font-weight: ${theme.fontWeight.extraBold};
 `;
 
