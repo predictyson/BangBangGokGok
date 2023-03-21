@@ -35,7 +35,6 @@ public class User extends BaseTimeEntity{
     @Column(nullable = true)
     private String profileImageType; // 프로필 이미지
     @Column(nullable = false)
-    @ColumnDefault("ROLE_USER")
     private String roles; // ROLE_USER, ROLE_ADMIN
     @Column(nullable = true)
     private String provider;
@@ -74,12 +73,14 @@ public class User extends BaseTimeEntity{
         this.gender = joinRequest.getGender();
         this.profileImageType = joinRequest.getProfileImageType();
         this.region = region;
+        this.roles = "ROLE_USER";
     }
 
     public User(OAuth2UserInfo user){
         this.email = user.getEmail();
         this.provider = user.getProvider();
         this.providerId = user.getProviderId();
+        this.roles = "ROLE_USER";
     }
 
     public void setEmail(String email){
