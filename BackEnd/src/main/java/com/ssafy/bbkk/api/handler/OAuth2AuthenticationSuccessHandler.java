@@ -49,20 +49,27 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
         User user = principalDetails.getUser();
 
-        logger.info("[determineTargetUrl] : principalDetails={}", principalDetails);
+//        logger.info("[determineTargetUrl] : principalDetails={}", principalDetails);
 
         // 소셜 로그인 성공 후 이동할 페이지 -> 추후 변경해야함
-        String targetUrl = "/addInfo";
+        String targetUrl = "/additional";
 
+        if(user.getEmail() == null) {
+//            throw new NullPointerException("이메일 동의를 하지 않아 회원가입이 불가능합니다.");
+            targetUrl = "/login";
+            return UriComponentsBuilder.fromUriString(targetUrl)
+                    .queryParam("error", "이메일 동의를 하지 않아 회원가입이 불가능합니다.")
+                    .build().toUriString();
+        }
         // 추가 정보가 입력되어 있다면 로그인 처리
-        if(user.getAge()>0 &&
+        else if(user.getAge()>0 &&
                 ("W".equals(user.getGender()) || "M".equals(user.getGender())) &&
                 user.getNickname()!=null &&
                 user.getProfileImageType()!=null &&
                 user.getRegion()!=null){
 
             // 토큰 정보 저장하는 페이지로 이동
-            targetUrl = "/social/success";
+            targetUrl = "/oauth2";
 
             // 3. 인증 정보를 기반으로 JWT 토큰 생성
             String accessToken = tokenProvider.generateAccessToken(authentication);
