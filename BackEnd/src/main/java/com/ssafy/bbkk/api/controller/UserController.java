@@ -56,16 +56,16 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-//    @PostMapping("join")
-//    public ResponseEntity<Void> join(@RequestBody JoinRequest joinRequest) throws Exception {
-//        logger.info("[join] request : joinRequest={}",joinRequest);
-//
-//        userService.join(joinRequest);
-//
-//        logger.info("[join] response : ");
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @PostMapping("join/additional")
+    public ResponseEntity<Void> addInfo(@RequestBody JoinAdditionalRequest joinAdditionalRequest) throws Exception {
+        logger.info("[addInfo] request : joinAdditionalRequest={}",joinAdditionalRequest);
+
+        userService.setUserAdditionalInfo(joinAdditionalRequest);
+
+        logger.info("[addInfo] response : ");
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @PostMapping("/reissue")
     private ResponseEntity<Map<String, Object>> reissue(

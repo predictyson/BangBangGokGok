@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserService{
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-
     @Override
     public TokenResponse login(LoginRequest loginRequest) throws Exception {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
@@ -72,27 +71,26 @@ public class UserServiceImpl implements UserService{
         return user.getId();
     }
 
-//    @Override
-//    public void join(JoinRequest joinRequest) throws Exception {
-//        // 유저의 선호 지역 조회
-//        Region region = regionRepository.findByRegionBigAndRegionSmall(joinRequest.getRegionBig(),
-//                joinRequest.getRegionSmall()).orElseThrow();
-//        // 입력 정보를 바탕으로 회원 가입할 유저 생성
-//        User joinUser = new User(joinRequest, region);
-//        // 비밀번호 암호화
-//        joinUser.setPassword(passwordEncoder.encode(joinUser.getPassword()));
-//        // 회원 가입
-//        joinUser = userRepository.save(joinUser);
-//
-//        for(int genreId : joinRequest.getGenreIds()){
-//            // 선호 장르 조회
-//            Genre genre = genreRepository.findById(genreId).orElseThrow();
-//            // 유저의 선호 장르 객체 생성
-//            PreferredGenreOfUser preferredGenreOfUser = new PreferredGenreOfUser(joinUser, genre);
-//            // 유저의 선호 장르 저장
-//            preferredGenreOfUserRepository.save(preferredGenreOfUser);
-//        }
-//    }
+    @Override
+    public void setUserAdditionalInfo(JoinAdditionalRequest joinAdditionalRequest) throws Exception {
+        // 유저의 선호 지역 조회
+        Region region = regionRepository.findByRegionBigAndRegionSmall(joinAdditionalRequest.getRegionBig(),
+                joinAdditionalRequest.getRegionSmall()).orElseThrow();
+        // 유저 id를 통해 유저 조회
+        User user = userRepository.findById(joinAdditionalRequest.getUserId()).orElseThrow();
+        // 입력한 정보를 바탕으로 정보 수정
+        user.addUserInfo(joinAdditionalRequest, region);
+        // 추가 정보 저장
+        user = userRepository.save(user);
+
+        for(int genreId : joinAdditionalRequest.getGenreIds()){
+            // 선호 장르 조회
+            Genre genre = genreRepository.findById(genreId).orElseThrow();
+            // 유저의 선호 장르 객체 생성
+            PreferredGenreOfUser preferredGenreOfUser = new PreferredGenreOfUser(user, genre);
+            // 유저의 선호 장르 저장
+            preferredGenreOfUserRepository.save(preferredGenreOfUser);
+    }
 
     @Override
     public String reissue(TokenRequest tokenRequest) throws Exception {

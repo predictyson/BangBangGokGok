@@ -1,6 +1,7 @@
 package com.ssafy.bbkk.db.entity;
 
 import com.ssafy.bbkk.api.common.oauth.OAuth2UserInfo;
+import com.ssafy.bbkk.api.dto.JoinAdditionalRequest;
 import com.ssafy.bbkk.api.dto.JoinRequest;
 import com.ssafy.bbkk.api.dto.UpdateUserInfoRequest;
 import lombok.*;
@@ -65,23 +66,20 @@ public class User extends BaseTimeEntity{
         this.region = region;
     }
 
+    public void addUserInfo(JoinAdditionalRequest joinAdditionalRequest, Region region){
+        this.nickname = joinAdditionalRequest.getNickname();
+        this.age = joinAdditionalRequest.getAge();
+        this.gender = joinAdditionalRequest.getGender();
+        this.profileImageType = joinAdditionalRequest.getProfileImageType();
+        this.region = region;
+    }
+
     @Builder
     public User(String email, String password, String roles){
         this.email = email;
         this.password = password;
         this.roles = roles;
     }
-
-//    public User(JoinRequest joinRequest, Region region){
-//        this.email = joinRequest.getEmail();
-//        this.password = joinRequest.getPassword();
-//        this.nickname = joinRequest.getNickname();
-//        this.age = joinRequest.getAge();
-//        this.gender = joinRequest.getGender();
-//        this.profileImageType = joinRequest.getProfileImageType();
-//        this.region = region;
-//        this.roles = "ROLE_USER";
-//    }
 
     public User(OAuth2UserInfo user){
         this.email = user.getEmail();

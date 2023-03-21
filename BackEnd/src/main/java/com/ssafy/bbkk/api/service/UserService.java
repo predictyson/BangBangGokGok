@@ -6,6 +6,7 @@ public interface UserService {
 
     TokenResponse login(LoginRequest loginRequest) throws Exception;
     int join(JoinRequest joinRequest) throws Exception;
+    void setUserAdditionalInfo(JoinAdditionalRequest joinAdditionalRequest) throws Exception;
     String reissue(TokenRequest tokenRequest) throws Exception;
     LoginResponse getLoginUser(String email) throws Exception;
     boolean existsByEmail(String email) throws Exception;
