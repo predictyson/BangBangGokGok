@@ -1,7 +1,7 @@
 package com.ssafy.bbkk.api.common.auth;
 
 import com.ssafy.bbkk.db.entity.User;
-import lombok.Data;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,9 @@ import java.util.Map;
 // 시큐리티가 /login 요청을 보고 로그인을 대신 진행해준다
 // 로그인 진행 완료시 시큐리티 세션이 만들어진다
 // Authentication 객체에 유저 정보를 저장하여 시큐리티 세션에 저장
-@Data
+@ToString
+@Setter
+@NoArgsConstructor
 public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user;
@@ -77,4 +79,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     public String getName() {
         return null;
     }
+
+    public User getUser(){return user;}
+
 }
