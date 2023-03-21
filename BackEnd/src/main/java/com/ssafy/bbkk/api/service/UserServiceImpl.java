@@ -1,10 +1,13 @@
 package com.ssafy.bbkk.api.service;
 
 import com.ssafy.bbkk.api.common.jwt.TokenProvider;
+import com.ssafy.bbkk.api.controller.UserController;
 import com.ssafy.bbkk.api.dto.*;
 import com.ssafy.bbkk.db.entity.*;
 import com.ssafy.bbkk.db.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -65,6 +68,7 @@ public class UserServiceImpl implements UserService{
                 .password(passwordEncoder.encode(joinRequest.getPassword()))
                 .roles("ROLE_USER")
                 .build();
+
         // 유저 저장
         user = userRepository.save(user);
 
@@ -83,13 +87,14 @@ public class UserServiceImpl implements UserService{
         // 추가 정보 저장
         user = userRepository.save(user);
 
-        for(int genreId : joinAdditionalRequest.getGenreIds()){
+        for(int genreId : joinAdditionalRequest.getGenreIds()) {
             // 선호 장르 조회
             Genre genre = genreRepository.findById(genreId).orElseThrow();
             // 유저의 선호 장르 객체 생성
             PreferredGenreOfUser preferredGenreOfUser = new PreferredGenreOfUser(user, genre);
             // 유저의 선호 장르 저장
             preferredGenreOfUserRepository.save(preferredGenreOfUser);
+        }
     }
 
     @Override
