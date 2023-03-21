@@ -1,8 +1,11 @@
 package com.ssafy.bbkk.db.entity;
 
+import com.ssafy.bbkk.api.common.oauth.OAuth2UserInfo;
+import com.ssafy.bbkk.api.dto.JoinAdditionalRequest;
 import com.ssafy.bbkk.api.dto.JoinRequest;
 import com.ssafy.bbkk.api.dto.UpdateUserInfoRequest;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,16 +25,22 @@ public class User extends BaseTimeEntity{
     private int id;
     @Column(nullable = false)
     private String email; // 이메일
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password; // 비밀번호
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String nickname; // 닉네임
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int age; // 나이
-    @Column(nullable = false, length = 1)
+    @Column(nullable = true, length = 1)
     private String gender; // 성별 {'W', 'M'}
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String profileImageType; // 프로필 이미지
+    @Column(nullable = false)
+    private String roles; // ROLE_USER, ROLE_ADMIN
+    @Column(nullable = true)
+    private String provider;
+    @Column(nullable = true)
+    private String providerId;
 
     @OneToOne
     @JoinColumn(name = "region_id") // 선호 지역은 하나만 선택하며, 영속성 관리를 할 필요가 없다
@@ -57,14 +66,30 @@ public class User extends BaseTimeEntity{
         this.region = region;
     }
 
-    public User(JoinRequest joinRequest, Region region){
-        this.email = joinRequest.getEmail();
-        this.password = joinRequest.getPassword();
-        this.nickname = joinRequest.getNickname();
-        this.age = joinRequest.getAge();
-        this.gender = joinRequest.getGender();
-        this.profileImageType = joinRequest.getProfileImageType();
+    public void addUserInfo(JoinAdditionalRequest joinAdditionalRequest, Region region){
+        this.nickname = joinAdditionalRequest.getNickname();
+        this.age = joinAdditionalRequest.getAge();
+        this.gender = joinAdditionalRequest.getGender();
+        this.profileImageType = joinAdditionalRequest.getProfileImageType();
         this.region = region;
+    }
+
+    @Builder
+    public User(String email, String password, String roles){
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public User(OAuth2UserInfo user){
+        this.email = user.getEmail();
+        this.provider = user.getProvider();
+        this.providerId = user.getProviderId();
+        this.roles = "ROLE_USER";
+    }
+
+    public void setEmail(String email){
+        this.email = email;
     }
 
     public void setPassword(String password){

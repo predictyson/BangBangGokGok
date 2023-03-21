@@ -1,7 +1,6 @@
 package com.ssafy.bbkk.api.controller;
 
-import com.ssafy.bbkk.api.dto.ChangePasswordRequest;
-import com.ssafy.bbkk.api.dto.JoinRequest;
+import com.ssafy.bbkk.api.dto.*;
 import com.ssafy.bbkk.api.service.EmailService;
 import com.ssafy.bbkk.api.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,15 +25,63 @@ public class UserController {
     private final UserService userService;
     private final EmailService emailService;
 
+    @PostMapping("login")
+    private ResponseEntity<Map<String, Object>> login(
+            @RequestBody LoginRequest loginRequest)  throws Exception {
+
+        logger.info("[login] request : loginRequest={}",loginRequest);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        TokenResponse tokenResponse = userService.login(loginRequest);
+        LoginResponse loginResponse = userService.getLoginUser(loginRequest.getEmail());
+
+        resultMap.put("token", tokenResponse);
+        resultMap.put("user", loginResponse);
+
+        logger.info("[login] response : token={}, user={}", tokenResponse, loginResponse);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
     @PostMapping("join")
-    public ResponseEntity<Void> join(@RequestBody JoinRequest joinRequest) throws Exception {
+    public ResponseEntity<Map<String, Object>> join(@RequestBody JoinRequest joinRequest) throws Exception {
         logger.info("[join] request : joinRequest={}",joinRequest);
 
-        userService.join(joinRequest);
+        Map<String, Object> resultMap = new HashMap<>();
+        int userId = userService.join(joinRequest);
 
-        logger.info("[join] response : ");
+        resultMap.put("userId", userId);
+
+        logger.info("[join] response : userId={}",userId);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @PostMapping("join/additional")
+    public ResponseEntity<Void> addInfo(@RequestBody JoinAdditionalRequest joinAdditionalRequest) throws Exception {
+        logger.info("[addInfo] request : joinAdditionalRequest={}",joinAdditionalRequest);
+
+        userService.setUserAdditionalInfo(joinAdditionalRequest);
+
+        logger.info("[addInfo] response : ");
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/reissue")
+    private ResponseEntity<Map<String, Object>> reissue(
+            @RequestBody TokenRequest tokenRequest) throws Exception {
+
+        logger.info("[reissue] request : tokenRequest={}",tokenRequest);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        String accessToken = userService.reissue(tokenRequest);
+
+        resultMap.put("accessToken", accessToken);
+
+        logger.info("[reissue] response : accessToken={}", accessToken);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @GetMapping("check/email/{email}")
