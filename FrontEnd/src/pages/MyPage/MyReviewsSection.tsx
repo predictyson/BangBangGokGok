@@ -19,6 +19,7 @@ export default function MyReviewsSection() {
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   width: 100%;
   height: 100%;
 `;
@@ -39,7 +40,6 @@ const SectionContentWrapper = styled.div`
   gap: 1rem;
   height: 100%;
   border-radius: 1.5rem;
-  margin: 1rem 0;
 `;
 
 const reviews = [

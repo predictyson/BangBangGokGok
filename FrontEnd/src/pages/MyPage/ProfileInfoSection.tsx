@@ -7,26 +7,30 @@ export default function ProfileInfoSection() {
     <ProfileWrapper>
       <SectionTitle>Infomation</SectionTitle>
       <SectionContentWrapper>
-        <ContentWrapper>
-          <ContentTitle>닉네임</ContentTitle>
-          <Content>정개미</Content>
-        </ContentWrapper>
-        <ContentWrapper>
-          <ContentTitle>이메일</ContentTitle>
-          <Content>example@example.com</Content>
-        </ContentWrapper>
-        <ContentWrapper>
-          <ContentTitle>성별</ContentTitle>
-          <Content>남자</Content>
-        </ContentWrapper>
-        <ContentWrapper>
-          <ContentTitle>선호 장르</ContentTitle>
-          <Content>공포, 뭐시기, 뭐시기</Content>
-        </ContentWrapper>
-        <ContentWrapper>
-          <ContentTitle>선호 지역</ContentTitle>
-          <Content>서울, 경기, 강원</Content>
-        </ContentWrapper>
+        <SectionFirstColumn>
+          <ContentWrapper>
+            <ContentTitle>닉네임</ContentTitle>
+            <Content>정개미</Content>
+          </ContentWrapper>
+          <ContentWrapper>
+            <ContentTitle>이메일</ContentTitle>
+            <Content>example@example.com</Content>
+          </ContentWrapper>
+          <ContentWrapper>
+            <ContentTitle>성별</ContentTitle>
+            <Content>남자</Content>
+          </ContentWrapper>
+        </SectionFirstColumn>
+        <SectionSecondColumn>
+          <ContentWrapper>
+            <ContentTitle>선호 장르</ContentTitle>
+            <Content>공포, 뭐시기, 뭐시기</Content>
+          </ContentWrapper>
+          <ContentWrapper>
+            <ContentTitle>선호 지역</ContentTitle>
+            <Content>서울, 경기, 강원</Content>
+          </ContentWrapper>
+        </SectionSecondColumn>
       </SectionContentWrapper>
       <SectionTitle>Chart</SectionTitle>
       <ChartWrapper>
@@ -61,7 +65,20 @@ const SectionContentWrapper = styled.div`
   background-color: ${theme.colors.containerLight};
   padding: 1rem 2rem;
   border-radius: 1.5rem;
-  margin: 0 0 1rem 0;
+`;
+
+const SectionFirstColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-basis: 50%;
+`;
+
+const SectionSecondColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-basis: 50%;
 `;
 
 const ContentWrapper = styled.div`
@@ -74,6 +91,7 @@ const ContentWrapper = styled.div`
 `;
 
 const ContentTitle = styled.h2`
+  flex-basis: 20%;
   font-size: 2rem;
   font-weight: ${theme.fontWeight.bold};
   color: ${theme.colors.white};
@@ -81,7 +99,8 @@ const ContentTitle = styled.h2`
 `;
 
 const Content = styled.div`
-  font-size: 1.5rem;
+  flex-basis: 80%;
+  font-size: 1.7rem;
   font-weight: ${theme.fontWeight.normal};
   color: ${theme.colors.white};
 `;

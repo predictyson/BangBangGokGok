@@ -72,6 +72,9 @@ const ContentWrapper = styled.div`
   height: 95%;
   margin: 0 auto;
   padding: 3rem;
+  @media (max-height: 800px) {
+    padding: 2rem;
+  }
   gap: 1rem;
   display: flex;
   flex-direction: row;
