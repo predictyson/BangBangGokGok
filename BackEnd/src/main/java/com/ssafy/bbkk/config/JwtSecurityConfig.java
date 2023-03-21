@@ -1,6 +1,6 @@
 package com.ssafy.bbkk.config;
 
-import com.ssafy.bbkk.api.common.jwt.TokenProvider;
+import com.ssafy.bbkk.common.jwt.TokenProvider;
 import com.ssafy.bbkk.filter.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;

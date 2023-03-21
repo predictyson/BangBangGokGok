@@ -1,11 +1,9 @@
 package com.ssafy.bbkk.db.entity;
 
-import com.ssafy.bbkk.api.common.oauth.OAuth2UserInfo;
+import com.ssafy.bbkk.common.oauth.OAuth2UserInfo;
 import com.ssafy.bbkk.api.dto.JoinAdditionalRequest;
-import com.ssafy.bbkk.api.dto.JoinRequest;
 import com.ssafy.bbkk.api.dto.UpdateUserInfoRequest;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;

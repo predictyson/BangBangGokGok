@@ -1,13 +1,10 @@
 package com.ssafy.bbkk.api.service;
 
-import com.ssafy.bbkk.api.common.jwt.TokenProvider;
-import com.ssafy.bbkk.api.controller.UserController;
+import com.ssafy.bbkk.common.jwt.TokenProvider;
 import com.ssafy.bbkk.api.dto.*;
 import com.ssafy.bbkk.db.entity.*;
 import com.ssafy.bbkk.db.repository.*;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;

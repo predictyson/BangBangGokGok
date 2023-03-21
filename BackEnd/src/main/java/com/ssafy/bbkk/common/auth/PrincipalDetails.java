@@ -1,4 +1,4 @@
-package com.ssafy.bbkk.api.common.auth;
+package com.ssafy.bbkk.common.auth;
 
 import com.ssafy.bbkk.db.entity.User;
 import lombok.*;

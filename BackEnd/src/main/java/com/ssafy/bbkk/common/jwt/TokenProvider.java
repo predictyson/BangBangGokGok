@@ -1,4 +1,4 @@
-package com.ssafy.bbkk.api.common.jwt;
+package com.ssafy.bbkk.common.jwt;
 
 import com.ssafy.bbkk.api.dto.TokenResponse;
 import io.jsonwebtoken.*;

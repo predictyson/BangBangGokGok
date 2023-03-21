@@ -1,7 +1,7 @@
-package com.ssafy.bbkk.api.handler;
+package com.ssafy.bbkk.handler;
 
-import com.ssafy.bbkk.api.common.auth.PrincipalDetails;
-import com.ssafy.bbkk.api.common.jwt.TokenProvider;
+import com.ssafy.bbkk.common.auth.PrincipalDetails;
+import com.ssafy.bbkk.common.jwt.TokenProvider;
 import com.ssafy.bbkk.api.dto.TokenResponse;
 import com.ssafy.bbkk.db.entity.RefreshToken;
 import com.ssafy.bbkk.db.entity.User;

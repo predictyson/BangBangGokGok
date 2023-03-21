@@ -1,6 +1,6 @@
-package com.ssafy.bbkk.api.common.oauth;
+package com.ssafy.bbkk.common.oauth;
 
-import com.ssafy.bbkk.api.common.auth.PrincipalDetails;
+import com.ssafy.bbkk.common.auth.PrincipalDetails;
 import com.ssafy.bbkk.db.entity.User;
 import com.ssafy.bbkk.db.repository.UserRepository;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.ssafy.bbkk.api.common.jwt;
+package com.ssafy.bbkk.common.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

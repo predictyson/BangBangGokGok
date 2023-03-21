@@ -1,4 +1,4 @@
-package com.ssafy.bbkk.api.handler;
+package com.ssafy.bbkk.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

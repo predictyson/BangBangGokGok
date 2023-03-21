@@ -1,4 +1,4 @@
-package com.ssafy.bbkk.api.common.oauth;
+package com.ssafy.bbkk.common.oauth;
 
 import java.util.Map;
 

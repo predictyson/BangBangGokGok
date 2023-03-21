@@ -1,4 +1,4 @@
-package com.ssafy.bbkk.api.handler;
+package com.ssafy.bbkk.handler;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

@@ -1,11 +1,11 @@
 package com.ssafy.bbkk.config;
 
 
-import com.ssafy.bbkk.api.common.jwt.JwtAuthenticationEntryPoint;
-import com.ssafy.bbkk.api.common.jwt.TokenProvider;
-import com.ssafy.bbkk.api.common.oauth.PrincipalOauth2UserService;
-import com.ssafy.bbkk.api.handler.JwtAccessDeniedHandler;
-import com.ssafy.bbkk.api.handler.OAuth2AuthenticationSuccessHandler;
+import com.ssafy.bbkk.common.jwt.JwtAuthenticationEntryPoint;
+import com.ssafy.bbkk.common.jwt.TokenProvider;
+import com.ssafy.bbkk.common.oauth.PrincipalOauth2UserService;
+import com.ssafy.bbkk.handler.JwtAccessDeniedHandler;
+import com.ssafy.bbkk.handler.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
