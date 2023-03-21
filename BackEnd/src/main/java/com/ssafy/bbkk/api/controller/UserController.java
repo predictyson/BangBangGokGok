@@ -43,15 +43,29 @@ public class UserController {
     }
 
     @PostMapping("join")
-    public ResponseEntity<Void> join(@RequestBody JoinRequest joinRequest) throws Exception {
+    public ResponseEntity<Map<String, Object>> join(@RequestBody JoinRequest joinRequest) throws Exception {
         logger.info("[join] request : joinRequest={}",joinRequest);
 
-        userService.join(joinRequest);
+        Map<String, Object> resultMap = new HashMap<>();
+        int userId = userService.join(joinRequest);
 
-        logger.info("[join] response : ");
+        resultMap.put("userId", userId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        logger.info("[join] response : userId={}",userId);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
+
+//    @PostMapping("join")
+//    public ResponseEntity<Void> join(@RequestBody JoinRequest joinRequest) throws Exception {
+//        logger.info("[join] request : joinRequest={}",joinRequest);
+//
+//        userService.join(joinRequest);
+//
+//        logger.info("[join] response : ");
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
     @PostMapping("/reissue")
     private ResponseEntity<Map<String, Object>> reissue(

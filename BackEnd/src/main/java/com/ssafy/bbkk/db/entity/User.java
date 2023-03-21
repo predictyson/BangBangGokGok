@@ -65,16 +65,23 @@ public class User extends BaseTimeEntity{
         this.region = region;
     }
 
-    public User(JoinRequest joinRequest, Region region){
-        this.email = joinRequest.getEmail();
-        this.password = joinRequest.getPassword();
-        this.nickname = joinRequest.getNickname();
-        this.age = joinRequest.getAge();
-        this.gender = joinRequest.getGender();
-        this.profileImageType = joinRequest.getProfileImageType();
-        this.region = region;
-        this.roles = "ROLE_USER";
+    @Builder
+    public User(String email, String password, String roles){
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
+
+//    public User(JoinRequest joinRequest, Region region){
+//        this.email = joinRequest.getEmail();
+//        this.password = joinRequest.getPassword();
+//        this.nickname = joinRequest.getNickname();
+//        this.age = joinRequest.getAge();
+//        this.gender = joinRequest.getGender();
+//        this.profileImageType = joinRequest.getProfileImageType();
+//        this.region = region;
+//        this.roles = "ROLE_USER";
+//    }
 
     public User(OAuth2UserInfo user){
         this.email = user.getEmail();
