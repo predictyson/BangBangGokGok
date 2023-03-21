@@ -65,6 +65,8 @@ public class UserServiceImpl implements UserService{
                 joinRequest.getRegionSmall()).orElseThrow();
         // 입력 정보를 바탕으로 회원 가입할 유저 생성
         User joinUser = new User(joinRequest, region);
+        // 비밀번호 암호화
+        joinUser.setPassword(passwordEncoder.encode(joinUser.getPassword()));
         // 회원 가입
         joinUser = userRepository.save(joinUser);
 
