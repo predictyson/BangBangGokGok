@@ -22,7 +22,7 @@ import java.util.Random;
 @PropertySource("classpath:email.properties")
 public class EmailServiceImpl implements EmailService{
 
-    @Value("${email.id}")
+    @Value("${AdminMail.id}")
     private String id;
 
     private final JavaMailSender javaMailSender;
