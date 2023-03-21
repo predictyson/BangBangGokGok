@@ -52,11 +52,7 @@ const BarChart: React.FC<Props> = ({ data }) => {
     }
   }, [data]);
 
-  return (
-    <div style={{ width: "100%", height: "100%" }}>
-      <canvas ref={canvasRef} />
-    </div>
-  );
+  return <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />;
 };
 
 export default BarChart;

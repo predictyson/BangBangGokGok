@@ -97,7 +97,9 @@ export default function Review({ data }: IProps) {
           </div>
         </InfoBox>
         <InfoBox>
-          <Chart data={BARDATA} />
+          <ChartWrapper>
+            <Chart data={BARDATA} />
+          </ChartWrapper>
         </InfoBox>
       </InfoWrapper>
       {data.reviews.map((item) => {
@@ -140,6 +142,11 @@ const InfoBox = styled.div`
   width: 30%;
   display: flex;
   flex-direction: column;
+`;
+
+const ChartWrapper = styled.div`
+  width: 100%;
+  height: 100%;
 `;
 
 const Header = styled.div`

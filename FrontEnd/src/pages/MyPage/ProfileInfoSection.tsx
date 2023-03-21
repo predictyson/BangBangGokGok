@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
+import ProfileChart from "@components/mypage/RightSection/Profile/ProfileChart";
 
 export default function ProfileInfoSection() {
   return (
     <ProfileWrapper>
-      <SectionTitle>Infomation</SectionTitle>
+      <SectionTitle>내 정보</SectionTitle>
       <SectionContentWrapper>
         <SectionFirstColumn>
           <ContentWrapper>
@@ -32,11 +33,8 @@ export default function ProfileInfoSection() {
           </ContentWrapper>
         </SectionSecondColumn>
       </SectionContentWrapper>
-      <SectionTitle>Chart</SectionTitle>
-      <ChartWrapper>
-        <div>차트1</div>
-        <div>차트2</div>
-      </ChartWrapper>
+      <SectionTitle>나의 장르 선호도</SectionTitle>
+      <ProfileChart />
     </ProfileWrapper>
   );
 }
@@ -103,15 +101,4 @@ const Content = styled.div`
   font-size: 1.7rem;
   font-weight: ${theme.fontWeight.normal};
   color: ${theme.colors.white};
-`;
-
-const ChartWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  /* margin: 1rem 0 0 0; */
-  padding: 1rem 2rem;
-  height: 100%;
-  background-color: ${theme.colors.containerLight};
-  border-radius: 1.5rem;
 `;
