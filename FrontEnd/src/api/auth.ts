@@ -13,7 +13,7 @@ export const emailValidCheck = (email: string) => {
   return reg.test(email);
 };
 
-// 로그인
+// 로컬 로그인
 export const requestLogin = async (user: IUserInfo) => {
   const userData: IUserInfo = {
     email: user.email,
@@ -53,7 +53,7 @@ export const requestAdditional = async (user: IAdditionalInfo) => {
   return await instance.post(`${URL}/user/join/additional`, additionalData);
 };
 
-// 이메일 코드 전송
+// 이메일 인증 코드 전송
 export const requestSendEmail = async (email: string) => {
   return await instance.get(`${URL}/user/send/email/${email}`);
 };
@@ -61,4 +61,9 @@ export const requestSendEmail = async (email: string) => {
 // 이메일 인증 코드 확인
 export const requestCheckCode = async (email: string, code: string) => {
   return await instance.get(`${URL}/user/check/emailCode/${email}/${code}`);
+};
+
+// 비밀번호 변경
+export const requestChangePassword = async (user: IUserInfo) => {
+  return await instance.post(`${URL}/user/password`, user);
 };

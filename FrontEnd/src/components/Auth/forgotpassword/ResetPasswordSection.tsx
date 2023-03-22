@@ -5,10 +5,13 @@ import { styled as mstyled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router";
 import Toast, { showToast } from "@/components/common/Toast";
+import { useLocation } from "react-router-dom";
+import { IUserInfo } from "types/auth";
+import { requestChangePassword } from "@/api/auth";
 
 export default function ResetPasswordSection() {
   const navigate = useNavigate();
-
+  const email = useLocation().state.email;
   const [password, setPassword] = useState<string>("");
   const [passwordValid, setPasswordValid] = useState<string>("");
   const [showHelperText, setShowHelperText] = useState(false);
@@ -35,10 +38,23 @@ export default function ResetPasswordSection() {
     message: IToastProps["message"]
   ) => {
     showToast({ type, message });
+  };
 
-    setTimeout(() => {
-      navigate("/login");
-    }, 2000);
+  const sendPassword = () => {
+    if (!showHelperText && password !== "") {
+      const userData: IUserInfo = {
+        email: email,
+        password: password,
+      };
+      requestChangePassword(userData);
+      console.log(userData);
+      handleToastClick("success", "비밀번호가 변경되었습니다.");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } else {
+      handleToastClick("error", "새 비밀번호를 확인해주세요.");
+    }
   };
 
   return (
@@ -51,6 +67,7 @@ export default function ResetPasswordSection() {
         color="warning"
         type="password"
         focused
+        value={password}
         placeholder="새 비밀번호를 입력해주세요."
         onChange={handlePasswordData}
         name="password"
@@ -62,18 +79,13 @@ export default function ResetPasswordSection() {
         color="warning"
         type="password"
         focused
+        value={passwordValid}
         onChange={handlePasswordData}
         name="passwordValid"
         placeholder="새 비밀번호를 입력해주세요."
         helperText={showHelperText ? "비밀번호와 일치하지 않습니다." : ""}
       />
-      <ValidCheckButton
-        onClick={() =>
-          handleToastClick("success", "비밀번호가 변경되었습니다.")
-        }
-      >
-        변경하기
-      </ValidCheckButton>
+      <ValidCheckButton onClick={sendPassword}>변경하기</ValidCheckButton>
       <Toast />
     </Container>
   );
@@ -121,17 +133,4 @@ const ValidCheckButton = styled.div`
   font-size: 1.7rem;
   background-color: ${theme.colors.pink};
   cursor: pointer;
-`;
-
-const NotValidCheckButton = styled.div`
-  width: 10rem;
-  height: 3.2rem;
-  border-radius: 0.5rem;
-  padding-top: 1.3rem;
-  text-align: center;
-  font-size: 1.7rem;
-  background-color: grey;
-  color: darkgrey;
-  cursor: pointer;
-  margin-top: 3rem;
 `;

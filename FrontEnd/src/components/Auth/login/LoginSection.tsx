@@ -125,7 +125,7 @@ const LoginImg = styled.img`
 `;
 
 const SubjectText = styled.div`
-  margin: 0 auto;
+  text-align: center;
   font-size: 4rem;
   font-weight: ${theme.fontWeight.extraBold};
 `;

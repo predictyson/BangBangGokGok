@@ -9,14 +9,17 @@ import {
   requestCheckCode,
   emailValidCheck,
 } from "@/api/auth";
+import { useNavigate } from "react-router-dom";
 
-export default function EmailSection({
-  handleValid,
-}: {
-  handleValid: () => void;
-}) {
+export default function EmailSection() {
+  const navigate = useNavigate();
+  const [isValid, setIsValid] = useState(false);
   const [email, setEmail] = useState<string>("");
   const [validCode, setValidCode] = useState<string>("");
+
+  const handleValid = () => {
+    setIsValid(true);
+  };
 
   const handleToastClick = (
     type: IToastProps["type"],
@@ -61,6 +64,7 @@ export default function EmailSection({
       const data = res.data;
       console.log(data);
       if (data) {
+        handleValid();
         handleToastClick("success", "이메일 인증 성공!");
       } else {
         handleToastClick("error", "인증코드를 다시 확인해주세요.");
@@ -101,6 +105,25 @@ export default function EmailSection({
           <ValidCheckButton onClick={checkCode}>코드 확인</ValidCheckButton>
         </InputBox>
       </HegihtHalfBox>
+      {isValid ? (
+        <ValidCheckButton
+          onClick={() =>
+            navigate("/resetpassword", {
+              state: {
+                email,
+              },
+            })
+          }
+        >
+          다음 단계로
+        </ValidCheckButton>
+      ) : (
+        <NotValidCheckButton
+          onClick={() => handleToastClick("error", "이메일 인증을 완료하세요.")}
+        >
+          다음 단계로
+        </NotValidCheckButton>
+      )}
       <Toast />
     </Container>
   );
@@ -161,5 +184,17 @@ const ValidCheckButton = styled.div`
   text-align: center;
   font-size: 1.7rem;
   background-color: ${theme.colors.pink};
+  cursor: pointer;
+`;
+
+const NotValidCheckButton = styled.div`
+  width: 10rem;
+  height: 3.2rem;
+  border-radius: 0.5rem;
+  padding-top: 1.3rem;
+  text-align: center;
+  font-size: 1.7rem;
+  background-color: grey;
+  color: darkgrey;
   cursor: pointer;
 `;
