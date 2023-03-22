@@ -5,6 +5,7 @@ import RankSlider from "@components/main/RankSlider";
 import BasicSlider from "@components/main/Slider";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
+import { ISliderData } from "types/slider";
 
 export default function MainPage() {
   const [hotData, setHotData] = useState<ISliderData[]>(HotThemesData);
@@ -12,10 +13,8 @@ export default function MainPage() {
   const [awardData, setAwardData] = useState<ISliderData[]>(AwardThemesData);
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
-
   const isLogin = true;
-
-  const data = topData.concat(awardData);
+  const data = topData.concat(awardData); // slider data를 모두 합친 것
   return (
     <Container>
       <Header />

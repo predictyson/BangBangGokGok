@@ -10,7 +10,7 @@ import { styled as mstyled } from "@mui/material/styles";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import InputBase from "@mui/material/InputBase";
 import StarIcon from "@mui/icons-material/Star";
-
+import { IDetailData, IPostData } from "types/detail";
 interface IRatingData {
   rating: number;
   difficulty: number;
@@ -76,7 +76,7 @@ export default function WriteReview({
   };
   const handleRatingChange = (
     e: React.SyntheticEvent<Element, Event>,
-    value: number
+    value: number | null
   ) => {
     const { name } = e.target as HTMLButtonElement;
     setRate((prevData) => ({
@@ -87,20 +87,15 @@ export default function WriteReview({
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    try {
-      await setPostdata(() => ({
-        themeId: themeId,
-        content: content,
-        rating: rate.rating,
-        activity: rate.activity,
-        fear: rate.fear,
-        difficulty: rate.difficulty,
-        isSuccess: isSuccess,
-      }));
-      console.log(postdata);
-    } catch (err) {
-      console.log(err);
-    }
+    // setPostdata(() => ({
+    //   themeId: themeId,
+    //   content: content,
+    //   rating: rate.rating,
+    //   activity: rate.activity,
+    //   fear: rate.fear,
+    //   difficulty: rate.difficulty,
+    //   isSuccess: isSuccess,
+    // }));
     handleClose();
   };
 

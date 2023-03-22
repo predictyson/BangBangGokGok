@@ -11,6 +11,7 @@ import Review from "./Review";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LikesModal from "./LikesModal";
+import { IReviewData, IDetailData } from "types/detail";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -326,10 +327,10 @@ const initData: IDetailData = {
     지휘부에서는 나를 포함한 경찰 특공대를 이 마약 조직에 몇 달 전부터 침투 시켰다.
     오늘이 지긋지긋한 마약조직을 끝장 내버릴 마지막 기회다!"
     `, // 테마 시놉시스
-  userRating: "3.3", // 평점
-  userActivity: "3.2", // 활동성
-  userFear: "4.4", // 공포도
-  userDifficulty: "3.3", // 체감 난이도
+  userRating: 3.3, // 평점
+  userActivity: 3.4, // 활동성
+  userFear: 4.4, // 공포도
+  userDifficulty: 4.4, // 체감 난이도
   userCnt: 8, // 평가 인원
   reviews: REVIEWDUMMY, // 해당 테마의 리뷰들;
   isInterested: false,
