@@ -1,9 +1,23 @@
 package com.ssafy.bbkk.api.service;
 
+import com.ssafy.bbkk.api.dto.ChangePasswordRequest;
+import com.ssafy.bbkk.api.dto.JoinAdditionalRequest;
+import com.ssafy.bbkk.api.dto.JoinRequest;
+import com.ssafy.bbkk.api.dto.LoginRequest;
+import com.ssafy.bbkk.api.dto.LoginResponse;
+import com.ssafy.bbkk.api.dto.TokenRequest;
+import com.ssafy.bbkk.api.dto.TokenResponse;
 import com.ssafy.bbkk.common.jwt.TokenProvider;
-import com.ssafy.bbkk.api.dto.*;
-import com.ssafy.bbkk.db.entity.*;
-import com.ssafy.bbkk.db.repository.*;
+import com.ssafy.bbkk.db.entity.Genre;
+import com.ssafy.bbkk.db.entity.PreferredGenreOfUser;
+import com.ssafy.bbkk.db.entity.RefreshToken;
+import com.ssafy.bbkk.db.entity.Region;
+import com.ssafy.bbkk.db.entity.User;
+import com.ssafy.bbkk.db.repository.GenreRepository;
+import com.ssafy.bbkk.db.repository.PreferredGenreOfUserRepository;
+import com.ssafy.bbkk.db.repository.RefreshTokenRepository;
+import com.ssafy.bbkk.db.repository.RegionRepository;
+import com.ssafy.bbkk.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RegionRepository regionRepository;
@@ -75,18 +89,21 @@ public class UserServiceImpl implements UserService{
     @Override
     public void setUserAdditionalInfo(JoinAdditionalRequest joinAdditionalRequest) throws Exception {
         // 유저의 선호 지역 조회
-        Region region = regionRepository.findByRegionBigAndRegionSmall(joinAdditionalRequest.getRegionBig(),
-                joinAdditionalRequest.getRegionSmall()).orElseThrow();
+        Region region = regionRepository.findByRegionBigAndRegionSmall(joinAdditionalRequest.getRegionBig(), joinAdditionalRequest.getRegionSmall())
+                .orElseThrow(
+                        () -> new Exception(joinAdditionalRequest.getRegionBig() + "과 " + joinAdditionalRequest.getRegionSmall() + "에 맞는 지역을 찾을 수 없습니다."));
         // 유저 id를 통해 유저 조회
-        User user = userRepository.findById(joinAdditionalRequest.getUserId()).orElseThrow();
+        User user = userRepository.findById(joinAdditionalRequest.getUserId()).orElseThrow(
+                () -> new Exception(joinAdditionalRequest.getUserId() + "에 맞는 유저를 찾을 수 없습니다."));
         // 입력한 정보를 바탕으로 정보 수정
         user.addUserInfo(joinAdditionalRequest, region);
         // 추가 정보 저장
         user = userRepository.save(user);
 
-        for(int genreId : joinAdditionalRequest.getGenreIds()) {
+        for (int genreId : joinAdditionalRequest.getGenreIds()) {
             // 선호 장르 조회
-            Genre genre = genreRepository.findById(genreId).orElseThrow();
+            Genre genre = genreRepository.findById(genreId).orElseThrow(
+                    () -> new Exception(genreId + "에 맞는 장르를 찾을 수 없습니다."));
             // 유저의 선호 장르 객체 생성
             PreferredGenreOfUser preferredGenreOfUser = new PreferredGenreOfUser(user, genre);
             // 유저의 선호 장르 저장
@@ -124,7 +141,8 @@ public class UserServiceImpl implements UserService{
     public LoginResponse getLoginUser(String email) throws Exception {
         LoginResponse result = null;
         // email을 통해 유저 조회
-        User user = userRepository.findByEmail(email).orElseThrow();
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new Exception(email + "에 맞는 유저를 찾을 수 없습니다."));
         // 유저를 Dto에 감싸기
         result = new LoginResponse(user);
         return result;
@@ -143,7 +161,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public void setPassword(ChangePasswordRequest changePasswordRequest) throws Exception {
         // 이메일을 통해 유저 조회
-        User user = userRepository.findByEmail(changePasswordRequest.getEmail()).orElseThrow();
+        User user = userRepository.findByEmail(changePasswordRequest.getEmail()).orElseThrow(
+                () -> new Exception(changePasswordRequest.getEmail() + "에 맞는 유저를 찾을 수 없습니다."));
         // 비밀번호 암호화 및 변경
         user.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
         // 유저 저장
