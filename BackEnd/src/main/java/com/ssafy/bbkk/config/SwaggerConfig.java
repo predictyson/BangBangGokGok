@@ -2,6 +2,7 @@ package com.ssafy.bbkk.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -23,11 +24,12 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.OAS_30)
+                .ignoredParameterTypes(AuthenticationPrincipal.class)
                 .apiInfo(apiInfo()) // API 문서에 대한 내용
                 .securityContexts(Arrays.asList(securityContext())) // swagger에서 jwt 토큰값 넣기위한 설정
                 .securitySchemes(Arrays.asList(apiKey())) // swagger에서 jwt 토큰값 넣기위한 설정
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ssafy.bbkk")) // Swagger를 적용할 package명 작성
+                .apis(RequestHandlerSelectors.basePackage("com.ssafy.bbkk.api")) // Swagger를 적용할 package명 작성
                 .paths(PathSelectors.any()) // PathSelectors.any() 해당패키지 하위에 있는 모든 url에 적용, 특정 url만 선택 가능
                 .build();
     }
