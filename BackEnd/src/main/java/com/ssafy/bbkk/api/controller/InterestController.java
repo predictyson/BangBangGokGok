@@ -26,6 +26,7 @@ public class InterestController {
 
     private final InterestThemeService interestThemeService;
 
+    @CrossOrigin("*")
     @Operation(summary = "관심 테마 등록", description = "내 관심 테마로 등록한다")
     @PostMapping("{themeId}")
     private ResponseEntity<Void> addInterestTheme(
@@ -41,6 +42,7 @@ public class InterestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @CrossOrigin("*")
     @Operation(summary = "관심 테마 제거", description = "내 관심 테마에서 제거한다")
     @DeleteMapping("{themeId}")
     private ResponseEntity<Void> deleteInterestTheme(

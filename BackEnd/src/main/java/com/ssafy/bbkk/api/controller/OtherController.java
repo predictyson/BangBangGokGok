@@ -24,6 +24,7 @@ public class OtherController {
 
     private final OtherService otherService;
 
+    @CrossOrigin("*")
     @Operation(summary = "장르와 지역 옵션 가져오기", description = "장르의 모든 종류와 지역의 모든 종류를 가져온다")
     @GetMapping
     private ResponseEntity<Map<String, Object>> getSelectList() throws Exception{
