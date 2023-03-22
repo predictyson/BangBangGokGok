@@ -25,11 +25,11 @@ public class CreateReviewRequest {
     private double difficulty;
     @Schema(description = "성공 여부(0 or 1)", required = true)
     private int isSuccess;
-    @Schema(description = "성공 기록(시)", required = false)
-    private int recordHH;
-    @Schema(description = "성공 기록(분)", required = false)
-    private int recordMM;
-    @Schema(description = "성공 기록(초)", required = false)
-    private int recordSS;
+//    @Schema(description = "성공 기록(시)", required = false)
+//    private int recordHH;
+//    @Schema(description = "성공 기록(분)", required = false)
+//    private int recordMM;
+//    @Schema(description = "성공 기록(초)", required = false)
+//    private int recordSS;
 
 }

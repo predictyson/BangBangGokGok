@@ -11,10 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +26,7 @@ public class GroupSetController {
 
     private final GroupSetService groupSetService;
 
+    @CrossOrigin("*")
     @Operation(summary = "일치하는 유저 목록 조회", description = "이메일 또는 닉네임에 입력값이 포함된 유저의 목록을 반환한다")
     @GetMapping("user/{emailOrNickname}")
     private ResponseEntity<Map<String, Object>> getUser(

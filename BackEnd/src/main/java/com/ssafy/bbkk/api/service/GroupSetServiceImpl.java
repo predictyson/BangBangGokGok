@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public class GroupSetServiceImpl implements GroupSetService {
 
     @Override
     public List<PreviewUserResponse> getUserListByEmailOrNickname(String emailOrNickname) throws Exception {
-        List<PreviewUserResponse> result = null;
+        List<PreviewUserResponse> result = new ArrayList<>();
         // email로 유저 찾아오기
         userRepository.findByEmailContaining(emailOrNickname)
                 .stream()

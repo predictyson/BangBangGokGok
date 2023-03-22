@@ -28,6 +28,7 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
+    @CrossOrigin("*")
     @Operation(summary = "테마의 리뷰 목록 조회", description = "해당 테마의 리뷰 목록을 불러온다")
     @GetMapping("{themeId}")
     private ResponseEntity<Map<String, Object>> getReviews(
@@ -44,6 +45,7 @@ public class ReviewController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
+    @CrossOrigin("*")
     @Operation(summary = "테마의 리뷰를 작성", description = "해당 테마의 리뷰를 작성한다")
     @PostMapping
     private ResponseEntity<Void> addReview(
@@ -59,6 +61,7 @@ public class ReviewController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @CrossOrigin("*")
     @Operation(summary = "테마의 리뷰를 수정", description = "해당 테마의 리뷰를 수정한다")
     @PutMapping
     private ResponseEntity<Map<String, Object>> setReview(
@@ -77,6 +80,7 @@ public class ReviewController {
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
 
+    @CrossOrigin("*")
     @Operation(summary = "테마의 리뷰를 제거", description = "해당 테마의 리뷰를 제거한다")
     @DeleteMapping("{reviewId}")
     private ResponseEntity<Void> deleteReview(

@@ -13,7 +13,6 @@ import java.util.TimeZone;
 
 @EnableJpaAuditing // JPA Auditing 활성화
 @SpringBootApplication
-@CrossOrigin("http://localhost:5173")
 public class BbkkApplication {
 
 	public static void main(String[] args) {
