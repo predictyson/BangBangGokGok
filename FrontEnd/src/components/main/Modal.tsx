@@ -173,7 +173,7 @@ const Synopsis = styled.div`
   pre {
     font-family: Pretendard;
   }
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   ::-webkit-scrollbar {
     width: 12px;
@@ -200,7 +200,7 @@ const Container = styled.div`
   display: flex;
   height: 50%;
   margin-top: 2rem;
-
+  overflow-y: hidden;
   .left-container {
     width: 45%;
     justify-content: center;
@@ -262,15 +262,8 @@ const style = {
   padding: "4rem 8rem",
   color: "white",
   overflowY: "auto",
-  WebkitOverflowScrolling: "touch",
   "&::-webkit-scrollbar": {
-    width: "8px",
-  },
-  "&::-webkit-scrollbar-thumb": {
-    borderRadius: "4px",
-  },
-  "&::-webkit-scrollbar-track": {
-    borderRadius: "4px",
+    display: "none",
   },
 };
 
