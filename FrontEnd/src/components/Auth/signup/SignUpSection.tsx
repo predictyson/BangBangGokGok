@@ -62,8 +62,10 @@ export default function SignUpSection() {
       };
       let userId = "";
 
-      requestSignUp(userData).then((res) => (userId = res.data.userId));
-      navigate("/additional", { state: { userId: userId } });
+      requestSignUp(userData).then((res) => {
+        userId = res.data.userId;
+        navigate("/additional", { state: { userId: userId } });
+      });
     } else {
       handleToastClick("error", "이메일 중복확인을 해주세요.");
     }

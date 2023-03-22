@@ -5,6 +5,7 @@ import { theme } from "@/styles/theme";
 import ProfileSection from "@components/Auth/signup/additional/ProfileSection";
 import { IAdditionalInfo } from "types/auth";
 import { useLocation } from "react-router-dom";
+import { requestAdditional } from "@/api/auth";
 
 const InitAdditionalInfo: IAdditionalInfo = {
   userId: -1,
@@ -19,6 +20,7 @@ const InitAdditionalInfo: IAdditionalInfo = {
 
 export default function AdditionalPage() {
   const userId = useLocation().state.userId;
+  console.log(userId);
   const [userAdditionalInfo, setUserAdditionalInfo] =
     useState<IAdditionalInfo>(InitAdditionalInfo);
   const [chapter, setChapter] = useState<"genre" | "profile">("genre");
@@ -27,7 +29,7 @@ export default function AdditionalPage() {
     if (chapter === "genre") setChapter("profile");
     else {
       //TODO : request additonalInfo API 연결
-      console.log(userAdditionalInfo);
+      requestAdditional(userAdditionalInfo);
     }
   };
 

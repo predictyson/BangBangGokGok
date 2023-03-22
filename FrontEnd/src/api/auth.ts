@@ -72,3 +72,7 @@ export const requestCheckCode = async (email: string, code: string) => {
 export const requestChangePassword = async (user: IUserInfo) => {
   return await instance.post(`${URL}/user/password`, user);
 };
+
+export const requestOther = () => {
+  return instance.get(`${URL}/other`);
+};
