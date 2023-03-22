@@ -12,6 +12,8 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LikesModal from "./LikesModal";
 import { IReviewData, IDetailData } from "types/detail";
+import { getDetail } from "@/api/theme";
+import { postInterest, deleteInterest } from "@/api/likes";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -23,12 +25,28 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
   const [data, setData] = useState(initData);
   const [childOpen, setchildOpen] = React.useState(false);
   const [isLiked, setIsLiked] = useState(data.isInterested);
+
+  const requestDetailData = async (themeId: number) => {
+    try {
+      const res = await getDetail(themeId);
+      setData(res.data);
+    } catch (err) {
+      throw new Error("Internal Server Error!");
+    }
+  };
+  requestDetailData(themeId);
+
   const handleClick = (
     type: IToastProps["type"],
     message: IToastProps["message"]
   ) => {
     showToast({ type, message });
     setIsLiked((prev) => !prev);
+    try {
+      isLiked ? postInterest(themeId) : deleteInterest(themeId);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const handleOpen = () => {
     setchildOpen(true);

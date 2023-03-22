@@ -17,30 +17,33 @@ export default function MainPage() {
   const isLogin = true;
 
   const requestThemeUser = async () => {
-    const res = await getThemeUser();
-    if (res.status !== 200) throw new Error("Internal Server Error ");
-    else {
-      setRecommendData(res.data.recommendThemes);
-      setHotData(res.data.hotThemes);
-      setTopData(res.data.topThemes);
+    try {
+      const res = await getThemeUser();
+      const { recommendThemes, hotThemes, topThemes } = res.data;
+      setRecommendData(recommendThemes);
+      setHotData(hotThemes);
+      setTopData(topThemes);
+    } catch (err) {
+      throw new Error("Internal Server Error ");
     }
-    console.log(setHotData);
   };
   const requestThemeGuest = async () => {
-    const res = await getThemeGuest();
-    if (res.status !== 200) throw new Error("Internal Server Error");
-    else {
+    try {
+      const res = await getThemeGuest();
       setHotData(res.data.hotThemes);
       setTopData(res.data.topThemes);
+    } catch (err) {
+      throw new Error("Internal Server Error");
     }
     console.log(setHotData);
   };
 
   const requestThemeAward = async () => {
-    const res = await getThemeAward();
-    if (res.status !== 200) throw new Error("Internal Server Error");
-    else {
+    try {
+      const res = await getThemeAward();
       setAwardData(res.data);
+    } catch (err) {
+      throw new Error("Internal Server Error");
     }
   };
   requestThemeGuest();
