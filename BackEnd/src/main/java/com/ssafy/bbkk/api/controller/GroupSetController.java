@@ -2,6 +2,10 @@ package com.ssafy.bbkk.api.controller;
 
 import com.ssafy.bbkk.api.dto.PreviewUserResponse;
 import com.ssafy.bbkk.api.service.GroupSetService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +29,10 @@ public class GroupSetController {
 
     private final GroupSetService groupSetService;
 
+    @Operation(summary = "일치하는 유저 목록 조회", description = "이메일 또는 닉네임에 입력값이 포함된 유저의 목록을 반환한다")
     @GetMapping("user/{emailOrNickname}")
     private ResponseEntity<Map<String, Object>> getUser(
-            @PathVariable String emailOrNickname) throws Exception{
+            @Parameter(description = "입력값", required = true) @PathVariable String emailOrNickname) throws Exception{
 
         logger.info("[getUserInterest] request : emailOrNickname={}", emailOrNickname);
 

@@ -3,6 +3,7 @@ package com.ssafy.bbkk.api.controller;
 import com.ssafy.bbkk.api.dto.GenreResponse;
 import com.ssafy.bbkk.api.dto.RegionResponse;
 import com.ssafy.bbkk.api.service.OtherService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +24,9 @@ public class OtherController {
 
     private final OtherService otherService;
 
+    @Operation(summary = "장르와 지역 옵션 가져오기", description = "장르의 모든 종류와 지역의 모든 종류를 가져온다")
     @GetMapping
-    private ResponseEntity<Map<String, Object>> getSelectList()
-            throws Exception{
+    private ResponseEntity<Map<String, Object>> getSelectList() throws Exception{
 
         logger.info("[getSelectList] request : ");
 

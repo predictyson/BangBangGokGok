@@ -4,6 +4,8 @@ import com.ssafy.bbkk.api.dto.CreateReviewRequest;
 import com.ssafy.bbkk.api.dto.ReviewOfUserResponse;
 import com.ssafy.bbkk.api.dto.UpdateReviewRequest;
 import com.ssafy.bbkk.api.service.ReviewService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +28,10 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
+    @Operation(summary = "테마의 리뷰 목록 조회", description = "해당 테마의 리뷰 목록을 불러온다")
     @GetMapping("{themeId}")
-    private ResponseEntity<Map<String, Object>> getReviews(@PathVariable int themeId) throws Exception{
+    private ResponseEntity<Map<String, Object>> getReviews(
+            @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int themeId) throws Exception{
         logger.info("[getReviews] request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -40,6 +44,7 @@ public class ReviewController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
+    @Operation(summary = "테마의 리뷰를 작성", description = "해당 테마의 리뷰를 작성한다")
     @PostMapping
     private ResponseEntity<Void> addReview(
             @AuthenticationPrincipal User user,
@@ -54,6 +59,7 @@ public class ReviewController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "테마의 리뷰를 수정", description = "해당 테마의 리뷰를 수정한다")
     @PutMapping
     private ResponseEntity<Map<String, Object>> setReview(
             @AuthenticationPrincipal User user,
@@ -71,10 +77,11 @@ public class ReviewController {
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
 
+    @Operation(summary = "테마의 리뷰를 제거", description = "해당 테마의 리뷰를 제거한다")
     @DeleteMapping("{reviewId}")
     private ResponseEntity<Void> deleteReview(
             @AuthenticationPrincipal User user,
-            @PathVariable int reviewId) throws Exception{
+            @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int reviewId) throws Exception{
 
         logger.info("[deleteReview] request : myEmail={}, reviewId={}", user.getUsername(), reviewId);
 

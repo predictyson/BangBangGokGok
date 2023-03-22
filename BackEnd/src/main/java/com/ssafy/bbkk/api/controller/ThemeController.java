@@ -9,6 +9,9 @@ import com.ssafy.bbkk.api.service.ThemeService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +37,7 @@ public class ThemeController {
     /**
      * DB 추가 후 내용 추가 바람
      */
+    @Operation(summary = "유저의 추천 테마 목록 조회", description = "로그인한 유저의 맞춤 추천 테마를 조회한다")
     @GetMapping("recommend")
     public ResponseEntity<Map<String, Object>> recommendedTheme(
             @AuthenticationPrincipal User user) throws Exception {
@@ -52,6 +56,7 @@ public class ThemeController {
     /**
      * DB 추가 후 내용 추가 바람
      */
+    @Operation(summary = "상위 테마 목록 조회", description = "상위 테마 목록을 불러온다")
     @GetMapping()
     public ResponseEntity<Map<String, Object>> topTheme() throws Exception {
         logger.info("[topTheme] request : ");
@@ -69,6 +74,7 @@ public class ThemeController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
+    @Operation(summary = "테마 검색", description = "필터를 기반으로 일치하는 테마를 불러온다")
     @GetMapping("search")
     public ResponseEntity<Map<String, Object>> searchedTheme(
             @ModelAttribute SearchThemeRequest searchThemeRequest) throws Exception {
@@ -84,9 +90,10 @@ public class ThemeController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
+    @Operation(summary = "테마의 상세 정보 조회", description = "해당 테마의 상세 정보를 불러온다")
     @GetMapping("{themeId}")
     public ResponseEntity<Map<String, Object>> themeInfo(
-            @PathVariable("themeId") int themeId) throws Exception {
+            @Parameter(description = "해당 테마의 Id", required = true) @PathVariable("themeId") int themeId) throws Exception {
         logger.info("[themeInfo] request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
