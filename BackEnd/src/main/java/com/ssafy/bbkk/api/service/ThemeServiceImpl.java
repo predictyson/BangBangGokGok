@@ -13,8 +13,9 @@ import com.ssafy.bbkk.api.dto.ThemeResponse;
 import com.ssafy.bbkk.db.entity.QGenreOfTheme;
 import com.ssafy.bbkk.db.entity.QTheme;
 import com.ssafy.bbkk.db.entity.Theme;
+import com.ssafy.bbkk.db.repository.AwardThemeRepository;
 import com.ssafy.bbkk.db.repository.ThemeRepository;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -29,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ThemeServiceImpl implements ThemeService {
 
     private final ThemeRepository themeRepository;
+    private final AwardThemeRepository awardThemeRepository;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -48,8 +50,9 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public List<AwardThemeBundleResponse> getAwardThemes() throws Exception {
-        List<AwardThemeBundleResponse> result = null;
-
+        List<AwardThemeBundleResponse> result = new ArrayList<>();
+        for (int year = 2019; year < 2023; year++)
+            result.add(new AwardThemeBundleResponse(year, awardThemeRepository.findByYear(year)));
         return result;
     }
 
