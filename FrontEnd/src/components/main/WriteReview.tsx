@@ -176,19 +176,6 @@ export default function WriteReview({
   );
 }
 
-const CustomIput = mstyled(InputBase)`
-width: 4rem;
-border: solid 2px white;
-border-radius: 0.5rem;
-color: white;
-height: 85%;
-font-size: 1.4rem;
-padding: 0 1rem;
-margin: 0 0.5rem;
-max-width: 4rem;
-box-sizing: border-box;
-`;
-
 const CustomToggleButton = mstyled(ToggleButton)({
   padding: "0.5rem 1.5rem",
   fontSize: "1.5rem",
@@ -322,7 +309,4 @@ const initData: IPostData = {
   fear: 0.0, // 공포도
   difficulty: 0.0, // 체감 난이도
   isSuccess: 1,
-  recordHH: 1,
-  recordSS: 24,
-  recordMM: 33, // 성공 여부 (0:실패, 1:성공)
 };

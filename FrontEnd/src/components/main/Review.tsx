@@ -9,6 +9,8 @@ import Rating from "@mui/material/Rating";
 import Chart from "@/components/main/Chart";
 import ReviewItem from "@/components/main/ReviewItem";
 import WriteReview from "./WriteReview";
+import { styled as mstyled } from "@mui/material/styles";
+import { IDetailData } from "types/detail";
 interface IProps {
   data: IDetailData;
   themeId: number;
@@ -82,14 +84,7 @@ export default function Review({ data, themeId, label }: IProps) {
         <InfoBox>
           <div className="title">사용자 총 평점 ( {data.userCnt} )</div>
           <div className="content-wrapper">
-            <StyledRating
-              name="customized-color"
-              value={data.userRating}
-              icon={<FavoriteIcon fontSize="inherit" />}
-              emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-              sx={{ fontSize: "2.5rem" }}
-              readOnly
-            />
+            <CustomFavorite width={"3rem"} fill={`${theme.colors.pink}`} />
             <span className="rating">{data.userRating}/5</span>
           </div>
         </InfoBox>
@@ -116,6 +111,12 @@ export default function Review({ data, themeId, label }: IProps) {
     </>
   );
 }
+const CustomFavorite = mstyled(FavoriteIcon)`
+  .css-v6ftt0-MuiSvgIcon-root {
+    width: 4rem,
+    fill:  ${theme.colors.pink},
+  },
+`;
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -146,6 +147,10 @@ const InfoBox = styled.div`
   width: 30%;
   display: flex;
   flex-direction: column;
+  .css-1xm1aux-MuiSvgIcon-root {
+    font-size: 3rem;
+    color: ${theme.colors.pink};
+  }
 `;
 
 const ChartWrapper = styled.div`

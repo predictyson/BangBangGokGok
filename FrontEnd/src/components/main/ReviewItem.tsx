@@ -24,10 +24,6 @@ export default function ReviewItem({ data }: IProps) {
             {data.isSuccess ? (
               <>
                 <Badge className="green">성공</Badge>
-                <div className="time-left">
-                  남은 시간 {time[0] != "0" && <span>{time[0]}시</span>}
-                  {time[1]}분 {time[2]}초
-                </div>
               </>
             ) : (
               <Badge className="red">실패</Badge>
