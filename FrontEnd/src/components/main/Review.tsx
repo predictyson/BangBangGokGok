@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Line from "@/assets/common/Line.png";
 import { theme } from "@/styles/theme";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import Rating from "@mui/material/Rating";
 import Chart from "@/components/main/Chart";

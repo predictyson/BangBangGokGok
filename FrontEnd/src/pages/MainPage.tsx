@@ -6,6 +6,7 @@ import BasicSlider from "@components/main/Slider";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import { ISliderData } from "types/slider";
+import { getThemeUser, getThemeGuest, getThemeAward } from "@/api/theme";
 
 export default function MainPage() {
   const [hotData, setHotData] = useState<ISliderData[]>(HotThemesData);
@@ -14,14 +15,43 @@ export default function MainPage() {
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
   const isLogin = true;
+
+  const requestThemeUser = async () => {
+    const res = await getThemeUser();
+    if (res.status !== 200) throw new Error("Internal Server Error ");
+    else {
+      setRecommendData(res.data.recommendThemes);
+      setHotData(res.data.hotThemes);
+      setTopData(res.data.topThemes);
+    }
+    console.log(setHotData);
+  };
+  const requestThemeGuest = async () => {
+    const res = await getThemeGuest();
+    if (res.status !== 200) throw new Error("Internal Server Error");
+    else {
+      setHotData(res.data.hotThemes);
+      setTopData(res.data.topThemes);
+    }
+    console.log(setHotData);
+  };
+
+  const requestThemeAward = async () => {
+    const res = await getThemeAward();
+    if (res.status !== 200) throw new Error("Internal Server Error");
+    else {
+      setAwardData(res.data);
+    }
+  };
+  requestThemeGuest();
   const data = topData.concat(awardData); // slider data를 모두 합친 것
+
   return (
     <Container>
       <Header />
       <div className="box">
-        {!isLogin ? (
-          <Banner />
-        ) : (
+        {isLogin && <Banner />}
+        {!isLogin && (
           <RecommendWrapper>
             <BasicSlider isRecommendSlider={true} data={recommendData} />
           </RecommendWrapper>

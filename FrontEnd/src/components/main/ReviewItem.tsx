@@ -9,7 +9,6 @@ interface IProps {
 }
 
 export default function ReviewItem({ data }: IProps) {
-  const time = data.record.split(":");
   return (
     <>
       <img
