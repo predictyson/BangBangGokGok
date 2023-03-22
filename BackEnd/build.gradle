@@ -55,6 +55,7 @@ dependencies {
 
     // 스웨거 의존성
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 //    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.9'
 
 //    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'

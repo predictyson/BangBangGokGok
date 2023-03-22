@@ -29,7 +29,7 @@ public class SwaggerConfig {
                 .securityContexts(Arrays.asList(securityContext())) // swagger에서 jwt 토큰값 넣기위한 설정
                 .securitySchemes(Arrays.asList(apiKey())) // swagger에서 jwt 토큰값 넣기위한 설정
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ssafy.bbkk.api.controller")) // Swagger를 적용할 package명 작성
+                .apis(RequestHandlerSelectors.basePackage("com.ssafy.bbkk.api")) // Swagger를 적용할 package명 작성
                 .paths(PathSelectors.any()) // PathSelectors.any() 해당패키지 하위에 있는 모든 url에 적용, 특정 url만 선택 가능
                 .build();
     }
