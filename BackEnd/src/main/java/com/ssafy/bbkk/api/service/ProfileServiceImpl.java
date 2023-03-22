@@ -88,7 +88,7 @@ public class ProfileServiceImpl implements ProfileService {
 
         // result에 장르명과 해당 장르의 방문횟수를 담기
         for (int i = 0; i < genreSize; i++) {
-            result.add(new PreferenceResponse(genres.get(i).getCategory(), genreIds[i]));
+            result.add(new PreferenceResponse(genres.get(i).getCategory(), genreIds[i + 1]));
         }
         return result;
     }
