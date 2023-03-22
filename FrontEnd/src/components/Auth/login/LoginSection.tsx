@@ -9,6 +9,7 @@ import Google from "@/assets/Auth/GoogleLogin.png";
 import Kakao from "@/assets/Auth/KakaoLogin.png";
 import { requestLogin } from "@/api/auth";
 import { IUserInfo } from "types/auth";
+import { useCookies } from "react-cookie";
 
 const InitUser = {
   email: "",
@@ -18,6 +19,7 @@ const InitUser = {
 export default function LoginSection() {
   const navigate = useNavigate();
   const [user, setUser] = useState<IUserInfo>(InitUser);
+  const [cookies, setCookie] = useCookies(["refresh", "access", "nickname"]);
 
   const handleInputValue = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
@@ -28,12 +30,22 @@ export default function LoginSection() {
       ...cur,
       [name]: value,
     }));
-
-    console.log(user);
   };
 
   const handleLogin = () => {
-    requestLogin(user);
+    requestLogin(user)
+      .then((res) => {
+        const refreshToken = res.data.token.refreshToken;
+        const accessToken = res.data.token.accessToken;
+        const nickname = res.data.user.nickname;
+        setCookie("refresh", refreshToken);
+        setCookie("access", accessToken);
+        setCookie("nickname", nickname);
+        navigate("/");
+      })
+      .catch((message) => {
+        console.log(message);
+      });
   };
 
   return (

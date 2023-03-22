@@ -11,7 +11,7 @@ import { IUserInfo } from "types/auth";
 export default function SignUpSection() {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
-  const [isEmail, setIsEmail] = useState<boolean>(false);
+  const [isEmail, setIsEmail] = useState<boolean>(true);
   const [password, setPassword] = useState<string>("");
   const [passwordValid, setPasswordValid] = useState<string>("");
   const [showHelperText, setShowHelperText] = useState(false);
@@ -42,6 +42,7 @@ export default function SignUpSection() {
   };
 
   const EmailCheck = () => {
+    console.log(email);
     requestEmailCheck(email)
       .then((res) => {
         const data = res.data;
