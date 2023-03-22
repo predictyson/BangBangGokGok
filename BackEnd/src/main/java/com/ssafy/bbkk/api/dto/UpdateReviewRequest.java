@@ -23,11 +23,11 @@ public class UpdateReviewRequest {
     private double difficulty; // 체감 난이도
     @Schema(description = "access 토큰", required = true)
     private int isSuccess; // 성공 여부 (0,1)
-    @Schema(description = "access 토큰", required = true)
-    private int recordHH; // 성공 기록 (시)
-    @Schema(description = "access 토큰", required = true)
-    private int recordMM; // 성공 기록 (분)
-    @Schema(description = "access 토큰", required = true)
-    private int recordSS; // 성공 기록 (초)
+//    @Schema(description = "access 토큰", required = true)
+//    private int recordHH; // 성공 기록 (시)
+//    @Schema(description = "access 토큰", required = true)
+//    private int recordMM; // 성공 기록 (분)
+//    @Schema(description = "access 토큰", required = true)
+//    private int recordSS; // 성공 기록 (초)
 
 }

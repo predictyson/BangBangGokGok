@@ -32,8 +32,8 @@ public class Review extends BaseTimeEntity{
     private double userDifficulty; // 체감 난이도
     @Column(nullable = false)
     private int isSuccess; // 성공 여부
-    @Column(nullable = true)
-    private LocalTime record; // 탈출 시간 (HH:MM:SS)
+//    @Column(nullable = true)
+//    private LocalTime record; // 탈출 시간 (HH:MM:SS)
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
@@ -50,11 +50,11 @@ public class Review extends BaseTimeEntity{
         this.userFear = createReviewRequest.getFear();
         this.userDifficulty = createReviewRequest.getDifficulty();
         this.isSuccess = createReviewRequest.getIsSuccess();
-        if(createReviewRequest.getIsSuccess() == 1){
-            this.record = LocalTime.of(createReviewRequest.getRecordHH(),
-                                        createReviewRequest.getRecordMM(),
-                                        createReviewRequest.getRecordSS());
-        }
+//        if(createReviewRequest.getIsSuccess() == 1){
+//            this.record = LocalTime.of(createReviewRequest.getRecordHH(),
+//                                        createReviewRequest.getRecordMM(),
+//                                        createReviewRequest.getRecordSS());
+//        }
 
         this.user = user;
         this.theme = theme;
@@ -68,10 +68,10 @@ public class Review extends BaseTimeEntity{
         this.userDifficulty = updateReviewRequest.getDifficulty();
         this.isSuccess = updateReviewRequest.getIsSuccess();
 
-        if(updateReviewRequest.getIsSuccess() == 1){
-            this.record = LocalTime.of(updateReviewRequest.getRecordHH(),
-                    updateReviewRequest.getRecordMM(),
-                    updateReviewRequest.getRecordSS());
-        }
+//        if(updateReviewRequest.getIsSuccess() == 1){
+//            this.record = LocalTime.of(updateReviewRequest.getRecordHH(),
+//                    updateReviewRequest.getRecordMM(),
+//                    updateReviewRequest.getRecordSS());
+//        }
     }
 }
