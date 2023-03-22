@@ -3,6 +3,15 @@ import { IUserInfo, IAdditionalInfo } from "types/auth";
 
 const URL = import.meta.env.VITE_SERVER_DOMAIN;
 
+export const requestLogin = async (user: IUserInfo) => {
+  const userData: IUserInfo = {
+    email: user.email,
+    password: user.password,
+  };
+
+  return await instance.post(`${URL}/user/login`, userData);
+};
+
 export const requestSignUp = async (user: IUserInfo) => {
   const userData: IUserInfo = {
     email: user.email,

@@ -7,13 +7,33 @@ import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import Google from "@/assets/Auth/GoogleLogin.png";
 import Kakao from "@/assets/Auth/KakaoLogin.png";
+import { requestLogin } from "@/api/auth";
+import { IUserInfo } from "types/auth";
+
+const InitUser = {
+  email: "",
+  password: "",
+};
 
 export default function LoginSection() {
   const navigate = useNavigate();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<IUserInfo>(InitUser);
 
-  const handleInputValue = (e: React.InputHTMLAttributes<unknown>) => {
-    // setUser(e.formTarget);
+  const handleInputValue = (e: React.SyntheticEvent) => {
+    const target = e.target as HTMLInputElement;
+    const name = target.name as string;
+    const value = target.value as string;
+
+    setUser((cur) => ({
+      ...cur,
+      [name]: value,
+    }));
+
+    console.log(user);
+  };
+
+  const handleLogin = () => {
+    requestLogin(user);
   };
 
   return (
@@ -27,6 +47,7 @@ export default function LoginSection() {
         sx={{ width: 300 }}
         color="warning"
         focused
+        name="email"
         onChange={handleInputValue}
       />
       <CustomTextField
@@ -37,9 +58,11 @@ export default function LoginSection() {
           width: 300,
         }}
         color="warning"
+        onChange={handleInputValue}
+        name="password"
         focused
       />
-      <LoginButton>Login</LoginButton>
+      <LoginButton onClick={handleLogin}>Login</LoginButton>
       <TextBox>
         <NavText onClick={() => navigate("/findpassword")}>
           비밀번호를 잊으셨나요?
