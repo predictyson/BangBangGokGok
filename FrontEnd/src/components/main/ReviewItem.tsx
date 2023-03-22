@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Rating from "@mui/material/Rating";
 import { theme } from "@/styles/theme";
 import Line from "@/assets/common/Line.png";
+import { IReviewData } from "types/detail";
 interface IProps {
   data: IReviewData;
 }

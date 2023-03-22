@@ -18,9 +18,6 @@ export interface IPostData {
   fear: number; // 공포도
   difficulty: number; // 체감 난이도
   isSuccess: number; // 성공 여부 (0:실패, 1:성공)
-  recordHH?: number; // 성공 기록 (시)
-  recordMM?: number; // 성공 기록 (분)
-  recordSS?: number; // 성공 기록 (초)
 }
 export interface IDetailData {
   themeId: number; // 테마 id

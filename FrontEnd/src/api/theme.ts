@@ -7,7 +7,6 @@ export async function getThemeUser() {
 export async function getThemeGuest() {
   return await instance.get(`${URL}/theme/guest`);
 }
-
 export async function getThemeAward() {
   return await instance.get(`${URL}/theme/award`);
 }
