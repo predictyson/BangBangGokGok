@@ -35,6 +35,11 @@ export const requestSignUp = async (user: IUserInfo) => {
   return await instance.post(`${URL}/user/join`, userData);
 };
 
+// 이메일 중복 검사
+export const requestEmailCheck = async (email: string) => {
+  return await instance.get(`${URL}/user/check/email/${email}`);
+};
+
 // 추가 정보 입력
 export const requestAdditional = async (user: IAdditionalInfo) => {
   const additionalData: IAdditionalInfo = {
