@@ -52,10 +52,10 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public List<ReviewOfUserResponse> getUserReviews(String email) throws Exception {
+    public List<ReviewOfUserResponse> getUserReviews(int userId) throws Exception {
         List<ReviewOfUserResponse> result = null;
-        // 이메일로 유저 찾아오기
-        User user = userRepository.findByEmail(email).orElseThrow();
+        // 유저 id로 유저 찾아오기
+        User user = userRepository.findById(userId).orElseThrow();
         // 유저의 리뷰들을 Dto에 감싸기
         result = user.getReviews()
                 .stream()
@@ -76,7 +76,7 @@ public class ProfileServiceImpl implements ProfileService {
         int genreSize = genres.size();
         int[] genreIds = new int[genreSize + 1];
 
-        // 유저 아이디로 유저 찾아오기
+        // 유저 id로 유저 찾아오기
         User user = userRepository.findById(userId).orElseThrow();
         user.getReviews()
                 .stream()
@@ -94,10 +94,10 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public List<InterestThemeResponse> getUserInterestThemes(String email) throws Exception {
+    public List<InterestThemeResponse> getUserInterestThemes(int userId) throws Exception {
         List<InterestThemeResponse> result = null;
-        // 이메일로 유저 찾아오기
-        User user = userRepository.findByEmail(email).orElseThrow();
+        // 유저 id로 유저 찾아오기
+        User user = userRepository.findById(userId).orElseThrow();
         // 유저의 관심 테마 목록을 Dto에 감싸기
         result = user.getInterestedThemeOfUsers()
                 .stream()
