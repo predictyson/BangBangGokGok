@@ -56,7 +56,7 @@ const reviews = [
     //   record : float // 남은 시간 기록
     theme: {
       themeId: 1, // 테마 id
-      title: "바이러스 어쩌구1111111111111111", // 테마명
+      title: "여고괴담 : 과학실 살인사건(프로파일링 게임)", // 테마명
       imgUrl:
         "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
       //   	 genres : string[] // 테마 장르 목록
@@ -75,7 +75,7 @@ const reviews = [
     //   record : float // 남은 시간 기록
     theme: {
       themeId: 1, // 테마 id
-      title: "바이러스 어쩌구2222222222222222", // 테마명
+      title: "사람들은 그것을 행복이라 부르기로 했다", // 테마명
       imgUrl:
         "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
       //   	 genres : string[] // 테마 장르 목록
@@ -90,11 +90,11 @@ const reviews = [
     fear: 3.5, // 공포도
     difficulty: 3.5, // 체감 난이도
     //   createTime : localDateTime // 생성 날짜
-    isSuccess: 1, // 성공 여부
+    isSuccess: 0, // 성공 여부
     //   record : float // 남은 시간 기록
     theme: {
       themeId: 1, // 테마 id
-      title: "바이러스 어쩌구3333333333333333", // 테마명
+      title: "안녕하세요? 무엇을 도와드릴까요?", // 테마명
       imgUrl:
         "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
       //   	 genres : string[] // 테마 장르 목록
@@ -109,11 +109,11 @@ const reviews = [
     fear: 3.5, // 공포도
     difficulty: 3.5, // 체감 난이도
     //   createTime : localDateTime // 생성 날짜
-    isSuccess: 1, // 성공 여부
+    isSuccess: 0, // 성공 여부
     //   record : float // 남은 시간 기록
     theme: {
       themeId: 1, // 테마 id
-      title: "바이러스 어쩌구4444444444444444444444", // 테마명
+      title: "도시괴담 Part.2 The Abandoned Office", // 테마명
       imgUrl:
         "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
       //   	 genres : string[] // 테마 장르 목록

@@ -12,6 +12,8 @@ export const theme: DefaultTheme = {
     selectedItemBackground: "#58424D",
     unselectedItem: "#000000",
     unselectedItemBackground: "#FFF1F8",
+    success: "#00BFA6",
+    failure: "#FF5B79",
   },
   fontWeight: {
     normal: 400,
