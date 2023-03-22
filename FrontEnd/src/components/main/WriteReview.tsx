@@ -9,6 +9,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import { styled as mstyled } from "@mui/material/styles";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import InputBase from "@mui/material/InputBase";
+import StarIcon from "@mui/icons-material/Star";
 
 interface IRatingData {
   rating: number;
@@ -104,10 +105,16 @@ export default function WriteReview({
   };
 
   const ratings: RatingProps[] = [
-    { name: "rating", emptyLabelText: "후기 평점", value: rate["rating"] ?? 0 },
+    {
+      name: "rating",
+      emptyLabelText: "후기 평점",
+      defaultValue: 0,
+      value: rate["rating"] ?? 0,
+    },
     {
       name: "difficulty",
       emptyLabelText: "체감 난이도",
+      defaultValue: 0,
       value: rate["difficulty"] ?? 0,
     },
     {
@@ -177,23 +184,28 @@ export default function WriteReview({
             <RatingWrapper>
               {ratings.map(({ emptyLabelText, name, value }) => (
                 <div className="ratingItem" key={name}>
-                  <div className="title">
-                    {emptyLabelText}
-                    <Rating
-                      sx={{
-                        "& .MuiRating-iconEmpty": {
-                          stroke: "white",
-                        },
-                        fontSize: "1.8rem",
-                        marginLeft: "1rem",
-                      }}
-                      precision={0.5}
-                      name={name}
-                      value={value}
-                      onChange={handleRatingChange}
-                    />
-                    <div />
-                  </div>
+                  <div className="rating-title">{emptyLabelText}</div>
+                  <Rating
+                    sx={{
+                      "& .MuiRating-iconEmpty": {
+                        stroke: "white",
+                      },
+                      "&.MuiRating-root:focus": {
+                        outline: "none",
+                      },
+                      fontSize: "3rem",
+                      marginLeft: "1rem",
+                      boxSizing: "content-box",
+                    }}
+                    precision={0.5}
+                    name={name}
+                    value={value}
+                    emptyIcon={
+                      <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+                    }
+                    onChange={handleRatingChange}
+                  />
+                  <div />
                 </div>
               ))}
             </RatingWrapper>
@@ -263,7 +275,6 @@ const InfoBox = styled.div`
   align-items: center;
   .info {
     align-items: center;
-
     width: 50%;
     display: flex;
   }
@@ -272,6 +283,8 @@ const RatingWrapper = styled.div`
   display: flex;
   font-size: 1.4rem;
   justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 const ReviewBox = styled.div`
   margin-top: 2rem;
@@ -281,8 +294,14 @@ const ReviewBox = styled.div`
     font-size: 1.6rem;
     margin-right: 1.5rem;
   }
+  .rating-title {
+    width: 25%;
+    font-size: 1.8rem;
+  }
   .ratingItem {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
+    height: 3.5rem;
+    width: calc(50% - 1rem);
     font-weight: ${theme.fontWeight.medium};
     color: white;
     display: flex;
@@ -295,8 +314,8 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "48%",
-  height: "55%",
-  bgcolor: "#3E2133",
+  height: "60%",
+  bgcolor: "#33202F",
   borderRadius: 10,
   boxShadow: 24,
   padding: "4rem 6rem",
