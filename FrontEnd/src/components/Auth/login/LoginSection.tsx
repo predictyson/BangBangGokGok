@@ -50,12 +50,12 @@ export default function LoginSection() {
       console.log(nickname);
       setCookie("refresh", refreshToken, {
         path: "/",
-        // httpOnly: true,
+        httpOnly: true,
         secure: true,
       });
       setCookie("access", accessToken, {
         path: "/",
-        // httpOnly: true,
+        httpOnly: true,
         secure: true,
       });
       localStorage.setItem("nickname", nickname);
