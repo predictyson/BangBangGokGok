@@ -57,7 +57,7 @@ const RecommendWrapper = styled.div`
   width: 90%;
   background-color: ${theme.colors.containerLight};
   border-radius: 1.5rem;
-  margin: auto auto;
+  margin: 3rem auto;
   display: flex;
   flex-direction: column;
   border: solid 1px ${theme.colors.pink};
