@@ -11,6 +11,8 @@ import ReviewItem from "@/components/main/ReviewItem";
 import WriteReview from "./WriteReview";
 interface IProps {
   data: IDetailData;
+  themeId: number;
+  label: string;
 }
 interface IBarData {
   labels: string[];
@@ -31,8 +33,9 @@ const StyledRating = styled(Rating)({
   },
 });
 
-export default function Review({ data }: IProps) {
+export default function Review({ data, themeId, label }: IProps) {
   const CHARTDATA = [data.userActivity, data.userFear, data.userDifficulty];
+
   const BARDATA: IBarData = {
     labels: ["활동성", "공포도", "체감 난이도"],
     datasets: [
@@ -64,6 +67,7 @@ export default function Review({ data }: IProps) {
           후기 작성하기
         </WriteButton>
         <WriteReview
+          themeId={themeId}
           handleClose={handleClose}
           childOpen={childOpen}
           data={data}

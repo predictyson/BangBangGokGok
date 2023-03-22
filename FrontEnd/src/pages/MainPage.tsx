@@ -5,7 +5,6 @@ import RankSlider from "@components/main/RankSlider";
 import BasicSlider from "@components/main/Slider";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
-import Container from "@mui/material/Container";
 
 export default function MainPage() {
   const [hotData, setHotData] = useState<ISliderData[]>(HotThemesData);
@@ -14,38 +13,51 @@ export default function MainPage() {
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
 
-  const isLogin = false;
+  const isLogin = true;
 
   const data = topData.concat(awardData);
   return (
-    <Container1>
+    <Container>
       <Header />
-      {!isLogin ? (
-        <Banner />
-      ) : (
-        <RecommendWrapper>
-          <BasicSlider isRecommendSlider={true} data={recommendData} />
-        </RecommendWrapper>
-      )}
-      <RankSlider data={hotData} />
-      <BasicSlider isRecommendSlider={false} data={data} />
-    </Container1>
+      <div className="box">
+        {!isLogin ? (
+          <Banner />
+        ) : (
+          <RecommendWrapper>
+            <BasicSlider isRecommendSlider={true} data={recommendData} />
+          </RecommendWrapper>
+        )}
+        <RankSlider data={hotData} />
+        <BasicSlider isRecommendSlider={false} data={data} />
+      </div>
+    </Container>
   );
 }
 
-const Container1 = styled.div`
+const Container = styled.div`
   background: linear-gradient(
     136.16deg,
     ${theme.colors.background} 35%,
     rgb(146, 89, 124) 65%
   );
+  .box {
+    overflow-y: scroll;
+    height: calc(100vh - 7rem);
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 6px;
+    }
+  }
 `;
 
 const RecommendWrapper = styled.div`
   width: 90%;
   background-color: ${theme.colors.containerLight};
   border-radius: 1.5rem;
-  margin: auto auto;
+  margin: 3rem auto;
   display: flex;
   flex-direction: column;
   border: solid 1px ${theme.colors.pink};

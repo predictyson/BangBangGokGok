@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-as-const */
 import React from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -10,7 +9,7 @@ interface IProps {
 }
 
 const style = {
-  position: "absolute" as "absolute",
+  position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",

@@ -63,6 +63,22 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
     nextArrow: <CustomNextArrow />,
     responsive: [
       {
+        breakpoint: 2000,
+        settings: {
+          slidesToShow: 5.5,
+          slidesToScroll: 5.5,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 1920,
+        settings: {
+          slidesToShow: 4.5,
+          slidesToScroll: 4.5,
+          infinite: true,
+        },
+      },
+      {
         breakpoint: 1250,
         settings: {
           slidesToShow: 3,
@@ -103,10 +119,7 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
           <Slider {...settings}>
             {item.themes.map((theme) => (
               <>
-                <SliderItem
-                  key={theme.themeId}
-                  onClick={() => handleOpen(theme.themeId, item.label)}
-                >
+                <SliderItem key={theme.themeId}>
                   <img
                     src={theme.imgUrl}
                     style={{
@@ -116,7 +129,12 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
                     }}
                   />
 
-                  <Hover className="card-hover">{theme.title}</Hover>
+                  <Hover
+                    className="card-hover"
+                    onClick={() => handleOpen(theme.themeId, item.label)}
+                  >
+                    {theme.title}
+                  </Hover>
                 </SliderItem>
               </>
             ))}
@@ -198,6 +216,7 @@ const Hover = styled.div`
   align-items: center;
   font-size: 2rem;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 const ICONLIST = [
