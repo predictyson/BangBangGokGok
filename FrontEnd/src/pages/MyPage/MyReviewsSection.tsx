@@ -45,12 +45,15 @@ const SectionContentWrapper = styled.div`
 const reviews = [
   {
     reviewId: 1, // 리뷰 id
-    content:
-      "너무 재밌어서 정신이 나갈 것 같아요~1111111111111111111111111111111111111111111111111111111slkdjflksdjflksjdflksjl;kfjsk sldkjflskdjfklsdjfsd slkdjfslkfjsdlk", // 리뷰 내용
-    rating: 5.0, // 평점
-    activity: 4.0, // 활동성
-    fear: 3.5, // 공포도
-    difficulty: 3.5, // 체감 난이도
+    content: `너무 재밌어서 정신이 나갈 것 같아요~1111111111111111111111111111111111111111111111111111111slkdjflksdjflksjdflksjl;kfjsk sldkjflskdjfklsdjfsd slkdjfslkfjsdlk
+      너무 재밌어서 정신이 나갈 것 같아요~1111111111111111111111111111111111111111111111111111111slkdjflksdjflksjdflksjl;kfjsk sldkjflskdjfklsdjfsd slkdjfslkfjsdlk
+      너무 재밌어서 정신이 나갈 것 같아요~1111111111111111111111111111111111111111111111111111111slkdjflksdjflksjdflksjl;kfjsk sldkjflskdjfklsdjfsd slkdjfslkfjsdlk너무 재밌어서 정신이 나갈 것 같아요~1111111111111111111111111111111111111111111111111111111slkdjflksdjflksjdflksjl;kfjsk sldkjflskdjfklsdjfsd slkdjfslkfjsdlk
+      너무 재밌어서 정신이 나갈 것 같아요~1111111111111111111111111111111111111111111111111111111slkdjflksdjflksjdflksjl;kfjsk sldkjflskdjfklsdjfsd slkdjfslkfjsdlk너무 재밌어서 정신이 나갈 것 같아요~1111111111111111111111111111111111111111111111111111111slkdjflksdjflksjdflksjl;kfjsk sldkjflskdjfklsdjfsd slkdjfslkfjsdlk
+      너무 재밌어서 정신이 나갈 것 같아요~1111111111111111111111111111111111111111111111111111111slkdjflksdjflksjdflksjl;kfjsk sldkjflskdjfklsdjfsd slkdjfslkfjsdlk`, // 리뷰 내용
+    rating: 3.0, // 평점
+    activity: 4.5, // 활동성
+    fear: 0.5, // 공포도
+    difficulty: 2.5, // 체감 난이도
     //   createTime : localDateTime // 생성 날짜
     isSuccess: 1, // 성공 여부
     //   record : float // 남은 시간 기록
@@ -83,8 +86,8 @@ const reviews = [
   },
   {
     reviewId: 3, // 리뷰 id
-    content:
-      "너무 재밌어서 정신이 나갈 것 같아요~333333333333333333333333333333333333333333333333333", // 리뷰 내용
+    content: `너무 재밌어서 정신이 나갈 것 같아요~333333333333333333333333333333333333333333333333333333333
+      dkdjslfksjdlf`, // 리뷰 내용
     rating: 5.0, // 평점
     activity: 4.0, // 활동성
     fear: 3.5, // 공포도

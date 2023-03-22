@@ -13,6 +13,7 @@ declare module "styled-components" {
       unselectedItem: string;
       unselectedItemBackground: string;
       success: string;
+      update: string;
       failure: string;
     };
     fontWeight: {
