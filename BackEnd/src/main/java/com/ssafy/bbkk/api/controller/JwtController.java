@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Enumeration;
+import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -19,24 +21,15 @@ public class JwtController {
 
     @GetMapping("/jwt")
     public String getJwtToken(HttpServletRequest request) {
-        BufferedReader br = null;
-        String line = "";
-        StringBuilder stringBuilder = new StringBuilder();
-        try {
-            //body내용 inputstream에 담는다.
-            InputStream inputStream = request.getInputStream();
-            if (inputStream != null) {
-                br = new BufferedReader(new InputStreamReader(inputStream));
-                //더 읽을 라인이 없을때까지 계속
-                while ((line = br.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            }else {
-                System.out.println("Data 없음");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println("=====START-LINE=====begin");
+        System.out.println("request.getMethod() = " + request.getMethod());
+        System.out.println("request.getProtocol() = " + request.getProtocol());
+        System.out.println("request.getRequestURI() = " + request.getRequestURI());
+        System.out.println("request.getRequestURL() = " + request.getRequestURL());
+        System.out.println("request.getScheme() = " + request.getScheme());
+        System.out.println("request.getQueryString() = " + request.getQueryString());
+        System.out.println("request.isSecure() = " + request.isSecure());
+        System.out.println("=====START-LINE=====end");
 
         Cookie[] cookies = request.getCookies();
 
