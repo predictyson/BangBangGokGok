@@ -31,7 +31,7 @@ public class ThemeController {
     private final ThemeService themeService;
 
     @CrossOrigin("*")
-    @Operation(summary = "유저의 추천 테마 목록 조회", description = "로그인한 유저의 맞춤 추천 테마를 조회한다")
+    @Operation(summary = "로그인 테마 목록 조회", description = "로그인시 메인 화면의 테마를 불러온다")
     @GetMapping("user")
     public ResponseEntity<Map<String, Object>> recommendedTheme(
             @AuthenticationPrincipal User user) throws Exception {
@@ -53,7 +53,7 @@ public class ThemeController {
     }
 
     @CrossOrigin("*")
-    @Operation(summary = "상위 테마 목록 조회", description = "상위 테마 목록을 불러온다")
+    @Operation(summary = "게스트 테마 목록 조회", description = "메인 화면의 기본 테마 목록을 불러온다")
     @GetMapping("guest")
     public ResponseEntity<Map<String, Object>> topTheme() throws Exception {
         logger.info("[topTheme] request : ");
