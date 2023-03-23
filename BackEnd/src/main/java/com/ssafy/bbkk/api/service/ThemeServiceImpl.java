@@ -63,35 +63,52 @@ public class ThemeServiceImpl implements ThemeService {
         QGenreOfTheme qGenreOfTheme = QGenreOfTheme.genreOfTheme;
 
         BooleanBuilder builder = new BooleanBuilder();
+
+        // 검색어가 있으면 검색어를 매장명이나 테마명에서 포함하는 테마들만 가져오도록 조건 추가
         String word = searchThemeRequest.getWord();
         if (!"".equals(word)) {
             builder.and(qTheme.title.contains(word).or(qTheme.storeName.contains(word)));
         }
 
+        // 지역을 선택했으면 해당 지역에 속하는 테마들만 가져오도록 조건 추가
         String regionBig = searchThemeRequest.getRegionBig();
         if (!"전체".equals(regionBig)) {
             builder.and(qTheme.region.regionBig.eq(regionBig));
+            String regionSmall = searchThemeRequest.getRegionSmall();
+            if (!"전체".equals(regionSmall)) {
+                builder.and(qTheme.region.regionSmall.eq(regionSmall));
+            }
         }
 
-        String regionSmall = searchThemeRequest.getRegionSmall();
-        if (!"전체".equals(regionSmall)) {
-            builder.and(qTheme.region.regionSmall.eq(regionSmall));
-        }
-
+        // 장르를 선택했으면 해당 장르에 속하는 테마들만 가져오도록 조건 추가
         int genreId = searchThemeRequest.getGenreId();
-        if (-1 < genreId) {
+        if (0 < genreId) {
             builder.and(qGenreOfTheme.genre.id.eq(genreId));
         }
 
+        // 난이도는 항상 조건 추가
         builder.and(qTheme.difficulty.between(searchThemeRequest.getDifficultyS(),
                 searchThemeRequest.getDifficultyE()));
 
+        // 인원수를 선택했으면 해당 인원이 갈 수 있는 테마들만 가져오도록 조건 추가
         int people = searchThemeRequest.getPeople();
-        if (0 < people)
+        if (0 < people) {
             builder.and(qTheme.minPeople.goe(people)).and(qTheme.maxPeople.loe(people));
+        }
 
-        Order order = (searchThemeRequest.getOrderby().equals("asc")) ? Order.ASC : Order.DESC;
-        Expression sort = qTheme.userRating;
+        // 시간을 선택했으면 해당 시간 범위에 해당하는 테마들만 가져오도록 조건 추가(1일 시 60분 이하, 2일 시 60분 초과)
+        int time = searchThemeRequest.getTime();
+        switch (time) {
+            case 1:
+                builder.and(qTheme.runningTime.loe(60));
+                break;
+            case 2:
+                builder.and(qTheme.runningTime.gt(60));
+                break;
+        }
+
+        Order order = (searchThemeRequest.getOrderby().equals("asc")) ? Order.ASC : Order.DESC; // 정렬 방식
+        Expression sort = qTheme.userRating; // 무엇을 기준으로 정렬할지
         switch (searchThemeRequest.getSortby()) {
             case "userActivity":
                 sort = qTheme.userActivity;
@@ -110,17 +127,15 @@ public class ThemeServiceImpl implements ThemeService {
                 .join(qTheme.genreOfThemes, qGenreOfTheme)
                 .where(builder)
                 .orderBy(new OrderSpecifier<>(order, sort))
-                .offset((page - 1) * size)
+                .offset((page) * size)
                 .limit(size)
                 .fetch();
 
-        List<PreviewThemeResponse> result = target
-                .stream()
+        List<PreviewThemeResponse> result = target.stream()
                 .map(x -> new PreviewThemeResponse(x))
                 .collect(Collectors.toList());
         return result;
     }
-
 
     @Override
     public ThemeResponse getThemeInfo(int themeId) throws Exception {
@@ -129,6 +144,5 @@ public class ThemeServiceImpl implements ThemeService {
         result = new ThemeResponse(theme);
         return result;
     }
-
 
 }
