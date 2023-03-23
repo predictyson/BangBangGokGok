@@ -10,10 +10,8 @@ import com.ssafy.bbkk.db.entity.Genre;
 import com.ssafy.bbkk.db.entity.PreferredGenreOfUser;
 import com.ssafy.bbkk.db.entity.Region;
 import com.ssafy.bbkk.db.entity.User;
-import com.ssafy.bbkk.db.repository.GenreRepository;
-import com.ssafy.bbkk.db.repository.PreferredGenreOfUserRepository;
-import com.ssafy.bbkk.db.repository.RegionRepository;
-import com.ssafy.bbkk.db.repository.UserRepository;
+import com.ssafy.bbkk.db.repository.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +26,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     private final UserRepository userRepository;
     private final RegionRepository regionRepository;
+    private final ReviewRepository reviewRepository;
     private final PreferredGenreOfUserRepository preferredGenreOfUserRepository;
     private final GenreRepository genreRepository;
 
@@ -78,26 +77,36 @@ public class ProfileServiceImpl implements ProfileService {
         List<PreferenceResponse> result = new ArrayList<>();
 
         // 모든 장르 목록 가져오기
-        List<GenreResponse> genres = genreRepository.findAll()
+        List<GenreResponse> genreList = genreRepository.findAll()
                 .stream()
                 .map(x -> new GenreResponse(x))
                 .collect(Collectors.toList());
-        int genreSize = genres.size();
+        int genreSize = genreList.size();
         int[] genreIds = new int[genreSize + 1];
 
-        // 유저 id로 유저 찾아오기
-        User user = userRepository.findById(userId).orElseThrow();
-        user.getReviews()
-                .stream()
-                .map(x -> x.getTheme()
-                        .getGenreOfThemes()
-                        .stream()
-                        .map(y -> genreIds[y.getGenre().getId()]++)
-                );
+        // 유저 id로 유저가 작성한 리뷰 찾아오기
+        reviewRepository.findByUserId(userId)
+                .forEach(review->{
+                    review.getTheme().getGenreOfThemes()
+                            .forEach(genre -> {
+                                genreIds[genre.getId()]++;
+                            });
+                });
+
+
+//        // 유저 id로 유저 찾아오기
+//        User user = userRepository.findById(userId).orElseThrow();
+//        user.getReviews()
+//                .stream()
+//                .map(x -> x.getTheme()
+//                        .getGenreOfThemes()
+//                        .stream()
+//                        .map(y -> genreIds[y.getGenre().getId()]++)
+//                );
 
         // result에 장르명과 해당 장르의 방문횟수를 담기
         for (int i = 0; i < genreSize; i++) {
-            result.add(new PreferenceResponse(genres.get(i).getCategory(), genreIds[i + 1]));
+            result.add(new PreferenceResponse(genreList.get(i).getCategory(), genreIds[i + 1]));
         }
         return result;
     }
