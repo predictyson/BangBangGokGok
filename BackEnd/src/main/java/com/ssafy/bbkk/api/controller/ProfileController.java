@@ -62,7 +62,7 @@ public class ProfileController {
     @Operation(summary = "유저가 작성한 리뷰 목록 조회", description = "해당 유저가 작성한 리뷰 목록을 불러온다")
     @GetMapping("reviews/{userId}")
     private ResponseEntity<Map<String, Object>> getUserReviews(
-            @Parameter(description = "해당 유저의 이메일", required = true) @PathVariable int userId) throws Exception {
+            @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
 
         logger.info("[getUserReviews] request : userId={}", userId);
 
@@ -80,7 +80,8 @@ public class ProfileController {
     @CrossOrigin("*")
     @Operation(summary = "유저의 장르 선호도를 조회", description = "해당 유저가 방문한 테마들의 장르별 방문횟수를 불러온다.")
     @GetMapping("preference/{userId}")
-    private ResponseEntity<Map<String, Object>> getUserPreference(@PathVariable int userId) throws Exception {
+    private ResponseEntity<Map<String, Object>> getUserPreference(
+            @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
         logger.info("[getUserPreference] request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -94,9 +95,9 @@ public class ProfileController {
 
     @CrossOrigin("*")
     @Operation(summary = "유저의 관심 테마 목록 조회", description = "해당 유저가 관심 등록한 테마 목록을 불러온다")
-    @GetMapping("interestThemes/{userid}")
+    @GetMapping("interestThemes/{userId}")
     private ResponseEntity<Map<String, Object>> getUserInterestThemes(
-            @Parameter(description = "해당 유저의 이메일", required = true) @PathVariable int userId) throws Exception {
+            @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
 
         logger.info("[getUserInterest] request : userId={}", userId);
 
