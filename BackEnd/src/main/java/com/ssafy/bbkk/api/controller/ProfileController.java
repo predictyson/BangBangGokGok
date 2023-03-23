@@ -38,21 +38,21 @@ public class ProfileController {
 
     @CrossOrigin("*")
     @Operation(summary = "유저의 프로필 정보 조회", description = "해당 유저가 나인지 확인하며, 유저의 프로필 정보를 불러온다")
-    @GetMapping("info/{email}")
+    @GetMapping("info/{userId}")
     private ResponseEntity<Map<String, Object>> getUserInfo(
             @AuthenticationPrincipal User user,
-            @Parameter(description = "해당 유저의 id", required = true) @PathVariable String email) throws Exception {
+            @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
 
-        logger.info("[getUserInfo] request : myEmail={}, Email={}", user.getUsername(), email);
+        logger.info("[getUserInfo] request : myEmail={}, userId={}", user.getUsername(), userId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isMe = false;
         UserInfoResponse userInfoResponse = null;
 
-        if (email.equals(user.getUsername())) {
+        if (profileService.isSameUser(user.getUsername(),userId)){
             isMe = true;
-            userInfoResponse = profileService.getUserInfoByEmail(email);
+            userInfoResponse = profileService.getUserInfoByEmail(user.getUsername());
         }
 
         resultMap.put("isMe", isMe);
