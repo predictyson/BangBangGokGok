@@ -6,6 +6,7 @@ import com.ssafy.bbkk.common.jwt.TokenProvider;
 import com.ssafy.bbkk.common.oauth.PrincipalOauth2UserService;
 import com.ssafy.bbkk.handler.JwtAccessDeniedHandler;
 import com.ssafy.bbkk.handler.OAuth2AuthenticationSuccessHandler;
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -101,20 +102,21 @@ public class SecurityConfig{
             "/swagger-ui/**"
     };
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration config = new CorsConfiguration();
-//
-//        config.addAllowedOrigin("http://localhost:5173");
-//        config.addAllowedOrigin("https://bbkk.store");
-//        config.addAllowedOrigin("http://localhost:8081");
-//        config.addAllowedOrigin("http://localhost:8082");
-//        config.addAllowedMethod("*"); // 모든 메소드 허용.
-//        config.addAllowedHeader("*");
-//        config.setAllowCredentials(true);
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", config);
-//        return source;
-//    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedOrigin("https://bbkk.store");
+        config.addAllowedOrigin("http://localhost:8081");
+        config.addAllowedOrigin("http://bbkk.store:8081");
+        config.addAllowedOrigin("http://localhost:8082");
+        config.addAllowedMethod("*"); // 모든 메소드 허용.
+        config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 }
