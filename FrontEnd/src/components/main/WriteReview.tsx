@@ -10,6 +10,7 @@ import { styled as mstyled } from "@mui/material/styles";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
 import { IDetailData, IPostData } from "types/detail";
+import { postReview } from "@/api/review";
 interface IRatingData {
   rating: number;
   difficulty: number;
@@ -67,15 +68,21 @@ export default function WriteReview({
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    // setPostdata(() => ({
-    //   themeId: themeId,
-    //   content: content,
-    //   rating: rate.rating,
-    //   activity: rate.activity,
-    //   fear: rate.fear,
-    //   difficulty: rate.difficulty,
-    //   isSuccess: isSuccess,
-    // }));
+    setPostdata({
+      themeId: 1,
+      content: content,
+      rating: rate.rating,
+      activity: rate.activity,
+      fear: rate.fear,
+      difficulty: rate.difficulty,
+      isSuccess: isSuccess === "true" ? 1 : 0,
+    });
+    try {
+      const res = await postReview(postdata);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
     handleClose();
   };
 

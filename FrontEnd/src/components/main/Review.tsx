@@ -4,16 +4,16 @@ import Line from "@/assets/common/Line.png";
 import { theme } from "@/styles/theme";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
-import Rating from "@mui/material/Rating";
 import Chart from "@/components/main/Chart";
 import ReviewItem from "@/components/main/ReviewItem";
 import WriteReview from "./WriteReview";
 import { styled as mstyled } from "@mui/material/styles";
-import { IDetailData } from "types/detail";
+import { IDetailData, IReviewData } from "types/detail";
 interface IProps {
   data: IDetailData;
   themeId: number;
   label: string;
+  reviews: IReviewData[];
 }
 interface IBarData {
   labels: string[];
@@ -25,16 +25,8 @@ interface IBarData {
     borderWidth: number;
   }[];
 }
-const StyledRating = styled(Rating)({
-  "& .MuiRating-iconFilled": {
-    color: "#ff6d75",
-  },
-  "& .MuiRating-iconHover": {
-    color: "#ff3d47",
-  },
-});
 
-export default function Review({ data, themeId, label }: IProps) {
+export default function Review({ data, themeId, label, reviews }: IProps) {
   const CHARTDATA = [data.userActivity, data.userFear, data.userDifficulty];
 
   const BARDATA: IBarData = {
@@ -91,7 +83,7 @@ export default function Review({ data, themeId, label }: IProps) {
           <div className="title">전체 리뷰 수 </div>
           <div className="content-wrapper" style={{ marginTop: "1.2rem" }}>
             <TextsmsOutlinedIcon sx={{ fontSize: "5rem" }} />
-            <span className="rating">{data.reviews.length}</span>
+            <span className="rating">{reviews.length}</span>
           </div>
         </InfoBox>
         <InfoBox>
@@ -100,7 +92,7 @@ export default function Review({ data, themeId, label }: IProps) {
           </ChartWrapper>
         </InfoBox>
       </InfoWrapper>
-      {data.reviews.map((item) => {
+      {reviews.map((item) => {
         return (
           <>
             <ReviewItem data={item} />

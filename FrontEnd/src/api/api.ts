@@ -3,7 +3,7 @@ import axios from "axios";
 const VITE_SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
 const instance = axios.create({
-  withCredentials: true,
+  // withCredentials: true,
   baseURL: VITE_SERVER_DOMAIN,
 });
 
