@@ -106,6 +106,7 @@ public class SecurityConfig{
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
+
         config.addAllowedOrigin("http://localhost:5173");
         config.addAllowedOrigin("https://bbkk.store");
         config.addAllowedOrigin("http://localhost:8081");
@@ -114,6 +115,10 @@ public class SecurityConfig{
         config.addAllowedMethod("*"); // 모든 메소드 허용.
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
+
+        System.out.println(config);
+
+
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
