@@ -15,7 +15,7 @@ public interface ThemeService {
     List<ThemeBundleResponse> getTopThemes() throws Exception;
     List<ThemeBundleResponse> getTopThemesOfUser(String email) throws Exception;
 
-    List<AwardThemeBundleResponse> getAwardThemes() throws Exception;
+    AwardThemeBundleResponse getAwardThemes() throws Exception;
 
     List<PreviewThemeResponse> getSearchThemes(SearchThemeRequest searchThemeRequest) throws Exception;
 
