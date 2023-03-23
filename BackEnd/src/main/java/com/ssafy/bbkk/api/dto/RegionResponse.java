@@ -1,10 +1,12 @@
 package com.ssafy.bbkk.api.dto;
 
+import lombok.Getter;
 import lombok.ToString;
 
 import java.util.List;
 
 @ToString
+@Getter
 public class RegionResponse {
 
     private String regionBig; // 지역 대분류

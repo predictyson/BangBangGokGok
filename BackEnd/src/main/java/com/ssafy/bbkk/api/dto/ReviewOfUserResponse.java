@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @ToString
+@Getter
 public class ReviewOfUserResponse {
 
     private int reviewId; // 리뷰 id

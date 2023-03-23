@@ -3,10 +3,13 @@ package com.ssafy.bbkk.api.dto;
 import com.ssafy.bbkk.db.entity.Theme;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import lombok.Getter;
 import lombok.ToString;
 
 
 @ToString
+@Getter
 public class ThemeResponse {
 
     private int themeId; // 테마 아이디
