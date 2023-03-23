@@ -1,8 +1,6 @@
 package com.ssafy.bbkk.api.dto;
 
 import com.ssafy.bbkk.db.entity.Theme;
-
-import java.sql.Clob;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.ToString;
@@ -21,7 +19,7 @@ public class ThemeResponse {
     private String openData; // 오픈일
     private int minPeople; // 최소 인원
     private int maxPeople; // 최대 인원
-    private Clob imgUrl; // 테마 포스터 링크
+    private String imgUrl; // 테마 포스터 링크
     private String pageUrl; // 테마 예약페이지 링크
     private String synopsis; // 테마 시놉시스
     private double userRating; // 평점
