@@ -3,12 +3,13 @@ import styled from "styled-components";
 import Rating from "@mui/material/Rating";
 import { theme } from "@/styles/theme";
 import Line from "@/assets/common/Line.png";
+import { IReviewData } from "types/detail";
+import { getReviews, postReview } from "@/api/review";
 interface IProps {
   data: IReviewData;
 }
 
 export default function ReviewItem({ data }: IProps) {
-  const time = data.record.split(":");
   return (
     <>
       <img
@@ -23,10 +24,6 @@ export default function ReviewItem({ data }: IProps) {
             {data.isSuccess ? (
               <>
                 <Badge className="green">성공</Badge>
-                <div className="time-left">
-                  남은 시간 {time[0] != "0" && <span>{time[0]}시</span>}
-                  {time[1]}분 {time[2]}초
-                </div>
               </>
             ) : (
               <Badge className="red">실패</Badge>

@@ -10,18 +10,14 @@ import { styled as mstyled } from "@mui/material/styles";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import InputBase from "@mui/material/InputBase";
 import StarIcon from "@mui/icons-material/Star";
-
+import { IDetailData, IPostData } from "types/detail";
 interface IRatingData {
   rating: number;
   difficulty: number;
   fear: number;
   activity: number;
 }
-interface ITimeData {
-  hour: number;
-  min: number;
-  sec: number;
-}
+
 interface IProps {
   childOpen: boolean;
   handleClose: () => void;
@@ -42,24 +38,9 @@ export default function WriteReview({
     fear: 0.0,
     activity: 0.0,
   });
-  const [time, setTime] = useState<ITimeData>({ hour: 0, min: 0, sec: 0 });
 
   const [postdata, setPostdata] = useState<IPostData>(initData);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    switch (name) {
-      case "hour":
-        setTime({ ...time, hour: parseInt(value) });
-        break;
-      case "minute":
-        setTime({ ...time, min: parseInt(value) });
-        break;
-      case "second":
-        setTime({ ...time, sec: parseInt(value) });
-    }
-    console.log(time);
-  };
   const handleTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -76,7 +57,7 @@ export default function WriteReview({
   };
   const handleRatingChange = (
     e: React.SyntheticEvent<Element, Event>,
-    value: number
+    value: number | null
   ) => {
     const { name } = e.target as HTMLButtonElement;
     setRate((prevData) => ({
@@ -87,20 +68,15 @@ export default function WriteReview({
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    try {
-      await setPostdata(() => ({
-        themeId: themeId,
-        content: content,
-        rating: rate.rating,
-        activity: rate.activity,
-        fear: rate.fear,
-        difficulty: rate.difficulty,
-        isSuccess: isSuccess,
-      }));
-      console.log(postdata);
-    } catch (err) {
-      console.log(err);
-    }
+    // setPostdata(() => ({
+    //   themeId: themeId,
+    //   content: content,
+    //   rating: rate.rating,
+    //   activity: rate.activity,
+    //   fear: rate.fear,
+    //   difficulty: rate.difficulty,
+    //   isSuccess: isSuccess,
+    // }));
     handleClose();
   };
 
@@ -141,9 +117,9 @@ export default function WriteReview({
             />
           </Header>
           <InfoBox>
-            테마명 :&nbsp; <div className="title">{data.title}</div>
-          </InfoBox>
-          <InfoBox>
+            <div className="info">
+              테마명 :&nbsp; <div className="title">{data.title}</div>
+            </div>
             <div className="info">
               성공 여부 &nbsp;&nbsp;
               <ToggleButtonGroup
@@ -154,29 +130,6 @@ export default function WriteReview({
                 <CustomToggleButton value="success">성공</CustomToggleButton>
                 <CustomToggleButton value="fail">실패</CustomToggleButton>
               </ToggleButtonGroup>
-            </div>
-            <div className="info">
-              남은 시간 &nbsp;{" "}
-              <div className="title">
-                <CustomIput
-                  name="hour"
-                  onChange={handleChange}
-                  value={time.hour}
-                />
-                시
-                <CustomIput
-                  name="minute"
-                  onChange={handleChange}
-                  value={time.min}
-                />
-                분
-                <CustomIput
-                  name="second"
-                  onChange={handleChange}
-                  value={time.sec}
-                />
-                초
-              </div>
             </div>
           </InfoBox>
 
@@ -222,19 +175,6 @@ export default function WriteReview({
     </React.Fragment>
   );
 }
-
-const CustomIput = mstyled(InputBase)`
-width: 4rem;
-border: solid 2px white;
-border-radius: 0.5rem;
-color: white;
-height: 85%;
-font-size: 1.4rem;
-padding: 0 1rem;
-margin: 0 0.5rem;
-max-width: 4rem;
-box-sizing: border-box;
-`;
 
 const CustomToggleButton = mstyled(ToggleButton)({
   padding: "0.5rem 1.5rem",
@@ -314,7 +254,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "48%",
-  height: "60%",
+  height: "55%",
   bgcolor: "#33202F",
   borderRadius: 10,
   boxShadow: 24,
@@ -369,7 +309,4 @@ const initData: IPostData = {
   fear: 0.0, // 공포도
   difficulty: 0.0, // 체감 난이도
   isSuccess: 1,
-  recordHH: 1,
-  recordSS: 24,
-  recordMM: 33, // 성공 여부 (0:실패, 1:성공)
 };
