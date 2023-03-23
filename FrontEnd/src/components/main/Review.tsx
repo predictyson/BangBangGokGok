@@ -12,7 +12,7 @@ import { IDetailData, IReviewData } from "types/detail";
 interface IProps {
   data: IDetailData;
   themeId: number;
-  label: string;
+  label?: string;
   reviews: IReviewData[];
 }
 interface IBarData {
