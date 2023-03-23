@@ -30,7 +30,6 @@ public class ThemeController {
 
     private final ThemeService themeService;
 
-    @CrossOrigin("*")
     @Operation(summary = "로그인 테마 목록 조회", description = "로그인시 메인 화면의 테마를 불러온다")
     @GetMapping("user")
     public ResponseEntity<Map<String, Object>> recommendedTheme(
@@ -54,6 +53,7 @@ public class ThemeController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
+
     @CrossOrigin("*")
     @Operation(summary = "게스트 테마 목록 조회", description = "메인 화면의 기본 테마 목록을 불러온다")
     @GetMapping("guest")
@@ -75,7 +75,6 @@ public class ThemeController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "테마 검색", description = "필터를 기반으로 일치하는 테마를 불러온다")
     @GetMapping("search")
     public ResponseEntity<Map<String, Object>> searchedTheme(
@@ -92,7 +91,6 @@ public class ThemeController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "테마의 상세 정보 조회", description = "해당 테마의 상세 정보를 불러온다")
     @GetMapping("{themeId}")
     public ResponseEntity<Map<String, Object>> themeInfo(
