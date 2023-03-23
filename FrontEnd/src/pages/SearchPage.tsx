@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchInput from "@components/search/SearchInput";
 import SearchSortOptions from "@components/search/SearchSortOptions";
 import SearchFilter from "@components/search/SearchFilter";
@@ -8,6 +8,11 @@ import styled from "styled-components";
 import { theme } from "@/styles/theme";
 
 export default function SearchPage() {
+  const [input, setInputValue] = useState<string>("");
+  // const [filter, setFilterValue] = useState<string>("");
+  // const [sortOption, setSortOption] = useState<string>("");
+  // const [results, setResults] = useState<string[]>([]);
+
   return (
     <>
       <Header />

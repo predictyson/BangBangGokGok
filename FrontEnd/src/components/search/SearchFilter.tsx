@@ -21,7 +21,7 @@ export default function SearchFilter() {
   const closeFilter = () => {
     setFilterButtonState(false);
   };
-  // 필터 적용 API를 사용
+
   const setFilter = () => {
     setFilterButtonState(false);
   };
