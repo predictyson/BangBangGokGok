@@ -2,26 +2,35 @@ import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
 
-export default function SearchInput() {
-  const [searchText, setSearchText] = useState("");
+interface SearchInputProps {
+  setInputValue: (value: string) => void;
+  handleSubmitEvent: () => void;
+}
 
+export default function SearchInput({
+  setInputValue,
+  handleSubmitEvent,
+}: SearchInputProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(event.target.value);
+    setInputValue(event.target.value);
   };
 
-  const handleSubmit = () => {
-    console.log(searchText);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleSubmitEvent();
   };
 
   return (
-    <Container>
-      <InputContainer>
-        <Input onChange={handleChange} placeholder="검색어를 입력하세요." />
-      </InputContainer>
-      <SearchButton onClick={handleSubmit}>
-        <SearchIcon fontSize="large" color="warning" />
-      </SearchButton>
-    </Container>
+    <form onSubmit={handleSubmit}>
+      <Container>
+        <InputContainer>
+          <Input onChange={handleChange} placeholder="검색어를 입력하세요." />
+        </InputContainer>
+        <SearchButton type="submit">
+          <SearchIcon fontSize="large" color="warning" />
+        </SearchButton>
+      </Container>
+    </form>
   );
 }
 

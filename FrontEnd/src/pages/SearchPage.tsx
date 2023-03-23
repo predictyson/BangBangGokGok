@@ -6,12 +6,29 @@ import SearchResult from "@components/search/SearchResult";
 import Header from "@components/common/Header";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
+import { SearchParams } from "types/search";
+import { getSearchThemes } from "@/api/theme";
+import { PreviewThemeResponse } from "types/search";
 
 export default function SearchPage() {
   const [input, setInputValue] = useState<string>("");
   // const [filter, setFilterValue] = useState<string>("");
   // const [sortOption, setSortOption] = useState<string>("");
-  // const [results, setResults] = useState<string[]>([]);
+  const [results, setResults] =
+    useState<PreviewThemeResponse[]>(DUMMY_RESULT_DATA);
+
+  const requestSearch = async (searchParams: SearchParams) => {
+    await getSearchThemes(searchParams);
+  };
+
+  // 검색을 트리거하는 함수
+  const handleSubmitEvent = () => {};
+
+  //   requestSearch({
+  //     word: input,
+  //     regionBig: ,
+  //   })
+  // };
 
   return (
     <>
@@ -19,7 +36,10 @@ export default function SearchPage() {
       <BackGround>
         <ContentWrapper>
           <FormContainer>
-            <SearchInput />
+            <SearchInput
+              setInputValue={setInputValue}
+              handleSubmitEvent={handleSubmitEvent}
+            />
             <SearchFilter />
           </FormContainer>
           <SearchSortOptions />
@@ -29,6 +49,15 @@ export default function SearchPage() {
     </>
   );
 }
+
+const DUMMY_RESULT_DATA = [
+  {
+    themeId: -1,
+    title: "",
+    imgUrl: "",
+    genres: [""],
+  },
+];
 
 const BackGround = styled.div`
   height: 90vh;
