@@ -20,6 +20,12 @@ public class InterestThemeServiceImpl implements InterestThemeService{
     private final ThemeRepository themeRepository;
 
     @Override
+    public boolean isInterestTheme(String email, int themeId) throws Exception {
+        User user = userRepository.findByEmail(email).orElseThrow();
+        return interestedThemeOfUserRepository.existsByUserIdAndThemeId(user.getId(), themeId);
+    }
+
+    @Override
     public void addInterestTheme(String email, int themeId) throws Exception {
         User user = userRepository.findByEmail(email).orElseThrow();
         Theme theme = themeRepository.findById(themeId).orElseThrow();
