@@ -26,6 +26,24 @@ public class InterestController {
 
     private final InterestThemeService interestThemeService;
 
+    @Operation(summary = "관심 테마 조회", description = "해당 테마다 내가 관심을 가진 테마인지 확인한다")
+    @GetMapping("{themeId}")
+    private ResponseEntity<Map<String, Object>> getInterestTheme(
+            @AuthenticationPrincipal User user,
+            @Parameter(description = "상세 테마의 Id", required = true) @PathVariable int themeId) throws Exception{
+
+        logger.info("[getInterestTheme] request : myEmail={}, themeId={}", user.getUsername(), themeId);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        boolean isInterest = interestThemeService.isInterestTheme(user.getUsername(), themeId);
+
+        resultMap.put("isInterest",isInterest);
+
+        logger.info("[getInterestTheme] response : isInterest={}",isInterest);
+
+        return new ResponseEntity<>(resultMap,HttpStatus.OK);
+    }
+
     @Operation(summary = "관심 테마 등록", description = "내 관심 테마로 등록한다")
     @PostMapping("{themeId}")
     private ResponseEntity<Void> addInterestTheme(
