@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public class PreviewThemeResponse {
 
