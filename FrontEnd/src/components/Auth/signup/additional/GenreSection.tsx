@@ -13,13 +13,14 @@ export default function GenreSection(props: ProfileProps) {
     _event: React.MouseEvent<HTMLElement, MouseEvent>,
     newAlignment: number[]
   ) => {
-    props.changeUserInfo("genreId", newAlignment);
+    props.changeUserInfo("genreIds", newAlignment);
   };
 
   useEffect(() => {
     requestOther().then((res) => {
       const data = res.data;
-      console.log(data);
+      console.log(data.genres);
+      setGenres(data.genres);
     });
   }, []);
 
@@ -34,12 +35,12 @@ export default function GenreSection(props: ProfileProps) {
           width: "100%",
           borderRadius: "10px",
         }}
-        value={props.userAdditionalInfo.genreId}
+        value={props.userAdditionalInfo.genreIds}
         onChange={handleChange}
       >
-        {values.map((item) => (
-          <CustomToggleButton value={item} key={item}>
-            {item}
+        {genres.map((item: IGenre) => (
+          <CustomToggleButton key={item.genreId} value={item.genreId}>
+            {item.category}
           </CustomToggleButton>
         ))}
       </ToggleButtonGroup>
@@ -59,6 +60,7 @@ const Container = styled.div`
 `;
 
 const CustomToggleButton = mstyled(ToggleButton)({
+  width: "18rem",
   height: "12rem",
   backgroundColor: "#FFF1F8",
   borderRadius: "1.5rem !important",

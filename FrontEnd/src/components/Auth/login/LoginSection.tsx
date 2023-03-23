@@ -32,20 +32,21 @@ export default function LoginSection() {
     }));
   };
 
-  const handleLogin = () => {
-    requestLogin(user)
-      .then((res) => {
-        const refreshToken = res.data.token.refreshToken;
-        const accessToken = res.data.token.accessToken;
-        const nickname = res.data.user.nickname;
-        setCookie("refresh", refreshToken);
-        setCookie("access", accessToken);
-        setCookie("nickname", nickname);
-        navigate("/");
-      })
-      .catch((message) => {
-        console.log(message);
-      });
+  const handleLogin = async () => {
+    try {
+      const {
+        data: {
+          token: { refreshToken, accessToken },
+          user: { nickname },
+        },
+      } = await requestLogin(user);
+      setCookie("refresh", refreshToken);
+      setCookie("access", accessToken);
+      setCookie("nickname", nickname);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -82,8 +83,13 @@ export default function LoginSection() {
         <NavText onClick={() => navigate("/signup")}>회원가입 하러가기</NavText>
       </TextBox>
       <TextBox>
-        <SNSbtn src={Google} />
-        <SNSbtn src={Kakao} />
+        <a href="https://bbkk.store/api/oauth2/authorization/google">
+          <SNSbtn src={Google} />
+        </a>
+
+        <a href="https://bbkk.store/api/oauth2/authorization/kakao">
+          <SNSbtn src={Kakao} />
+        </a>
       </TextBox>
     </Container>
   );

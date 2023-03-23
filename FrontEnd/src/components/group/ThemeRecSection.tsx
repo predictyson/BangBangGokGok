@@ -21,6 +21,10 @@ export default function ThemeRecSection({
   }, [isWaiting]);
 
   const handleResult = () => {
+    // TODO: data는 userid모은거
+    const data = userList.map((user) => {
+      return user.userId;
+    });
     setIsWaiting(true);
   };
 

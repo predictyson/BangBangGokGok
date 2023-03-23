@@ -4,14 +4,14 @@ import { styled as mstyled } from "@mui/material/styles";
 import { theme } from "@/styles/theme";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router";
-import { requestEmailCheck, requestSignUp } from "@/api/auth";
+import { emailValidCheck, requestEmailCheck, requestSignUp } from "@/api/auth";
 import Toast, { showToast } from "@/components/common/Toast";
 import { IUserInfo } from "types/auth";
 
 export default function SignUpSection() {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
-  const [isEmail, setIsEmail] = useState<boolean>(true);
+  const [isEmail, setIsEmail] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [passwordValid, setPasswordValid] = useState<string>("");
   const [showHelperText, setShowHelperText] = useState(false);
@@ -41,31 +41,39 @@ export default function SignUpSection() {
     showToast({ type, message });
   };
 
-  const EmailCheck = () => {
-    console.log(email);
-    requestEmailCheck(email)
-      .then((res) => {
-        const data = res.data;
-        if (data) setIsEmail(true);
-        else handleToastClick("error", "이미 존재하는 이메일입니다.");
-      })
-      .catch((message) => {
-        console.log(message);
-      });
+  const emailCheck = () => {
+    if (emailValidCheck(email)) {
+      requestEmailCheck(email)
+        .then((res) => {
+          const data = res.data;
+          if (data) {
+            setIsEmail(true);
+            handleToastClick("success", "사용가능한 이메일입니다.");
+          } else handleToastClick("error", "이미 존재하는 이메일입니다.");
+        })
+        .catch((message) => {
+          console.log(message);
+        });
+    } else {
+      handleToastClick("error", "올바른 형식의 이메일을 입력해주세요.");
+    }
   };
 
-  const SendNextPage = () => {
+  const sendNextPage = async () => {
     if (isEmail) {
       const userData: IUserInfo = {
         email: email,
         password: password,
       };
-      let userId = "";
 
-      requestSignUp(userData).then((res) => {
-        userId = res.data.userId;
-        navigate("/additional", { state: { userId: userId } });
-      });
+      try {
+        const { data } = await requestSignUp(userData);
+        const newUserId = data.userId;
+        navigate("/additional", { state: { userId: newUserId } });
+      } catch (error) {
+        console.log(error);
+        handleToastClick("error", "회원가입에 실패하였습니다.");
+      }
     } else {
       handleToastClick("error", "이메일 중복확인을 해주세요.");
     }
@@ -85,7 +93,7 @@ export default function SignUpSection() {
           placeholder="example123@naver.com"
           onChange={handleSignUpData}
         />
-        <ValidCheckButton onClick={EmailCheck}>중복확인</ValidCheckButton>
+        <ValidCheckButton onClick={emailCheck}>중복확인</ValidCheckButton>
       </EmailCheckBox>
       <CustomTextField
         label="비밀번호"
@@ -110,7 +118,7 @@ export default function SignUpSection() {
         onChange={handleSignUpData}
         helperText={showHelperText ? "비밀번호와 일치하지 않습니다." : ""}
       />
-      <SignUpButton onClick={SendNextPage}>회원가입</SignUpButton>
+      <SignUpButton onClick={sendNextPage}>회원가입</SignUpButton>
       <Toast />
     </Container>
   );

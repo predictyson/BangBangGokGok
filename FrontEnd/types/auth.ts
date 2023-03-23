@@ -11,7 +11,7 @@ export interface IUserInfo {
 export interface IAdditionalInfo {
   userId: number; // 유저 고유 아이디
   nickname: string; // 닉네임
-  genreId: number[]; // 선호 장르 id
+  genreIds: number[]; // 선호 장르 id
   regionBig: string; // 선호 지역(대분류)
   regionSmall: string; // 선호 지역(대분류)
   age: number; // 나이
