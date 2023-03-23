@@ -49,21 +49,33 @@ public class ThemeServiceImpl implements ThemeService {
         Region region = regionRepository.findById(regionId).orElseThrow();
 
         List<PreviewThemeResponse> themes = null;
-        List<Theme> list = null;
+        List<PreviewThemeResponse> list = null;
         int themeCnt = themeRepository.countByRegionId(region.getId());
         // 테마 개수가 적을 경우
         if(themeCnt < THEME_COUNT){
-            List<Region> regions = regionRepository.findAllByRegionBig(region.getRegionBig());
+            List<Integer> regionIds = regionRepository.findAllByRegionBig(region.getRegionBig())
+                    .stream()
+                    .map(x->x.getId())
+                    .collect(Collectors.toList());
             // 지역 대분류에서 테마 가져오기
-            for(Region reg : regions){
-                list.addAll(themeRepository.findByRegionIdOrderByUserRatingDesc(reg.getId()));
+            list = new ArrayList<>();
+            for(int regId : regionIds){
+                if(themeRepository.countByRegionId(regId) >= 1){
+                    list.addAll(themeRepository.findByRegionIdOrderByUserRatingDesc(regId)
+                            .stream()
+                            .map(x->new PreviewThemeResponse(x))
+                            .collect(Collectors.toList()));
+                }
             }
             label = region.getRegionBig() + "에서 인기있는 테마";
         }
         // 테마 개수가 많을 경우
         else{
             // 지역 소분류에서 테마 가져오기
-            list = themeRepository.findByRegionIdOrderByUserRatingDesc(region.getId());
+            list = themeRepository.findByRegionIdOrderByUserRatingDesc(region.getId())
+                    .stream()
+                    .map(x->new PreviewThemeResponse(x))
+                    .collect(Collectors.toList());
             label = region.getRegionBig() + " " + region.getRegionSmall() + "에서 인기있는 테마";
         }
 
@@ -74,11 +86,11 @@ public class ThemeServiceImpl implements ThemeService {
             temp = new ArrayList<>();
 
             // 테마를 위에서부터 for문으로
-            for(Theme theme : list){
+            for(PreviewThemeResponse theme : list){
                 // 확률에 의해 담긴다
                 if(rnd.nextInt(10) < 8) { // 80%
                     cnt++;
-                    temp.add(new PreviewThemeResponse(theme));
+                    temp.add(theme);
                 }
                 // 모두 담겼으면 끝
                 if(cnt == THEME_RETURN_COUNT) break;
