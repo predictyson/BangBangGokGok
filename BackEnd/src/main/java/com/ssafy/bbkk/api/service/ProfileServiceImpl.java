@@ -87,12 +87,13 @@ public class ProfileServiceImpl implements ProfileService {
         // 유저 id로 유저가 작성한 리뷰 찾아오기
         reviewRepository.findByUserId(userId)
                 .forEach(review->{
-                    review.getTheme().getGenreOfThemes()
-                            .forEach(genre -> {
-                                genreIds[genre.getId()]++;
+                    review
+                            .getTheme()
+                            .getGenreOfThemes()
+                            .forEach(genreOfTheme -> {
+                                genreIds[genreOfTheme.getGenre().getId()]++;
                             });
                 });
-
 
 //        // 유저 id로 유저 찾아오기
 //        User user = userRepository.findById(userId).orElseThrow();

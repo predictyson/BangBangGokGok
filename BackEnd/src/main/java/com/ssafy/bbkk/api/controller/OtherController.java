@@ -26,7 +26,6 @@ public class OtherController {
 
     private final OtherService otherService;
 
-    @CrossOrigin("*")
     @Operation(summary = "모든 장르 가져오기", description = "모든 장르 종류를 가져온다")
     @GetMapping("genre")
     private ResponseEntity<Map<String, Object>> getSelectList() throws Exception {
@@ -49,7 +48,6 @@ public class OtherController {
     }
 
 
-    @CrossOrigin("*")
     @Operation(summary = "지역 소분류 가져오기", description = "지역 대분류 이름을 받아 속하는 지역 소분류 종류를 가져온다")
     @GetMapping("region/{regionBig}")
     private ResponseEntity<Map<String, Object>> getRegionSmallList(@PathVariable("regionBig") String regionBig) throws Exception {

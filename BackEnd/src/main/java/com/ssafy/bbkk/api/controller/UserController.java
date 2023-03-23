@@ -45,7 +45,6 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "회원 가입", description = "회원 가입을 진행한다")
     @PostMapping("join")
     public ResponseEntity<Map<String, Object>> join(@RequestBody JoinRequest joinRequest) throws Exception {
@@ -61,7 +60,6 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "추가 정보 작성", description = "회원 가입 후 추가 정보를 작성한다")
     @PostMapping("join/additional")
     public ResponseEntity<Void> addInfo(@RequestBody JoinAdditionalRequest joinAdditionalRequest) throws Exception {
@@ -74,7 +72,6 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "토큰 재발급", description = "access token을 재발급한다")
     @PostMapping("/reissue")
     private ResponseEntity<Map<String, Object>> reissue(
@@ -92,7 +89,6 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "이메일 중복 확인", description = "이메일 중복 검사를 실시한다")
     @GetMapping("check/email/{email}")
     public ResponseEntity<Map<String, Object>> checkEmail(@PathVariable String email) throws Exception {
@@ -108,7 +104,6 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "닉네임 중복 확인", description = "닉네임 중복 검사를 실시한다")
     @GetMapping("check/nickname/{nickname}")
     public ResponseEntity<Map<String, Object>> checkNickname(@PathVariable String nickname) throws Exception {
@@ -124,7 +119,6 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "이메일 인증 코드 발송", description = "해당 이메일로 인증 코드를 발송한다")
     @GetMapping("send/email/{email}")
     public ResponseEntity<Map<String, Object>> sendEmailCode(@PathVariable String email) throws Exception {
@@ -145,7 +139,6 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "이메일 인증 코드 확인", description = "해당 이메일로 발송한 인증 코드와 일치하는지 확인한다")
     @GetMapping("check/emailCode/{email}/{code}")
     public ResponseEntity<Map<String, Object>> checkEmailCode(@PathVariable String email,
@@ -162,7 +155,6 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "비밀번호 변경", description = "비밀번호를 변경한다")
     @PostMapping("password")
     public ResponseEntity<Void> changePassword(
