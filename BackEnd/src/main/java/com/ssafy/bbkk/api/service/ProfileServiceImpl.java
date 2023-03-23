@@ -32,6 +32,15 @@ public class ProfileServiceImpl implements ProfileService {
     private final GenreRepository genreRepository;
 
     @Override
+    public boolean isSameUser(String email, int userId) throws Exception {
+        // 유저 id를 통해 유저 조회
+        User user = userRepository.findById(userId).orElseThrow();
+        // 로그인한 정보와 조회한 유저가 같은지 비교
+        if(email.equals(user.getEmail())) return true;
+        return false;
+    }
+
+    @Override
     public UserInfoResponse getUserInfoByEmail(String email) throws Exception {
         UserInfoResponse result = null;
         // 이메일로 유저 찾아오기
