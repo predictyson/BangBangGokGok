@@ -39,11 +39,12 @@ public class ThemeServiceImpl implements ThemeService {
 
     private final int THEME_RETURN_COUNT = 5;
     private final int THEME_COUNT = 10;
-    private Random rnd = new Random();
+    private Random rnd;
 
     // 지역 id에 해당되는 지역의 인기 테마를 반환
     public ThemeBundleResponse getRegionBundle(int regionId){
         ThemeBundleResponse result = null;
+        rnd = new Random();
         String label;
         // 테마의 지역
         Region region = regionRepository.findById(regionId).orElseThrow();
@@ -111,7 +112,7 @@ public class ThemeServiceImpl implements ThemeService {
     public ThemeBundleResponse getFeelBundle(int type) throws Exception{
         ThemeBundleResponse result = null;
         List<PreviewThemeResponse> themes = null;
-
+        rnd = new Random();
         List<PreviewThemeResponse> list = null;
         String label = "";
         switch (type){
@@ -213,7 +214,7 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public List<ThemeBundleResponse> getTopThemes() throws Exception {
         List<ThemeBundleResponse> result = new ArrayList<>();
-
+        rnd = new Random();
         // 체감 테마
         result.add(getFeelBundle(rnd.nextInt(4) + 1));
 
@@ -229,7 +230,7 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public List<ThemeBundleResponse> getTopThemesOfUser(String email) throws Exception {
         List<ThemeBundleResponse> result = new ArrayList<>();
-
+        rnd = new Random();
         if(rnd.nextBoolean()){
             // 체감 테마
             result.add(getFeelBundle(rnd.nextInt(4)));
@@ -244,10 +245,12 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public List<AwardThemeBundleResponse> getAwardThemes() throws Exception {
-        List<AwardThemeBundleResponse> result = new ArrayList<>();
-        for (int year = 2019; year < 2023; year++)
-            result.add(new AwardThemeBundleResponse(year, awardThemeRepository.findByYear(year)));
+    public AwardThemeBundleResponse getAwardThemes() throws Exception {
+        AwardThemeBundleResponse result = null;
+        rnd = new Random();
+        int year = rnd.nextInt(4) + 2019;
+        result = new AwardThemeBundleResponse(year, awardThemeRepository.findByYear(year));
+
         return result;
     }
 
