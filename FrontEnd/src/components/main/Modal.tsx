@@ -14,6 +14,7 @@ import LikesModal from "./LikesModal";
 import { IReviewData, IDetailData } from "types/detail";
 import { getDetail } from "@/api/theme";
 import { postInterest, deleteInterest } from "@/api/likes";
+import { getReviews } from "@/api/review";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -22,9 +23,19 @@ interface IProps {
 }
 
 export default function DetailModal({ open, onClose, themeId, label }: IProps) {
-  const [data, setData] = useState(initData);
+  const [data, setData] = useState<IDetailData>(initData);
   const [childOpen, setchildOpen] = React.useState(false);
   const [isLiked, setIsLiked] = useState(data.isInterested);
+  const [reviews, setReviews] = useState(REVIEWDUMMY);
+
+  const requestReviews = async (themeId: number) => {
+    try {
+      const res = await getReviews(themeId);
+      setReviews(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const requestDetailData = async (themeId: number) => {
     try {
@@ -34,16 +45,20 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
       throw new Error("Internal Server Error!");
     }
   };
+  requestReviews(themeId);
   requestDetailData(themeId);
 
-  const handleClick = (
+  const handleClick = async (
     type: IToastProps["type"],
     message: IToastProps["message"]
   ) => {
     showToast({ type, message });
     setIsLiked((prev) => !prev);
     try {
-      isLiked ? postInterest(themeId) : deleteInterest(themeId);
+      const res = isLiked
+        ? await postInterest(themeId)
+        : await deleteInterest(themeId);
+      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -118,13 +133,18 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
             </DetailInfo>
             <DetailInfo>
               난이도
-              <Rating
-                name="readonly"
-                value={data.difficulty}
-                style={{ marginLeft: "1rem" }}
-                size="large"
-                readOnly
-              />
+              {data.difficulty === -1 && (
+                <h2 style={{ marginLeft: "3rem" }}>?</h2>
+              )}
+              {data.difficulty !== -1 && (
+                <Rating
+                  name="readonly"
+                  value={data.difficulty}
+                  style={{ marginLeft: "1rem" }}
+                  size="large"
+                  readOnly
+                />
+              )}
               {isLiked ? (
                 <LikeButton
                   onClick={() =>
@@ -153,7 +173,7 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
         <Synopsis>
           <pre>{data.synopsis}</pre>
         </Synopsis>
-        <Review data={data} themeId={themeId} label={label} />
+        <Review data={data} themeId={themeId} label={label} reviews={reviews} />
       </Box>
     </Modal>
   );
@@ -350,6 +370,5 @@ const initData: IDetailData = {
   userFear: 4.4, // 공포도
   userDifficulty: 4.4, // 체감 난이도
   userCnt: 8, // 평가 인원
-  reviews: REVIEWDUMMY, // 해당 테마의 리뷰들;
   isInterested: false,
 };

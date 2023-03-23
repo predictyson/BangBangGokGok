@@ -4,7 +4,7 @@ import Rating from "@mui/material/Rating";
 import { theme } from "@/styles/theme";
 import Line from "@/assets/common/Line.png";
 import { IReviewData } from "types/detail";
-import { getReviews, postReview } from "@/api/review";
+
 interface IProps {
   data: IReviewData;
 }

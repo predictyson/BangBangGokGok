@@ -3,10 +3,13 @@ import styled from "styled-components";
 import Ghost from "@/assets/common/Ghost.png";
 import Logo from "@/assets/common/Logo.png";
 import { theme } from "@/styles/theme";
+import { styled as mstyled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 export default function Header() {
   const navigate = useNavigate();
-
+  const isLogin = true;
+  const username = "나는야 상기";
   return (
     <Container>
       <div className="left-container">
@@ -26,7 +29,16 @@ export default function Header() {
       <div className="right-container">
         <NavItem onClick={() => navigate("/groupset")}>Group Set</NavItem>
         <NavItem onClick={() => navigate("/search")}>Search</NavItem>
-        <NavButton onClick={() => navigate("/login")}>Login</NavButton>
+        {!isLogin && (
+          <NavButton onClick={() => navigate("/login")}>Login</NavButton>
+        )}
+        {isLogin && (
+          <NavItem onClick={() => navigate("/mypage")}>
+            {/* <AccountCircleOutlinedIcon style={{ fontSize: "3rem" }} /> */}
+            {/* <span> {username}</span> */}
+            Mypage
+          </NavItem>
+        )}
       </div>
     </Container>
   );
@@ -59,6 +71,20 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+`;
+
+const ProfileItem = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
+  span {
+    margin-left: 0.5rem;
   }
 `;
 

@@ -39,6 +39,5 @@ export interface IDetailData {
   userFear: number; // 공포도
   userDifficulty: number; // 체감 난이도
   userCnt: number; // 평가 인원
-  reviews: IReviewData[]; // 해당 테마의 리뷰들
   isInterested: boolean;
 }
