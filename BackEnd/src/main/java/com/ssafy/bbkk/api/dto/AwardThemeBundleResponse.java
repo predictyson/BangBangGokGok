@@ -3,9 +3,12 @@ package com.ssafy.bbkk.api.dto;
 import com.ssafy.bbkk.db.entity.AwardTheme;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import lombok.Getter;
 import lombok.ToString;
 
 @ToString
+@Getter
 public class AwardThemeBundleResponse {
 
     private int year; // 어워즈 연도
