@@ -51,7 +51,7 @@ public class SecurityConfig{
 
         .and()
             .cors()
-//            .configurationSource(corsConfigurationSource())
+            .configurationSource(corsConfigurationSource())
 
         .and()
             .headers()
