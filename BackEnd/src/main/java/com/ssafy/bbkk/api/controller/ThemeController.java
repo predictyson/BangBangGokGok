@@ -30,44 +30,43 @@ public class ThemeController {
 
     private final ThemeService themeService;
 
-    /**
-     * DB 추가 후 내용 추가 바람
-     */
     @CrossOrigin("*")
     @Operation(summary = "유저의 추천 테마 목록 조회", description = "로그인한 유저의 맞춤 추천 테마를 조회한다")
-    @GetMapping("recommend")
+    @GetMapping("user")
     public ResponseEntity<Map<String, Object>> recommendedTheme(
             @AuthenticationPrincipal User user) throws Exception {
         logger.info("[recommendedTheme] request : myEmail={}",user.getUsername());
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        List<ThemeBundleResponse> themeBundleResponses = themeService.getRecommendedThemes(user.getUsername());
-        resultMap.put("recommendThemes", themeBundleResponses);
+        List<ThemeBundleResponse> recommendThemes = themeService.getRecommendedThemes(user.getUsername());
+        List<ThemeBundleResponse> topThemes = themeService.getTopThemesOfUser(user.getUsername());
+        List<AwardThemeBundleResponse> awardThemes = themeService.getAwardThemes();
 
-        logger.info("[recommendedTheme] response : recommendThemes={}", themeBundleResponses);
+        resultMap.put("recommendThemes", recommendThemes);
+        resultMap.put("topThemes", topThemes);
+        resultMap.put("awardThemes", awardThemes);
+
+        logger.info("[recommendedTheme] response : recommendThemes={}, topThemes={}, awardThemes={}", recommendThemes, topThemes, awardThemes);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    /**
-     * DB 추가 후 내용 추가 바람
-     */
     @CrossOrigin("*")
     @Operation(summary = "상위 테마 목록 조회", description = "상위 테마 목록을 불러온다")
-    @GetMapping()
+    @GetMapping("guest")
     public ResponseEntity<Map<String, Object>> topTheme() throws Exception {
         logger.info("[topTheme] request : ");
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        List<ThemeBundleResponse> themeBundleResponseList = themeService.getTopThemes();
-        List<AwardThemeBundleResponse> AwardThemeBundleList = themeService.getAwardThemes();
+        List<ThemeBundleResponse> topThemes = themeService.getTopThemes();
+        List<AwardThemeBundleResponse> awardThemes = themeService.getAwardThemes();
 
-        resultMap.put("topThemes", themeBundleResponseList);
-        resultMap.put("awardThemes", AwardThemeBundleList);
+        resultMap.put("topThemes", topThemes);
+        resultMap.put("awardThemes", awardThemes);
 
-        logger.info("[topTheme] response : recommendThemes={}, awardThemes={}", themeBundleResponseList, AwardThemeBundleList);
+        logger.info("[topTheme] response : topThemes={}, awardThemes={}", topThemes, awardThemes);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }

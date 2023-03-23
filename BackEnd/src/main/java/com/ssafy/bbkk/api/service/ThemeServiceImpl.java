@@ -10,16 +10,16 @@ import com.ssafy.bbkk.api.dto.PreviewThemeResponse;
 import com.ssafy.bbkk.api.dto.SearchThemeRequest;
 import com.ssafy.bbkk.api.dto.ThemeBundleResponse;
 import com.ssafy.bbkk.api.dto.ThemeResponse;
-import com.ssafy.bbkk.db.entity.QGenreOfTheme;
-import com.ssafy.bbkk.db.entity.QTheme;
-import com.ssafy.bbkk.db.entity.Theme;
-import com.ssafy.bbkk.db.repository.AwardThemeRepository;
-import com.ssafy.bbkk.db.repository.ThemeRepository;
+import com.ssafy.bbkk.db.entity.*;
+import com.ssafy.bbkk.db.repository.*;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,21 +29,204 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ThemeServiceImpl implements ThemeService {
 
+    private final UserRepository userRepository;
+    private final RegionRepository regionRepository;
     private final ThemeRepository themeRepository;
     private final AwardThemeRepository awardThemeRepository;
+    private final RecommendedThemeOfUserRepository recommendedThemeOfUserRepository;
     @PersistenceContext
     private EntityManager entityManager;
+
+    private final int THEME_RETURN_COUNT = 5;
+    private final int THEME_COUNT = 10;
+    private Random rnd = new Random();
+
+    // 지역 id에 해당되는 지역의 인기 테마를 반환
+    public ThemeBundleResponse getRegionBundle(int regionId){
+        ThemeBundleResponse result = null;
+        String label;
+        // 테마의 지역
+        Region region = regionRepository.findById(regionId).orElseThrow();
+
+        List<PreviewThemeResponse> themes = null;
+        List<Theme> list = null;
+        int themeCnt = themeRepository.countByRegionId(region.getId());
+        // 테마 개수가 적을 경우
+        if(themeCnt < THEME_COUNT){
+            List<Region> regions = regionRepository.findAllByRegionBig(region.getRegionBig());
+            // 지역 대분류에서 테마 가져오기
+            for(Region reg : regions){
+                list.addAll(themeRepository.findByRegionIdOrderByUserRatingDesc(reg.getId()));
+            }
+            label = region.getRegionBig() + "에서 인기있는 테마";
+        }
+        // 테마 개수가 많을 경우
+        else{
+            // 지역 소분류에서 테마 가져오기
+            list = themeRepository.findByRegionIdOrderByUserRatingDesc(region.getId());
+            label = region.getRegionBig() + " " + region.getRegionSmall() + "에서 인기있는 테마";
+        }
+
+        int cnt = 0;
+        List<PreviewThemeResponse> temp = null;
+        while(true){
+            cnt = 0;
+            temp = new ArrayList<>();
+
+            // 테마를 위에서부터 for문으로
+            for(Theme theme : list){
+                // 확률에 의해 담긴다
+                if(rnd.nextInt(10) < 8) { // 80%
+                    cnt++;
+                    temp.add(new PreviewThemeResponse(theme));
+                }
+                // 모두 담겼으면 끝
+                if(cnt == THEME_RETURN_COUNT) break;
+            }
+            // 모두 담겼으면 끝
+            if(cnt == THEME_RETURN_COUNT) {
+                themes = temp;
+                break;
+            }
+        }// 근데 이 방식은 지역 대분류에서 가져온 테마 목록의 개수마저도 적으면 에러가 날 수 있다
+
+        result = new ThemeBundleResponse(label, themes);
+
+        return result;
+    }
+
+    // 사람들이 ~~다고 느낀 테마를 반환
+    public ThemeBundleResponse getFeelBundle(int type) throws Exception{
+        ThemeBundleResponse result = null;
+        List<PreviewThemeResponse> themes = null;
+
+        List<PreviewThemeResponse> list = null;
+        String label = "";
+        switch (type){
+            case 1: // 난이도 최고
+                list = themeRepository.findByUserCntGreaterThanOrderByUserDifficultyDesc(4)
+                        .stream()
+                        .map(x->new PreviewThemeResponse(x))
+                        .collect(Collectors.toList());
+                label = "유저들이 어렵다고 느낀 테마";
+                break;
+            case 2: // 난이도 최하
+                list = themeRepository.findByUserCntGreaterThanOrderByUserDifficultyAsc(4)
+                        .stream()
+                        .map(x->new PreviewThemeResponse(x))
+                        .collect(Collectors.toList());
+                label = "유저들이 쉽다고 느낀 테마";
+                break;
+            case 3: // 공포도 최고
+                list = themeRepository.findByUserCntGreaterThanOrderByUserFearDesc(4)
+                        .stream()
+                        .map(x->new PreviewThemeResponse(x))
+                        .collect(Collectors.toList());
+                label = "유저들이 무섭다고 느낀 테마";
+                break;
+            case 4: // 공포도 최하
+                list = themeRepository.findByUserCntGreaterThanOrderByUserFearAsc(4)
+                        .stream()
+                        .map(x->new PreviewThemeResponse(x))
+                        .collect(Collectors.toList());
+                label = "유저들이 무섭지 않다고 느낀 테마";
+                break;
+            default:
+                throw new Exception("getFeelBundle(int type)의 type 형식이 맞지 않습니다.");
+        }
+
+        int cnt = 0;
+        List<PreviewThemeResponse> temp = null;
+        while(true){
+            cnt = 0;
+            temp = new ArrayList<>();
+
+            // 테마를 위에서부터 for문으로
+            for(PreviewThemeResponse theme : list){
+                // 확률에 의해 담긴다
+                if(rnd.nextInt(10) < 8) { // 80%
+                    cnt++;
+                    temp.add(theme);
+                }
+                // 모두 담겼으면 끝
+                if(cnt == THEME_RETURN_COUNT) break;
+            }
+            // 모두 담겼으면 끝
+            if(cnt == THEME_RETURN_COUNT) {
+                themes = temp;
+                break;
+            }
+        }
+
+        result = new ThemeBundleResponse(label, themes);
+
+        return result;
+    }
 
     @Override
     public List<ThemeBundleResponse> getRecommendedThemes(String email) throws Exception {
         List<ThemeBundleResponse> result = null;
+        // 유저 email을 통해 유저 조회
+        User user = userRepository.findByEmail(email).orElseThrow();
+        // 추천 테마 리스트
+        List<PreviewThemeResponse> CBFList = new ArrayList<>();
+        List<PreviewThemeResponse> CFList = new ArrayList<>();
+        // 유저의 추천 테마 목록 조회
+        recommendedThemeOfUserRepository.findByUserId(user.getId())
+                .forEach(x -> {
+                    if(x.getType() == 1){
+                        CBFList.add(new PreviewThemeResponse(x.getTheme()));
+                    }
+                    else{
+                        CFList.add(new PreviewThemeResponse(x.getTheme()));
+                    }
+                });
+        // CBF : 맞춤 테마
+        result.add(new ThemeBundleResponse("님의 맞춤 추천 테마입니다", CBFList));
+        // CF : 비슷한 유저와 비교시 맞춤 테마
+        if(CFList.size() > 0){
+            result.add(new ThemeBundleResponse("님과 비슷한 유저가 자주간 테마입니다", CFList));
+        }
+        return result;
+    }
+
+    @Override
+    public List<PreviewThemeResponse> getHotThemes() throws Exception {
+        List<PreviewThemeResponse> result = new ArrayList<>();
+
 
         return result;
     }
 
     @Override
     public List<ThemeBundleResponse> getTopThemes() throws Exception {
-        List<ThemeBundleResponse> result = null;
+        List<ThemeBundleResponse> result = new ArrayList<>();
+
+        // 체감 테마
+        result.add(getFeelBundle(rnd.nextInt(4) + 1));
+
+        // 지역 인기 테마
+        List<Region> regionList = regionRepository.findAll();
+        // 랜덤 지역 id
+        int idx = regionList.get(rnd.nextInt(regionList.size())).getId();
+        result.add(getRegionBundle(idx));
+
+        return result;
+    }
+
+    @Override
+    public List<ThemeBundleResponse> getTopThemesOfUser(String email) throws Exception {
+        List<ThemeBundleResponse> result = new ArrayList<>();
+
+        if(rnd.nextBoolean()){
+            // 체감 테마
+            result.add(getFeelBundle(rnd.nextInt(4)));
+        }
+        else{
+            User user = userRepository.findByEmail(email).orElseThrow();
+            // 선호 지역 인기 테마
+            result.add(getRegionBundle(user.getRegion().getId()));
+        }
 
         return result;
     }
