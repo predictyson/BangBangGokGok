@@ -26,7 +26,6 @@ public class UserController {
     private final UserService userService;
     private final EmailService emailService;
 
-    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
     @Operation(summary = "로그인", description = "로그인을 진행한다")
     @PostMapping("login")
     private ResponseEntity<Map<String, Object>> login(
