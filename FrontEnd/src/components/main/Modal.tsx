@@ -133,13 +133,18 @@ export default function DetailModal({ open, onClose, themeId, label }: IProps) {
             </DetailInfo>
             <DetailInfo>
               난이도
-              <Rating
-                name="readonly"
-                value={data.difficulty}
-                style={{ marginLeft: "1rem" }}
-                size="large"
-                readOnly
-              />
+              {data.difficulty === -1 && (
+                <h2 style={{ marginLeft: "3rem" }}>?</h2>
+              )}
+              {data.difficulty !== -1 && (
+                <Rating
+                  name="readonly"
+                  value={data.difficulty}
+                  style={{ marginLeft: "1rem" }}
+                  size="large"
+                  readOnly
+                />
+              )}
               {isLiked ? (
                 <LikeButton
                   onClick={() =>
