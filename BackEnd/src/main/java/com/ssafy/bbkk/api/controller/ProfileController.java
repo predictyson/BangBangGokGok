@@ -60,7 +60,7 @@ public class ProfileController {
 
     @CrossOrigin("*")
     @Operation(summary = "유저가 작성한 리뷰 목록 조회", description = "해당 유저가 작성한 리뷰 목록을 불러온다")
-    @GetMapping("review/{userId}")
+    @GetMapping("reviews/{userId}")
     private ResponseEntity<Map<String, Object>> getUserReviews(
             @Parameter(description = "해당 유저의 이메일", required = true) @PathVariable int userId) throws Exception {
 
