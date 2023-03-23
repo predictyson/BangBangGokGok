@@ -76,16 +76,16 @@ export default function AwardsSlider(awardData: IProps) {
       {
         breakpoint: 2000,
         settings: {
-          slidesToShow: 5.5,
-          slidesToScroll: 5.5,
+          slidesToShow: 5,
+          slidesToScroll: 5,
           infinite: true,
         },
       },
       {
         breakpoint: 1920,
         settings: {
-          slidesToShow: 4.5,
-          slidesToScroll: 4.5,
+          slidesToShow: 4,
+          slidesToScroll: 4,
           infinite: true,
         },
       },
@@ -114,60 +114,74 @@ export default function AwardsSlider(awardData: IProps) {
       },
     ],
   };
+  console.log(awardData.awardData[0]);
+  const data = awardData.awardData[0];
   return (
     <Container>
-      {awardData.awardData.map((item, idx) => (
-        <>
-          <TitleWrapper>
-            <Icon
-              src="https://icon-library.com/images/prize-icon/prize-icon-5.jpg"
-              alt="icon"
-            />
-            <Title>{item.year}년도 어워즈 수상작</Title>
-            <Select
-              labelId="location-select"
-              value={year}
-              color="warning"
-              onChange={handleYearChange}
+      <TitleWrapper>
+        <Icon
+          src="https://icon-library.com/images/prize-icon/prize-icon-5.jpg"
+          alt="icon"
+        />
+        <Title>{data.year}년도 어워즈 수상작</Title>
+      </TitleWrapper>
+      <Slider {...settings}>
+        {data.theme.map((theme: IAwardTheme) => (
+          <SliderItem key={theme.themeId}>
+            <div
+              style={{
+                width: "25rem",
+                height: "5rem",
+                fontSize: "2rem",
+                margin: "1rem auto ",
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+              }}
             >
-              <>
-                {years.map((year) => {
-                  return (
-                    <MenuItem value={year} key={year}>
-                      {year}
-                    </MenuItem>
-                  );
-                })}
-              </>
-            </Select>
-          </TitleWrapper>
-          <Slider {...settings}>
-            {item.theme.map((theme: IAwardTheme) => (
-              <>
-                <SliderItem key={theme.themeId}>
-                  <img
-                    src={theme.imgUrl}
-                    style={{
-                      width: "20rem",
-                      height: "25rem",
-                      cursor: "pointer",
-                    }}
-                  />
-                  <Hover
-                    className="card-hover"
-                    onClick={() => handleOpen(theme.themeId)} // , item.label)}
-                  >
-                    {theme.title}
-                  </Hover>
-                </SliderItem>
-              </>
-            ))}
-          </Slider>
-          {themeId !== undefined && (
-            <Modal open={open} onClose={handleClose} themeId={themeId} />
-          )}
-        </>
-      ))}
+              <img
+                src="https://user-images.githubusercontent.com/55784772/227142184-4680b14f-4d30-4699-a62e-8b258803b9db.png"
+                alt="left"
+              />
+              <span
+                style={{
+                  marginTop: "auto",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <span style={{ marginBottom: "0.2rem", fontSize: "1.6rem" }}>
+                  최고의
+                </span>
+                {theme.awardName}
+              </span>
+              <img
+                src="https://user-images.githubusercontent.com/55784772/227142176-55d00e0c-d111-4fa0-880a-29a75030bb8d.png"
+                alt="right"
+                // width="100rem"
+              />
+            </div>
+            <img
+              src={theme.imgUrl}
+              style={{
+                width: "22rem",
+                height: "28rem",
+                cursor: "pointer",
+                margin: "0 auto",
+              }}
+            />
+            <Hover
+              className="card-hover"
+              onClick={() => handleOpen(theme.themeId)} // , item.label)}
+            >
+              {theme.title}
+            </Hover>
+          </SliderItem>
+        ))}
+      </Slider>
+      {themeId !== undefined && (
+        <Modal open={open} onClose={handleClose} themeId={themeId} />
+      )}
     </Container>
   );
 }
@@ -185,14 +199,6 @@ const Container = styled.div`
   }
 `;
 
-const RecommendTitle = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
-  color: white;
-  font-family: Pretendard;
-  margin-top: 3rem;
-  margin-bottom: 1.5rem;
-`;
 const TitleWrapper = styled.div`
   display: flex;
   margin-top: 10rem;
@@ -212,8 +218,9 @@ const Title = styled.div`
 `;
 
 const SliderItem = styled.div`
-  border: solid 2px blue;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   :hover {
     & > .card-hover {
       opacity: 0.8;
@@ -221,14 +228,6 @@ const SliderItem = styled.div`
   }
 `;
 
-const AwardSliderItem = styled.div`
-  border: solid 2px yellow;
-  :hover {
-    & > .card-hover {
-      opacity: 0.8;
-    }
-  }
-`;
 const Hover = styled.div`
   width: 20rem;
   height: 25rem;

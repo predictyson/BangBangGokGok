@@ -203,7 +203,6 @@ const Title = styled.div`
 `;
 
 const SliderItem = styled.div`
-  border: solid 2px blue;
   position: relative;
   :hover {
     & > .card-hover {
@@ -212,14 +211,6 @@ const SliderItem = styled.div`
   }
 `;
 
-const AwardSliderItem = styled.div`
-  border: solid 2px yellow;
-  :hover {
-    & > .card-hover {
-      opacity: 0.8;
-    }
-  }
-`;
 const Hover = styled.div`
   width: 20rem;
   height: 25rem;
