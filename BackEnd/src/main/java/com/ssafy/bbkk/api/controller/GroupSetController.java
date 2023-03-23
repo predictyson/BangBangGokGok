@@ -26,7 +26,6 @@ public class GroupSetController {
 
     private final GroupSetService groupSetService;
 
-    @CrossOrigin("*")
     @Operation(summary = "일치하는 유저 목록 조회", description = "이메일 또는 닉네임에 입력값이 포함된 유저의 목록을 반환한다")
     @GetMapping("user/{emailOrNickname}")
     private ResponseEntity<Map<String, Object>> getUser(

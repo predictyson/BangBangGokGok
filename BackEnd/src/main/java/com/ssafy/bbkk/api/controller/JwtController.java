@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class JwtController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @CrossOrigin("*")
     @GetMapping("/jwt")
     public String getJwtToken(@CookieValue(name = "access", required = false) String access) {
         logger.info("[login] response : token={}", access);

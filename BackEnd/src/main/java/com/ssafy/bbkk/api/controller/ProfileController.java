@@ -36,7 +36,6 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
-    @CrossOrigin("*")
     @Operation(summary = "유저의 프로필 정보 조회", description = "해당 유저가 나인지 확인하며, 유저의 프로필 정보를 불러온다")
     @GetMapping("info/{userId}")
     private ResponseEntity<Map<String, Object>> getUserInfo(
@@ -63,7 +62,6 @@ public class ProfileController {
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "유저가 작성한 리뷰 목록 조회", description = "해당 유저가 작성한 리뷰 목록을 불러온다")
     @GetMapping("review/{userId}")
     private ResponseEntity<Map<String, Object>> getUserReviews(
@@ -82,7 +80,6 @@ public class ProfileController {
     }
 
 
-    @CrossOrigin("*")
     @Operation(summary = "유저의 장르 선호도를 조회", description = "해당 유저가 방문한 테마들의 장르별 방문횟수를 불러온다.")
     @GetMapping("preference/{userId}")
     private ResponseEntity<Map<String, Object>> getUserPreference(@PathVariable int userId) throws Exception {
@@ -97,7 +94,6 @@ public class ProfileController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "유저의 관심 테마 목록 조회", description = "해당 유저가 관심 등록한 테마 목록을 불러온다")
     @GetMapping("interestThemes/{userid}")
     private ResponseEntity<Map<String, Object>> getUserInterestThemes(
@@ -115,7 +111,6 @@ public class ProfileController {
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "유저의 정보 수정", description = "해당 유저의 프로필 정보를 수정한다")
     @PutMapping
     private ResponseEntity<Map<String, Object>> setUserInfo(
@@ -134,7 +129,6 @@ public class ProfileController {
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "회원 탈퇴", description = "해당 유저의 회원 탈퇴를 진행한다")
     @DeleteMapping
     private ResponseEntity<Void> deleteUser(

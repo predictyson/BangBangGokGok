@@ -33,7 +33,6 @@ public class ThemeController {
     /**
      * DB 추가 후 내용 추가 바람
      */
-    @CrossOrigin("*")
     @Operation(summary = "유저의 추천 테마 목록 조회", description = "로그인한 유저의 맞춤 추천 테마를 조회한다")
     @GetMapping("recommend")
     public ResponseEntity<Map<String, Object>> recommendedTheme(
@@ -53,7 +52,6 @@ public class ThemeController {
     /**
      * DB 추가 후 내용 추가 바람
      */
-    @CrossOrigin("*")
     @Operation(summary = "상위 테마 목록 조회", description = "상위 테마 목록을 불러온다")
     @GetMapping()
     public ResponseEntity<Map<String, Object>> topTheme() throws Exception {
@@ -72,7 +70,6 @@ public class ThemeController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "테마 검색", description = "필터를 기반으로 일치하는 테마를 불러온다")
     @GetMapping("search")
     public ResponseEntity<Map<String, Object>> searchedTheme(
@@ -89,7 +86,6 @@ public class ThemeController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "테마의 상세 정보 조회", description = "해당 테마의 상세 정보를 불러온다")
     @GetMapping("{themeId}")
     public ResponseEntity<Map<String, Object>> themeInfo(
