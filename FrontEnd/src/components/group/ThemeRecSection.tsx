@@ -1,7 +1,7 @@
 import { theme } from "@/styles/theme";
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-
+import { IThemeData } from "types/slider";
 export default function ThemeRecSection({
   userList,
 }: {

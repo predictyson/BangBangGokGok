@@ -6,6 +6,7 @@ import NextArrow from "@/assets/main/NextArrow.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { theme } from "@/styles/theme";
+import { ISliderData, IThemeData } from "types/slider";
 import Modal from "./Modal";
 interface IProps {
   data: ISliderData[];
@@ -117,7 +118,7 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
             </TitleWrapper>
           )}
           <Slider {...settings}>
-            {item.themes.map((theme) => (
+            {item.themes.map((theme: IThemeData) => (
               <>
                 <SliderItem key={theme.themeId}>
                   <img

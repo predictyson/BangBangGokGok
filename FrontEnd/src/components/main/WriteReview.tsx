@@ -8,7 +8,6 @@ import { Rating, RatingProps } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import { styled as mstyled } from "@mui/material/styles";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import InputBase from "@mui/material/InputBase";
 import StarIcon from "@mui/icons-material/Star";
 import { IDetailData, IPostData } from "types/detail";
 interface IRatingData {
