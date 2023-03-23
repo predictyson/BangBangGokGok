@@ -40,10 +40,12 @@ public class ThemeController {
         Map<String, Object> resultMap = new HashMap<>();
 
         List<ThemeBundleResponse> recommendThemes = themeService.getRecommendedThemes(user.getUsername());
+        List<PreviewThemeResponse> hotThemes = themeService.getHotThemes();
         List<ThemeBundleResponse> topThemes = themeService.getTopThemesOfUser(user.getUsername());
         List<AwardThemeBundleResponse> awardThemes = themeService.getAwardThemes();
 
         resultMap.put("recommendThemes", recommendThemes);
+        resultMap.put("hotThemes", hotThemes);
         resultMap.put("topThemes", topThemes);
         resultMap.put("awardThemes", awardThemes);
 
@@ -60,9 +62,11 @@ public class ThemeController {
 
         Map<String, Object> resultMap = new HashMap<>();
 
+        List<PreviewThemeResponse> hotThemes = themeService.getHotThemes();
         List<ThemeBundleResponse> topThemes = themeService.getTopThemes();
         List<AwardThemeBundleResponse> awardThemes = themeService.getAwardThemes();
 
+        resultMap.put("hotThemes", hotThemes);
         resultMap.put("topThemes", topThemes);
         resultMap.put("awardThemes", awardThemes);
 
