@@ -29,6 +29,7 @@ public class JwtController {
         System.out.println("request.getScheme() = " + request.getScheme());
         System.out.println("request.getQueryString() = " + request.getQueryString());
         System.out.println("request.isSecure() = " + request.isSecure());
+        System.out.println("request.getCookies() = " + request.getCookies());
         System.out.println("=====START-LINE=====end");
 
         Cookie[] cookies = request.getCookies();
