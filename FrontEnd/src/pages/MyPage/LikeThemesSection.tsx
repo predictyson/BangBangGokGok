@@ -77,7 +77,12 @@ const ThemeItem = styled.div`
   height: 29.3rem;
   @media (max-height: 800px) {
     width: 15rem;
+    /* width: 18rem; */
     height: 20rem;
+  }
+  @media (max-height: 755px) {
+    width: 17rem;
+    height: 23.5rem;
   }
   background-color: #3e2133;
 `;
