@@ -1,14 +1,13 @@
 package com.ssafy.bbkk.api.dto;
 
 import com.ssafy.bbkk.db.entity.AwardTheme;
-import java.sql.Clob;
 
 public class AwardThemeResponse {
 
     private String awardName; // 수상 부문
     private int themeId; // 테마 id
     private String title; // 테마명
-    private Clob imgUrl; // 테마 포스터 링크
+    private String imgUrl; // 테마 포스터 링크
 
     public AwardThemeResponse(AwardTheme awardTheme) {
         this.awardName = awardTheme.getAwardName();
