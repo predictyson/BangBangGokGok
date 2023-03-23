@@ -47,13 +47,8 @@ public class ProfileController {
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        boolean isMe = false;
-        UserInfoResponse userInfoResponse = null;
-
-        if (profileService.isSameUser(user.getUsername(),userId)){
-            isMe = true;
-            userInfoResponse = profileService.getUserInfoByEmail(user.getUsername());
-        }
+        boolean isMe = profileService.isSameUser(user.getUsername(),userId) ? true : false;
+        UserInfoResponse userInfoResponse = profileService.getUserInfoByEmail(user.getUsername());
 
         resultMap.put("isMe", isMe);
         resultMap.put("userInfo", userInfoResponse);
