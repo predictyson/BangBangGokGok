@@ -28,11 +28,13 @@ export default function LeftNavBar({ userProfile }: UserProfileProps) {
   return (
     <Wrapper>
       <ProfileWrapper>
-        <ProfileImage
-          // src={imageSrcMap[userProfile.profileImageType]}
-          src={imageSrcMap[imageNumber]}
-          alt="profile image"
-        />
+        <ProfileImageWrapper>
+          <ProfileImage
+            // src={imageSrcMap[userProfile.profileImageType]}
+            src={imageSrcMap[imageNumber]}
+            alt="profile image"
+          />
+        </ProfileImageWrapper>
         <ProfileName>{userProfile.nickname}</ProfileName>
         {/* 칭호(?)는 아직 정해진 바가 없음! */}
         {/* <ProfileTitle>{userProfile.title}</ProfileTitle> */}
@@ -70,19 +72,28 @@ const Wrapper = styled.div`
 const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.5rem;
   background-color: ${theme.colors.containerLight};
-  /* margin: 1rem; */
   padding: 2rem 1rem;
   border-radius: 1.5rem;
+`;
+
+const ProfileImageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 25rem;
+  background-color: ${theme.colors.container};
 `;
 
 const ProfileImage = styled.img`
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 15rem;
-  height: 15rem;
+  width: 12rem;
   border-radius: 1.5rem;
   text-align: center;
 `;
