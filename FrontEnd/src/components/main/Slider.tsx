@@ -5,14 +5,23 @@ import PrevArrow from "@/assets/main/PrevArrow.png";
 import NextArrow from "@/assets/main/NextArrow.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { theme } from "@/styles/theme";
-import { ISliderData, IThemeData } from "types/slider";
+import {
+  ISliderData,
+  IThemeData,
+  IAwardSlider,
+  IAwardTheme,
+} from "types/slider";
 import Modal from "./Modal";
 interface IProps {
-  data: ISliderData[];
+  topData: ISliderData[];
+  awardData: IAwardSlider[];
   isRecommendSlider: boolean;
 }
-export default function BasicSlider({ data, isRecommendSlider }: IProps) {
+export default function BasicSlider({
+  topData,
+  awardData,
+  isRecommendSlider,
+}: IProps) {
   interface ArrowProps extends CustomArrowProps {
     onClick?: MouseEventHandler<HTMLDivElement>;
   }
@@ -107,7 +116,7 @@ export default function BasicSlider({ data, isRecommendSlider }: IProps) {
 
   return (
     <Container>
-      {data.map((item, idx) => (
+      {topData.map((item, idx) => (
         <>
           {isRecommendSlider ? (
             <RecommendTitle className="recommend">{item.label}</RecommendTitle>
@@ -194,7 +203,17 @@ const Title = styled.div`
 `;
 
 const SliderItem = styled.div`
+  border: solid 2px blue;
   position: relative;
+  :hover {
+    & > .card-hover {
+      opacity: 0.8;
+    }
+  }
+`;
+
+const AwardSliderItem = styled.div`
+  border: solid 2px yellow;
   :hover {
     & > .card-hover {
       opacity: 0.8;

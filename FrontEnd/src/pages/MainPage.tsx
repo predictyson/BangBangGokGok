@@ -5,13 +5,13 @@ import RankSlider from "@components/main/RankSlider";
 import BasicSlider from "@components/main/Slider";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
-import { ISliderData } from "types/slider";
+import { IAwardSlider, ISliderData } from "types/slider";
 import { getThemeUser, getThemeGuest, getThemeAward } from "@/api/theme";
 
 export default function MainPage() {
   const [hotData, setHotData] = useState<ISliderData[]>(HotThemesData);
   const [topData, setTopData] = useState<ISliderData[]>(TopThemesData);
-  const [awardData, setAwardData] = useState<ISliderData[]>(AwardThemesData);
+  const [awardData, setAwardData] = useState<IAwardSlider[]>(AwardThemesData);
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
   const isLogin = true;
@@ -60,7 +60,11 @@ export default function MainPage() {
           </RecommendWrapper>
         )}
         <RankSlider data={hotData} />
-        <BasicSlider isRecommendSlider={false} data={data} />
+        <BasicSlider
+          isRecommendSlider={false}
+          topdata={topData}
+          awardData={awardData}
+        />
       </div>
     </Container>
   );
@@ -260,7 +264,7 @@ const TopThemesData: ISliderData[] = [
     ],
   },
 ];
-const AwardThemesData: ISliderData[] = [
+const AwardThemesData: IAwardSlider[] = [
   {
     label: "방탈출 어워즈 선정 테마 ",
     themes: [
@@ -315,6 +319,14 @@ const AwardThemesData: ISliderData[] = [
     ],
   },
 ];
+const AwardThemeDummy: IAwardTheme[]  = [
+  {
+    awardName: "코믹/문제/기타"; // 수상 부문
+    themeId: number; // 테마 id
+    title: string; // 테마명
+    imgUrl: string; // 테마 포스터 링크
+  }
+]
 
 const RecommendThemesData: ISliderData[] = [
   {
