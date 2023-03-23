@@ -324,7 +324,7 @@ def groupsetAPI(request):
 
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
-    user_id = body["user_id"]
+    user_id = body["userIds"]
     print(user_id)
 
 
