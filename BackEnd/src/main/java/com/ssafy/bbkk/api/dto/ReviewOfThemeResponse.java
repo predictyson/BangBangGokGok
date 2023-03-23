@@ -1,10 +1,14 @@
 package com.ssafy.bbkk.api.dto;
 
 import com.ssafy.bbkk.db.entity.Review;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@ToString
+@Getter
 public class ReviewOfThemeResponse {
 
     private int reviewId; // 리뷰 id

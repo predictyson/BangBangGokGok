@@ -1,8 +1,10 @@
 package com.ssafy.bbkk.api.dto;
 
+import lombok.Getter;
 import lombok.ToString;
 
 @ToString
+@Getter
 public class PreferenceResponse {
 
     private String genre; // 장르

@@ -1,9 +1,11 @@
 package com.ssafy.bbkk.api.dto;
 
 import com.ssafy.bbkk.db.entity.AwardTheme;
+import lombok.Getter;
 import lombok.ToString;
 
 @ToString
+@Getter
 public class AwardThemeResponse {
 
     private String awardName; // 수상 부문

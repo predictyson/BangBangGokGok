@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ToString
+@Getter
 public class UserInfoResponse {
 
     private int id;
