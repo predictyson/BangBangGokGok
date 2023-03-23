@@ -13,17 +13,22 @@ export default function TimeForm() {
 
   return (
     <Wrapper>
-      <CustomInputLabel id="time-select">시간</CustomInputLabel>
-      <CustomSelect
-        labelId="time-select"
-        value={time}
-        onChange={handleTimeChange}
-      >
-        <MenuItem value="0">전체</MenuItem>
-        <MenuItem value="1">60분 이내</MenuItem>
-        <MenuItem value="2">60분 ~ 90분</MenuItem>
-        <MenuItem value="3">90분 이상</MenuItem>
-      </CustomSelect>
+      <div style={{ flexBasis: "15%" }}>
+        <CustomInputLabel id="time-select">시간</CustomInputLabel>
+      </div>
+      <div style={{ flexBasis: "85%" }}>
+        <CustomSelect
+          labelId="time-select"
+          value={time}
+          color="warning"
+          onChange={handleTimeChange}
+        >
+          <MenuItem value="0">전체</MenuItem>
+          <MenuItem value="1">60분 이내</MenuItem>
+          <MenuItem value="2">60분 ~ 90분</MenuItem>
+          <MenuItem value="3">90분 이상</MenuItem>
+        </CustomSelect>
+      </div>
     </Wrapper>
   );
 }
@@ -47,7 +52,7 @@ const CustomInputLabel = mstyled(InputLabel)({
 });
 
 const CustomSelect = mstyled(Select)({
-  width: "10rem",
+  width: "11.5rem",
   height: "4rem",
   fontSize: "1.2rem",
   border: "1px solid white",

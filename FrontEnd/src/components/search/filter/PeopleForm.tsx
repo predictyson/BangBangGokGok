@@ -13,20 +13,25 @@ export default function PeopleForm() {
 
   return (
     <Wrapper>
-      <CustomInputLabel id="people-select">인원</CustomInputLabel>
-      <CustomSelect
-        labelId="people-select"
-        value={people}
-        onChange={handlePeopleChange}
-      >
-        <MenuItem value="0">전체</MenuItem>
-        <MenuItem value="1">1명</MenuItem>
-        <MenuItem value="2">2명</MenuItem>
-        <MenuItem value="3">3명</MenuItem>
-        <MenuItem value="4">4명</MenuItem>
-        <MenuItem value="5">5명</MenuItem>
-        <MenuItem value="6">6명</MenuItem>
-      </CustomSelect>
+      <div style={{ flexBasis: "15%" }}>
+        <CustomInputLabel id="people-select">인원</CustomInputLabel>
+      </div>
+      <div style={{ flexBasis: "85%" }}>
+        <CustomSelect
+          labelId="people-select"
+          value={people}
+          color="warning"
+          onChange={handlePeopleChange}
+        >
+          <MenuItem value="0">전체</MenuItem>
+          <MenuItem value="1">1명</MenuItem>
+          <MenuItem value="2">2명</MenuItem>
+          <MenuItem value="3">3명</MenuItem>
+          <MenuItem value="4">4명</MenuItem>
+          <MenuItem value="5">5명</MenuItem>
+          <MenuItem value="6">6명</MenuItem>
+        </CustomSelect>
+      </div>
     </Wrapper>
   );
 }
@@ -50,7 +55,7 @@ const CustomInputLabel = mstyled(InputLabel)({
 });
 
 const CustomSelect = mstyled(Select)({
-  width: "10rem",
+  width: "11.5rem",
   height: "4rem",
   fontSize: "1.2rem",
   border: "1px solid white",

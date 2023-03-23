@@ -30,7 +30,7 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  width: 60rem;
+  width: 61.5rem;
   height: 100%;
   border-radius: 20px;
   border: 1px solid white;

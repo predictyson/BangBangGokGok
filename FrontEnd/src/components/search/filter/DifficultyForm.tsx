@@ -25,23 +25,27 @@ export default function DifficultyForm() {
 
   return (
     <Wrapper>
-      <InputLabel id="difficulty-slider" sx={labelStyle}>
-        난이도
-      </InputLabel>
-      <div style={{ width: "70%" }}>
-        <CustomSlider
-          id="difficulty-slider"
-          // color="info"
-          size="small"
-          min={1}
-          max={5}
-          step={0.5}
-          marks
-          valueLabelDisplay="auto"
-          value={value}
-          onChange={handleChange}
-          disableSwap
-        />
+      <div style={{ flexBasis: "15%" }}>
+        <InputLabel id="difficulty-slider" sx={labelStyle}>
+          난이도
+        </InputLabel>
+      </div>
+      <div style={{ flexBasis: "85%" }}>
+        <div style={{ width: "100%" }}>
+          <CustomSlider
+            id="difficulty-slider"
+            // color="info"
+            size="small"
+            min={1}
+            max={5}
+            step={0.5}
+            marks
+            valueLabelDisplay="auto"
+            value={value}
+            onChange={handleChange}
+            disableSwap
+          />
+        </div>
       </div>
     </Wrapper>
   );
