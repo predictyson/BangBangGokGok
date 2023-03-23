@@ -50,7 +50,7 @@ public class SecurityConfig{
 
         .and()
             .cors()
-            .configurationSource(corsConfigurationSource())
+//            .configurationSource(corsConfigurationSource())
 
         .and()
             .headers()
@@ -101,20 +101,20 @@ public class SecurityConfig{
             "/swagger-ui/**"
     };
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-
-        config.addAllowedOrigin("http://localhost:5173");
-        config.addAllowedOrigin("https://bbkk.store");
-        config.addAllowedOrigin("http://localhost:8081");
-        config.addAllowedOrigin("http://localhost:8082");
-        config.addAllowedMethod("*"); // 모든 메소드 허용.
-        config.addAllowedHeader("*");
-        config.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration config = new CorsConfiguration();
+//
+//        config.addAllowedOrigin("http://localhost:5173");
+//        config.addAllowedOrigin("https://bbkk.store");
+//        config.addAllowedOrigin("http://localhost:8081");
+//        config.addAllowedOrigin("http://localhost:8082");
+//        config.addAllowedMethod("*"); // 모든 메소드 허용.
+//        config.addAllowedHeader("*");
+//        config.setAllowCredentials(true);
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", config);
+//        return source;
+//    }
 }
