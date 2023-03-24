@@ -5,23 +5,13 @@ import PrevArrow from "@/assets/main/PrevArrow.png";
 import NextArrow from "@/assets/main/NextArrow.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {
-  ISliderData,
-  IThemeData,
-  IAwardSlider,
-  IAwardTheme,
-} from "types/slider";
+import { ISliderData, IThemeData, IAwardSlider } from "types/slider";
 import Modal from "./Modal";
 interface IProps {
   topData: ISliderData[];
-  awardData: IAwardSlider[];
   isRecommendSlider: boolean;
 }
-export default function BasicSlider({
-  topData,
-  awardData,
-  isRecommendSlider,
-}: IProps) {
+export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
   interface ArrowProps extends CustomArrowProps {
     onClick?: MouseEventHandler<HTMLDivElement>;
   }
@@ -136,6 +126,7 @@ export default function BasicSlider({
                       width: "20rem",
                       height: "25rem",
                       cursor: "pointer",
+                      borderRadius: "1rem",
                     }}
                   />
 

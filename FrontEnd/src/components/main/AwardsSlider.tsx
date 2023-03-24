@@ -10,7 +10,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { IThemeData, IAwardSlider, IAwardTheme } from "types/slider";
 interface IProps {
-  awardData: IAwardSlider[];
+  awardData: IAwardSlider;
 }
 interface ArrowProps extends CustomArrowProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
@@ -20,7 +20,6 @@ const years = [2019, 2020, 2021, 2022];
 export default function AwardsSlider(awardData: IProps) {
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
-  const [year, setYear] = useState(2019);
   const handleOpen = (themeId: number) => {
     setThemeId(themeId);
     setOpen(true);
@@ -29,17 +28,6 @@ export default function AwardsSlider(awardData: IProps) {
     setOpen(false);
   };
 
-  const handleYearChange = (event: SelectChangeEvent<unknown>) => {
-    setYear(event.target.value as number);
-  };
-  const renderYearOptions = () => {
-    const options = years.map((year) => {
-      <MenuItem value={year} key={year}>
-        {year}
-      </MenuItem>;
-    });
-    return options;
-  };
   const CustomPrevArrow: FC<ArrowProps> = ({ className, onClick }) => {
     return (
       <div className={className} onClick={onClick}>
@@ -114,8 +102,8 @@ export default function AwardsSlider(awardData: IProps) {
       },
     ],
   };
-  console.log(awardData.awardData[0]);
-  const data = awardData.awardData[0];
+  // console.log(awardData.awardData[0]);
+  const data = awardData.awardData;
   return (
     <Container>
       <TitleWrapper>
@@ -148,9 +136,16 @@ export default function AwardsSlider(awardData: IProps) {
                   marginTop: "auto",
                   display: "flex",
                   flexDirection: "column",
+                  fontWeight: "bold",
                 }}
               >
-                <span style={{ marginBottom: "0.2rem", fontSize: "1.6rem" }}>
+                <span
+                  style={{
+                    marginBottom: "0.2rem",
+                    fontSize: "1.6rem",
+                    fontWeight: 400,
+                  }}
+                >
                   최고의
                 </span>
                 {theme.awardName}
@@ -158,7 +153,6 @@ export default function AwardsSlider(awardData: IProps) {
               <img
                 src="https://user-images.githubusercontent.com/55784772/227142176-55d00e0c-d111-4fa0-880a-29a75030bb8d.png"
                 alt="right"
-                // width="100rem"
               />
             </div>
             <img
@@ -245,10 +239,5 @@ const Hover = styled.div`
   font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
+  z-index: 10;
 `;
-
-const ICONLIST = [
-  "https://user-images.githubusercontent.com/55784772/224244356-4b23a520-1b98-4a5f-a0ab-08b2c2fa3685.png",
-  "https://user-images.githubusercontent.com/55784772/224244351-f487bf83-9e70-4a82-873b-57c5076abff6.png",
-  "https://user-images.githubusercontent.com/55784772/224244359-d37e4b92-49fc-4584-97b9-06147d5a3bb2.png",
-];

@@ -12,7 +12,7 @@ import { getThemeUser, getThemeGuest, getThemeAward } from "@/api/theme";
 export default function MainPage() {
   const [hotData, setHotData] = useState<ISliderData[]>(HotThemesData);
   const [topData, setTopData] = useState<ISliderData[]>(TopThemesData);
-  const [awardData, setAwardData] = useState<IAwardSlider[]>(AwardThemesData);
+  const [awardData, setAwardData] = useState<IAwardSlider>(AwardThemesData);
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
   const isLogin = true;
@@ -33,6 +33,7 @@ export default function MainPage() {
       const res = await getThemeGuest();
       // setHotData(res.data.hotThemes);
       setTopData(res.data.topThemes);
+      setAwardData(res.data.awardThemes);
     } catch (err) {
       throw new Error("Internal Server Error");
     }
@@ -60,11 +61,7 @@ export default function MainPage() {
           </RecommendWrapper>
         )} */}
         <RankSlider data={hotData} />
-        <BasicSlider
-          isRecommendSlider={false}
-          topData={topData}
-          awardData={awardData}
-        />
+        <BasicSlider isRecommendSlider={false} topData={topData} />
         <AwardsSlider awardData={awardData} />
       </div>
     </Container>
@@ -324,12 +321,10 @@ const AwardThemeDummy: IAwardTheme[] = [
       "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
   },
 ];
-const AwardThemesData: IAwardSlider[] = [
-  {
-    year: 2019,
-    theme: AwardThemeDummy,
-  },
-];
+const AwardThemesData: IAwardSlider = {
+  year: 2019,
+  theme: AwardThemeDummy,
+};
 const RecommendThemesData: ISliderData[] = [
   {
     label: "GG님을 위한 방탈출 테마 추천",
