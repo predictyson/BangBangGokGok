@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import Google from "@/assets/Auth/GoogleLogin.png";
 import Kakao from "@/assets/Auth/KakaoLogin.png";
-import { requestLogin } from "@/api/auth";
+import { requestLogin, tempRequest } from "@/api/auth";
 import { IUserInfo } from "types/auth";
 import { useCookies } from "react-cookie";
 
@@ -37,13 +37,25 @@ export default function LoginSection() {
       const {
         data: {
           token: { refreshToken, accessToken },
-          user: { nickname },
+          user: { nickname, userId },
         },
       } = await requestLogin(user);
-      setCookie("refresh", refreshToken);
-      setCookie("access", accessToken);
-      setCookie("nickname", nickname);
-      navigate("/");
+      console.log(refreshToken);
+      console.log(accessToken);
+      console.log(nickname);
+      setCookie("refresh", refreshToken, {
+        path: "/",
+        // httpOnly: true,
+        secure: true,
+      });
+      setCookie("access", accessToken, {
+        path: "/",
+        // httpOnly: true,
+        secure: true,
+      });
+      localStorage.setItem("nickname", nickname);
+      localStorage.setItem("userId", userId);
+      // navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -51,31 +63,33 @@ export default function LoginSection() {
 
   return (
     <Container>
-      <LoginImg src={Ghost} />
+      <LoginImg src={Ghost} onClick={tempRequest} />
       <SubjectText>BangBang GokGok</SubjectText>
       {/* <SubjectText>GokGok</SubjectText> */}
-      <CustomTextField
-        label="E-mail"
-        autoComplete="current-password"
-        sx={{ width: 300 }}
-        color="warning"
-        focused
-        name="email"
-        onChange={handleInputValue}
-      />
-      <CustomTextField
-        label="Password"
-        type="password"
-        autoComplete="current-password"
-        sx={{
-          width: 300,
-        }}
-        color="warning"
-        onChange={handleInputValue}
-        name="password"
-        focused
-      />
-      <LoginButton onClick={handleLogin}>Login</LoginButton>
+      <CustomForm onSubmit={handleLogin}>
+        <CustomTextField
+          label="E-mail"
+          autoComplete="current-password"
+          sx={{ width: 300 }}
+          color="warning"
+          focused
+          name="email"
+          onChange={handleInputValue}
+        />
+        <CustomTextField
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          sx={{
+            width: 300,
+          }}
+          color="warning"
+          onChange={handleInputValue}
+          name="password"
+          focused
+        />
+        <LoginButton type="submit" value="Login" />
+      </CustomForm>
       <TextBox>
         <NavText onClick={() => navigate("/findpassword")}>
           비밀번호를 잊으셨나요?
@@ -94,6 +108,14 @@ export default function LoginSection() {
     </Container>
   );
 }
+
+const CustomForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 35%;
+`;
 
 const SNSbtn = styled.img`
   width: 14.5rem;
@@ -148,13 +170,13 @@ const SubjectText = styled.div`
   font-weight: ${theme.fontWeight.extraBold};
 `;
 
-const LoginButton = styled.div`
+const LoginButton = styled.input`
   width: 30rem;
-  height: 2.5rem;
   border-radius: 0.5rem;
   text-align: center;
   font-size: 1.6rem;
-  padding-top: 0.5rem;
+  padding: 0.5rem 0;
+  color: white;
   background-color: ${theme.colors.pink};
   cursor: pointer;
 `;

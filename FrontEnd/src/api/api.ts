@@ -14,15 +14,31 @@ const instance = axios.create({
  */
 
 // interceptors를 통해
-// instance.interceptors.request.use(
-//   function (config) {
-//     // 요청 바로 직전
-//     config.headers["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
-//     return config;
-//   },
-//   function (error) {
-//     return Promise.reject(error);
-//   }
-// );
+instance.interceptors.request.use(
+  function (config) {
+    // 요청 바로 직전
+    console.log(getCookie("access"));
+    config.headers["Authorization"] = `Bearer ${getCookie("access")}`;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
 
 export default instance;
+
+function getCookie(name: string): string | null {
+  const nameLenPlus = name.length + 1;
+  return (
+    document.cookie
+      .split(";")
+      .map((c) => c.trim())
+      .filter((cookie) => {
+        return cookie.substring(0, nameLenPlus) === `${name}=`;
+      })
+      .map((cookie) => {
+        return decodeURIComponent(cookie.substring(nameLenPlus));
+      })[0] || null
+  );
+}

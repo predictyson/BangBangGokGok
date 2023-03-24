@@ -1,6 +1,10 @@
 import instance from "./api";
 import { IUserInfo, IAdditionalInfo } from "types/auth";
 
+export const tempRequest = () => {
+  return instance.get(`/jwt`, { withCredentials: true });
+};
+
 /**
  * @param email
  * @returns {boolean}
@@ -17,7 +21,6 @@ export const requestLogin = async (user: IUserInfo) => {
     email: user.email,
     password: user.password,
   };
-  console.log(user);
   return await instance.post(`/user/login`, userData);
 };
 
