@@ -110,6 +110,7 @@ public class ProfileController {
     @Operation(summary = "유저의 정보 수정", description = "해당 유저의 프로필 정보를 수정한다")
     @PutMapping
     private ResponseEntity<Map<String, Object>> setUserInfo(
+            @AuthenticationPrincipal User user,
             @RequestBody UpdateUserInfoRequest updateUserInfoRequest) throws Exception {
 
         logger.info("[setUserInfo] request : updateUserInfoRequest={}", updateUserInfoRequest);
