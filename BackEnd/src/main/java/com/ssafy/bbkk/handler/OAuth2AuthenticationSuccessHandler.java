@@ -52,7 +52,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //        logger.info("[determineTargetUrl] : principalDetails={}", principalDetails);
 
         // 소셜 로그인 성공 후 이동할 페이지 -> 추후 변경해야함
-        String targetUrl = "/additional";
+        String targetUrl = "/oauth";
 
         if(user.getEmail() == null) {
 //            throw new NullPointerException("이메일 동의를 하지 않아 회원가입이 불가능합니다.");
@@ -97,7 +97,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         // 추가 정보가 입력되어 있지 않다면 추가 정보 입력창으로 보냄
         return UriComponentsBuilder.fromUriString(targetUrl)
-                .queryParam("email", user.getEmail())
+                .queryParam("userId", user.getId())
                 .build().toUriString();
     }
 }
