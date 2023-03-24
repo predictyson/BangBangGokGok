@@ -27,8 +27,8 @@ def cbfAPI(request):
     curs.execute(sql, email)
     user_id = curs.fetchone()[0]
 
-
     print("user_id : " + str(user_id))
+
     # 유저의 관심 테마가 몇개 있는지 확인
     sql = "select count(*) from interested_theme_of_user where user_id = %s"
     curs.execute(sql, user_id)
@@ -136,6 +136,109 @@ def cfAPI(request):
     sql = "select user_id from user where email=%s"
     curs.execute(sql, email)
     user_id = curs.fetchone()[0]
+
+    count_review_sql = "select count(*) from review where user_id=%s"
+    curs.execute(count_review_sql, user_id)
+    review_count = curs.fetchone()[0]
+
+    if (review_count == 0):
+        # 유저의 관심 테마가 몇개 있는지 확인
+        sql = "select count(*) from interested_theme_of_user where user_id = %s"
+        curs.execute(sql, user_id)
+        like_count = curs.fetchone()[0]
+
+        # 첫 회원가입시 선호하는 장르 가져오기
+        genre_list = []
+        theme_list = []
+        sql = "select category from genre where genre_id in (select genre_id from preferred_genre_of_user where user_id = %s)"
+        curs.execute(sql, user_id)
+        res = curs.fetchall()
+
+        for genre in res:
+            genre_list.append(genre[0])
+
+        print("like_count : " + str(like_count))
+        print(genre_list)
+        # 관심테마 : n개, 처음 선호 하는 장르 + 자신이 관심을 누른 테마들의 장르
+        if (like_count > 0):
+            sql = "select category from genre where genre_id in " \
+                  "(select genre_id from genre_of_theme where theme_id in " \
+                  "(select theme_id from interested_theme_of_user where user_id = %s))"
+            curs.execute(sql, user_id)
+            res = curs.fetchall()
+            for genre in res:
+                genre_list.append(genre[0])
+
+            sql = "select theme_id from interested_theme_of_user where user_id = %s"
+            curs.execute(sql, user_id)
+            res = curs.fetchall()
+            for theme in res:
+                theme_list.append(theme[0])
+
+        print("genre_list : ", end=' ')
+        print(genre_list)
+
+        df = pd.read_csv('./(MERGE) 방탈출 테마 정보_정리완료.csv', encoding='cp949')
+        data = df[
+            ['지역(대)', '지역(소)', '매장명', '테마명', '장르', '난이도', '시간', '오픈일', '최소인원', '최대인원', '메인사진', '예약URL', '내용', '인원',
+             '추천율', '유저_난이도', '유저_활동성', '유저_공포도']]
+
+        select_theme_genre = ' '.join(genre_list)
+        print(select_theme_genre)
+        data.loc[data.shape[0]] = ['', '', '', 'standard', select_theme_genre, '', '', '', '', '', '', '', '', '', '',
+                                   '', '', '']
+
+        from sklearn.feature_extraction.text import CountVectorizer
+
+        counter_vector = CountVectorizer(ngram_range=(1, 1))
+        c_vector_genres = counter_vector.fit_transform(data['장르'])
+
+        # 유사도값 추출(코사인 유사도)
+        # 장르를 기준으로 유사도값을 계산한다
+        from sklearn.metrics.pairwise import cosine_similarity
+
+        # argsort를 이용해서 유사도가 높은 영화들의 index 추출
+        similarity_genre = cosine_similarity(c_vector_genres, c_vector_genres).argsort()[:, ::-1]
+
+        # 장르기반의 유사도를 기준으로 영화를 추천해준다
+        # top=10을 없애는게 맞음. 10개 모두 내가 관심목록으로해서 제외시키면 return이 0개기 때문에 아쉬운 상황을 방지하고자 top을 없애고 나중에 뿌릴 때 몇개 뿌릴지 설정
+        def recommend_theme_list(df, theme_title, top=50):
+            # 특정 테마정보 뽑아내기
+            target_theme_index = df[df['테마명'] == theme_title].index.values
+
+            # 타켓테마와 비슷한 코사인 유사도값
+            sim_index = similarity_genre[target_theme_index, :top].reshape(-1)
+
+            # 본인은 제외시킴
+            for seq in theme_list:
+                sim_index = sim_index[sim_index != seq]
+            sim_index = sim_index[sim_index != target_theme_index]
+
+            # 추천결과 새로운 df생성, 평균평점(score)으로 정렬
+            result = df.iloc[sim_index]
+
+            return result
+
+        # 이걸 DB에 저장하면 끄읏
+        recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[:10]
+
+        print(recommend_theme)
+
+        # recommended_theme_of_user에 넣기전 이전 데이터를 삭제해야됨
+        delete_sql = "delete from recommended_theme_of_user where user_id = %s and type = 2"
+        curs.execute(delete_sql, user_id)
+        conn.commit()
+
+        # recommended_theme_of_user에 새로운 데이터 넣기
+        sql = "insert into recommended_theme_of_user(created_date, modified_date, type, theme_id, user_id) values (now(), now(), 2, %s, %s)"
+
+        for theme_id in recommend_theme:
+            curs.execute(sql, (theme_id, user_id))
+        conn.commit()
+
+        response = HttpResponse('review 개수 0개 CBF 추천 완료', status=200)
+
+        return response
 
     rating_data_sql = "SELECT user_id, theme_id, user_rating FROM review"
     theme_data_sql = "SELECT theme_id, title FROM theme"
