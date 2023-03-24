@@ -19,7 +19,7 @@ public class ThemeResponse {
     private String title; // 테마명
     private float difficulty; // 난이도
     private int runningTime; // 시간
-    private String openData; // 오픈일
+    private String openDate; // 오픈일
     private int minPeople; // 최소 인원
     private int maxPeople; // 최대 인원
     private String imgUrl; // 테마 포스터 링크
