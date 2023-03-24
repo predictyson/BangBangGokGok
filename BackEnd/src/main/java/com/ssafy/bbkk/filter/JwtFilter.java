@@ -46,17 +46,6 @@ public class JwtFilter extends OncePerRequestFilter {
             Authentication authentication = tokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        else{
-            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            res.setContentType("application/json");
-            res.setCharacterEncoding("UTF-8");
-
-            JSONObject resJson = new JSONObject();
-            resJson.put("code", 401);
-            resJson.put("message", "JWT 토큰 에러");
-
-            res.getWriter().write(resJson.toString());
-        }
 
         filterChain.doFilter(request, response);
     }
