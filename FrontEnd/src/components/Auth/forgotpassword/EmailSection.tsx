@@ -4,14 +4,22 @@ import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Toast, { showToast } from "@/components/common/Toast";
+import {
+  requestSendEmail,
+  requestCheckCode,
+  emailValidCheck,
+} from "@/api/auth";
+import { useNavigate } from "react-router-dom";
 
-export default function EmailSection({
-  handleValid,
-}: {
-  handleValid: () => void;
-}) {
+export default function EmailSection() {
+  const navigate = useNavigate();
+  const [isValid, setIsValid] = useState(false);
   const [email, setEmail] = useState<string>("");
   const [validCode, setValidCode] = useState<string>("");
+
+  const handleValid = () => {
+    setIsValid(true);
+  };
 
   const handleToastClick = (
     type: IToastProps["type"],
@@ -30,17 +38,38 @@ export default function EmailSection({
   };
 
   const sendCode = () => {
-    if (email !== "") {
-      console.log(email);
-      handleToastClick("success", "5분간 유효한 코드가 전송되었습니다.");
-    } else {
+    if (email === "" || !emailValidCheck(email)) {
       // TODO : 이메일 형식 검사 reg 추가할 것
-      handleToastClick("error", "올바른 이메일을 입력하세요.");
+      handleToastClick("error", "올바른 형식의 이메일을 입력하세요.");
+    } else {
+      requestSendEmail(email)
+        .then((res) => {
+          const data = res.data;
+          console.log(data);
+          if (data) {
+            handleToastClick("success", "5분간 유효한 코드가 전송되었습니다.");
+          } else {
+            handleToastClick("error", "존재하지않는 이메일 입니다.");
+          }
+        })
+        .catch((message) => {
+          console.log(message);
+        });
     }
   };
 
   const checkCode = () => {
     // TODO : API 다녀와서 200 res오면
+    requestCheckCode(email, validCode).then((res) => {
+      const data = res.data;
+      console.log(data);
+      if (data) {
+        handleValid();
+        handleToastClick("success", "이메일 인증 성공!");
+      } else {
+        handleToastClick("error", "인증코드를 다시 확인해주세요.");
+      }
+    });
     handleValid();
   };
 
@@ -76,6 +105,25 @@ export default function EmailSection({
           <ValidCheckButton onClick={checkCode}>코드 확인</ValidCheckButton>
         </InputBox>
       </HegihtHalfBox>
+      {isValid ? (
+        <ValidCheckButton
+          onClick={() =>
+            navigate("/resetpassword", {
+              state: {
+                email,
+              },
+            })
+          }
+        >
+          다음 단계로
+        </ValidCheckButton>
+      ) : (
+        <NotValidCheckButton
+          onClick={() => handleToastClick("error", "이메일 인증을 완료하세요.")}
+        >
+          다음 단계로
+        </NotValidCheckButton>
+      )}
       <Toast />
     </Container>
   );
@@ -136,5 +184,17 @@ const ValidCheckButton = styled.div`
   text-align: center;
   font-size: 1.7rem;
   background-color: ${theme.colors.pink};
+  cursor: pointer;
+`;
+
+const NotValidCheckButton = styled.div`
+  width: 10rem;
+  height: 3.2rem;
+  border-radius: 0.5rem;
+  padding-top: 1.3rem;
+  text-align: center;
+  font-size: 1.7rem;
+  background-color: grey;
+  color: darkgrey;
   cursor: pointer;
 `;

@@ -12,6 +12,8 @@ import ProfileInfoSection from "./pages/MyPage/ProfileInfoSection";
 import MyReviesSection from "./pages/MyPage/MyReviewsSection";
 import LikeThemesSection from "./pages/MyPage/LikeThemesSection";
 import ResetPasswordPage from "./pages/Auth/ResetPasswordPage";
+import OAuthPage from "./pages/Auth/OAuthPage";
+import OAuth2Page from "./pages/Auth/OAuth2Page";
 
 const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -32,6 +34,8 @@ const router = createBrowserRouter([
       { path: "likes", element: <LikeThemesSection /> },
     ],
   },
+  { path: "/oauth/:id", element: <OAuthPage /> },
+  { path: "/oauth2", element: <OAuth2Page /> },
 ]);
 
 export default router;

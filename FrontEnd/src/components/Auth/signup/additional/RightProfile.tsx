@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
@@ -8,17 +8,37 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { theme } from "@/styles/theme";
 import { ProfileProps } from "types/auth";
+import { requestSmallRegion } from "@/api/auth";
 
 export default function LeftPorfile(props: ProfileProps) {
+  const [bigRegion, setBigRegion] = useState<string>("");
+  const [smallRegion, setSmallRegion] = useState<string[]>([]);
+
   const handleInputChange = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
     console.log(target.name + " : " + target.value);
     props.changeUserInfo(target.name, target.value);
   };
 
-  const handleSelectChange = (e: SelectChangeEvent<unknown>) => {
+  const handleSelectChange2 = async (e: SelectChangeEvent<unknown>) => {
     const target = e.target as HTMLInputElement;
     // console.log(target.name + " : " + target.value);
+    setBigRegion(target.value);
+    props.changeUserInfo(target.name, target.value);
+    try {
+      const {
+        data: { regionSmalls },
+      } = await requestSmallRegion(target.value);
+      setSmallRegion(regionSmalls);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSelectChange = async (e: SelectChangeEvent<unknown>) => {
+    const target = e.target as HTMLInputElement;
+    // console.log(target.name + " : " + target.value);
+    setBigRegion(target.value);
     props.changeUserInfo(target.name, target.value);
   };
 
@@ -47,34 +67,38 @@ export default function LeftPorfile(props: ProfileProps) {
       <SelectBox>
         <p>선호 방문 지역을 선택해주세요.</p>
         <CustomSelect
-          onChange={handleSelectChange}
-          value={props.userAdditionalInfo.regionBig}
+          onChange={handleSelectChange2}
           name="regionBig"
           color="warning"
           displayEmpty
+          value={props.userAdditionalInfo.regionBig}
         >
           <MenuItem value="">
             <em>선택하세요</em>
           </MenuItem>
           <MenuItem value={"서울"}>서울</MenuItem>
-          <MenuItem value={"어디"}>경기/인천</MenuItem>
-          <MenuItem value={"어디1"}>어디1</MenuItem>
-          <MenuItem value={"워디"}>워디</MenuItem>
+          <MenuItem value={"경기"}>경기</MenuItem>
+          <MenuItem value={"충청"}>충청</MenuItem>
+          <MenuItem value={"전라"}>전라</MenuItem>
+          <MenuItem value={"경상"}>경상</MenuItem>
+          <MenuItem value={"강원"}>강원</MenuItem>
+          <MenuItem value={"제주"}>제주</MenuItem>
         </CustomSelect>
         <CustomSelect
           onChange={handleSelectChange}
-          value={props.userAdditionalInfo.regionSmall}
           name="regionSmall"
           color="warning"
+          value={props.userAdditionalInfo.regionSmall}
           displayEmpty
         >
           <MenuItem value="">
             <em>선택하세요</em>
           </MenuItem>
-          <MenuItem value={"서울"}>서울</MenuItem>
-          <MenuItem value={"어디"}>서울대입구</MenuItem>
-          <MenuItem value={"어디1"}>어디1</MenuItem>
-          <MenuItem value={"워디"}>워디</MenuItem>
+          {smallRegion.map((region: string, idx: number) => (
+            <MenuItem value={region} key={idx}>
+              {region}
+            </MenuItem>
+          ))}
         </CustomSelect>
       </SelectBox>
       <SelectBox>
@@ -104,8 +128,8 @@ export default function LeftPorfile(props: ProfileProps) {
           onChange={handleToggleChange}
           aria-label="Platform"
         >
-          <CustomToggleButton value="male">남</CustomToggleButton>
-          <CustomToggleButton value="female">여</CustomToggleButton>
+          <CustomToggleButton value="M">남</CustomToggleButton>
+          <CustomToggleButton value="W">여</CustomToggleButton>
         </ToggleButtonGroup>
       </SelectBox>
     </RightBox>

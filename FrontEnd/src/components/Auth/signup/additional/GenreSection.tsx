@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled as mstyled } from "@mui/material/styles";
 import styled from "styled-components";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
-import { ProfileProps } from "types/auth";
+import { IGenre, ProfileProps } from "types/auth";
+import { requestOther } from "@/api/auth";
 
 const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
 
 export default function GenreSection(props: ProfileProps) {
+  const [genres, setGenres] = useState<IGenre[]>([]);
   const handleChange = (
     _event: React.MouseEvent<HTMLElement, MouseEvent>,
     newAlignment: number[]
   ) => {
-    props.changeUserInfo("genreId", newAlignment);
+    props.changeUserInfo("genreIds", newAlignment);
   };
+
+  useEffect(() => {
+    requestOther().then((res) => {
+      const data = res.data;
+      console.log(data.genres);
+      setGenres(data.genres);
+    });
+  }, []);
 
   return (
     <Container>
@@ -25,12 +35,12 @@ export default function GenreSection(props: ProfileProps) {
           width: "100%",
           borderRadius: "10px",
         }}
-        value={props.userAdditionalInfo.genreId}
+        value={props.userAdditionalInfo.genreIds}
         onChange={handleChange}
       >
-        {values.map((item) => (
-          <CustomToggleButton value={item} key={item}>
-            {item}
+        {genres.map((item: IGenre) => (
+          <CustomToggleButton key={item.genreId} value={item.genreId}>
+            {item.category}
           </CustomToggleButton>
         ))}
       </ToggleButtonGroup>
@@ -44,12 +54,10 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  .Mui-selected {
-    background-color: red;
-  }
 `;
 
 const CustomToggleButton = mstyled(ToggleButton)({
+  width: "18rem",
   height: "12rem",
   backgroundColor: "#FFF1F8",
   borderRadius: "1.5rem !important",

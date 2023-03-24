@@ -10,6 +10,8 @@ import { theme } from "@/styles/theme";
 import { RecoilRoot } from "recoil";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { CookiesProvider } from "react-cookie";
+
 const GlobalStyle = createGlobalStyle`
   ${normalize}
   html{
@@ -39,9 +41,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <ThemeProvider theme={theme}>
     <GlobalStyle />
     <MThemeProvider theme={mtheme}>
-      <RecoilRoot>
-        <RouterProvider router={router} />
-      </RecoilRoot>
+      <CookiesProvider>
+        <RecoilRoot>
+          <RouterProvider router={router} />
+        </RecoilRoot>
+      </CookiesProvider>
     </MThemeProvider>
   </ThemeProvider>
 );
