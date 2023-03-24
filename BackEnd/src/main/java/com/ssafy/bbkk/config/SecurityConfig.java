@@ -69,6 +69,13 @@ public class SecurityConfig{
             .authorizeRequests()
             .antMatchers(PERMIT_URL_ARRAY).permitAll()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+            .antMatchers("/user/oauth/login",
+                    "/profile/**",
+                    "/theme/user",
+                    "/interest/**",
+                    "/review/**",
+                    "/groupset/**"
+                    ).authenticated()
             .anyRequest().permitAll()
 
             // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
