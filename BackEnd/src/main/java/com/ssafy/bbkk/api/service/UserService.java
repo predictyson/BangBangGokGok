@@ -5,6 +5,7 @@ import com.ssafy.bbkk.api.dto.*;
 public interface UserService {
 
     TokenResponse login(LoginRequest loginRequest) throws Exception;
+    String oauthLogin(String email) throws Exception;
     int join(JoinRequest joinRequest) throws Exception;
     void setUserAdditionalInfo(JoinAdditionalRequest joinAdditionalRequest) throws Exception;
     String reissue(TokenRequest tokenRequest) throws Exception;

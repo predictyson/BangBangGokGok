@@ -9,10 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,6 +70,23 @@ public class UserController {
         logger.info("[addInfo] response : ");
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "소셜 로그인", description = "소셜 로그인을 진행한다")
+    @GetMapping("oauth/login")
+    public ResponseEntity<Map<String, Object>> oauthLogin(@AuthenticationPrincipal User user) throws Exception {
+        logger.info("[oauthLogin] request : myEmail={}",user.getUsername());
+
+        Map<String, Object> resultMap = new HashMap<>();
+        String refreshToken = userService.oauthLogin(user.getUsername());
+        LoginResponse loginResponse = userService.getLoginUser(user.getUsername());
+
+        resultMap.put("refreshToken", refreshToken);
+        resultMap.put("user", loginResponse);
+
+        logger.info("[oauthLogin] response : refreshToken={}, user={}",refreshToken, loginResponse);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @Operation(summary = "토큰 재발급", description = "access token을 재발급한다")

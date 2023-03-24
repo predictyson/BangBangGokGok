@@ -72,6 +72,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String oauthLogin(String email) throws Exception {
+        // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
+        RefreshToken refreshToken = refreshTokenRepository.findByKey(email)
+                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
+
+        // 1. Refresh Token 검증
+        if (!tokenProvider.validateToken(refreshToken.getValue())) {
+            throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
+        }
+
+        return refreshToken.getValue();
+    }
+
+    @Override
     public int join(JoinRequest joinRequest) throws Exception {
         // 유저 기본 정보 입력
         User user = User.builder()

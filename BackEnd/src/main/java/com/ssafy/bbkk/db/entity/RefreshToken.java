@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RefreshToken {
+public class RefreshToken extends BaseTimeEntity{
 
     @Id
     @Column(name = "rt_key")
