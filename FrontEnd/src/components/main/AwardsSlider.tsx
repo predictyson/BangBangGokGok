@@ -88,13 +88,15 @@ export default function AwardsSlider(awardData: IProps) {
                 alt="right"
               />
             </SliderTitleWrapper>
-            <PosterItem src={theme.imgUrl} />
-            <Hover
-              className="card-hover"
-              onClick={() => handleOpen(theme.themeId)} // , item.label)}
-            >
-              {theme.title}
-            </Hover>
+            <>
+              <PosterItem src={theme.imgUrl} />
+              <Hover
+                className="card-hover"
+                onClick={() => handleOpen(theme.themeId)}
+              >
+                {theme.title}
+              </Hover>
+            </>
           </SliderItem>
         ))}
       </Slider>
@@ -110,6 +112,7 @@ const PosterItem = styled.img`
   height: 28rem;
   cursor: pointer;
   margin: 0 auto;
+  border-radius: 1rem;
 `;
 const SliderTitleWrapper = styled.div`
   width: 25rem;
@@ -163,6 +166,7 @@ const Title = styled.div`
 `;
 
 const SliderItem = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -174,8 +178,8 @@ const SliderItem = styled.div`
 `;
 
 const Hover = styled.div`
-  width: 20rem;
-  height: 25rem;
+  width: 22rem;
+  height: 28rem;
   position: absolute;
   opacity: 0;
   background-color: black;
@@ -189,8 +193,9 @@ const Hover = styled.div`
   align-items: center;
   font-size: 2rem;
   font-weight: bold;
+  margin-top: 7rem;
+  margin-left: 5rem;
   cursor: pointer;
-  z-index: 10;
 `;
 
 const BREAKPOINT = [
