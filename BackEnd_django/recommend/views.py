@@ -21,7 +21,12 @@ curs = conn.cursor()
 def cbfAPI(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
-    user_id = body["userId"]
+    email = body["email"]
+
+    sql = "select user_id from user where email=%s"
+    curs.execute(sql, email)
+    user_id = curs.fetchone()[0]
+
 
     print("user_id : " + str(user_id))
     # 유저의 관심 테마가 몇개 있는지 확인
@@ -126,7 +131,11 @@ def cbfAPI(request):
 def cfAPI(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
-    user_id = body["userId"]
+    email = body["email"]
+
+    sql = "select user_id from user where email=%s"
+    curs.execute(sql, email)
+    user_id = curs.fetchone()[0]
 
     rating_data_sql = "SELECT user_id, theme_id, user_rating FROM review"
     theme_data_sql = "SELECT theme_id, title FROM theme"
