@@ -6,9 +6,7 @@ import NextArrow from "@/assets/main/NextArrow.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Modal from "./Modal";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import { IThemeData, IAwardSlider, IAwardTheme } from "types/slider";
+import { IAwardSlider, IAwardTheme } from "types/slider";
 interface IProps {
   awardData: IAwardSlider;
 }
@@ -16,13 +14,13 @@ interface ArrowProps extends CustomArrowProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-const years = [2019, 2020, 2021, 2022];
 export default function AwardsSlider(awardData: IProps) {
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
   const handleOpen = (themeId: number) => {
     setThemeId(themeId);
     setOpen(true);
+    console.log("handleOpen Award : " + themeId);
   };
   const handleClose = () => {
     setOpen(false);
@@ -60,49 +58,8 @@ export default function AwardsSlider(awardData: IProps) {
     arrows: true,
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,
-    responsive: [
-      {
-        breakpoint: 2000,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 5,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 1920,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 1250,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+    responsive: BREAKPOINT,
   };
-  // console.log(awardData.awardData[0]);
   const data = awardData.awardData;
   return (
     <Container>
@@ -241,3 +198,45 @@ const Hover = styled.div`
   cursor: pointer;
   z-index: 10;
 `;
+
+const BREAKPOINT = [
+  {
+    breakpoint: 2000,
+    settings: {
+      slidesToShow: 5,
+      slidesToScroll: 5,
+      infinite: true,
+    },
+  },
+  {
+    breakpoint: 1920,
+    settings: {
+      slidesToShow: 4,
+      slidesToScroll: 4,
+      infinite: true,
+    },
+  },
+  {
+    breakpoint: 1250,
+    settings: {
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      infinite: true,
+    },
+  },
+  {
+    breakpoint: 900,
+    settings: {
+      slidesToShow: 2,
+      slidesToScroll: 2,
+      initialSlide: 2,
+    },
+  },
+  {
+    breakpoint: 640,
+    settings: {
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    },
+  },
+];

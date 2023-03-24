@@ -5,7 +5,7 @@ import PrevArrow from "@/assets/main/PrevArrow.png";
 import NextArrow from "@/assets/main/NextArrow.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ISliderData, IThemeData, IAwardSlider } from "types/slider";
+import { ISliderData, IThemeData } from "types/slider";
 import Modal from "./Modal";
 interface IProps {
   topData: ISliderData[];
@@ -61,47 +61,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
     arrows: true,
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,
-    responsive: [
-      {
-        breakpoint: 2000,
-        settings: {
-          slidesToShow: 5.5,
-          slidesToScroll: 5.5,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 1920,
-        settings: {
-          slidesToShow: 4.5,
-          slidesToScroll: 4.5,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 1250,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+    responsive: BREAKPOINT,
   };
 
   return (
@@ -225,4 +185,46 @@ const ICONLIST = [
   "https://user-images.githubusercontent.com/55784772/224244356-4b23a520-1b98-4a5f-a0ab-08b2c2fa3685.png",
   "https://user-images.githubusercontent.com/55784772/224244351-f487bf83-9e70-4a82-873b-57c5076abff6.png",
   "https://user-images.githubusercontent.com/55784772/224244359-d37e4b92-49fc-4584-97b9-06147d5a3bb2.png",
+];
+
+const BREAKPOINT = [
+  {
+    breakpoint: 2000,
+    settings: {
+      slidesToShow: 5.5,
+      slidesToScroll: 5.5,
+      infinite: true,
+    },
+  },
+  {
+    breakpoint: 1920,
+    settings: {
+      slidesToShow: 4.5,
+      slidesToScroll: 4.5,
+      infinite: true,
+    },
+  },
+  {
+    breakpoint: 1250,
+    settings: {
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      infinite: true,
+    },
+  },
+  {
+    breakpoint: 900,
+    settings: {
+      slidesToShow: 2,
+      slidesToScroll: 2,
+      initialSlide: 2,
+    },
+  },
+  {
+    breakpoint: 640,
+    settings: {
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    },
+  },
 ];
