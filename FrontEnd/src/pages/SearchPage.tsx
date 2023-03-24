@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import SearchInput from "@components/search/SearchInput";
 import SearchSortOptions from "@components/search/SearchSortOptions";
 import SearchFilter from "@components/search/SearchFilter";
@@ -8,9 +8,15 @@ import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import { SearchParams } from "types/search";
 import { getSearchThemes } from "@/api/theme";
-import { PreviewThemeResponse, SortOption, SortOrder } from "types/search";
+import {
+  PreviewThemeResponse,
+  SortOption,
+  SortOrder,
+  FilterValue,
+  ReducerAction,
+} from "types/search";
 
-const DUMMY_RESULT_DATA = [
+const INITIAL_RESULT_DATA = [
   {
     themeId: -1,
     title: "",
@@ -19,10 +25,42 @@ const DUMMY_RESULT_DATA = [
   },
 ];
 
+const INITIAL_FILTER_SET_VALUE: FilterValue = {
+  regionBig: "전체",
+  regionSmall: "전체",
+  genreId: 0,
+  difficultyS: 1,
+  difficultyE: 5,
+  people: 0,
+  time: 0,
+};
+
+const filterReducer = (
+  filterValue: FilterValue,
+  action: ReducerAction
+): FilterValue => {
+  switch (action.type) {
+    case "regionBig":
+      return { ...filterValue, regionBig: action.newValue.regionBig };
+    case "regionSmall":
+      return { ...filterValue, regionSmall: action.newValue.regionSmall };
+    case "genreId":
+      return { ...filterValue, genreId: action.newValue.genreId };
+    case "difficultyS":
+      return { ...filterValue, difficultyS: action.newValue.difficultyS };
+    case "difficultyE":
+      return { ...filterValue, difficultyE: action.newValue.difficultyE };
+    case "people":
+      return { ...filterValue, people: action.newValue.people };
+    case "time":
+      return { ...filterValue, time: action.newValue.time };
+  }
+};
+
 export default function SearchPage() {
   // SearchResult 관련 변수
   const [results, setResults] =
-    useState<PreviewThemeResponse[]>(DUMMY_RESULT_DATA);
+    useState<PreviewThemeResponse[]>(INITIAL_RESULT_DATA);
 
   // SearchInput 관련 변수, 함수
   const [input, setInputValue] = useState<string>("");
@@ -40,7 +78,13 @@ export default function SearchPage() {
   };
 
   // SearchFilter 관련 변수, 함수
-  // const [filter, setFilterValue] = useState<string>("");
+  const [filterValue, filterValueDispatch] = useReducer(
+    filterReducer,
+    INITIAL_FILTER_SET_VALUE
+  );
+  const handleFilterValueChange = (action: ReducerAction) => {
+    filterValueDispatch(action);
+  };
 
   // SearchSortOptions 관련 변수, 함수
   const [sortOption, setSortOption] = useState<SortOption>("userRating");
@@ -54,8 +98,6 @@ export default function SearchPage() {
     }
   };
 
-  console.log(sortOption, sortOrder);
-
   return (
     <>
       <Header />
@@ -67,7 +109,10 @@ export default function SearchPage() {
               handleInputChange={handleInputChange}
               handleSubmit={handleSubmit}
             />
-            <SearchFilter />
+            <SearchFilter
+              filterValue={filterValue}
+              handleFilterValueChange={handleFilterValueChange}
+            />
           </FormContainer>
           <SearchSortOptions
             sortOption={sortOption}

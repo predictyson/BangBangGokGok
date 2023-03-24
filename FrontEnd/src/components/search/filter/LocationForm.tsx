@@ -1,43 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
+import { getRegionSmall } from "@/api/others";
 
-const LocationForm = () => {
-  const [city, setCity] = useState("전체"); // regionBig
-  const [location, setLocation] = useState("전체"); // regionSmall
-  console.log(city, location);
+interface LocationFormProps {
+  regionBig: string;
+  regionSmall: string;
+}
 
-  const handleCityChange = (event: SelectChangeEvent<unknown>) => {
-    setCity(event.target.value as string);
-    setLocation("전체");
-  };
+const REGION_BIG_OPTIONS = [
+  "전체",
+  "강원",
+  "서울",
+  "경기/인천",
+  "경상",
+  "전라",
+  "제주",
+  "충청",
+];
 
-  const handleLocationChange = (event: SelectChangeEvent<unknown>) => {
-    setLocation(event.target.value as string);
-  };
+const LocationForm = (props: LocationFormProps) => {
+  // TODO: useEffect로 regionBig, regionSmall을 받아와서 선택지를 뿌려줘야 함.
+  const [regionSmallOptions, setRegionSmallOptions] = useState<string[]>([
+    "전체",
+  ]);
+
+  // const handleCityChange = (event: SelectChangeEvent<unknown>) => {
+  //   setCity(event.target.value as string);
+  //   setLocation("전체");
+  // };
+
+  // const handleLocationChange = (event: SelectChangeEvent<unknown>) => {
+  //   setLocation(event.target.value as string);
+  // };
 
   const renderLocationOptions = () => {
-    // regionBig을 기준으로 regionSmall을 불러오는 API를 사용
-    // response를 dummyData에 저장
-    const dummyData = [
-      "강남",
-      "홍대",
-      "건대",
-      "동구",
-      "서구",
-      "제주시",
-      "서귀포",
-    ];
-
-    return dummyData.map((data) => (
-      <MenuItem value={data} key={data}>
-        {data}
+    return regionSmallOptions.map((regionSmalloption) => (
+      <MenuItem value={regionSmalloption} key={regionSmalloption}>
+        {regionSmalloption}
       </MenuItem>
     ));
   };
+
+  console.log(props.regionSmall);
+
+  useEffect(() => {
+    const requestRegionSmall = async () => {
+      const reponse = await getRegionSmall(props.regionBig);
+      console.log(reponse.data);
+      setRegionSmallOptions(reponse.data);
+    };
+    requestRegionSmall();
+  }, [props.regionBig]);
 
   return (
     <Wrapper>
@@ -53,24 +70,24 @@ const LocationForm = () => {
       >
         <CustomSelect
           labelId="city-select"
-          value={city}
+          value={props.regionBig}
           color="warning"
-          onChange={handleCityChange}
+          // onChange={handleCityChange}
         >
-          <MenuItem value="전체">전체</MenuItem>
-          <MenuItem value="서울">서울</MenuItem>
-          <MenuItem value="부산">부산</MenuItem>
-          <MenuItem value="제주">제주</MenuItem>
+          {REGION_BIG_OPTIONS.map((option) => (
+            <MenuItem value={option} key={option}>
+              {option}
+            </MenuItem>
+          ))}
         </CustomSelect>
         <CustomInputLabel id="location-select"></CustomInputLabel>
         <CustomSelect
           labelId="location-select"
-          value={location}
+          value={props.regionSmall}
           color="warning"
-          onChange={handleLocationChange}
-          disabled={!city}
+          // onChange={handleLocationChange}
+          disabled={!props.regionBig}
         >
-          <MenuItem value="전체">전체</MenuItem>
           {renderLocationOptions()}
         </CustomSelect>
       </div>
