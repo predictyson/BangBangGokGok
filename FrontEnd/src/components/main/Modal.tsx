@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Line from "@/assets/common/Line.png";
@@ -12,7 +12,6 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LikesModal from "./LikesModal";
 import { IReviewData, IDetailData } from "types/detail";
-import { getDetail } from "@/api/theme";
 import { postInterest, deleteInterest } from "@/api/likes";
 import { getReviews } from "@/api/review";
 interface IProps {
@@ -29,13 +28,15 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
 
   const requestReviews = async (themeId: number) => {
     try {
-      const res = await getReviews(themeId);
-      setReviews(res.data);
+      // const res = await getReviews(themeId);
+      // setReviews(res.data.reviews);
     } catch (err) {
       console.log(err);
     }
   };
-
+  useEffect(() => {
+    requestReviews(themeId);
+  });
   // requestReviews(themeId);
   // requestDetailData(themeId);
 

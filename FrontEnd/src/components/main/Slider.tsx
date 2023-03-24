@@ -95,7 +95,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
                     className="card-hover"
                     onClick={() => handleOpen(theme.themeId)}
                   >
-                    {theme.title}
+                    <span style={{ padding: "0 2rem" }}>{theme.title}</span>
                   </Hover>
                 </SliderItem>
               </>

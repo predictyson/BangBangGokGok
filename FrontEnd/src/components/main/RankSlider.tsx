@@ -3,9 +3,9 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ISliderData } from "types/slider";
+import { IThemeData } from "types/slider";
 interface IProps {
-  data: ISliderData[];
+  data: IThemeData[];
 }
 
 export default function RankSlider({ data }: IProps) {
@@ -46,14 +46,15 @@ export default function RankSlider({ data }: IProps) {
       },
     ],
   };
+  console.log("HOT DATA : " + data);
   return (
     <Container>
-      <Title>{data[0].label}</Title>
+      <Title>🔥 이번주 Hot한 테마</Title>
       <Slider {...settings}>
-        {data[0].themes.map((item, idx) => (
+        {data.map((item, idx) => (
           <>
             <SliderItem key={idx}>
-              <Rank>{item.themeId}</Rank>
+              <Rank>{idx + 1}</Rank>
               <img
                 src={item.imgUrl}
                 alt="img"
