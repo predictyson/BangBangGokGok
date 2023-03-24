@@ -20,7 +20,7 @@ export default function LeftPorfile(props: ProfileProps) {
     props.changeUserInfo(target.name, target.value);
   };
 
-  const handleSelectChange2 = async (e: SelectChangeEvent<unknown>) => {
+  const handleSetSmallRegion = async (e: SelectChangeEvent<unknown>) => {
     const target = e.target as HTMLInputElement;
     // console.log(target.name + " : " + target.value);
     setBigRegion(target.value);
@@ -67,7 +67,7 @@ export default function LeftPorfile(props: ProfileProps) {
       <SelectBox>
         <p>선호 방문 지역을 선택해주세요.</p>
         <CustomSelect
-          onChange={handleSelectChange2}
+          onChange={handleSetSmallRegion}
           name="regionBig"
           color="warning"
           displayEmpty
