@@ -37,24 +37,20 @@ export default function EmailSection() {
     }
   };
 
-  const sendCode = () => {
+  const sendCode = async () => {
     if (email === "" || !emailValidCheck(email)) {
-      // TODO : 이메일 형식 검사 reg 추가할 것
       handleToastClick("error", "올바른 형식의 이메일을 입력하세요.");
     } else {
-      requestSendEmail(email)
-        .then((res) => {
-          const data = res.data;
-          console.log(data);
-          if (data) {
-            handleToastClick("success", "5분간 유효한 코드가 전송되었습니다.");
-          } else {
-            handleToastClick("error", "존재하지않는 이메일 입니다.");
-          }
-        })
-        .catch((message) => {
-          console.log(message);
-        });
+      try {
+        const { data: isExisted } = await requestSendEmail(email);
+        if (isExisted) {
+          handleToastClick("success", "5분간 유효한 코드가 전송되었습니다.");
+        } else {
+          handleToastClick("error", "존재하지않는 이메일 입니다.");
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

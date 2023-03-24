@@ -5,8 +5,6 @@ import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { IGenre, ProfileProps } from "types/auth";
 import { requestOther } from "@/api/auth";
 
-const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
-
 export default function GenreSection(props: ProfileProps) {
   const [genres, setGenres] = useState<IGenre[]>([]);
   const handleChange = (
