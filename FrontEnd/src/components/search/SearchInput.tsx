@@ -1,23 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
 
 interface SearchInputProps {
-  setInputValue: (value: string) => void;
-  handleSubmitEvent: () => void;
+  handleChange: (input: string) => void;
+  handleSubmit: () => void;
 }
 
-export default function SearchInput({
-  setInputValue,
-  handleSubmitEvent,
-}: SearchInputProps) {
+export default function SearchInput(props: SearchInputProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    props.handleChange(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleSubmitEvent();
+    props.handleSubmit();
   };
 
   return (
@@ -47,14 +44,12 @@ const Container = styled.div`
 
 const InputContainer = styled.div`
   width: 85%;
-  /* height: 100%; */
   cursor: pointer;
 `;
 
 const Input = styled.input`
   width: 100%;
   height: 100%;
-  /* height: 5rem; */
   padding: 0 1rem;
   font-size: 2rem;
   border: none;

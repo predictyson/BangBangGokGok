@@ -11,24 +11,27 @@ import { getSearchThemes } from "@/api/theme";
 import { PreviewThemeResponse } from "types/search";
 
 export default function SearchPage() {
+  // SearchInput 관련 변수, 함수
   const [input, setInputValue] = useState<string>("");
+  const handleChange = () => {
+    setInputValue(input);
+  };
+  const handleSubmit = () => {
+    const requestSearch = async (searchParams: SearchParams) => {
+      await getSearchThemes(searchParams);
+    };
+  }; // 검색을 트리거하는 함수 => result에 저장
+
+  // SearchFilter 관련 변수, 함수
   // const [filter, setFilterValue] = useState<string>("");
-  // const [sortOption, setSortOption] = useState<string>("");
+
+  // SearchSortOptions 관련 변수, 함수
+  const [sortOption, setSortOption] = useState<string>(OPTIONS[0]);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+  // SearchResult 관련 변수
   const [results, setResults] =
     useState<PreviewThemeResponse[]>(DUMMY_RESULT_DATA);
-
-  const requestSearch = async (searchParams: SearchParams) => {
-    await getSearchThemes(searchParams);
-  };
-
-  // 검색을 트리거하는 함수
-  const handleSubmitEvent = () => {};
-
-  //   requestSearch({
-  //     word: input,
-  //     regionBig: ,
-  //   })
-  // };
 
   return (
     <>
@@ -37,12 +40,16 @@ export default function SearchPage() {
         <ContentWrapper>
           <FormContainer>
             <SearchInput
-              setInputValue={setInputValue}
-              handleSubmitEvent={handleSubmitEvent}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
             />
             <SearchFilter />
           </FormContainer>
-          <SearchSortOptions />
+          <SearchSortOptions
+            sortOption={sortOption}
+            setSortOption={setSortOption}
+            setSortOrder={setSortOrder}
+          />
           <SearchResult />
         </ContentWrapper>
       </BackGround>
@@ -58,6 +65,8 @@ const DUMMY_RESULT_DATA = [
     genres: [""],
   },
 ];
+
+const OPTIONS: string[] = ["평점", "활동성", "공포도", "체감 난이도"];
 
 const BackGround = styled.div`
   height: 90vh;
