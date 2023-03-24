@@ -220,7 +220,7 @@ def cfAPI(request):
             return result
 
         # 이걸 DB에 저장하면 끄읏
-        recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[:10]
+        recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[11:20]
 
         print(recommend_theme)
 
@@ -233,7 +233,7 @@ def cfAPI(request):
         sql = "insert into recommended_theme_of_user(created_date, modified_date, type, theme_id, user_id) values (now(), now(), 2, %s, %s)"
 
         for theme_id in recommend_theme:
-            curs.execute(sql, (theme_id, user_id))
+                curs.execute(sql, (theme_id, user_id))
         conn.commit()
 
         response = HttpResponse('review 개수 0개 CBF 추천 완료', status=200)
@@ -398,7 +398,7 @@ def cfAPI(request):
     not_tried = get_not_tried_theme(user_movie_rating, username)
 
     # 아이템 기반의 최근접 이웃 CF로 테마 추천
-    recomm_theme = recomm_theme_by_userid(ratings_pred_matrix, username, not_tried, top_n=10)
+    recomm_theme = recomm_theme_by_userid(ratings_pred_matrix, username, not_tried, top_n=20)
 
     recomm_theme = pd.DataFrame(data=recomm_theme.values, index=recomm_theme.index,
                                 columns=['예측평점'])
@@ -412,8 +412,8 @@ def cfAPI(request):
     sql = "insert into recommended_theme_of_user(created_date, modified_date, type, theme_id, user_id) values (now(), now(), 2, %s, %s)"
 
     for title in recomm_theme.iterrows():
-        title, theme_id = title[0].split('_')
-        curs.execute(sql, (theme_id, user_id))
+            title, theme_id = title[0].split('_')
+            curs.execute(sql, (theme_id, user_id))
     conn.commit()
 
     response = HttpResponse('CF 추천 완료', status=200)
