@@ -20,7 +20,7 @@ export default function ReviewItem({ data }: IProps) {
       <ReviewBox>
         <Header>
           <div className="left-wrapper">
-            {data.user.nickname}
+            {/* {data.user.nickname} */}
             {data.isSuccess ? (
               <>
                 <Badge className="green">성공</Badge>
@@ -29,16 +29,19 @@ export default function ReviewItem({ data }: IProps) {
               <Badge className="red">실패</Badge>
             )}
           </div>
-          <div className="right-wrapper">{data.createTime}</div>
+          <div className="right-wrapper">
+            {data.createTime.substring(0, 10)}
+          </div>
         </Header>
         <RatingWrapper>
           <div className="ratingItem">
             후기 평점
             <Rating
               name="readonly"
-              value={data.rating}
+              value={Math.round(data.userRating)}
               style={{ marginLeft: "1rem" }}
               size="large"
+              precision={0.5}
               readOnly
             />
           </div>
@@ -46,9 +49,10 @@ export default function ReviewItem({ data }: IProps) {
             체감 난이도
             <Rating
               name="readonly"
-              value={data.difficulty}
+              value={Math.round(data.userDifficulty)}
               style={{ marginLeft: "1rem" }}
               size="large"
+              precision={0.5}
               readOnly
             />
           </div>
@@ -56,9 +60,10 @@ export default function ReviewItem({ data }: IProps) {
             체감 공포도
             <Rating
               name="readonly"
-              value={data.fear}
+              value={Math.round(data.userFear)}
               style={{ marginLeft: "1rem" }}
               size="large"
+              precision={0.5}
               readOnly
             />
           </div>
@@ -66,9 +71,10 @@ export default function ReviewItem({ data }: IProps) {
             체감 활동성
             <Rating
               name="readonly"
-              value={data.activity}
+              value={Math.round(data.userActivity)}
               style={{ marginLeft: "1rem" }}
               size="large"
+              precision={0.5}
               readOnly
             />
           </div>

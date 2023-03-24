@@ -20,31 +20,7 @@ export default function RankSlider({ data }: IProps) {
     speed: 2000,
     autoplaySpeed: 2000,
     pauseOnHover: true,
-    responsive: [
-      {
-        breakpoint: 1250,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+    responsive: BREAKPOINT,
   };
   console.log("HOT DATA : " + data);
   return (
@@ -106,3 +82,29 @@ const Rank = styled.div`
     font-size: 10rem;
   }
 `;
+
+const BREAKPOINT = [
+  {
+    breakpoint: 1250,
+    settings: {
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      infinite: true,
+    },
+  },
+  {
+    breakpoint: 900,
+    settings: {
+      slidesToShow: 2,
+      slidesToScroll: 2,
+      initialSlide: 2,
+    },
+  },
+  {
+    breakpoint: 640,
+    settings: {
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    },
+  },
+];

@@ -116,6 +116,36 @@ const HotThemesData: IThemeData[] = [
     title: "X테마",
     imgUrl: "http://www.dumbndumber-sm.kr/img/sample_xtheme_26.png",
   },
+  {
+    themeId: 560,
+    title: "온칼로: 10만년의 밤",
+    imgUrl: "http://www.master-key.co.kr/upload/room/76_img1.jpg",
+  },
+  {
+    themeId: 264,
+    title: "X테마",
+    imgUrl: "http://www.dumbndumber-sm.kr/img/sample_xtheme_26.png",
+  },
+  {
+    themeId: 560,
+    title: "온칼로: 10만년의 밤",
+    imgUrl: "http://www.master-key.co.kr/upload/room/76_img1.jpg",
+  },
+  {
+    themeId: 264,
+    title: "X테마",
+    imgUrl: "http://www.dumbndumber-sm.kr/img/sample_xtheme_26.png",
+  },
+  {
+    themeId: 560,
+    title: "온칼로: 10만년의 밤",
+    imgUrl: "http://www.master-key.co.kr/upload/room/76_img1.jpg",
+  },
+  {
+    themeId: 264,
+    title: "X테마",
+    imgUrl: "http://www.dumbndumber-sm.kr/img/sample_xtheme_26.png",
+  },
 ];
 
 const TopThemesData: ISliderData[] = [

@@ -28,15 +28,16 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
 
   const requestReviews = async (themeId: number) => {
     try {
-      // const res = await getReviews(themeId);
-      // setReviews(res.data.reviews);
+      const res = await getReviews(themeId);
+      setReviews(res.data.reviews);
+      console.log(res.data.reviews);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
     requestReviews(themeId);
-  });
+  }, [themeId]);
   // requestReviews(themeId);
   // requestDetailData(themeId);
 
@@ -134,6 +135,7 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
                   value={data.difficulty}
                   style={{ marginLeft: "1rem" }}
                   size="large"
+                  precision={0.5}
                   readOnly
                 />
               )}
@@ -318,10 +320,10 @@ const REVIEWDUMMY: IReviewData[] = [
     user: USERDUMMY,
     reviewId: 1,
     content: "너무너무 재밌어요 눈물나요",
-    rating: 4.2,
-    activity: 3.3,
-    fear: 4.4,
-    difficulty: 2.2,
+    userRating: 4.2,
+    userActivity: 3.3,
+    userFear: 4.4,
+    userDifficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 0, // 1: 성공 0 : 실파
     record: "0:12:50", // 분.초
@@ -330,10 +332,10 @@ const REVIEWDUMMY: IReviewData[] = [
     user: USERDUMMY,
     reviewId: 1,
     content: "너무너무 재밌어요 눈물나요",
-    rating: 4.2,
-    activity: 3.3,
-    fear: 4.4,
-    difficulty: 2.2,
+    userRating: 4.2,
+    userActivity: 3.3,
+    userFear: 4.4,
+    userDifficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 1, // 1: 성공 0 : 실파
     record: "0:12:50", // 분.초
