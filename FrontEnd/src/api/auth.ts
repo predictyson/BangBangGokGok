@@ -84,3 +84,9 @@ export const requestSmallRegion = (big: string) => {
   console.log(big);
   return instance.get(`/other/region/${big}`);
 };
+
+// 소셜 로그인 이후 회원 정보 조회
+export const requestUserInfo = () => {
+  // 로그인 이후기때문에 토큰에 헤더가 실려서 가겠죠? 쉽죠?
+  return instance.get(`/user/oauth/login`);
+};

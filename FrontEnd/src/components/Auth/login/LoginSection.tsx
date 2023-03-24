@@ -31,8 +31,13 @@ export default function LoginSection() {
       [name]: value,
     }));
   };
-
-  const handleLogin = async () => {
+  /** 로그인 API
+   * 로컬 로그인의 경우,
+   * refresh, access토큰은 cookie로
+   * userId, nicname은 localStorage로
+   */
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // 기본 동작 방지
     try {
       const {
         data: {
@@ -55,9 +60,11 @@ export default function LoginSection() {
       });
       localStorage.setItem("nickname", nickname);
       localStorage.setItem("userId", userId);
-      // navigate("/");
+      navigate("/");
     } catch (err) {
       console.log(err);
+      // TODO: 로그인 실패 TOAST 추가하자
+      alert("틀렸다 이자식아!!!");
     }
   };
 
