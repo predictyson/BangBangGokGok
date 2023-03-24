@@ -53,7 +53,6 @@ public class ThemeController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-
     @CrossOrigin("*")
     @Operation(summary = "게스트 테마 목록 조회", description = "메인 화면의 기본 테마 목록을 불러온다")
     @GetMapping("guest")
@@ -103,6 +102,22 @@ public class ThemeController {
         resultMap.put("theme", themeResponse);
 
         logger.info("[themeInfo] response : theme={}", themeResponse);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @CrossOrigin("*")
+    @GetMapping("test")
+    public ResponseEntity<Map<String, Object>> hotTheme() throws Exception {
+        logger.info("[hotTheme] request : ");
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        List<PreviewThemeResponse> hotThemes = themeService.getHotThemes();
+
+        resultMap.put("hotThemes", hotThemes);
+
+        logger.info("[hotTheme] response : hotTheme={}", hotThemes);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }

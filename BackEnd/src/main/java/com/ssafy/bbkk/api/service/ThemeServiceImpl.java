@@ -22,11 +22,14 @@ import com.ssafy.bbkk.db.repository.ThemeRepository;
 import com.ssafy.bbkk.db.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class ThemeServiceImpl implements ThemeService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ThemeServiceImpl.class);
 
     private final UserRepository userRepository;
     private final RegionRepository regionRepository;
@@ -213,7 +218,10 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public List<PreviewThemeResponse> getHotThemes() throws Exception {
-        List<PreviewThemeResponse> result = new ArrayList<>();
+        List<PreviewThemeResponse> result = null;
+        Map<Integer, Integer> themeCnt; // 카운트된 테마의 개수
+
+
 
         return result;
     }
@@ -352,3 +360,108 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
 }
+
+/*
+
+    @Override
+    public List<PreviewThemeResponse> getHotThemes() throws Exception {
+        List<PreviewThemeResponse> result = null;
+        Map<Integer, Long> themeCnt; // 카운트된 테마의 개수
+
+        JPAQueryFactory qf = new JPAQueryFactory(entityManager);
+        QReview qReview = QReview.review;
+        QInterestedThemeOfUser qInterest = QInterestedThemeOfUser.interestedThemeOfUser;
+
+        ///////////////////////////////////////////////////
+        // 일주일동안 작성된 테마의 리뷰 개수들을 불러온다
+        List<ThemeCountResponse> qlist = qf
+                .from(qReview)
+                .where(
+                    qReview.modifiedDate.between(
+                        LocalDateTime.now(),
+                        LocalDateTime.now().plusDays(7)
+                    )
+                )
+                .groupBy(qReview.theme)
+                .select(
+                    Projections.constructor(ThemeCountResponse.class,
+                        qReview.theme,
+                        qReview.theme.count()
+                    )
+                )
+                .fetch()
+                ;
+
+        logger.info("qlist={}",qlist);
+
+        // 테마 카운팅된 결과를 map으로 변환
+        themeCnt = qlist
+                .stream()
+                .collect(
+                        Collectors.toMap(
+                                ThemeCountResponse::getTheme,
+                                ThemeCountResponse::getCount
+                        )
+                );
+        logger.info("keySet : {}",themeCnt.keySet());
+        logger.info("valueSet : {}",themeCnt.values());
+
+        ///////////////////////////////////////////////////
+        // 일주일동안 관심을 추가한 테마의 개수들을 불러온다
+        qlist = qf
+                .from(qInterest)
+                .where(
+                        qInterest.modifiedDate.between(
+                                LocalDateTime.now(),
+                                LocalDateTime.now().plusDays(7)
+                        )
+                )
+                .groupBy(qInterest.theme)
+                .select(
+                    Projections.fields(ThemeCountResponse.class,
+                        qInterest.theme,
+                        qInterest.theme.count()
+                    )
+                )
+                .fetch();
+
+        // 테마 카운팅된 결과를 map에다 추가
+        qlist.forEach(theme -> {
+                    int themeId = theme.getThemeId();
+                    if(themeCnt.containsKey(themeId)){
+                        themeCnt.replace(themeId, themeCnt.get(themeId) + theme.getCount());
+                    }
+                    else{
+                        themeCnt.put(themeId, theme.getCount());
+                    }
+                });
+
+        ///////////////////////////////////////////////////
+        // 카운트된 테마들을 리스트로 변환
+        List<Integer> themeIdlist = new ArrayList(themeCnt.keySet());
+        logger.info("[themeCnt Map]");
+        for(int key : themeCnt.keySet()){
+            long value = themeCnt.get(key);
+            logger.info("themeId={}, count={}",key,value);
+        }
+
+        // 리스트의 개수를 비교
+        if(themeIdlist.size() < 9){ // 개수가 적으면 디폴트 값을 반환
+            // userCnt가 높은 순으로 반환
+            result = themeRepository.findTop9ByOrderByUserCntDesc()
+                    .stream()
+                    .map(x->new PreviewThemeResponse(x))
+                    .collect(Collectors.toList());
+        }
+        else{ // 개수가 많으면 db에서 뽑아옴
+            result = new ArrayList<>();
+            for (int i = 0; i<10; i++){
+                result.add(new PreviewThemeResponse(themeRepository.findById(themeIdlist.get(i)).orElseThrow()));
+            }
+        }
+
+        return result;
+    }
+
+
+ */
