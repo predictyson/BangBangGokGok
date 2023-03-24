@@ -12,8 +12,8 @@ import ProfileInfoSection from "./pages/MyPage/ProfileInfoSection";
 import MyReviesSection from "./pages/MyPage/MyReviewsSection";
 import LikeThemesSection from "./pages/MyPage/LikeThemesSection";
 import ResetPasswordPage from "./pages/Auth/ResetPasswordPage";
-import OAuthPage from "./pages/Auth/OAuthPage";
-import OAuth2Page from "./pages/Auth/OAuth2Page";
+import OAuthPage from "./pages/Auth/RedirectSignUp";
+import OAuth2Page from "./pages/Auth/RedirectOauth2";
 
 const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
