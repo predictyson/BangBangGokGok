@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Modal from "./Modal";
 import { IAwardSlider, IAwardTheme } from "types/slider";
+import { style } from "@mui/system";
 interface IProps {
   awardData: IAwardSlider;
 }
@@ -73,54 +74,21 @@ export default function AwardsSlider(awardData: IProps) {
       <Slider {...settings}>
         {data.theme.map((theme: IAwardTheme) => (
           <SliderItem key={theme.themeId}>
-            <div
-              style={{
-                width: "25rem",
-                height: "5rem",
-                fontSize: "2rem",
-                margin: "1rem auto ",
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
+            <SliderTitleWrapper>
               <img
                 src="https://user-images.githubusercontent.com/55784772/227142184-4680b14f-4d30-4699-a62e-8b258803b9db.png"
                 alt="left"
               />
-              <span
-                style={{
-                  marginTop: "auto",
-                  display: "flex",
-                  flexDirection: "column",
-                  fontWeight: "bold",
-                }}
-              >
-                <span
-                  style={{
-                    marginBottom: "0.2rem",
-                    fontSize: "1.6rem",
-                    fontWeight: 400,
-                  }}
-                >
-                  최고의
-                </span>
+              <span className="title">
+                <span>최고의</span>
                 {theme.awardName}
               </span>
               <img
                 src="https://user-images.githubusercontent.com/55784772/227142176-55d00e0c-d111-4fa0-880a-29a75030bb8d.png"
                 alt="right"
               />
-            </div>
-            <img
-              src={theme.imgUrl}
-              style={{
-                width: "22rem",
-                height: "28rem",
-                cursor: "pointer",
-                margin: "0 auto",
-              }}
-            />
+            </SliderTitleWrapper>
+            <PosterItem src={theme.imgUrl} />
             <Hover
               className="card-hover"
               onClick={() => handleOpen(theme.themeId)} // , item.label)}
@@ -137,6 +105,32 @@ export default function AwardsSlider(awardData: IProps) {
   );
 }
 
+const PosterItem = styled.img`
+  width: 22rem;
+  height: 28rem;
+  cursor: pointer;
+  margin: 0 auto;
+`;
+const SliderTitleWrapper = styled.div`
+  width: 25rem;
+  height: 5rem;
+  font-size: 2rem;
+  margin: 1rem auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  span {
+    margin-bottom: 0.2rem;
+    font-size: 1.6rem;
+    font-weight: 400;
+  }
+  .title {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+  }
+`;
 const Container = styled.div`
   width: 90%;
   margin: auto auto;
