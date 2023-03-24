@@ -54,19 +54,19 @@ export default function EmailSection() {
     }
   };
 
-  const checkCode = () => {
+  const checkCode = async () => {
     // TODO : API 다녀와서 200 res오면
-    requestCheckCode(email, validCode).then((res) => {
-      const data = res.data;
-      console.log(data);
-      if (data) {
-        handleValid();
+    try {
+      const { data: isCheck } = await requestCheckCode(email, validCode);
+      if (isCheck) {
+        setIsValid(true);
         handleToastClick("success", "이메일 인증 성공!");
       } else {
-        handleToastClick("error", "인증코드를 다시 확인해주세요.");
+        handleToastClick("error", "인증코드를 확인해주세요.");
       }
-    });
-    handleValid();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
