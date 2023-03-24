@@ -4,6 +4,7 @@ import com.ssafy.bbkk.api.controller.UserController;
 import com.ssafy.bbkk.common.jwt.TokenProvider;
 import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -33,6 +34,9 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
 
+        // response
+        HttpServletResponse res = (HttpServletResponse)response;
+
         // 1. Request Header 에서 토큰을 꺼냄
         String jwt = resolveToken(request);
 
@@ -41,6 +45,17 @@ public class JwtFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             Authentication authentication = tokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+        else{
+            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            res.setContentType("application/json");
+            res.setCharacterEncoding("UTF-8");
+
+            JSONObject resJson = new JSONObject();
+            resJson.put("code", 401);
+            resJson.put("message", "JWT 토큰 에러");
+
+            res.getWriter().write(resJson.toString());
         }
 
         filterChain.doFilter(request, response);
