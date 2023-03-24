@@ -90,8 +90,8 @@ public class UserServiceImpl implements UserService {
     public void setUserAdditionalInfo(JoinAdditionalRequest joinAdditionalRequest) throws Exception {
         // 유저의 선호 지역 조회
         Region region = regionRepository.findByRegionBigAndRegionSmall(joinAdditionalRequest.getRegionBig(), joinAdditionalRequest.getRegionSmall())
-                .orElseThrow(
-                        () -> new Exception(joinAdditionalRequest.getRegionBig() + "과 " + joinAdditionalRequest.getRegionSmall() + "에 맞는 지역을 찾을 수 없습니다."));
+                .orElseThrow(() -> new Exception("regionBig=" + joinAdditionalRequest.getRegionBig() +
+                        "과 regionSmall=" + joinAdditionalRequest.getRegionSmall() + "에 맞는 지역을 찾을 수 없습니다."));
         // 유저 id를 통해 유저 조회
         User user = userRepository.findById(joinAdditionalRequest.getUserId()).orElseThrow(
                 () -> new Exception(joinAdditionalRequest.getUserId() + "에 맞는 유저를 찾을 수 없습니다."));
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
         for (int genreId : joinAdditionalRequest.getGenreIds()) {
             // 선호 장르 조회
             Genre genre = genreRepository.findById(genreId).orElseThrow(
-                    () -> new Exception(genreId + "에 맞는 장르를 찾을 수 없습니다."));
+                    () -> new Exception("genreId=" + genreId + "에 맞는 장르를 찾을 수 없습니다."));
             // 유저의 선호 장르 객체 생성
             PreferredGenreOfUser preferredGenreOfUser = new PreferredGenreOfUser(user, genre);
             // 유저의 선호 장르 저장
@@ -142,7 +142,7 @@ public class UserServiceImpl implements UserService {
         LoginResponse result = null;
         // email을 통해 유저 조회
         User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new Exception(email + "에 맞는 유저를 찾을 수 없습니다."));
+                () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
         // 유저를 Dto에 감싸기
         result = new LoginResponse(user);
         return result;
@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
     public void setPassword(ChangePasswordRequest changePasswordRequest) throws Exception {
         // 이메일을 통해 유저 조회
         User user = userRepository.findByEmail(changePasswordRequest.getEmail()).orElseThrow(
-                () -> new Exception(changePasswordRequest.getEmail() + "에 맞는 유저를 찾을 수 없습니다."));
+                () -> new Exception("email=" + changePasswordRequest.getEmail() + "에 맞는 유저를 찾을 수 없습니다."));
         // 비밀번호 암호화 및 변경
         user.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
         // 유저 저장

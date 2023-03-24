@@ -53,7 +53,7 @@ public class ThemeServiceImpl implements ThemeService {
         String label;
         // 테마의 지역
         Region region = regionRepository.findById(regionId).orElseThrow(
-                () -> new Exception(regionId + "에 맞는 지역을 찾을 수 없습니다."));
+                () -> new Exception("regionId=" + regionId + "에 맞는 지역을 찾을 수 없습니다."));
 
         List<PreviewThemeResponse> themes = null;
         List<PreviewThemeResponse> list = null;
@@ -189,7 +189,7 @@ public class ThemeServiceImpl implements ThemeService {
         List<ThemeBundleResponse> result = null;
         // 유저 email을 통해 유저 조회
         User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new Exception(email + "에 맞는 유저를 찾을 수 없습니다."));
+                () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
         // 추천 테마 리스트
         List<PreviewThemeResponse> CBFList = new ArrayList<>();
         List<PreviewThemeResponse> CFList = new ArrayList<>();
@@ -243,7 +243,7 @@ public class ThemeServiceImpl implements ThemeService {
             result.add(getFeelBundle(rnd.nextInt(4)));
         } else {
             User user = userRepository.findByEmail(email).orElseThrow(
-                    () -> new Exception(email + "에 맞는 유저를 찾을 수 없습니다."));
+                    () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
             // 선호 지역 인기 테마
             result.add(getRegionBundle(user.getRegion().getId()));
         }
@@ -346,7 +346,7 @@ public class ThemeServiceImpl implements ThemeService {
     public ThemeResponse getThemeInfo(int themeId) throws Exception {
         ThemeResponse result = null;
         Theme theme = themeRepository.findById(themeId).orElseThrow(
-                () -> new Exception(themeId + "에 맞는 테마를 찾을 수 없습니다."));
+                () -> new Exception("themeId=" + themeId + "에 맞는 테마를 찾을 수 없습니다."));
         result = new ThemeResponse(theme);
         return result;
     }

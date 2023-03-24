@@ -37,7 +37,7 @@ public class ProfileServiceImpl implements ProfileService {
     public boolean isSameUser(String email, int userId) throws Exception {
         // 유저 id를 통해 유저 조회
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new Exception(userId + "에 맞는 유저를 찾을 수 없습니다."));
+                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
 
         // 로그인한 정보와 조회한 유저가 같은지 비교
         if (email.equals(user.getEmail()))
@@ -50,7 +50,7 @@ public class ProfileServiceImpl implements ProfileService {
         UserInfoResponse result = null;
         // 이메일로 유저 찾아오기
         User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new Exception(email + "에 맞는 유저를 찾을 수 없습니다."));
+                () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
         // 유저를 Dto에 감싸기
         result = new UserInfoResponse(user);
         return result;
@@ -61,7 +61,7 @@ public class ProfileServiceImpl implements ProfileService {
         UserInfoResponse result = null;
         // 유저 id로 유저 찾아오기
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new Exception(userId + "에 맞는 유저를 찾을 수 없습니다."));
+                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
         // 유저를 Dto에 감싸기
         result = new UserInfoResponse(user);
         return result;
@@ -72,7 +72,7 @@ public class ProfileServiceImpl implements ProfileService {
         List<ReviewOfUserResponse> result = null;
         // 유저 id로 유저 찾아오기
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new Exception(userId + "에 맞는 유저를 찾을 수 없습니다."));
+                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
         // 유저의 리뷰들을 Dto에 감싸기
         result = user.getReviews()
                 .stream()
@@ -105,7 +105,7 @@ public class ProfileServiceImpl implements ProfileService {
                 });
 
 //        User user = userRepository.findById(userId).orElseThrow(
-//                () -> new Exception(userId + "에 맞는 유저를 찾을 수 없습니다."));
+//                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
 //
 //        user.getReviews()
 //                .stream()
@@ -127,7 +127,7 @@ public class ProfileServiceImpl implements ProfileService {
         List<InterestThemeResponse> result = null;
         // 유저 id로 유저 찾아오기
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new Exception(userId + "에 맞는 유저를 찾을 수 없습니다."));
+                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
         // 유저의 관심 테마 목록을 Dto에 감싸기
         result = user.getInterestedThemeOfUsers()
                 .stream()
@@ -141,18 +141,19 @@ public class ProfileServiceImpl implements ProfileService {
         int userId = updateUserInfoRequest.getUserId();
         // 유저 id로 유저 찾아오기
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new Exception(userId + "에 맞는 유저를 찾을 수 없습니다."));
+                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
         // 수정한 선호 지역 찾아오기
         Region region = regionRepository.findByRegionBigAndRegionSmall(updateUserInfoRequest.getRegionBig(), updateUserInfoRequest.getRegionSmall())
                 .orElseThrow(
-                        () -> new Exception(updateUserInfoRequest.getRegionBig() + "과 " + updateUserInfoRequest.getRegionSmall() + "에 맞는 지역을 찾을 수 없습니다."));
+                        () -> new Exception("regionBig=" + updateUserInfoRequest.getRegionBig() +
+                                "과 regionSmall=" + updateUserInfoRequest.getRegionSmall() + "에 맞는 지역을 찾을 수 없습니다."));
         // 유저 정보 수정 (선호 장르들은 preferredGenreOfUser 에서 가져오는 것이므로 직접 수정할 필요없음)
         user.updateUserInfo(updateUserInfoRequest, region);
         user = userRepository.save(user);
         // 추가된 선호 장르를 추가
         for (int genreId : updateUserInfoRequest.getGenreIdAdd()) {
             Genre genre = genreRepository.findById(genreId).orElseThrow(
-                    () -> new Exception(genreId + "에 맞는 장르를 찾을 수 없습니다."));
+                    () -> new Exception("genreId=" + genreId + "에 맞는 장르를 찾을 수 없습니다."));
             preferredGenreOfUserRepository.save(new PreferredGenreOfUser(user, genre));
         }
         // 삭제된 선호 장르를 제거
