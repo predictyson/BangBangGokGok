@@ -21,7 +21,7 @@ curs = conn.cursor()
 def cbfAPI(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
-    user_id = body["user_id"]
+    user_id = body["userId"]
 
     print("user_id : " + str(user_id))
     # 유저의 관심 테마가 몇개 있는지 확인
@@ -126,7 +126,7 @@ def cbfAPI(request):
 def cfAPI(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
-    user_id = body["user_id"]
+    user_id = body["userId"]
 
     rating_data_sql = "SELECT user_id, theme_id, user_rating FROM review"
     theme_data_sql = "SELECT theme_id, title FROM theme"
@@ -339,7 +339,7 @@ def groupsetAPI(request):
             hybrid_flag = False
             break
 
-    if (hybrid_flag == False): # CF
+    if (hybrid_flag): # CF
         rating_data_sql = "SELECT user_id, theme_id, user_rating FROM review"
         theme_data_sql = "SELECT theme_id, title FROM theme"
 
@@ -359,7 +359,7 @@ def groupsetAPI(request):
         theme_user_rating.fillna(0, inplace=True)
 
         merged_df = theme_user_rating.loc[:,user_id[0]]
-
+        print(merged_df)
         for i in range(1,len(user_id)):
             merged_df = pd.merge(merged_df, theme_user_rating.loc[:,user_id[i]], on='title', how='outer')
 
