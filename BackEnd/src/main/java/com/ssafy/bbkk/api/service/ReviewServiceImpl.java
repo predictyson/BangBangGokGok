@@ -10,7 +10,6 @@ import com.ssafy.bbkk.db.repository.ReviewRepository;
 import com.ssafy.bbkk.db.repository.ThemeRepository;
 import com.ssafy.bbkk.db.repository.UserRepository;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,8 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewOfUserResponse getReview(int reviewId) throws Exception {
         ReviewOfUserResponse result = null;
         // 리뷰 id를 통해 리뷰 찾아오기
-        Review review = reviewRepository.findById(reviewId).orElseThrow();
+        Review review = reviewRepository.findById(reviewId).orElseThrow(
+                () -> new Exception("reviewId=" + reviewId + "에 맞는 리뷰를 찾을 수 없습니다."));
         // 리뷰를 Dto에 감싸기
         result = new ReviewOfUserResponse(review);
         return result;
@@ -39,7 +39,8 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ReviewOfUserResponse> getReviews(int themeId) throws Exception {
         List<ReviewOfUserResponse> result = null;
         // 테마 id를 통해 테마 불러오기
-        Theme theme = themeRepository.findById(themeId).orElseThrow();
+        Theme theme = themeRepository.findById(themeId).orElseThrow(
+                () -> new Exception("themeId=" + themeId + "에 맞는 테마를 찾을 수 없습니다."));
         // 리뷰를 Dto에 감싸기
         result = theme.getReviews()
                 .stream()
@@ -51,9 +52,11 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void addReview(String email, CreateReviewRequest createReviewRequest) throws Exception {
         // email을 통해 유저 찾아오기
-        User user = userRepository.findByEmail(email).orElseThrow();
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
         // themeId를 통해 테마 찾아오기
-        Theme theme = themeRepository.findById(createReviewRequest.getThemeId()).orElseThrow();
+        Theme theme = themeRepository.findById(createReviewRequest.getThemeId()).orElseThrow(
+                () -> new Exception("themeId=" + createReviewRequest.getThemeId() + "에 맞는 테마를 찾을 수 없습니다."));
         // 리뷰 생성
         Review review = new Review(user, theme, createReviewRequest);
         reviewRepository.save(review);
@@ -62,12 +65,14 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void deleteReview(String email, int reviewId) throws Exception {
         // email을 통해 유저 찾아오기
-        User user = userRepository.findByEmail(email).orElseThrow();
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
         // 리뷰 id를 통해 리뷰 찾아오기
-        Review review = reviewRepository.findById(reviewId).orElseThrow();
+        Review review = reviewRepository.findById(reviewId).orElseThrow(
+                () -> new Exception("reviewId=" + reviewId + "에 맞는 리뷰를 찾을 수 없습니다."));
         // 해당 유저가 작성한 리뷰인지 확인하기
         if (user.getId() != review.getUser().getId())
-            throw new Exception("리뷰를 삭제할 권한이 없습니다.");
+            throw new Exception("email=" + email + " 사용자는 reviewId=" + reviewId + "인 리뷰를 삭제할 권한이 없습니다.");
         // 리뷰 삭제하기
         reviewRepository.deleteById(reviewId);
     }
@@ -76,12 +81,14 @@ public class ReviewServiceImpl implements ReviewService {
     @Transactional
     public ReviewOfUserResponse setReview(String email, UpdateReviewRequest updateReviewRequest) throws Exception {
         // email을 통해 유저 찾아오기
-        User user = userRepository.findByEmail(email).orElseThrow();
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
         // 리뷰 id를 통해 리뷰 찾아오기
-        Review review = reviewRepository.findById(updateReviewRequest.getReviewId()).orElseThrow();
+        Review review = reviewRepository.findById(updateReviewRequest.getReviewId()).orElseThrow(
+                () -> new Exception("reviewId=" + updateReviewRequest.getReviewId() + "에 맞는 리뷰를 찾을 수 없습니다."));
         // 해당 유저가 작성한 리뷰인지 확인하기
         if (user.getId() != review.getUser().getId())
-            throw new Exception("리뷰를 수정할 권한이 없습니다.");
+            throw new Exception("email=" + email + " 사용자는 reviewId=" + updateReviewRequest.getReviewId() + "인 리뷰를 수정할 권한이 없습니다.");
         // 리뷰 수정하기
         review.updateReviewInfo(updateReviewRequest);
         return new ReviewOfUserResponse(review);
