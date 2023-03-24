@@ -15,11 +15,16 @@ export default function GenreSection(props: ProfileProps) {
   };
 
   useEffect(() => {
-    requestOther().then((res) => {
-      const data = res.data;
-      console.log(data.genres);
-      setGenres(data.genres);
-    });
+    const getGenres = async () => {
+      try {
+        const { data } = await requestOther();
+        setGenres(data.genres);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getGenres();
   }, []);
 
   return (
