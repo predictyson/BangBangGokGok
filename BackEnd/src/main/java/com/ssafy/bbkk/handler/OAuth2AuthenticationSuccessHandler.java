@@ -99,8 +99,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
 
         // 추가 정보가 입력되어 있지 않다면 추가 정보 입력창으로 보냄
-        return UriComponentsBuilder.fromUriString(localUrl+targetUrl)
-                .queryParam("userId", user.getId())
+        return UriComponentsBuilder.fromUriString(localUrl+targetUrl+"/"+user.getId())
                 .build().toUriString();
+
+//        // 추가 정보가 입력되어 있지 않다면 추가 정보 입력창으로 보냄
+//        return UriComponentsBuilder.fromUriString(localUrl+targetUrl)
+//                .queryParam("userId", user.getId())
+//                .build().toUriString();
     }
 }
