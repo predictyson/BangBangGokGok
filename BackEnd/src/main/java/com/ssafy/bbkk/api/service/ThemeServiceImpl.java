@@ -191,20 +191,23 @@ public class ThemeServiceImpl implements ThemeService {
         // 추천 테마 리스트
         List<PreviewThemeResponse> CBFList = new ArrayList<>();
         List<PreviewThemeResponse> CFList = new ArrayList<>();
-        // 유저의 추천 테마 목록 조회
-        recommendedThemeOfUserRepository.findByUserId(user.getId())
-                .forEach(x -> {
-                    if (x.getType() == 1) {
-                        CBFList.add(new PreviewThemeResponse(x.getTheme()));
-                    } else {
-                        CFList.add(new PreviewThemeResponse(x.getTheme()));
-                    }
-                });
-        // CBF : 맞춤 테마
-        result.add(new ThemeBundleResponse("님의 맞춤 추천 테마입니다", CBFList));
-        // CF : 비슷한 유저와 비교시 맞춤 테마
-        if (CFList.size() > 0) {
-            result.add(new ThemeBundleResponse("님과 비슷한 유저가 자주간 테마입니다", CFList));
+        int cnt = recommendedThemeOfUserRepository.countByUserId(user.getId());
+        if(cnt > 0){
+            // 유저의 추천 테마 목록 조회
+            recommendedThemeOfUserRepository.findByUserId(user.getId())
+                    .forEach(x -> {
+                        if (x.getType() == 1) {
+                            CBFList.add(new PreviewThemeResponse(x.getTheme()));
+                        } else {
+                            CFList.add(new PreviewThemeResponse(x.getTheme()));
+                        }
+                    });
+            // CBF : 맞춤 테마
+            result.add(new ThemeBundleResponse("님의 맞춤 추천 테마입니다", CBFList));
+            // CF : 비슷한 유저와 비교시 맞춤 테마
+            if (CFList.size() > 0) {
+                result.add(new ThemeBundleResponse("님과 비슷한 유저가 자주간 테마입니다", CFList));
+            }
         }
         return result;
     }
