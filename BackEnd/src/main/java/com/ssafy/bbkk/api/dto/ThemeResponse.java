@@ -42,7 +42,7 @@ public class ThemeResponse {
         this.title = theme.getTitle();
         this.difficulty = theme.getDifficulty();
         this.runningTime = theme.getRunningTime();
-        this.openData = theme.getOpenDate();
+        this.openDate = theme.getOpenDate();
         this.minPeople = theme.getMinPeople();
         this.maxPeople = theme.getMaxPeople();
         this.imgUrl = theme.getImgUrl();
