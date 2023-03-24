@@ -1,6 +1,7 @@
 package com.ssafy.bbkk.api.controller;
 
 import com.ssafy.bbkk.api.dto.CreateReviewRequest;
+import com.ssafy.bbkk.api.dto.ReviewOfThemeResponse;
 import com.ssafy.bbkk.api.dto.ReviewOfUserResponse;
 import com.ssafy.bbkk.api.dto.UpdateReviewRequest;
 import com.ssafy.bbkk.api.service.ReviewService;
@@ -41,11 +42,11 @@ public class ReviewController {
         logger.info("[getReviews] request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
-        List<ReviewOfUserResponse> reviewOfUserResponses = reviewService.getReviews(themeId);
+        List<ReviewOfThemeResponse> reviewOfThemeResponses = reviewService.getReviews(themeId);
 
-        resultMap.put("reviews", reviewOfUserResponses);
+        resultMap.put("reviews", reviewOfThemeResponses);
 
-        logger.info("[getReviews] response : reviews={}", reviewOfUserResponses);
+        logger.info("[getReviews] response : reviews={}", reviewOfThemeResponses);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }

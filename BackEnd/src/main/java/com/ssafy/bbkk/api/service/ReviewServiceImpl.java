@@ -1,6 +1,7 @@
 package com.ssafy.bbkk.api.service;
 
 import com.ssafy.bbkk.api.dto.CreateReviewRequest;
+import com.ssafy.bbkk.api.dto.ReviewOfThemeResponse;
 import com.ssafy.bbkk.api.dto.ReviewOfUserResponse;
 import com.ssafy.bbkk.api.dto.UpdateReviewRequest;
 import com.ssafy.bbkk.db.entity.Review;
@@ -36,15 +37,15 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewOfUserResponse> getReviews(int themeId) throws Exception {
-        List<ReviewOfUserResponse> result = null;
+    public List<ReviewOfThemeResponse> getReviews(int themeId) throws Exception {
+        List<ReviewOfThemeResponse> result = null;
         // 테마 id를 통해 테마 불러오기
         Theme theme = themeRepository.findById(themeId).orElseThrow(
                 () -> new Exception("themeId=" + themeId + "에 맞는 테마를 찾을 수 없습니다."));
         // 리뷰를 Dto에 감싸기
         result = theme.getReviews()
                 .stream()
-                .map(x -> new ReviewOfUserResponse(x))
+                .map(x -> new ReviewOfThemeResponse(x))
                 .collect(Collectors.toList());
         return result;
     }
