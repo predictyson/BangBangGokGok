@@ -12,7 +12,6 @@ import { IDetailData, IReviewData } from "types/detail";
 interface IProps {
   data: IDetailData;
   themeId: number;
-  label: string;
   reviews: IReviewData[];
 }
 interface IBarData {
@@ -26,7 +25,7 @@ interface IBarData {
   }[];
 }
 
-export default function Review({ data, themeId, label, reviews }: IProps) {
+export default function Review({ data, themeId, reviews }: IProps) {
   const CHARTDATA = [data.userActivity, data.userFear, data.userDifficulty];
 
   const BARDATA: IBarData = {

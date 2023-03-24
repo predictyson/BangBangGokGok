@@ -5,22 +5,23 @@ import PrevArrow from "@/assets/main/PrevArrow.png";
 import NextArrow from "@/assets/main/NextArrow.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ISliderData, IThemeData } from "types/slider";
 import Modal from "./Modal";
+import { IAwardSlider, IAwardTheme } from "types/slider";
+import { style } from "@mui/system";
 interface IProps {
-  topData: ISliderData[];
-  isRecommendSlider: boolean;
+  awardData: IAwardSlider;
 }
-export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
-  interface ArrowProps extends CustomArrowProps {
-    onClick?: MouseEventHandler<HTMLDivElement>;
-  }
+interface ArrowProps extends CustomArrowProps {
+  onClick?: MouseEventHandler<HTMLDivElement>;
+}
+
+export default function AwardsSlider(awardData: IProps) {
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
-  const handleOpen = (themeId: number, label: string) => {
+  const handleOpen = (themeId: number) => {
     setThemeId(themeId);
     setOpen(true);
-    console.log(label + " " + themeId);
+    console.log("handleOpen Award : " + themeId);
   };
   const handleClose = () => {
     setOpen(false);
@@ -49,7 +50,6 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
       </div>
     );
   };
-
   const settings = {
     centerMode: true,
     dots: false,
@@ -61,51 +61,79 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
     nextArrow: <CustomNextArrow />,
     responsive: BREAKPOINT,
   };
-
+  const data = awardData.awardData;
   return (
     <Container>
-      {topData.map((item, idx) => (
-        <>
-          {isRecommendSlider ? (
-            <RecommendTitle className="recommend">{item.label}</RecommendTitle>
-          ) : (
-            <TitleWrapper>
-              <Icon src={ICONLIST[idx]} alt="icon" />
-              <Title>{item.label}</Title>
-            </TitleWrapper>
-          )}
-          <Slider {...settings}>
-            {item.themes.map((theme: IThemeData) => (
-              <>
-                <SliderItem key={theme.themeId}>
-                  <PosterItem src={theme.imgUrl} />
-                  <Hover
-                    className="card-hover"
-                    onClick={() => handleOpen(theme.themeId, item.label)}
-                  >
-                    {theme.title}
-                  </Hover>
-                </SliderItem>
-              </>
-            ))}
-          </Slider>
-          {themeId !== undefined && (
-            <Modal open={open} onClose={handleClose} themeId={themeId} />
-          )}
-        </>
-      ))}
+      <TitleWrapper>
+        <Icon
+          src="https://icon-library.com/images/prize-icon/prize-icon-5.jpg"
+          alt="icon"
+        />
+        <Title>{data.year}년도 어워즈 수상작</Title>
+      </TitleWrapper>
+      <Slider {...settings}>
+        {data.theme.map((theme: IAwardTheme) => (
+          <SliderItem key={theme.themeId}>
+            <SliderTitleWrapper>
+              <img
+                src="https://user-images.githubusercontent.com/55784772/227142184-4680b14f-4d30-4699-a62e-8b258803b9db.png"
+                alt="left"
+              />
+              <span className="title">
+                <span>최고의</span>
+                {theme.awardName}
+              </span>
+              <img
+                src="https://user-images.githubusercontent.com/55784772/227142176-55d00e0c-d111-4fa0-880a-29a75030bb8d.png"
+                alt="right"
+              />
+            </SliderTitleWrapper>
+            <>
+              <PosterItem src={theme.imgUrl} />
+              <Hover
+                className="card-hover"
+                onClick={() => handleOpen(theme.themeId)}
+              >
+                {theme.title}
+              </Hover>
+            </>
+          </SliderItem>
+        ))}
+      </Slider>
+      {themeId !== undefined && (
+        <Modal open={open} onClose={handleClose} themeId={themeId} />
+      )}
     </Container>
   );
 }
 
 const PosterItem = styled.img`
-  width: 20rem;
-  height: 25rem;
+  width: 22rem;
+  height: 28rem;
   cursor: pointer;
-  border-bottom: 1rem;
+  margin: 0 auto;
   border-radius: 1rem;
 `;
-
+const SliderTitleWrapper = styled.div`
+  width: 25rem;
+  height: 5rem;
+  font-size: 2rem;
+  margin: 1rem auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  span {
+    margin-bottom: 0.2rem;
+    font-size: 1.6rem;
+    font-weight: 400;
+  }
+  .title {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+  }
+`;
 const Container = styled.div`
   width: 90%;
   margin: auto auto;
@@ -119,14 +147,6 @@ const Container = styled.div`
   }
 `;
 
-const RecommendTitle = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
-  color: white;
-  font-family: Pretendard;
-  margin-top: 3rem;
-  margin-bottom: 1.5rem;
-`;
 const TitleWrapper = styled.div`
   display: flex;
   margin-top: 10rem;
@@ -147,6 +167,9 @@ const Title = styled.div`
 
 const SliderItem = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   :hover {
     & > .card-hover {
       opacity: 0.8;
@@ -155,8 +178,8 @@ const SliderItem = styled.div`
 `;
 
 const Hover = styled.div`
-  width: 20rem;
-  height: 25rem;
+  width: 22rem;
+  height: 28rem;
   position: absolute;
   opacity: 0;
   background-color: black;
@@ -170,29 +193,25 @@ const Hover = styled.div`
   align-items: center;
   font-size: 2rem;
   font-weight: bold;
+  margin-top: 7rem;
+  margin-left: 5rem;
   cursor: pointer;
 `;
-
-const ICONLIST = [
-  "https://user-images.githubusercontent.com/55784772/224244356-4b23a520-1b98-4a5f-a0ab-08b2c2fa3685.png",
-  "https://user-images.githubusercontent.com/55784772/224244351-f487bf83-9e70-4a82-873b-57c5076abff6.png",
-  "https://user-images.githubusercontent.com/55784772/224244359-d37e4b92-49fc-4584-97b9-06147d5a3bb2.png",
-];
 
 const BREAKPOINT = [
   {
     breakpoint: 2000,
     settings: {
-      slidesToShow: 5.5,
-      slidesToScroll: 5.5,
+      slidesToShow: 5,
+      slidesToScroll: 5,
       infinite: true,
     },
   },
   {
     breakpoint: 1920,
     settings: {
-      slidesToShow: 4.5,
-      slidesToScroll: 4.5,
+      slidesToShow: 4,
+      slidesToScroll: 4,
       infinite: true,
     },
   },

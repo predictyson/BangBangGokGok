@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "@/components/common/Header";
 import Banner from "@/components/main/Banner";
 import RankSlider from "@components/main/RankSlider";
 import BasicSlider from "@components/main/Slider";
+import AwardsSlider from "@components/main/AwardsSlider";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
-import { ISliderData } from "types/slider";
+import { IAwardSlider, ISliderData, IAwardTheme } from "types/slider";
 import { getThemeUser, getThemeGuest, getThemeAward } from "@/api/theme";
 
 export default function MainPage() {
   const [hotData, setHotData] = useState<ISliderData[]>(HotThemesData);
   const [topData, setTopData] = useState<ISliderData[]>(TopThemesData);
-  const [awardData, setAwardData] = useState<ISliderData[]>(AwardThemesData);
+  const [awardData, setAwardData] = useState<IAwardSlider>(AwardThemesData);
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
   const isLogin = true;
@@ -30,12 +31,12 @@ export default function MainPage() {
   const requestThemeGuest = async () => {
     try {
       const res = await getThemeGuest();
-      setHotData(res.data.hotThemes);
+      // setHotData(res.data.hotThemes);
       setTopData(res.data.topThemes);
+      setAwardData(res.data.awardThemes);
     } catch (err) {
       throw new Error("Internal Server Error");
     }
-    console.log(setHotData);
   };
 
   const requestThemeAward = async () => {
@@ -46,21 +47,22 @@ export default function MainPage() {
       throw new Error("Internal Server Error");
     }
   };
-  requestThemeGuest();
-  const data = topData.concat(awardData); // slider data를 모두 합친 것
-
+  useEffect(() => {
+    requestThemeGuest();
+  }, []);
   return (
     <Container>
       <Header />
       <div className="box">
         {isLogin && <Banner />}
-        {!isLogin && (
+        {/* {!isLogin && (
           <RecommendWrapper>
-            <BasicSlider isRecommendSlider={true} data={recommendData} />
+            <BasicSlider isRecommendSlider={true} topData={recommendData} />
           </RecommendWrapper>
-        )}
+        )} */}
         <RankSlider data={hotData} />
-        <BasicSlider isRecommendSlider={false} data={data} />
+        <BasicSlider isRecommendSlider={false} topData={topData} />
+        <AwardsSlider awardData={awardData} />
       </div>
     </Container>
   );
@@ -260,62 +262,69 @@ const TopThemesData: ISliderData[] = [
     ],
   },
 ];
-const AwardThemesData: ISliderData[] = [
+
+const AwardThemeDummy: IAwardTheme[] = [
   {
-    label: "방탈출 어워즈 선정 테마 ",
-    themes: [
-      {
-        themeId: 1,
-        title: "VIRUS",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
-      },
-      {
-        themeId: 2,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
-      },
-      {
-        themeId: 3,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
-      },
-      {
-        themeId: 4,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
-      },
-      {
-        themeId: 5,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
-      },
-      {
-        themeId: 6,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
-      },
-      {
-        themeId: 7,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
-      },
-      {
-        themeId: 8,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
-      },
-    ],
+    awardName: "코믹/문제/기타", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "미스테리 거울의 방", // 테마명
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "코믹/문제/기타", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "미스테리 거울의 방", // 테마명
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "코믹/문제/기타", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "미스테리 거울의 방", // 테마명
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "코믹/문제/기타", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "미스테리 거울의 방", // 테마명
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "코믹/문제/기타", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "미스테리 거울의 방", // 테마명
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "코믹/문제/기타", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "미스테리 거울의 방", // 테마명
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "코믹/문제/기타", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "미스테리 거울의 방", // 테마명
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "코믹/문제/기타", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "미스테리 거울의 방", // 테마명
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
   },
 ];
-
+const AwardThemesData: IAwardSlider = {
+  year: 2019,
+  theme: AwardThemeDummy,
+};
 const RecommendThemesData: ISliderData[] = [
   {
     label: "GG님을 위한 방탈출 테마 추천",
