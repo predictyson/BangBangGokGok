@@ -2,19 +2,28 @@ package com.ssafy.bbkk.db.entity;
 
 import com.ssafy.bbkk.api.dto.CreateReviewRequest;
 import com.ssafy.bbkk.api.dto.UpdateReviewRequest;
-import lombok.*;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
-@Table(name="review")
+@Table(name = "review")
 @Getter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Review extends BaseTimeEntity{
+public class Review extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,14 +45,14 @@ public class Review extends BaseTimeEntity{
 //    private LocalTime record; // 탈출 시간 (HH:MM:SS)
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user; // 작성 유저
 
     @ManyToOne(targetEntity = Theme.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="theme_id")
+    @JoinColumn(name = "theme_id")
     private Theme theme; // 해당 테마
 
-    public Review(User user, Theme theme, CreateReviewRequest createReviewRequest){
+    public Review(User user, Theme theme, CreateReviewRequest createReviewRequest) {
         this.content = createReviewRequest.getContent();
         this.userRating = createReviewRequest.getRating();
         this.userActivity = createReviewRequest.getActivity();
@@ -60,10 +69,10 @@ public class Review extends BaseTimeEntity{
         this.theme = theme;
     }
 
-    public void updateReviewInfo(UpdateReviewRequest updateReviewRequest){
+    public void updateReviewInfo(UpdateReviewRequest updateReviewRequest) {
         this.content = updateReviewRequest.getContent();
-        this.userRating = updateReviewRequest.getReviewId();
-        this.userActivity = updateReviewRequest.getReviewId();
+        this.userRating = updateReviewRequest.getRating();
+        this.userActivity = updateReviewRequest.getActivity();
         this.userFear = updateReviewRequest.getFear();
         this.userDifficulty = updateReviewRequest.getDifficulty();
         this.isSuccess = updateReviewRequest.getIsSuccess();
@@ -74,4 +83,5 @@ public class Review extends BaseTimeEntity{
 //                    updateReviewRequest.getRecordSS());
 //        }
     }
+
 }

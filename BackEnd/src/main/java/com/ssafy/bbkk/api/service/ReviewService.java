@@ -11,5 +11,5 @@ public interface ReviewService {
     List<ReviewOfUserResponse> getReviews(int reviewId) throws Exception;
     void addReview(String email, CreateReviewRequest createReviewRequest) throws Exception;
     void deleteReview(String email, int reviewId) throws Exception;
-    void setReview(String email, UpdateReviewRequest updateReviewRequest) throws Exception;
+    ReviewOfUserResponse setReview(String email, UpdateReviewRequest updateReviewRequest) throws Exception;
 }
