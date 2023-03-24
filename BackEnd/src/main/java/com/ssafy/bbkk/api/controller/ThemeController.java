@@ -105,21 +105,4 @@ public class ThemeController {
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
-
-    @CrossOrigin("*")
-    @GetMapping("test")
-    public ResponseEntity<Map<String, Object>> hotTheme() throws Exception {
-        logger.info("[hotTheme] request : ");
-
-        Map<String, Object> resultMap = new HashMap<>();
-
-        List<PreviewThemeResponse> hotThemes = themeService.getHotThemes();
-
-        resultMap.put("hotThemes", hotThemes);
-
-        logger.info("[hotTheme] response : hotTheme={}", hotThemes);
-
-        return new ResponseEntity<>(resultMap, HttpStatus.OK);
-    }
-
 }
