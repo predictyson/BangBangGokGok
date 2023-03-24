@@ -17,11 +17,9 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
   }
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
-  const [label, setLabel] = useState("");
   const handleOpen = (themeId: number, label: string) => {
     setThemeId(themeId);
     setOpen(true);
-    setLabel(label);
     console.log(label + " " + themeId);
   };
   const handleClose = () => {
@@ -80,16 +78,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
             {item.themes.map((theme: IThemeData) => (
               <>
                 <SliderItem key={theme.themeId}>
-                  <img
-                    src={theme.imgUrl}
-                    style={{
-                      width: "20rem",
-                      height: "25rem",
-                      cursor: "pointer",
-                      borderRadius: "1rem",
-                    }}
-                  />
-
+                  <PosterItem src={theme.imgUrl} />
                   <Hover
                     className="card-hover"
                     onClick={() => handleOpen(theme.themeId, item.label)}
@@ -100,19 +89,22 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
               </>
             ))}
           </Slider>
-          {(themeId && label) !== undefined && (
-            <Modal
-              open={open}
-              onClose={handleClose}
-              themeId={themeId}
-              label={label}
-            />
+          {themeId !== undefined && (
+            <Modal open={open} onClose={handleClose} themeId={themeId} />
           )}
         </>
       ))}
     </Container>
   );
 }
+
+const PosterItem = styled.img`
+  width: 20rem;
+  height: 25rem;
+  cursor: pointer;
+  border-bottom: 1rem;
+  border-radius: 1rem;
+`;
 
 const Container = styled.div`
   width: 90%;
