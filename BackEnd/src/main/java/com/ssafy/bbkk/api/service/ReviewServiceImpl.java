@@ -9,18 +9,17 @@ import com.ssafy.bbkk.db.entity.User;
 import com.ssafy.bbkk.db.repository.ReviewRepository;
 import com.ssafy.bbkk.db.repository.ThemeRepository;
 import com.ssafy.bbkk.db.repository.UserRepository;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
@@ -44,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService{
         // 리뷰를 Dto에 감싸기
         result = theme.getReviews()
                 .stream()
-                .map(x->new ReviewOfUserResponse(x))
+                .map(x -> new ReviewOfUserResponse(x))
                 .collect(Collectors.toList());
         return result;
     }
@@ -62,25 +61,30 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public void deleteReview(String email, int reviewId) throws Exception {
+        // email을 통해 유저 찾아오기
+        User user = userRepository.findByEmail(email).orElseThrow();
         // 리뷰 id를 통해 리뷰 찾아오기
         Review review = reviewRepository.findById(reviewId).orElseThrow();
-        // 유저가 작성한 리뷰인지 확인하기
-        if(email != review.getUser().getEmail()) throw new NoSuchElementException();
+        // 해당 유저가 작성한 리뷰인지 확인하기
+        if (user.getId() != review.getUser().getId())
+            throw new Exception("리뷰를 삭제할 권한이 없습니다.");
         // 리뷰 삭제하기
         reviewRepository.deleteById(reviewId);
     }
 
     @Override
-    public void setReview(String email, UpdateReviewRequest updateReviewRequest) throws Exception {
+    @Transactional
+    public ReviewOfUserResponse setReview(String email, UpdateReviewRequest updateReviewRequest) throws Exception {
         // email을 통해 유저 찾아오기
         User user = userRepository.findByEmail(email).orElseThrow();
-        // reviewId를 통해 리뷰 찾아오기
+        // 리뷰 id를 통해 리뷰 찾아오기
         Review review = reviewRepository.findById(updateReviewRequest.getReviewId()).orElseThrow();
-        // 유저가 작성한 리뷰인지 확인하기
-        if(user.getId() != review.getUser().getId()) throw new NoSuchElementException();
+        // 해당 유저가 작성한 리뷰인지 확인하기
+        if (user.getId() != review.getUser().getId())
+            throw new Exception("리뷰를 수정할 권한이 없습니다.");
         // 리뷰 수정하기
         review.updateReviewInfo(updateReviewRequest);
-        reviewRepository.save(review);
+        return new ReviewOfUserResponse(review);
     }
 
 }
