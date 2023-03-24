@@ -40,22 +40,32 @@ export default function ResetPasswordSection() {
     showToast({ type, message });
   };
 
-  const sendPassword = () => {
+  const sendPassword = async () => {
     if (!showHelperText && password !== "") {
       const userData: IUserInfo = {
         email: email,
         password: password,
       };
-      requestChangePassword(userData);
-      console.log(userData);
-      handleToastClick("success", "비밀번호가 변경되었습니다.");
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      try {
+        const response = await requestChangePassword(userData);
+        
+        if (response.status === 200) {
+          handleToastClick("success", "비밀번호가 변경되었습니다.");
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      } catch (error) {
+        handleToastClick("error", "비밀번호 변경 중 오류가 발생했습니다.");
+        console.error(error);
+      }
     } else {
       handleToastClick("error", "새 비밀번호를 확인해주세요.");
     }
   };
+  
 
   return (
     <Container>
