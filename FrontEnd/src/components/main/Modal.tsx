@@ -19,12 +19,12 @@ interface IProps {
   open: boolean;
   onClose: () => void;
   themeId: number;
+  data: IDetailData;
 }
 
-export default function DetailModal({ open, onClose, themeId }: IProps) {
-  const [data, setData] = useState<IDetailData>(initData);
+export default function DetailModal({ open, onClose, themeId, data }: IProps) {
   const [childOpen, setchildOpen] = React.useState(false);
-  const [isLiked, setIsLiked] = useState(data.isInterested);
+  const [isLiked, setIsLiked] = useState(0);
   const [reviews, setReviews] = useState(REVIEWDUMMY);
 
   const requestReviews = async (themeId: number) => {
@@ -36,14 +36,6 @@ export default function DetailModal({ open, onClose, themeId }: IProps) {
     }
   };
 
-  const requestDetailData = async (themeId: number) => {
-    try {
-      const res = await getDetail(themeId);
-      setData(res.data);
-    } catch (err) {
-      throw new Error("Internal Server Error!");
-    }
-  };
   // requestReviews(themeId);
   // requestDetailData(themeId);
 
@@ -52,7 +44,7 @@ export default function DetailModal({ open, onClose, themeId }: IProps) {
     message: IToastProps["message"]
   ) => {
     showToast({ type, message });
-    setIsLiked((prev) => !prev);
+    // setIsLiked((prev) => !prev);
     // try {
     //   const res = isLiked
     //     ? await postInterest(themeId)
