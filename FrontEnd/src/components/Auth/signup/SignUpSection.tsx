@@ -46,7 +46,7 @@ export default function SignUpSection() {
       requestEmailCheck(email)
         .then((res) => {
           const data = res.data;
-          if (data) {
+          if (!data.isDuplicated) {
             setIsEmail(true);
             handleToastClick("success", "사용가능한 이메일입니다.");
           } else handleToastClick("error", "이미 존재하는 이메일입니다.");
