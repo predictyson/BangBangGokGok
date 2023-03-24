@@ -5,25 +5,16 @@ import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.bbkk.api.dto.AwardThemeBundleResponse;
-import com.ssafy.bbkk.api.dto.PreviewThemeResponse;
-import com.ssafy.bbkk.api.dto.SearchThemeRequest;
-import com.ssafy.bbkk.api.dto.ThemeBundleResponse;
-import com.ssafy.bbkk.api.dto.ThemeResponse;
+import com.ssafy.bbkk.api.dto.*;
 import com.ssafy.bbkk.db.entity.QGenreOfTheme;
 import com.ssafy.bbkk.db.entity.QTheme;
 import com.ssafy.bbkk.db.entity.Region;
 import com.ssafy.bbkk.db.entity.Theme;
 import com.ssafy.bbkk.db.entity.User;
-import com.ssafy.bbkk.db.repository.AwardThemeRepository;
-import com.ssafy.bbkk.db.repository.RecommendedThemeOfUserRepository;
-import com.ssafy.bbkk.db.repository.RegionRepository;
-import com.ssafy.bbkk.db.repository.ThemeRepository;
-import com.ssafy.bbkk.db.repository.UserRepository;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import com.ssafy.bbkk.db.repository.*;
+
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -42,7 +33,9 @@ public class ThemeServiceImpl implements ThemeService {
 
     private final UserRepository userRepository;
     private final RegionRepository regionRepository;
+    private final ReviewRepository reviewRepository;
     private final ThemeRepository themeRepository;
+    private final InterestedThemeOfUserRepository interestedRepository;
     private final AwardThemeRepository awardThemeRepository;
     private final RecommendedThemeOfUserRepository recommendedThemeOfUserRepository;
     private final int THEME_RETURN_COUNT = 5;
@@ -220,8 +213,58 @@ public class ThemeServiceImpl implements ThemeService {
     public List<PreviewThemeResponse> getHotThemes() throws Exception {
         List<PreviewThemeResponse> result = null;
         Map<Integer, Integer> themeCnt; // 카운트된 테마의 개수
+        int[] themeIds; // 테마 id마다 개수 체크할 배열
 
+        Theme topTheme = themeRepository.findFirstByOrderByIdDesc().orElseThrow();
+        int themeArraySize = topTheme.getId();
+        themeIds = new int[themeArraySize+1];
 
+        ////////////////////////////////////////////////////////////////////////////////
+        // 리뷰 개수 체크
+        reviewRepository.findByModifiedDateAfter(LocalDateTime.now().minusDays(7))
+                .forEach(review -> {
+                    int themeId = review.getTheme().getId();
+                    themeIds[themeId]++;
+                });
+
+        // 관심 개수 체크
+        interestedRepository.findByModifiedDateAfter(LocalDateTime.now().minusDays(7))
+                .forEach(interest -> {
+                    int themeId = interest.getTheme().getId();
+                    themeIds[themeId]++;
+                });
+
+        // 개수 체크된 배열을 리스트로 변경
+        List<ThemeCountResponse> list =  new ArrayList<>();
+        for(int i=0;i<=themeArraySize;i++){
+            if(themeIds[i] > 0){
+                list.add(new ThemeCountResponse(i,themeIds[i]));
+            }
+        }
+
+        // 핫 한 테마의 개수가 적을 경우
+        if(list.size() < 9){
+            // userCnt가 높은 순으로 반환
+            result = themeRepository.findTop9ByOrderByUserCntDesc()
+                    .stream()
+                    .map(x->new PreviewThemeResponse(x))
+                    .collect(Collectors.toList());
+        }
+        // 핫 한 테마의 개수가 많을 경우
+        else{
+            // 개수 순으로 내림차순 정렬
+            Collections.sort(list,(o1, o2) -> {
+                return o2.getCount() - o1.getCount();
+            });
+
+            result = new ArrayList<>();
+            for (int i = 0; i<9; i++){
+                result.add(
+                        new PreviewThemeResponse(themeRepository.findById(list.get(i).getThemeId())
+                                .orElseThrow())
+                );
+            }
+        }
 
         return result;
     }
