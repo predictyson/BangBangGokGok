@@ -88,7 +88,7 @@ export default function AwardsSlider(awardData: IProps) {
                 alt="right"
               />
             </SliderTitleWrapper>
-            <>
+            <SliderMaterialWrapper>
               <PosterItem src={theme.imgUrl} />
               <Hover
                 className="card-hover"
@@ -96,7 +96,7 @@ export default function AwardsSlider(awardData: IProps) {
               >
                 {theme.title}
               </Hover>
-            </>
+            </SliderMaterialWrapper>
           </SliderItem>
         ))}
       </Slider>
@@ -106,6 +106,15 @@ export default function AwardsSlider(awardData: IProps) {
     </Container>
   );
 }
+const SliderMaterialWrapper = styled.div`
+  width: 22rem;
+  margin: 0 auto;
+  :hover {
+    & > .card-hover {
+      opacity: 0.8;
+    }
+  }
+`;
 
 const PosterItem = styled.img`
   width: 22rem;
@@ -170,11 +179,6 @@ const SliderItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  :hover {
-    & > .card-hover {
-      opacity: 0.8;
-    }
-  }
 `;
 
 const Hover = styled.div`
@@ -184,7 +188,8 @@ const Hover = styled.div`
   opacity: 0;
   background-color: black;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   transition: all 0.5s;
   border-radius: 1rem;
   display: flex;
@@ -193,8 +198,7 @@ const Hover = styled.div`
   align-items: center;
   font-size: 2rem;
   font-weight: bold;
-  margin-top: 7rem;
-  margin-left: 5rem;
+  margin: 7rem auto;
   cursor: pointer;
 `;
 
