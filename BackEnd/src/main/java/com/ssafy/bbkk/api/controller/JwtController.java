@@ -10,6 +10,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,34 +24,8 @@ public class JwtController {
     private static final Logger logger = LoggerFactory.getLogger(JwtController.class);
 
     @GetMapping("/jwt")
-    public String getJwtToken(HttpServletRequest request) {
-        System.out.println("=====START-LINE=====begin");
-        System.out.println("request.getMethod() = " + request.getMethod());
-        System.out.println("request.getProtocol() = " + request.getProtocol());
-        System.out.println("request.getRequestURI() = " + request.getRequestURI());
-        System.out.println("request.getRequestURL() = " + request.getRequestURL());
-        System.out.println("request.getScheme() = " + request.getScheme());
-        System.out.println("request.getQueryString() = " + request.getQueryString());
-        System.out.println("request.isSecure() = " + request.isSecure());
-        System.out.println("request.getCookies() = " + request.getCookies());
-        System.out.println("=====START-LINE=====end");
+    public String getJwtToken(@AuthenticationPrincipal User user, HttpServletRequest request) {
 
-        Cookie[] cookies = request.getCookies();
-
-        logger.info("[Jwt] cookies : cookies={}", cookies);
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                logger.info("[Jwt] cookie : cookie={}", cookie);
-                logger.info("[Jwt] cookie : cookie.getName()={}", cookie.getName());
-
-                if (cookie.getName().equals("jwt")) {
-                    logger.info("[Jwt] jwt : jwt={}", cookie.getValue());
-
-                    return cookie.getValue();
-                }
-            }
-        }
-        return null;
+        return "응애";
     }
 }
