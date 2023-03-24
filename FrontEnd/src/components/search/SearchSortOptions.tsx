@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled as mstyled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import { SortOption, SortOrder } from "types/search";
 
-export default function SearchSortOptions() {
-  const [sortOption, setSortOption] = useState<string>(OPTIONS[0]);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+interface SearchSortOptionsProps {
+  sortOption: SortOption;
+  sortOrder: SortOrder;
+  handleSortOptionOrderChange: (option: SortOption) => void;
+}
 
-  const handleSortOptionChange = (option: string) => {
-    if (sortOption === option) {
-      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-    } else {
-      setSortOrder("desc");
-    }
-    setSortOption(option);
+const OPTIONS: string[] = ["평점", "활동성", "공포도", "체감 난이도"];
+
+const OPTION_MAP: { [key: string]: SortOption } = {
+  평점: "userRating",
+  활동성: "userActivity",
+  공포도: "userFear",
+  "체감 난이도": "userDifficulty",
+};
+
+export default function SearchSortOptions(props: SearchSortOptionsProps) {
+  const handleSortOptionOrderChange = (option: SortOption) => {
+    props.handleSortOptionOrderChange(option);
   };
 
   return (
@@ -21,20 +29,24 @@ export default function SearchSortOptions() {
       {OPTIONS.map((option) => (
         <OptionButton
           key={option}
-          onClick={() => handleSortOptionChange(option)}
-          variant={sortOption === option ? "outlined" : "contained"}
+          onClick={() => handleSortOptionOrderChange(OPTION_MAP[option])}
+          variant={
+            props.sortOption === OPTION_MAP[option] ? "outlined" : "contained"
+          }
         >
           {option} 순 정렬
-          {sortOption === option && sortOrder === "desc" && "▼"}
-          {sortOption === option && sortOrder === "asc" && "▲"}
-          {sortOption !== option && ""}
+          {props.sortOption === OPTION_MAP[option] &&
+            props.sortOrder === "desc" &&
+            "▼"}
+          {props.sortOption === OPTION_MAP[option] &&
+            props.sortOrder === "asc" &&
+            "▲"}
+          {props.sortOption !== OPTION_MAP[option] && ""}
         </OptionButton>
       ))}
     </Stack>
   );
 }
-
-const OPTIONS: string[] = ["평점", "활동성", "공포도", "체감 난이도"];
 
 const OptionButton = mstyled(Button)`
   font-size: 1.5rem;

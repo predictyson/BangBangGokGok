@@ -1,5 +1,6 @@
 import instance from "./api";
-import { SearchParams } from "types/search";
+import { AxiosResponse } from "axios";
+import { SearchParams, PreviewThemeResponse } from "types/search";
 
 export async function getThemeUser() {
   return await instance.get(`/theme/user`);
@@ -11,7 +12,9 @@ export async function getThemeAward() {
   return await instance.get(`/theme/award`);
 }
 
-export async function getSearchThemes(searchParams: SearchParams) {
+export async function getSearchThemes(
+  searchParams: SearchParams
+): Promise<AxiosResponse<PreviewThemeResponse[]>> {
   return await instance.get(`/theme/search`, { params: searchParams });
 }
 

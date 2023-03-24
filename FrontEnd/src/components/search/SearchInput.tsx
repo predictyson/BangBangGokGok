@@ -3,13 +3,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
 
 interface SearchInputProps {
-  handleChange: (input: string) => void;
+  input: string;
+  handleInputChange: (input: string) => void;
   handleSubmit: () => void;
 }
 
 export default function SearchInput(props: SearchInputProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.handleChange(event.target.value);
+    props.handleInputChange(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -21,7 +22,11 @@ export default function SearchInput(props: SearchInputProps) {
     <form onSubmit={handleSubmit}>
       <Container>
         <InputContainer>
-          <Input onChange={handleChange} placeholder="검색어를 입력하세요." />
+          <Input
+            onChange={handleChange}
+            value={props.input}
+            placeholder="검색어를 입력하세요."
+          />
         </InputContainer>
         <SearchButton type="submit">
           <SearchIcon fontSize="large" color="warning" />
