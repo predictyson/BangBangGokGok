@@ -201,13 +201,14 @@ const Synopsis = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
   pre {
     font-family: Pretendard;
+    margin-top: 4rem;
   }
-  overflow-y: hidden;
-  overflow-x: hidden;
   ::-webkit-scrollbar {
-    width: 12px;
+    width: 4px;
   }
   ::-webkit-scrollbar-thumb {
     background-color: #888;
