@@ -85,6 +85,7 @@ export default function SearchPage() {
   const handleFilterValueChange = (action: ReducerAction) => {
     filterValueDispatch(action);
   };
+  console.log("filterValue", filterValue);
 
   // SearchSortOptions 관련 변수, 함수
   const [sortOption, setSortOption] = useState<SortOption>("userRating");

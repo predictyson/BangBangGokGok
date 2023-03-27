@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useMediaQuery } from "@mui/material";
@@ -52,7 +52,10 @@ export default function SearchFilter(props: SearchFilterProps) {
             filterValue={props.filterValue}
             handleFilterValueChange={props.handleFilterValueChange}
           />
-          <GenreForm />
+          <GenreForm
+            filterValue={props.filterValue}
+            handleFilterValueChange={props.handleFilterValueChange}
+          />
           <DifficultyForm />
           <PeopleForm />
           <TimeForm />

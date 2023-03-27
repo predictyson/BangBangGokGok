@@ -16,7 +16,7 @@ const REGION_BIG_OPTIONS = [
   "전체", // 전체는 요청 못보냄
   "강원",
   "서울",
-  "경기/인천",
+  "경기",
   "경상",
   "전라",
   "제주",
@@ -24,12 +24,10 @@ const REGION_BIG_OPTIONS = [
 ];
 
 const LocationForm = (props: LocationFormProps) => {
-  // TODO: useEffect로 regionBig, regionSmall을 받아와서 선택지를 뿌려줘야 함.
-  const [regionSmallOptions, setRegionSmallOptions] = useState<string[]>([]);
-
-  const [regionBigInputValue, setRegionBigInputValue] =
-    useState<string>("전체");
-
+  // 대지역 입력값
+  const [regionBigInputValue, setRegionBigInputValue] = useState<string>(
+    props.filterValue.regionBig
+  );
   const handleBigInputValueChange = (event: SelectChangeEvent<unknown>) => {
     setRegionBigInputValue(event.target.value as string);
     props.handleFilterValueChange({
@@ -48,8 +46,11 @@ const LocationForm = (props: LocationFormProps) => {
       },
     });
   };
-  const [regionSmallInputValue, setRegionSmallInputValue] =
-    useState<string>("전체");
+
+  // 소지역 입력값
+  const [regionSmallInputValue, setRegionSmallInputValue] = useState<string>(
+    props.filterValue.regionSmall
+  );
 
   const handleSmallInputValueChange = (event: SelectChangeEvent<unknown>) => {
     setRegionSmallInputValue(event.target.value as string);
@@ -62,6 +63,10 @@ const LocationForm = (props: LocationFormProps) => {
     });
   };
 
+  // 소지역 옵션[]
+  const [regionSmallOptions, setRegionSmallOptions] = useState<string[]>([]);
+
+  // 소지역 옵션 렌더링
   const renderLocationOptions = () => {
     return regionSmallOptions.map((regionSmalloption) => (
       <MenuItem value={regionSmalloption} key={regionSmalloption}>
