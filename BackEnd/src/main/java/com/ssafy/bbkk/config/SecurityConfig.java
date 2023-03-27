@@ -76,7 +76,7 @@ public class SecurityConfig{
 //                    "/review/**",
 //                    "/groupset/**"
 //                    ).authenticated()
-//             .antMatchers("/jwt/**").authenticated()
+             .antMatchers("/jwt/**").authenticated()
             .anyRequest().permitAll()
 
             // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
