@@ -5,7 +5,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_DOMAIN;
 const LOCAL_URL = import.meta.env.VITE_LOCAL_DOMAIN;
 
 const instance = axios.create({
-  withCredentials: true,
+  // withCredentials: true,
   baseURL: SERVER_URL,
 });
 
