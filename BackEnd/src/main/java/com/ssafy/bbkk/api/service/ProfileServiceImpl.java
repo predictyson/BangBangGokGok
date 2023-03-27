@@ -36,21 +36,19 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public boolean isSameUser(String email, int userId) throws Exception {
         // 유저 id를 통해 유저 조회
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
 
         // 로그인한 정보와 조회한 유저가 같은지 비교
-        if (email.equals(user.getEmail()))
-            return true;
-        return false;
+        return email.equals(user.getEmail()) ? true : false;
     }
 
     @Override
     public UserInfoResponse getUserInfoByEmail(String email) throws Exception {
         UserInfoResponse result = null;
         // 이메일로 유저 찾아오기
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
         // 유저를 Dto에 감싸기
         result = new UserInfoResponse(user);
         return result;
@@ -60,8 +58,8 @@ public class ProfileServiceImpl implements ProfileService {
     public UserInfoResponse getUserInfoByUserId(int userId) throws Exception {
         UserInfoResponse result = null;
         // 유저 id로 유저 찾아오기
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
         // 유저를 Dto에 감싸기
         result = new UserInfoResponse(user);
         return result;
@@ -71,8 +69,8 @@ public class ProfileServiceImpl implements ProfileService {
     public List<ReviewOfUserResponse> getUserReviews(int userId) throws Exception {
         List<ReviewOfUserResponse> result = null;
         // 유저 id로 유저 찾아오기
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
         // 유저의 리뷰들을 Dto에 감싸기
         result = user.getReviews()
                 .stream()
@@ -85,6 +83,11 @@ public class ProfileServiceImpl implements ProfileService {
     public List<PreferenceResponse> getUserPreference(int userId) throws Exception {
         List<PreferenceResponse> result = new ArrayList<>();
 
+        // 유저 존재 확인
+        if(!userRepository.existsById(userId)){
+            throw new Exception("해당 사용자를 찾을 수 없습니다.");
+        }
+
         // 모든 장르 목록 가져오기
         List<GenreResponse> genreList = genreRepository.findAll()
                 .stream()
@@ -95,25 +98,13 @@ public class ProfileServiceImpl implements ProfileService {
 
         // 유저 id로 유저가 작성한 리뷰 찾아오기
         reviewRepository.findByUserId(userId)
-                .forEach(review -> {
-                    review
-                            .getTheme()
-                            .getGenreOfThemes()
-                            .forEach(genreOfTheme -> {
-                                genreIds[genreOfTheme.getGenre().getId()]++;
-                            });
-                });
-
-//        User user = userRepository.findById(userId).orElseThrow(
-//                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
-//
-//        user.getReviews()
-//                .stream()
-//                .map(x -> x.getTheme()
-//                        .getGenreOfThemes()
-//                        .stream()
-//                        .map(y -> genreIds[y.getGenre().getId()]++)
-//                );
+            .forEach(review -> {
+                review.getTheme()
+                    .getGenreOfThemes()
+                    .forEach(genreOfTheme -> {
+                        genreIds[genreOfTheme.getGenre().getId()]++;
+                    });
+            });
 
         // result에 장르명과 해당 장르의 방문횟수를 담기
         for (int i = 0; i < genreSize; i++) {
@@ -126,8 +117,8 @@ public class ProfileServiceImpl implements ProfileService {
     public List<InterestThemeResponse> getUserInterestThemes(int userId) throws Exception {
         List<InterestThemeResponse> result = null;
         // 유저 id로 유저 찾아오기
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
         // 유저의 관심 테마 목록을 Dto에 감싸기
         result = user.getInterestedThemeOfUsers()
                 .stream()
@@ -140,20 +131,18 @@ public class ProfileServiceImpl implements ProfileService {
     public void setUserInfo(UpdateUserInfoRequest updateUserInfoRequest) throws Exception {
         int userId = updateUserInfoRequest.getUserId();
         // 유저 id로 유저 찾아오기
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new Exception("userId=" + userId + "에 맞는 유저를 찾을 수 없습니다."));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
         // 수정한 선호 지역 찾아오기
         Region region = regionRepository.findByRegionBigAndRegionSmall(updateUserInfoRequest.getRegionBig(), updateUserInfoRequest.getRegionSmall())
-                .orElseThrow(
-                        () -> new Exception("regionBig=" + updateUserInfoRequest.getRegionBig() +
-                                "과 regionSmall=" + updateUserInfoRequest.getRegionSmall() + "에 맞는 지역을 찾을 수 없습니다."));
+                .orElseThrow(() -> new Exception("해당 지역을 찾을 수 없습니다."));
         // 유저 정보 수정 (선호 장르들은 preferredGenreOfUser 에서 가져오는 것이므로 직접 수정할 필요없음)
         user.updateUserInfo(updateUserInfoRequest, region);
         user = userRepository.save(user);
         // 추가된 선호 장르를 추가
         for (int genreId : updateUserInfoRequest.getGenreIdAdd()) {
-            Genre genre = genreRepository.findById(genreId).orElseThrow(
-                    () -> new Exception("genreId=" + genreId + "에 맞는 장르를 찾을 수 없습니다."));
+            Genre genre = genreRepository.findById(genreId)
+                    .orElseThrow(() -> new Exception("해당 장르를 찾을 수 없습니다."));
             preferredGenreOfUserRepository.save(new PreferredGenreOfUser(user, genre));
         }
         // 삭제된 선호 장르를 제거
@@ -164,6 +153,10 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void deleteUser(String email) throws Exception {
+        // 유저 존재 확인
+        if(!userRepository.existsByEmail(email)){
+            throw new Exception("해당 사용자를 찾을 수 없습니다.");
+        }
         // 이메일로 유저 삭제
         userRepository.deleteByEmail(email);
     }
