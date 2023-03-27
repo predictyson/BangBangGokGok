@@ -16,6 +16,10 @@ import { FilterValue, ReducerAction } from "types/search";
 interface SearchFilterProps {
   filterValue: FilterValue;
   handleFilterValueChange: (action: ReducerAction) => void;
+  dumpFilterGenreCategoryInputValue: string;
+  handleDumpFilterGenreCategoryInputValueChange: (
+    genreCategoryInputValue: string
+  ) => void;
 }
 
 export default function SearchFilter(props: SearchFilterProps) {
@@ -55,6 +59,12 @@ export default function SearchFilter(props: SearchFilterProps) {
           <GenreForm
             filterValue={props.filterValue}
             handleFilterValueChange={props.handleFilterValueChange}
+            dumpFilterGenreCategoryInputValue={
+              props.dumpFilterGenreCategoryInputValue
+            }
+            handleDumpFilterGenreCategoryInputValueChange={
+              props.handleDumpFilterGenreCategoryInputValueChange
+            }
           />
           <DifficultyForm />
           <PeopleForm />

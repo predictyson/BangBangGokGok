@@ -87,6 +87,17 @@ export default function SearchPage() {
   };
   console.log("filterValue", filterValue);
 
+  // 장르 카테고리만 따로 관리하는 dump 변수, 함수(장르 카테고리를 저장해서 초기 렌더링 시에만 활용)
+  const [
+    dumpFilterGenreCategoryInputValue,
+    setDumpFilterGenreCategoryInputValue,
+  ] = useState<string>("전체");
+  const handleDumpFilterGenreCategoryInputValueChange = (
+    genreCategoryInputValue: string
+  ) => {
+    setDumpFilterGenreCategoryInputValue(genreCategoryInputValue);
+  };
+
   // SearchSortOptions 관련 변수, 함수
   const [sortOption, setSortOption] = useState<SortOption>("userRating");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
@@ -113,6 +124,12 @@ export default function SearchPage() {
             <SearchFilter
               filterValue={filterValue}
               handleFilterValueChange={handleFilterValueChange}
+              dumpFilterGenreCategoryInputValue={
+                dumpFilterGenreCategoryInputValue
+              }
+              handleDumpFilterGenreCategoryInputValueChange={
+                handleDumpFilterGenreCategoryInputValueChange
+              }
             />
           </FormContainer>
           <SearchSortOptions

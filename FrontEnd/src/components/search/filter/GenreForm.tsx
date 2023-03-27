@@ -11,20 +11,28 @@ import { FilterValue, ReducerAction } from "types/search";
 interface GenreFormProps {
   filterValue: FilterValue;
   handleFilterValueChange: (action: ReducerAction) => void;
+  dumpFilterGenreCategoryInputValue: string;
+  handleDumpFilterGenreCategoryInputValueChange: (
+    genreCategoryInputValue: string
+  ) => void;
 }
 
 export default function GenreForm(props: GenreFormProps) {
   const [genresOptions, setGenresOptions] = useState<GenreResponse[]>([
     { genreId: 0, category: "전체" },
   ]);
-  const [genreInputValue, setGenreInputValue] = useState("전체");
-  // const [genreInputValue, setGenreInputValue] = useState(
-  //   genresOptions.find()
 
-  //     props.filterValue.genreId
+  const [genreInputValue, setGenreInputValue] = useState(
+    props.dumpFilterGenreCategoryInputValue
+  );
 
   const handleGenreChange = (event: SelectChangeEvent<unknown>) => {
+    // 장르명 변경
     setGenreInputValue(event.target.value as string);
+    // 덤프값 변경(덤프값은 초기렌더링시에 이전 렌더링에서 사용했던 값을 그대로 가져오는 역할을 함)
+    props.handleDumpFilterGenreCategoryInputValueChange(
+      event.target.value as string
+    );
 
     // 장르명 -> genreId로 변환
     const genreId = genresOptions.find(
@@ -46,9 +54,23 @@ export default function GenreForm(props: GenreFormProps) {
         { genreId: 0, category: "전체" },
         ...response.data.genres,
       ]); // prev => [prev, ...response.data.genres] 로 짜고 싶은데 안됨
+
+      // 장르id로 장르이름 찾기
+      // setGenreInputValue(
+      //   genresOptions.find(
+      //     (genre) => genre.genreId === props.filterValue.genreId
+      //   )?.category as string
+      // );
     };
     requestGenres();
-  }, []);
+  });
+
+  // 장르id로 장르이름 찾기
+  // setGenreInputValue(
+  //   genresOptions.find(
+  //     (genre) => genre.genreId === props.filterValue.genreId
+  //   )?.category as string
+  // );
 
   return (
     <Wrapper>
