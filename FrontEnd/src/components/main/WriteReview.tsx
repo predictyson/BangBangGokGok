@@ -71,10 +71,10 @@ export default function WriteReview({
     setPostdata({
       themeId: 1,
       content: content,
-      rating: rate.rating,
-      activity: rate.activity,
-      fear: rate.fear,
-      difficulty: rate.difficulty,
+      userRating: rate.rating,
+      userActivity: rate.activity,
+      userFear: rate.fear,
+      userDifficulty: rate.difficulty,
       isSuccess: isSuccess === "true" ? 1 : 0,
     });
     try {
@@ -310,9 +310,9 @@ const WriteButton = styled.div`
 const initData: IPostData = {
   themeId: 1, // 테마 id
   content: "", // 리뷰 내용
-  rating: 0.0, // 평점
-  activity: 0.0, // 활동성
-  fear: 0.0, // 공포도
-  difficulty: 0.0, // 체감 난이도
+  userRating: 0.0, // 평점
+  userActivity: 0.0, // 활동성
+  userFear: 0.0, // 공포도
+  userDifficulty: 0.0, // 체감 난이도
   isSuccess: 1,
 };
