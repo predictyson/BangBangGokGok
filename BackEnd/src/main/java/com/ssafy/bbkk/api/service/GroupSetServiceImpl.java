@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -32,9 +29,7 @@ public class GroupSetServiceImpl implements GroupSetService {
                 .forEach(x->{
                     if(x.getNickname()!=null) result.add(new PreviewUserResponse(x));
                 });
-        Collections.sort(result,(o1, o2) -> {
-            return o1.getNickname().compareTo(o2.getNickname());
-        });
+        Collections.sort(result, Comparator.comparing(PreviewUserResponse::getNickname));
         return result;
     }
 }
