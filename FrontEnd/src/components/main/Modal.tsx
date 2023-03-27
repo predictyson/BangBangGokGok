@@ -27,12 +27,13 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
   const [reviews, setReviews] = useState(REVIEWDUMMY);
 
   const requestReviews = async (themeId: number) => {
-    try {
-      const res = await getReviews(themeId);
-      setReviews(res.data.reviews);
-      console.log(res.data.reviews);
-    } catch (err) {
-      console.log(err);
+    if (themeId !== 0) {
+      try {
+        const res = await getReviews(themeId);
+        themeId !== 0 && setReviews(res.data.reviews);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   useEffect(() => {

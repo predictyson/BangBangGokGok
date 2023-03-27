@@ -20,12 +20,12 @@ export default function MainPage() {
   const [awardData, setAwardData] = useState<IAwardSlider>(AwardThemesData);
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
-  const isLogin = true;
-
+  const isLogin = localStorage.getItem("userId") !== null ? true : false;
   const requestThemeUser = async () => {
     try {
       const res = await getThemeUser();
       const { recommendThemes, hotThemes, topThemes } = res.data;
+      console.log(res.data);
       setRecommendData(recommendThemes);
       setHotData(hotThemes);
       setTopData(topThemes);
@@ -54,18 +54,18 @@ export default function MainPage() {
     }
   };
   useEffect(() => {
-    requestThemeGuest();
+    isLogin ? requestThemeUser() : requestThemeGuest();
   }, []);
   return (
     <Container>
       <Header />
       <div className="box">
-        {isLogin && <Banner />}
-        {/* {!isLogin && (
+        {!isLogin && <Banner />}
+        {isLogin && (
           <RecommendWrapper>
             <BasicSlider isRecommendSlider={true} topData={recommendData} />
           </RecommendWrapper>
-        )} */}
+        )}
         <RankSlider data={hotData} />
         <BasicSlider isRecommendSlider={false} topData={topData} />
         <AwardsSlider awardData={awardData} />

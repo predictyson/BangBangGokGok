@@ -65,12 +65,14 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
     responsive: BREAKPOINT,
   };
   const requestDetailData = async (themeId: number) => {
-    try {
-      const res = await getDetail(themeId);
-      setData(res.data.theme);
-      console.log(res.data.theme);
-    } catch (err) {
-      throw new Error("Internal Server Error!");
+    if (themeId !== 0) {
+      try {
+        const res = await getDetail(themeId);
+        setData(res.data.theme);
+        console.log(res.data.theme);
+      } catch (err) {
+        throw new Error("Internal Server Error!");
+      }
     }
   };
 
