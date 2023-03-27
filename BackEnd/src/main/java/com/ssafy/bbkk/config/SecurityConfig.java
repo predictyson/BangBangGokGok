@@ -69,13 +69,13 @@ public class SecurityConfig{
             .authorizeRequests()
             .antMatchers(PERMIT_URL_ARRAY).permitAll()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-//            .antMatchers("/user/oauth/login",
+            .antMatchers("/user/oauth/login",
 //                    "/profile/**",
-//                    "/theme/user",
-//                    "/interest/**",
-//                    "/review/**",
+                    "/theme/user",
+                    "/interest/**",
+                    "/review/**"
 //                    "/groupset/**"
-//                    ).authenticated()
+                    ).authenticated()
              .antMatchers("/jwt/**").authenticated()
             .anyRequest().permitAll()
 
