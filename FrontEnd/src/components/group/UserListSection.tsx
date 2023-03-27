@@ -7,6 +7,13 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { requestUser } from "@/api/group";
+import CircularProgress from "@mui/material/CircularProgress";
+
+function sleep(delay = 0) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay);
+  });
+}
 
 export default function UserListSection({
   userList,
@@ -32,14 +39,14 @@ export default function UserListSection({
   const [searchResults, setSearchResults] = useState<GroupSetUer[]>([]);
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchResults([]);
     setSearchTerm(event.target.value);
+    setSearchResults([]);
     if (event.target.value === "") return;
     try {
       const {
         data: { users },
       } = await requestUser(event.target.value);
-      // console.log(users);
+      console.log(users);
       setSearchResults(users);
       // console.log("searchResults");
       // console.log(searchResults);
