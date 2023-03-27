@@ -24,11 +24,12 @@ export default function MainPage() {
   const requestThemeUser = async () => {
     try {
       const res = await getThemeUser();
-      const { recommendThemes, hotThemes, topThemes } = res.data;
+      const { recommendThemes, hotThemes, topThemes, awardThemes } = res.data;
       console.log(res.data);
       setRecommendData(recommendThemes);
       setHotData(hotThemes);
       setTopData(topThemes);
+      setAwardData(awardThemes);
     } catch (err) {
       throw new Error("Internal Server Error ");
     }
@@ -45,14 +46,6 @@ export default function MainPage() {
     }
   };
 
-  const requestThemeAward = async () => {
-    try {
-      const res = await getThemeAward();
-      setAwardData(res.data);
-    } catch (err) {
-      throw new Error("Internal Server Error");
-    }
-  };
   useEffect(() => {
     isLogin ? requestThemeUser() : requestThemeGuest();
   }, []);

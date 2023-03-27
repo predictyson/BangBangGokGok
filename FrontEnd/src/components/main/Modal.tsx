@@ -25,7 +25,7 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
   const [childOpen, setchildOpen] = React.useState(false);
   const [isLiked, setIsLiked] = useState(0);
   const [reviews, setReviews] = useState(REVIEWDUMMY);
-
+  const isLogin = localStorage.getItem("userId") !== null ? true : false;
   const requestReviews = async (themeId: number) => {
     if (themeId !== 0) {
       try {
@@ -39,8 +39,6 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
   useEffect(() => {
     requestReviews(themeId);
   }, [themeId]);
-  // requestReviews(themeId);
-  // requestDetailData(themeId);
 
   const handleClick = async (
     type: IToastProps["type"],
