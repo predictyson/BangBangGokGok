@@ -36,6 +36,9 @@ dependencies {
 
     // 원하는 dependency 를 추가하고 어떤 dependency 인지 주석으로 명시해주세요
 
+    // validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
     // mysql
     implementation 'mysql:mysql-connector-java:8.0.30'
 
