@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
 
 interface SearchInputProps {
-  input: string;
+  searchWord: string;
   handleInputChange: (input: string) => void;
   handleSubmit: () => void;
 }
@@ -24,7 +24,7 @@ export default function SearchInput(props: SearchInputProps) {
         <InputContainer>
           <Input
             onChange={handleChange}
-            value={props.input}
+            value={props.searchWord}
             placeholder="검색어를 입력하세요."
           />
         </InputContainer>

@@ -1,18 +1,6 @@
 import instance from "./api";
 import { AxiosResponse } from "axios";
-
-interface RegionSmallResponse {
-  regionSmalls: string[];
-}
-
-interface GenresReponse {
-  genres: GenreResponse[];
-}
-
-export interface GenreResponse {
-  category: string;
-  genreId: number;
-}
+import { RegionSmallResponse, GenresReponse } from "types/search";
 
 // 지역 소분류 목록 조회
 export async function getRegionSmall(

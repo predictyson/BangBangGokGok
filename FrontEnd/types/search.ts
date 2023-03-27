@@ -48,6 +48,23 @@ export interface FilterValue {
 
 export type SortOrder = "asc" | "desc";
 
+export interface RegionSmallResponse {
+  regionSmalls: string[];
+}
+
+export interface GenresReponse {
+  genres: GenreResponse[];
+}
+
+export interface GenreResponse {
+  category: string;
+  genreId: number;
+}
+
+export interface SearchResponse {
+  themes: PreviewThemeResponse[];
+}
+
 export interface PreviewThemeResponse {
   themeId: number; // 테마 id
   title: string; // 테마명

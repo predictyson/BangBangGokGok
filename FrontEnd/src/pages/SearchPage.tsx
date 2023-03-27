@@ -6,7 +6,6 @@ import SearchResult from "@components/search/SearchResult";
 import Header from "@components/common/Header";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
-import { SearchParams } from "types/search";
 import { getSearchThemes } from "@/api/theme";
 import {
   PreviewThemeResponse,
@@ -16,7 +15,7 @@ import {
   ReducerAction,
 } from "types/search";
 
-const INITIAL_RESULT_DATA = [
+const INITIAL_RESULT_DATA: PreviewThemeResponse = [
   {
     themeId: -1,
     title: "",
@@ -63,18 +62,25 @@ export default function SearchPage() {
     useState<PreviewThemeResponse[]>(INITIAL_RESULT_DATA);
 
   // SearchInput 관련 변수, 함수
-  const [input, setInputValue] = useState<string>("");
+  const [searchWord, setInputValue] = useState<string>("");
   const handleInputChange = (newInput: string) => {
     setInputValue(newInput);
   };
 
+  const [page, setPage] = useState<number>(1);
+
   // 검색을 트리거하는 함수 => result에 저장
-  const handleSubmit = () => {
-    const requestSearch = async (searchParams: SearchParams) => {
-      const response = await getSearchThemes(searchParams);
-      setResults(response.data);
-    };
-    // requestSearch({});
+  const handleSubmit = async () => {
+    const response = await getSearchThemes({
+      word: searchWord,
+      ...filterValue,
+      pages: page,
+      sortby: sortOption,
+      orderby: sortOrder,
+    });
+    setPage((prev) => prev + 1);
+    console.log(response.data.themes);
+    setResults(response.data.themes);
   };
 
   // SearchFilter 관련 변수, 함수
@@ -85,7 +91,6 @@ export default function SearchPage() {
   const handleFilterValueChange = (action: ReducerAction) => {
     filterValueDispatch(action);
   };
-  console.log("filterValue", filterValue);
 
   // 장르 카테고리만 따로 관리하는 dump 변수, 함수(장르 카테고리를 저장해서 초기 렌더링 시에만 활용)
   const [
@@ -117,7 +122,7 @@ export default function SearchPage() {
         <ContentWrapper>
           <FormContainer>
             <SearchInput
-              input={input}
+              searchWord={searchWord}
               handleInputChange={handleInputChange}
               handleSubmit={handleSubmit}
             />
@@ -137,7 +142,7 @@ export default function SearchPage() {
             sortOrder={sortOrder}
             handleSortOptionOrderChange={handleSortOptionOrderChange}
           />
-          <SearchResult />
+          <SearchResult results={results} />
         </ContentWrapper>
       </BackGround>
     </>
