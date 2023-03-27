@@ -12,7 +12,7 @@ import {
   IAwardTheme,
   IThemeData,
 } from "types/slider";
-import { getThemeUser, getThemeGuest, getThemeAward } from "@/api/theme";
+import { getThemeUser, getThemeGuest } from "@/api/theme";
 
 export default function MainPage() {
   const [hotData, setHotData] = useState<IThemeData[]>(HotThemesData);

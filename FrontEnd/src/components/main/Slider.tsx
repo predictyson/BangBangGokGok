@@ -81,7 +81,9 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
       {topData.map((item, idx) => (
         <>
           {isRecommendSlider ? (
-            <RecommendTitle className="recommend">{item.label}</RecommendTitle>
+            <RecommendTitle className="recommend">
+              {localStorage.getItem("nickname") + item.label}
+            </RecommendTitle>
           ) : (
             <TitleWrapper>
               <Icon src={ICONLIST[idx]} alt="icon" />
