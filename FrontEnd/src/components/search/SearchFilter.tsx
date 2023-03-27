@@ -74,7 +74,10 @@ export default function SearchFilter(props: SearchFilterProps) {
             filterValue={props.filterValue}
             handleFilterValueChange={props.handleFilterValueChange}
           />
-          <TimeForm />
+          <TimeForm
+            filterValue={props.filterValue}
+            handleFilterValueChange={props.handleFilterValueChange}
+          />
           <ButtonContainer>
             <OkButton onClick={requestSearchWithFilter}>필터 적용</OkButton>
             <CancelButton onClick={closeFilter}>취소</CancelButton>
