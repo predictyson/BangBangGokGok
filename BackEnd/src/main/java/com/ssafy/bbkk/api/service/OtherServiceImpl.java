@@ -1,18 +1,21 @@
 package com.ssafy.bbkk.api.service;
 
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.bbkk.api.dto.GenreResponse;
-import com.ssafy.bbkk.db.entity.QRegion;
 import com.ssafy.bbkk.db.repository.GenreRepository;
 import com.ssafy.bbkk.db.repository.RegionRepository;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @Transactional
@@ -45,4 +48,33 @@ public class OtherServiceImpl implements OtherService {
 //                .collect(Collectors.toList());
         return result;
     }
+
+    @Override
+    public void recCF(String email) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("email", email);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        restTemplate.postForEntity("https://bbkk.store/rec/cf", httpEntity, String.class);
+    }
+
+    @Override
+    public void recCBF(String email) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("email", email);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        restTemplate.postForEntity("https://bbkk.store/rec/cbf", httpEntity, String.class);
+    }
+
 }

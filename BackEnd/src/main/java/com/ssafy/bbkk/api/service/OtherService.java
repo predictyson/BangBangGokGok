@@ -9,4 +9,8 @@ public interface OtherService {
 
     List<String> getRegionSmallList(String regionBig) throws Exception;
 
+    void recCF(String email);
+
+    void recCBF(String email);
+
 }
