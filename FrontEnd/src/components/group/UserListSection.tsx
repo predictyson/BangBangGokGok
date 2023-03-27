@@ -6,45 +6,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-
-const tempUserSearchList: GroupSetUer[] = [
-  {
-    userId: 123,
-    nickname: "정상기",
-    email: "jackid1103@naver.com",
-    profileImageType: "Avatar2",
-  },
-  {
-    userId: 123,
-    nickname: "손예지",
-    email: "happy3@naver.com",
-    profileImageType: "Avatar6",
-  },
-  {
-    userId: 123,
-    nickname: "이상민",
-    email: "example@naver.com",
-    profileImageType: "Avatar1",
-  },
-  {
-    userId: 123,
-    nickname: "우상빈",
-    email: "angry1103@naver.com",
-    profileImageType: "Avatar4",
-  },
-  {
-    userId: 123,
-    nickname: "이지원",
-    email: "angry1103@naver.com",
-    profileImageType: "Avatar3",
-  },
-  {
-    userId: 123,
-    nickname: "김성수",
-    email: "angry1103@naver.com",
-    profileImageType: "Avatar8",
-  },
-];
+import { requestUser } from "@/api/group";
 
 export default function UserListSection({
   userList,
@@ -69,25 +31,27 @@ export default function UserListSection({
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<GroupSetUer[]>([]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-
-    const results = tempUserSearchList.filter(
-      (user) =>
-        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.nickname.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    console.log(searchTerm);
-    console.log(searchResults);
-    setSearchResults(results);
+    try {
+      const {
+        data: { users },
+      } = await requestUser(event.target.value);
+      console.log(users);
+      setSearchResults(users);
+      console.log("searchResults");
+      console.log(searchResults);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <Container>
-      {userList.map((user: GroupSetUer, idx: number) => (
+      {userList.map((user: GroupSetUer) => (
         <UserSection
           user={user}
-          key={idx}
+          key={user.userId}
           handleDeleteUser={handleDeleteUser}
         />
       ))}
@@ -114,9 +78,8 @@ export default function UserListSection({
                     {...props}
                     onClick={() => {
                       handleAddUser(option);
-                      setSearchTerm("");
-                      setSearchResults([]);
                     }}
+                    key={option.userId}
                   >
                     {option.nickname} ({option.email})
                   </Box>
@@ -128,7 +91,9 @@ export default function UserListSection({
                     onChange={handleChange}
                     color="warning"
                     focused
+                    autoFocus
                     hiddenLabel
+                    value={searchTerm}
                     sx={{
                       backgroundColor: "",
                       input: { fontSize: 14, color: "white" },
