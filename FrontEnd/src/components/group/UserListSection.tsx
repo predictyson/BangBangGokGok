@@ -32,15 +32,17 @@ export default function UserListSection({
   const [searchResults, setSearchResults] = useState<GroupSetUer[]>([]);
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchResults([]);
     setSearchTerm(event.target.value);
+    if (event.target.value === "") return;
     try {
       const {
         data: { users },
       } = await requestUser(event.target.value);
-      console.log(users);
+      // console.log(users);
       setSearchResults(users);
-      console.log("searchResults");
-      console.log(searchResults);
+      // console.log("searchResults");
+      // console.log(searchResults);
     } catch (err) {
       console.log(err);
     }
@@ -77,6 +79,7 @@ export default function UserListSection({
                     sx={{ fontSize: 14 }}
                     {...props}
                     onClick={() => {
+                      console.log(option);
                       handleAddUser(option);
                     }}
                     key={option.userId}

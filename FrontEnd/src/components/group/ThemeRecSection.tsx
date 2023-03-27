@@ -1,3 +1,4 @@
+import { themeRec } from "@/api/group";
 import { theme } from "@/styles/theme";
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
@@ -20,11 +21,20 @@ export default function ThemeRecSection({
     }
   }, [isWaiting]);
 
-  const handleResult = () => {
+  const handleResult = async () => {
     // TODO: data는 userid모은거
     const data = userList.map((user) => {
       return user.userId;
     });
+    console.log(data);
+    try {
+      const {
+        data: { themes },
+      } = await themeRec(data);
+      console.log(themes);
+    } catch (err) {
+      console.log(err);
+    }
     setIsWaiting(true);
   };
 
