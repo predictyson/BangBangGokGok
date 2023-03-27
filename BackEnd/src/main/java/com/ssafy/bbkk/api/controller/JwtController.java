@@ -8,22 +8,24 @@ import java.util.Enumeration;
 import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("jwt")
+@RequiredArgsConstructor
 public class JwtController {
+
     private static final Logger logger = LoggerFactory.getLogger(JwtController.class);
 
-    @GetMapping("/jwt")
+    @GetMapping
     public String getJwtToken(@AuthenticationPrincipal User user, HttpServletRequest request) {
             logger.info("[jwt] user={}",user.getUsername());
         return user.getUsername();
