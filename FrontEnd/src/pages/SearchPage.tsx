@@ -36,24 +36,24 @@ const INITIAL_FILTER_SET_VALUE: FilterValue = {
 };
 
 const filterReducer = (
-  filterValue: FilterValue,
+  oldFilterValue: FilterValue,
   action: ReducerAction
 ): FilterValue => {
   switch (action.type) {
     case "regionBig":
-      return { ...filterValue, regionBig: action.newValue.regionBig };
+      return { ...oldFilterValue, regionBig: action.newValue.regionBig };
     case "regionSmall":
-      return { ...filterValue, regionSmall: action.newValue.regionSmall };
+      return { ...oldFilterValue, regionSmall: action.newValue.regionSmall };
     case "genreId":
-      return { ...filterValue, genreId: action.newValue.genreId };
+      return { ...oldFilterValue, genreId: action.newValue.genreId };
     case "difficultyS":
-      return { ...filterValue, difficultyS: action.newValue.difficultyS };
+      return { ...oldFilterValue, difficultyS: action.newValue.difficultyS };
     case "difficultyE":
-      return { ...filterValue, difficultyE: action.newValue.difficultyE };
+      return { ...oldFilterValue, difficultyE: action.newValue.difficultyE };
     case "people":
-      return { ...filterValue, people: action.newValue.people };
+      return { ...oldFilterValue, people: action.newValue.people };
     case "time":
-      return { ...filterValue, time: action.newValue.time };
+      return { ...oldFilterValue, time: action.newValue.time };
   }
 };
 

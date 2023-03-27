@@ -49,8 +49,8 @@ export default function SearchFilter(props: SearchFilterProps) {
       >
         <FilterContainer>
           <LocationForm
-            regionBig={props.filterValue.regionBig}
-            regionSmall={props.filterValue.regionSmall}
+            filterValue={props.filterValue}
+            handleFilterValueChange={props.handleFilterValueChange}
           />
           <GenreForm />
           <DifficultyForm />
