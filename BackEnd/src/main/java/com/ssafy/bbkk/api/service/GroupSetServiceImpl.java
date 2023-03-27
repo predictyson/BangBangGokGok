@@ -19,7 +19,7 @@ public class GroupSetServiceImpl implements GroupSetService {
 
     @Override
     public List<PreviewUserResponse> getUserListByEmailOrNickname(String emailOrNickname) throws Exception {
-        List<PreviewUserResponse> result = new ArrayList<>();
+        List<PreviewUserResponse> result = null;
         List<PreviewUserResponse> temp = new ArrayList<>();
 
         // email로 유저 찾아오기
@@ -36,6 +36,7 @@ public class GroupSetServiceImpl implements GroupSetService {
 
         // 상위 n개만 반환
         if(temp.size()>SIZE_OF_USER_LIST){
+            result = new ArrayList<>();
             for(int i=0;i<SIZE_OF_USER_LIST;i++){
                 result.add(temp.get(i));
             }
