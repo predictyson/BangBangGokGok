@@ -25,7 +25,7 @@ public class JwtController {
 
     @GetMapping("/jwt")
     public String getJwtToken(@AuthenticationPrincipal User user, HttpServletRequest request) {
-
-        return "응애";
+            logger.info("[jwt] user={}",user.getUsername());
+        return user.getUsername();
     }
 }
