@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
 import styled from "styled-components";
-import { theme } from "@/styles/theme";
 import { PreviewThemeResponse } from "types/search";
 
 interface SearchResultProps {
@@ -9,32 +7,22 @@ interface SearchResultProps {
 }
 
 export default function SearchResult(props: SearchResultProps) {
-  const [searchResults, setSearchResults] = useState<PreviewThemeResponse[]>(
-    props.results
-  );
+  const [searchResults, setSearchResults] = useState<PreviewThemeResponse[]>([
+    ...props.results,
+  ]);
+  // const [searchResults, setSearchResults] = useState<PreviewThemeResponse[]>(
+  //   props.results
+  // );
+
+  console.log(searchResults);
 
   return (
     <Wrapper>
       <Container>
-        {searchResults.map((result) => (
+        {props.results.map((result) => (
           <ThemeItem key={result.themeId}>{result.title}</ThemeItem>
         ))}
       </Container>
-      {/* <Container>
-
-        {[...searchResults.slice(0, Math.floor(searchResults.length / 2))].map(
-          (result) => (
-            <ThemeItem key={result.themeId}>{result.title}</ThemeItem>
-          )
-        )}
-      </Container> */}
-      {/* <Container>
-        {[...searchResults.slice(Math.floor(searchResults.length / 2))].map(
-          (result) => (
-            <ThemeItem key={result.themeId}>{result.title}</ThemeItem>
-          )
-        )}
-      </Container> */}
     </Wrapper>
   );
 }
@@ -50,6 +38,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: 2.5rem;
 `;
 
 const ThemeItem = styled.div`

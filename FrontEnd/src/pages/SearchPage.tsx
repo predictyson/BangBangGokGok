@@ -15,7 +15,7 @@ import {
   ReducerAction,
 } from "types/search";
 
-const INITIAL_RESULT_DATA: PreviewThemeResponse = [
+const INITIAL_RESULT_DATA = [
   {
     themeId: -1,
     title: "",
@@ -60,7 +60,7 @@ export default function SearchPage() {
   // SearchResult 관련 변수
   const [results, setResults] =
     useState<PreviewThemeResponse[]>(INITIAL_RESULT_DATA);
-
+  console.log(results);
   // SearchInput 관련 변수, 함수
   const [searchWord, setInputValue] = useState<string>("");
   const handleInputChange = (newInput: string) => {
@@ -79,7 +79,6 @@ export default function SearchPage() {
       orderby: sortOrder,
     });
     setPage((prev) => prev + 1);
-    console.log(response.data.themes);
     setResults(response.data.themes);
   };
 
