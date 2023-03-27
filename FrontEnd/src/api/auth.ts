@@ -6,7 +6,7 @@ export const tempRequest = () => {
 };
 
 /**
- * @param email
+ * @param email 유효성 체크하고싶은 이메일
  * @returns {boolean}
  * @comment 이메일 유효성 체크
  */
@@ -89,4 +89,21 @@ export const requestSmallRegion = (big: string) => {
 export const requestUserInfo = () => {
   // 로그인 이후기때문에 토큰에 헤더가 실려서 가겠죠? 쉽죠?
   return instance.get(`/user/oauth/login`);
+};
+
+/**
+ * JWT 토큰 재발급
+ * @param accessToken
+ * @param refreshToken
+ * @returns refreshToken을 바탕으로 NEW accessToken 반환
+ */
+export const requestToken = (
+  accessToken: string | null,
+  refreshToken: string | null
+) => {
+  const tokens = {
+    accessToken: accessToken,
+    refreshToken: refreshToken,
+  };
+  return instance.post(`/user/reissue`, tokens);
 };

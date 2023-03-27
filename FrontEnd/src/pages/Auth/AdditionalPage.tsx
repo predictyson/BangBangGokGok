@@ -6,6 +6,7 @@ import ProfileSection from "@components/Auth/signup/additional/ProfileSection";
 import { IAdditionalInfo } from "types/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { requestAdditional } from "@/api/auth";
+import Toast, { showToast } from "@/components/common/Toast";
 
 const InitAdditionalInfo: IAdditionalInfo = {
   userId: -1,
@@ -26,13 +27,31 @@ export default function AdditionalPage() {
     useState<IAdditionalInfo>(InitAdditionalInfo);
   const [chapter, setChapter] = useState<"genre" | "profile">("genre");
 
-  const handleChapter = () => {
+  const handleToastClick = (
+    type: IToastProps["type"],
+    message: IToastProps["message"]
+  ) => {
+    showToast({ type, message });
+  };
+
+  const handleChapter = async () => {
     if (chapter === "genre") setChapter("profile");
     else {
-      //TODO : request additonalInfo API 연결
-      // console.log(userAdditionalInfo);
+      try {
+        const res = await requestAdditional(userAdditionalInfo);
+        if (res.status === 200) {
+          handleToastClick("success", "회원가입이 완료되었습니다.");
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+        } else {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+      } catch (err) {
+        console.log(err);
+      }
       requestAdditional(userAdditionalInfo);
-      navigate("/");
+      navigate("/login");
     }
   };
 
@@ -81,6 +100,7 @@ export default function AdditionalPage() {
           {chapter === "genre" ? "다음 단계로" : "회원 가입 완료"}
         </NextButton>
       </Container>
+      <Toast />
     </Container1>
   );
 }
