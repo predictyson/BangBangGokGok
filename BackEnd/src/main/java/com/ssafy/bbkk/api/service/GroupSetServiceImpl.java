@@ -15,35 +15,29 @@ import java.util.*;
 public class GroupSetServiceImpl implements GroupSetService {
 
     private final UserRepository userRepository;
-    private final int SIZE_OF_USER_LIST = 10;
 
     @Override
     public List<PreviewUserResponse> getUserListByEmailOrNickname(String emailOrNickname) throws Exception {
-        List<PreviewUserResponse> result = null;
-        List<PreviewUserResponse> temp = new ArrayList<>();
+        List<PreviewUserResponse> result = new ArrayList<>();
 
-        // email로 유저 찾아오기
-        userRepository.findByEmailContaining(emailOrNickname)
-                .forEach(x->{
-                    if(x.getNickname()!=null) temp.add(new PreviewUserResponse(x));
-                });
-        // nickname으로 유저 찾아오기
-        userRepository.findByNicknameContaining(emailOrNickname)
-                .forEach(x->{
-                    if(x.getNickname()!=null) temp.add(new PreviewUserResponse(x));
-                });
-        Collections.sort(temp, Comparator.comparing(PreviewUserResponse::getNickname));
+        userRepository.findByEmailContainingOrNicknameContaining(emailOrNickname, emailOrNickname)
+            .forEach(x->{
+                if(x.getEmail()!=null && x.getNickname()!=null){
+                    result.add(new PreviewUserResponse(x));
+                }
+            });
 
-        // 상위 n개만 반환
-        if(temp.size()>SIZE_OF_USER_LIST){
-            result = new ArrayList<>();
-            for(int i=0;i<SIZE_OF_USER_LIST;i++){
-                result.add(temp.get(i));
-            }
-        }
-        else {
-            result = temp;
-        }
+//        // email로 유저 찾아오기
+//        userRepository.findByEmailContaining(emailOrNickname)
+//                .forEach(x->{
+//                    if(x.getNickname()!=null) result.add(new PreviewUserResponse(x));
+//                });
+//        // nickname으로 유저 찾아오기
+//        userRepository.findByNicknameContaining(emailOrNickname)
+//                .forEach(x->{
+//                    if(x.getNickname()!=null) result.add(new PreviewUserResponse(x));
+//                });
+//        Collections.sort(result, Comparator.comparing(PreviewUserResponse::getNickname));
 
         return result;
     }
