@@ -4,11 +4,24 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
+import { FilterValue, ReducerAction, PeopleOption } from "types/search";
 
-export default function PeopleForm() {
-  const [people, setPeople] = useState("0");
+interface PeopleFormProps {
+  filterValue: FilterValue;
+  handleFilterValueChange: (action: ReducerAction) => void;
+}
+
+export default function PeopleForm(props: PeopleFormProps) {
+  const [people, setPeople] = useState<PeopleOption>(props.filterValue.people);
   const handlePeopleChange = (event: SelectChangeEvent<unknown>) => {
-    setPeople(event.target.value as string);
+    setPeople(event.target.value as PeopleOption);
+    props.handleFilterValueChange({
+      type: "people",
+      newValue: {
+        ...props.filterValue,
+        people: event.target.value as PeopleOption,
+      },
+    });
   };
 
   return (
@@ -23,13 +36,13 @@ export default function PeopleForm() {
           color="warning"
           onChange={handlePeopleChange}
         >
-          <MenuItem value="0">전체</MenuItem>
-          <MenuItem value="1">1명</MenuItem>
-          <MenuItem value="2">2명</MenuItem>
-          <MenuItem value="3">3명</MenuItem>
-          <MenuItem value="4">4명</MenuItem>
-          <MenuItem value="5">5명</MenuItem>
-          <MenuItem value="6">6명</MenuItem>
+          <MenuItem value={0}>전체</MenuItem>
+          <MenuItem value={1}>1명</MenuItem>
+          <MenuItem value={2}>2명</MenuItem>
+          <MenuItem value={3}>3명</MenuItem>
+          <MenuItem value={4}>4명</MenuItem>
+          <MenuItem value={5}>5명</MenuItem>
+          <MenuItem value={6}>6명</MenuItem>
         </CustomSelect>
       </div>
     </Wrapper>
