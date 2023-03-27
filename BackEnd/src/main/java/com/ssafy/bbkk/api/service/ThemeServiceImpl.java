@@ -192,7 +192,9 @@ public class ThemeServiceImpl implements ThemeService {
         List<PreviewThemeResponse> CBFList = new ArrayList<>();
         List<PreviewThemeResponse> CFList = new ArrayList<>();
         int cnt = recommendedThemeOfUserRepository.countByUserId(user.getId());
+        logger.info("[cnt]={}",cnt);
         if(cnt > 0){
+            result = new ArrayList<>();
             // 유저의 추천 테마 목록 조회
             recommendedThemeOfUserRepository.findByUserId(user.getId())
                     .forEach(x -> {
