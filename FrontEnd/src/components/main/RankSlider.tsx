@@ -3,9 +3,9 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ISliderData } from "types/slider";
+import { IThemeData } from "types/slider";
 interface IProps {
-  data: ISliderData[];
+  data: IThemeData[];
 }
 
 export default function RankSlider({ data }: IProps) {
@@ -20,40 +20,17 @@ export default function RankSlider({ data }: IProps) {
     speed: 2000,
     autoplaySpeed: 2000,
     pauseOnHover: true,
-    responsive: [
-      {
-        breakpoint: 1250,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+    responsive: BREAKPOINT,
   };
+  console.log("HOT DATA : " + data);
   return (
     <Container>
-      <Title>{data[0].label}</Title>
+      <Title>🔥 이번주 Hot한 테마</Title>
       <Slider {...settings}>
-        {data[0].themes.map((item, idx) => (
+        {data.map((item, idx) => (
           <>
             <SliderItem key={idx}>
-              <Rank>{item.themeId}</Rank>
+              <Rank>{idx + 1}</Rank>
               <img
                 src={item.imgUrl}
                 alt="img"
@@ -105,3 +82,29 @@ const Rank = styled.div`
     font-size: 10rem;
   }
 `;
+
+const BREAKPOINT = [
+  {
+    breakpoint: 1250,
+    settings: {
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      infinite: true,
+    },
+  },
+  {
+    breakpoint: 900,
+    settings: {
+      slidesToShow: 2,
+      slidesToScroll: 2,
+      initialSlide: 2,
+    },
+  },
+  {
+    breakpoint: 640,
+    settings: {
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    },
+  },
+];

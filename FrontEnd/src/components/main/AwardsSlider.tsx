@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler, useState } from "react";
+import React, { FC, MouseEventHandler, useState, useEffect } from "react";
 import styled from "styled-components";
 import Slider, { CustomArrowProps } from "react-slick";
 import PrevArrow from "@/assets/main/PrevArrow.png";
@@ -8,6 +8,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Modal from "./Modal";
 import { IAwardSlider, IAwardTheme } from "types/slider";
 import { style } from "@mui/system";
+import { IDetailData } from "types/detail";
+import { getDetail } from "@/api/theme";
 interface IProps {
   awardData: IAwardSlider;
 }
@@ -18,6 +20,7 @@ interface ArrowProps extends CustomArrowProps {
 export default function AwardsSlider(awardData: IProps) {
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
+  const [data, setData] = useState<IDetailData>(initData);
   const handleOpen = (themeId: number) => {
     setThemeId(themeId);
     setOpen(true);
@@ -61,7 +64,19 @@ export default function AwardsSlider(awardData: IProps) {
     nextArrow: <CustomNextArrow />,
     responsive: BREAKPOINT,
   };
-  const data = awardData.awardData;
+  const requestDetailData = async (themeId: number) => {
+    try {
+      const res = await getDetail(themeId);
+      setData(res.data.theme);
+      console.log(res.data.theme);
+    } catch (err) {
+      throw new Error("Internal Server Error!");
+    }
+  };
+  useEffect(() => {
+    requestDetailData(themeId);
+  }, [themeId]);
+  const awarddata = awardData.awardData;
   return (
     <Container>
       <TitleWrapper>
@@ -69,10 +84,10 @@ export default function AwardsSlider(awardData: IProps) {
           src="https://icon-library.com/images/prize-icon/prize-icon-5.jpg"
           alt="icon"
         />
-        <Title>{data.year}년도 어워즈 수상작</Title>
+        <Title>{awarddata.year}년도 어워즈 수상작</Title>
       </TitleWrapper>
       <Slider {...settings}>
-        {data.theme.map((theme: IAwardTheme) => (
+        {awarddata.theme.map((theme: IAwardTheme) => (
           <SliderItem key={theme.themeId}>
             <SliderTitleWrapper>
               <img
@@ -101,7 +116,12 @@ export default function AwardsSlider(awardData: IProps) {
         ))}
       </Slider>
       {themeId !== undefined && (
-        <Modal open={open} onClose={handleClose} themeId={themeId} />
+        <Modal
+          open={open}
+          onClose={handleClose}
+          themeId={themeId}
+          data={data}
+        />
       )}
     </Container>
   );
@@ -243,3 +263,29 @@ const BREAKPOINT = [
     },
   },
 ];
+const initData: IDetailData = {
+  themeId: 1,
+  regionBig: "서울", // 지역(대분류)
+  regionSmall: "강남", // 지역(소분류)
+  storeName: "코드케이 홍대점", // 매장명
+  title: "미스테리 거울의 방", // 테마명
+  genre: ["공포", "추리"], // 장르 목록
+  difficulty: 3.2, // 난이도
+  runningTime: 60, // 시간 (분단위)
+  openDate: "2023.03.13", // 오픈일
+  minPeople: 2, // 최소 인원
+  maxPeople: 6, // 최대 인원
+  imgUrl:
+    "https://user-images.githubusercontent.com/55784772/224640336-ec8412c3-f81b-4472-b6a5-9e56254004a3.jpg", // 테마 포스터 링크
+  pageUrl: "http://www.code-k.co.kr/", // 테마 예약페이지 링크
+  synopsis: `"몇 년 전부터 조직에 잠입해 있던 언더커버로부터 대량의 마약 거래 정보가 들어왔다.
+    지휘부에서는 나를 포함한 경찰 특공대를 이 마약 조직에 몇 달 전부터 침투 시켰다.
+    오늘이 지긋지긋한 마약조직을 끝장 내버릴 마지막 기회다!"
+    `, // 테마 시놉시스
+  userRating: 3.3, // 평점
+  userActivity: 3.4, // 활동성
+  userFear: 4.4, // 공포도
+  userDifficulty: 4.4, // 체감 난이도
+  userCnt: 8, // 평가 인원
+  isInterested: false,
+};

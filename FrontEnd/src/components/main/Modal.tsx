@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Line from "@/assets/common/Line.png";
@@ -12,38 +12,32 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LikesModal from "./LikesModal";
 import { IReviewData, IDetailData } from "types/detail";
-import { getDetail } from "@/api/theme";
 import { postInterest, deleteInterest } from "@/api/likes";
 import { getReviews } from "@/api/review";
 interface IProps {
   open: boolean;
   onClose: () => void;
   themeId: number;
+  data: IDetailData;
 }
 
-export default function DetailModal({ open, onClose, themeId }: IProps) {
-  const [data, setData] = useState<IDetailData>(initData);
+export default function DetailModal({ open, onClose, themeId, data }: IProps) {
   const [childOpen, setchildOpen] = React.useState(false);
-  const [isLiked, setIsLiked] = useState(data.isInterested);
+  const [isLiked, setIsLiked] = useState(0);
   const [reviews, setReviews] = useState(REVIEWDUMMY);
 
   const requestReviews = async (themeId: number) => {
     try {
       const res = await getReviews(themeId);
-      setReviews(res.data);
+      setReviews(res.data.reviews);
+      console.log(res.data.reviews);
     } catch (err) {
       console.log(err);
     }
   };
-
-  const requestDetailData = async (themeId: number) => {
-    try {
-      const res = await getDetail(themeId);
-      setData(res.data);
-    } catch (err) {
-      throw new Error("Internal Server Error!");
-    }
-  };
+  useEffect(() => {
+    requestReviews(themeId);
+  }, [themeId]);
   // requestReviews(themeId);
   // requestDetailData(themeId);
 
@@ -52,7 +46,7 @@ export default function DetailModal({ open, onClose, themeId }: IProps) {
     message: IToastProps["message"]
   ) => {
     showToast({ type, message });
-    setIsLiked((prev) => !prev);
+    // setIsLiked((prev) => !prev);
     // try {
     //   const res = isLiked
     //     ? await postInterest(themeId)
@@ -141,6 +135,7 @@ export default function DetailModal({ open, onClose, themeId }: IProps) {
                   value={data.difficulty}
                   style={{ marginLeft: "1rem" }}
                   size="large"
+                  precision={0.5}
                   readOnly
                 />
               )}
@@ -208,13 +203,14 @@ const Synopsis = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
   pre {
     font-family: Pretendard;
+    margin-top: 4rem;
   }
-  overflow-y: hidden;
-  overflow-x: hidden;
   ::-webkit-scrollbar {
-    width: 12px;
+    width: 4px;
   }
   ::-webkit-scrollbar-thumb {
     background-color: #888;
@@ -324,10 +320,10 @@ const REVIEWDUMMY: IReviewData[] = [
     user: USERDUMMY,
     reviewId: 1,
     content: "너무너무 재밌어요 눈물나요",
-    rating: 4.2,
-    activity: 3.3,
-    fear: 4.4,
-    difficulty: 2.2,
+    userRating: 4.2,
+    userActivity: 3.3,
+    userFear: 4.4,
+    userDifficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 0, // 1: 성공 0 : 실파
     record: "0:12:50", // 분.초
@@ -336,10 +332,10 @@ const REVIEWDUMMY: IReviewData[] = [
     user: USERDUMMY,
     reviewId: 1,
     content: "너무너무 재밌어요 눈물나요",
-    rating: 4.2,
-    activity: 3.3,
-    fear: 4.4,
-    difficulty: 2.2,
+    userRating: 4.2,
+    userActivity: 3.3,
+    userFear: 4.4,
+    userDifficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 1, // 1: 성공 0 : 실파
     record: "0:12:50", // 분.초

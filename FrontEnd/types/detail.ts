@@ -2,10 +2,10 @@ export interface IReviewData {
   user: IUserData;
   reviewId: number; // 리뷰 id
   content: string; // 리뷰 내용
-  rating: number; // 평점
-  activity: number; // 활동성
-  fear: number; // 공포도
-  difficulty: number; // 체감 난이도
+  userRating: number; // 평점
+  userActivity: number; // 활동성
+  userFear: number; // 공포도
+  userDifficulty: number; // 체감 난이도
   createTime: string; // 생성 날짜
   isSuccess: number; // 성공 여부
   record: string; // 남은 시간 기록
@@ -13,10 +13,10 @@ export interface IReviewData {
 export interface IPostData {
   themeId: number; // 테마 id
   content: string; // 리뷰 내용
-  rating: number; // 평점
-  activity: number; // 활동성
-  fear: number; // 공포도
-  difficulty: number; // 체감 난이도
+  userRating: number; // 평점
+  userActivity: number; // 활동성
+  userFear: number; // 공포도
+  userDifficulty: number; // 체감 난이도
   isSuccess: number; // 성공 여부 (0:실패, 1:성공)
 }
 export interface IDetailData {
