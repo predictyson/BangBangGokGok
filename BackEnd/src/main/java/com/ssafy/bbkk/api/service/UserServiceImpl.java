@@ -42,6 +42,13 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Override
+    public String findUserEmailByUserId(int userId) throws Exception {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new Exception(userId + "에 맞는 유저를 찾을 수 없습니다."));
+        return user.getEmail();
+    }
+
+    @Override
     public TokenResponse login(LoginRequest loginRequest) throws Exception {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = loginRequest.toAuthentication();
