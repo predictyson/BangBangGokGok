@@ -27,7 +27,7 @@ public class PrincipalDetailsService implements UserDetailsService {
         // 유저 불러오기
         return userRepository.findByEmail(username)
                 .map(this::createUserDetails)
-                .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
+                .orElseThrow(() -> new UsernameNotFoundException("해당 사용자를 찾을 수 없습니다."));
     }
 
     // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴

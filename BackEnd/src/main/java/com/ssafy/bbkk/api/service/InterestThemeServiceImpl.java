@@ -21,24 +21,27 @@ public class InterestThemeServiceImpl implements InterestThemeService {
 
     @Override
     public boolean isInterestTheme(String email, int themeId) throws Exception {
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
         return interestedThemeOfUserRepository.existsByUserIdAndThemeId(user.getId(), themeId);
     }
 
     @Override
     public void addInterestTheme(String email, int themeId) throws Exception {
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
-        Theme theme = themeRepository.findById(themeId).orElseThrow(
-                () -> new Exception("themeId=" + themeId + "에 맞는 테마를 찾을 수 없습니다."));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
+        Theme theme = themeRepository.findById(themeId)
+                .orElseThrow(() -> new Exception("해당 테마를 찾을 수 없습니다."));
         interestedThemeOfUserRepository.save(new InterestedThemeOfUser(user, theme));
     }
 
     @Override
     public void deleteInterestTheme(String email, int themeId) throws Exception {
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
+        if(!themeRepository.existsById(themeId)){
+            throw new Exception("해당 테마를 찾을 수 없습니다.");
+        }
         interestedThemeOfUserRepository.deleteByUserIdAndThemeId(user.getId(), themeId);
     }
 }

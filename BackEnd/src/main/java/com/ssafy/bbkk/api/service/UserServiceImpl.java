@@ -50,6 +50,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public TokenResponse login(LoginRequest loginRequest) throws Exception {
+        if(!userRepository.existsByEmail(loginRequest.getEmail())){
+            throw new Exception("해당 사용자를 찾을 수 없습니다.");
+        }
+
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = loginRequest.toAuthentication();
 
@@ -174,8 +178,8 @@ public class UserServiceImpl implements UserService {
     public LoginResponse getLoginUser(String email) throws Exception {
         LoginResponse result = null;
         // email을 통해 유저 조회
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new Exception("email=" + email + "에 맞는 유저를 찾을 수 없습니다."));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
         // 유저를 Dto에 감싸기
         result = new LoginResponse(user);
         return result;
@@ -194,8 +198,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void setPassword(ChangePasswordRequest changePasswordRequest) throws Exception {
         // 이메일을 통해 유저 조회
-        User user = userRepository.findByEmail(changePasswordRequest.getEmail()).orElseThrow(
-                () -> new Exception("해당 사용자를 찾을 수 없습니다."));
+        User user = userRepository.findByEmail(changePasswordRequest.getEmail())
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
         // 비밀번호 암호화 및 변경
         user.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
         // 유저 저장

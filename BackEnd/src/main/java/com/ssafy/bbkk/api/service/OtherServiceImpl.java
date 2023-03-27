@@ -39,6 +39,11 @@ public class OtherServiceImpl implements OtherService {
     @Override
     public List<String> getRegionSmallList(String regionBig) throws Exception {
         List<String> result = null;
+
+        if(!regionRepository.existsByRegionBig(regionBig)){
+            throw new Exception("해당 지역을 찾을 수 없습니다.");
+        }
+
         result = regionRepository.findByRegionBig(regionBig).stream()
                 .map(x -> x.getRegionSmall())
                 .collect(Collectors.toList());
