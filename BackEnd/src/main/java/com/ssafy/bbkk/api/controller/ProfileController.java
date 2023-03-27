@@ -5,6 +5,7 @@ import com.ssafy.bbkk.api.dto.PreferenceResponse;
 import com.ssafy.bbkk.api.dto.ReviewOfUserResponse;
 import com.ssafy.bbkk.api.dto.UpdateUserInfoRequest;
 import com.ssafy.bbkk.api.dto.UserInfoResponse;
+import com.ssafy.bbkk.api.service.OtherService;
 import com.ssafy.bbkk.api.service.ProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +35,7 @@ public class ProfileController {
     private static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
 
     private final ProfileService profileService;
+    private final OtherService otherService;
 
     @Operation(summary = "유저의 프로필 정보 조회", description = "해당 유저가 나인지 확인하며, 유저의 프로필 정보를 불러온다")
     @GetMapping("info/{userId}")
@@ -46,7 +47,7 @@ public class ProfileController {
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        boolean isMe = profileService.isSameUser(user.getUsername(),userId) ? true : false;
+        boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
         UserInfoResponse userInfoResponse = profileService.getUserInfoByEmail(user.getUsername());
 
         resultMap.put("isMe", isMe);
@@ -109,8 +110,7 @@ public class ProfileController {
 
     @Operation(summary = "유저의 정보 수정", description = "해당 유저의 프로필 정보를 수정한다")
     @PutMapping
-    private ResponseEntity<Map<String, Object>> setUserInfo(
-            @AuthenticationPrincipal User user,
+    private ResponseEntity<Map<String, Object>> setUserInfo(@AuthenticationPrincipal User user,
             @RequestBody UpdateUserInfoRequest updateUserInfoRequest) throws Exception {
 
         logger.info("[setUserInfo] request : updateUserInfoRequest={}", updateUserInfoRequest);
@@ -120,6 +120,7 @@ public class ProfileController {
         profileService.setUserInfo(updateUserInfoRequest);
         UserInfoResponse userInfoResponse = profileService.getUserInfoByUserId(updateUserInfoRequest.getUserId());
         resultMap.put("userInfo", userInfoResponse);
+        otherService.recCBF(user.getUsername());
 
         logger.info("[setUserInfo] response : userInfo={}", userInfoResponse);
 

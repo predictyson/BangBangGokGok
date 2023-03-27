@@ -2,6 +2,7 @@ package com.ssafy.bbkk.api.controller;
 
 import com.ssafy.bbkk.api.dto.UserInfoResponse;
 import com.ssafy.bbkk.api.service.InterestThemeService;
+import com.ssafy.bbkk.api.service.OtherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class InterestController {
     private static final Logger logger = LoggerFactory.getLogger(InterestController.class);
 
     private final InterestThemeService interestThemeService;
+    private final OtherService otherService;
 
     @Operation(summary = "관심 테마 조회", description = "해당 테마다 내가 관심을 가진 테마인지 확인한다")
     @GetMapping("{themeId}")
@@ -53,6 +55,7 @@ public class InterestController {
         logger.info("[addInterestTheme] request : myEmail={}, themeId={}", user.getUsername(), themeId);
 
         interestThemeService.addInterestTheme(user.getUsername(), themeId);
+        otherService.recCBF(user.getUsername());
 
         logger.info("[addInterestTheme] response : ");
 
@@ -68,6 +71,7 @@ public class InterestController {
         logger.info("[deleteInterestTheme] request : myEmail={}, themeId={}", user.getUsername(), themeId);
 
         interestThemeService.deleteInterestTheme(user.getUsername(), themeId);
+        otherService.recCBF(user.getUsername());
 
         logger.info("[deleteInterestTheme] response : ");
 

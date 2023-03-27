@@ -2,6 +2,7 @@ package com.ssafy.bbkk.api.controller;
 
 import com.ssafy.bbkk.api.dto.*;
 import com.ssafy.bbkk.api.service.EmailService;
+import com.ssafy.bbkk.api.service.OtherService;
 import com.ssafy.bbkk.api.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class UserController {
 
     private final UserService userService;
     private final EmailService emailService;
+    private final OtherService otherService;
 
     @Operation(summary = "로그인", description = "로그인을 진행한다")
     @PostMapping("login")
@@ -66,6 +68,9 @@ public class UserController {
         logger.info("[addInfo] request : joinAdditionalRequest={}",joinAdditionalRequest);
 
         userService.setUserAdditionalInfo(joinAdditionalRequest);
+        String email = userService.findUserEmailByUserId(joinAdditionalRequest.getUserId());
+//        otherService.recCF(email);
+        otherService.recCBF(email);
 
         logger.info("[addInfo] response : ");
 
