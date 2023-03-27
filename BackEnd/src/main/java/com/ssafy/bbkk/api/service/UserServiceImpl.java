@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String findUserEmailByUserId(int userId) throws Exception {
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new Exception(userId + "에 맞는 유저를 찾을 수 없습니다."));
+                () -> new Exception("해당 사용자를 찾을 수 없습니다."));
         return user.getEmail();
     }
 
@@ -80,13 +80,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String oauthLogin(String email) throws Exception {
+        // 유저 존재 확인
+        if(!userRepository.existsByEmail(email)){
+            throw new Exception("해당 사용자를 찾을 수 없습니다.");
+        }
+
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
         RefreshToken refreshToken = refreshTokenRepository.findByKey(email)
-                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
+                .orElseThrow(() -> new RuntimeException("이미 로그아웃 된 사용자입니다."));
 
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(refreshToken.getValue())) {
-            throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
+            throw new RuntimeException("Refresh Token이 유효하지 않습니다.");
         }
 
         return refreshToken.getValue();
@@ -94,6 +99,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int join(JoinRequest joinRequest) throws Exception {
+        // 이메일 중복 검사
+        if(userRepository.existsByEmail(joinRequest.getEmail())){
+            throw new Exception("해당 사용자가 이미 존재합니다.");
+        }
+
         // 유저 기본 정보 입력
         User user = User.builder()
                 .email(joinRequest.getEmail())
@@ -111,11 +121,10 @@ public class UserServiceImpl implements UserService {
     public void setUserAdditionalInfo(JoinAdditionalRequest joinAdditionalRequest) throws Exception {
         // 유저의 선호 지역 조회
         Region region = regionRepository.findByRegionBigAndRegionSmall(joinAdditionalRequest.getRegionBig(), joinAdditionalRequest.getRegionSmall())
-                .orElseThrow(() -> new Exception("regionBig=" + joinAdditionalRequest.getRegionBig() +
-                        "과 regionSmall=" + joinAdditionalRequest.getRegionSmall() + "에 맞는 지역을 찾을 수 없습니다."));
+                .orElseThrow(() -> new Exception("해당 지역이 존재하지 않습니다."));
         // 유저 id를 통해 유저 조회
-        User user = userRepository.findById(joinAdditionalRequest.getUserId()).orElseThrow(
-                () -> new Exception(joinAdditionalRequest.getUserId() + "에 맞는 유저를 찾을 수 없습니다."));
+        User user = userRepository.findById(joinAdditionalRequest.getUserId())
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
         // 입력한 정보를 바탕으로 정보 수정
         user.addUserInfo(joinAdditionalRequest, region);
         // 추가 정보 저장
@@ -123,8 +132,8 @@ public class UserServiceImpl implements UserService {
 
         for (int genreId : joinAdditionalRequest.getGenreIds()) {
             // 선호 장르 조회
-            Genre genre = genreRepository.findById(genreId).orElseThrow(
-                    () -> new Exception("genreId=" + genreId + "에 맞는 장르를 찾을 수 없습니다."));
+            Genre genre = genreRepository.findById(genreId)
+                    .orElseThrow(() -> new Exception("해당 장르를 찾을 수 없습니다."));
             // 유저의 선호 장르 객체 생성
             PreferredGenreOfUser preferredGenreOfUser = new PreferredGenreOfUser(user, genre);
             // 유저의 선호 장르 저장
@@ -136,19 +145,22 @@ public class UserServiceImpl implements UserService {
     public String reissue(TokenRequest tokenRequest) throws Exception {
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRequest.getRefreshToken())) {
-            throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
+            throw new RuntimeException("해당 Refresh Token이 유효하지 않습니다.");
         }
 
         // 2. Access Token 에서 Member ID 가져오기
         Authentication authentication = tokenProvider.getAuthentication(tokenRequest.getAccessToken());
+        if(!userRepository.existsByEmail(authentication.getName())){
+            throw new RuntimeException("해당 사용자를 찾을 수 없습니다.");
+        }
 
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
         RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
+                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다.")); // 로그아웃 시 DB에서 리프레쉬 토큰을 제거한다는 가정하에
 
         // 4. Refresh Token 일치하는지 검사
         if (!refreshToken.getValue().equals(tokenRequest.getRefreshToken())) {
-            throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
+            throw new RuntimeException("해당 Refresh Token이 일치하지 않습니다.");
         }
 
         // 5. 새로운 accessToken 생성
@@ -183,7 +195,7 @@ public class UserServiceImpl implements UserService {
     public void setPassword(ChangePasswordRequest changePasswordRequest) throws Exception {
         // 이메일을 통해 유저 조회
         User user = userRepository.findByEmail(changePasswordRequest.getEmail()).orElseThrow(
-                () -> new Exception("email=" + changePasswordRequest.getEmail() + "에 맞는 유저를 찾을 수 없습니다."));
+                () -> new Exception("해당 사용자를 찾을 수 없습니다."));
         // 비밀번호 암호화 및 변경
         user.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
         // 유저 저장

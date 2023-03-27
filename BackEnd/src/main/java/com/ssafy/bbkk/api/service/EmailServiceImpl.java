@@ -29,13 +29,12 @@ public class EmailServiceImpl implements EmailService{
     private final ConfirmationTokenRepository confirmationTokenRepository;
 
     @Override
-    public String sendMessage(String to) throws Exception {
+    public void sendMessage(String to) throws Exception {
         String ePw = createKey();
         MimeMessage message = createMessage(ePw, to);
         javaMailSender.send(message);
         ConfirmationToken confirmationToken = ConfirmationToken.createEmailConfirmationToken(to, ePw);
         confirmationTokenRepository.save(confirmationToken);
-        return ePw;
     }
 
     @Override
