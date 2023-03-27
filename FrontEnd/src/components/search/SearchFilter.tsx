@@ -66,7 +66,10 @@ export default function SearchFilter(props: SearchFilterProps) {
               props.handleDumpFilterGenreCategoryInputValueChange
             }
           />
-          <DifficultyForm />
+          <DifficultyForm
+            filterValue={props.filterValue}
+            handleFilterValueChange={props.handleFilterValueChange}
+          />
           <PeopleForm />
           <TimeForm />
           <ButtonContainer>
