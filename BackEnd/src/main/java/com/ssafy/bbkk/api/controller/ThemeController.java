@@ -1,10 +1,6 @@
 package com.ssafy.bbkk.api.controller;
 
-import com.ssafy.bbkk.api.dto.AwardThemeBundleResponse;
-import com.ssafy.bbkk.api.dto.PreviewThemeResponse;
-import com.ssafy.bbkk.api.dto.SearchThemeRequest;
-import com.ssafy.bbkk.api.dto.ThemeBundleResponse;
-import com.ssafy.bbkk.api.dto.ThemeResponse;
+import com.ssafy.bbkk.api.dto.*;
 import com.ssafy.bbkk.api.service.ThemeService;
 import java.util.HashMap;
 import java.util.List;
@@ -102,6 +98,22 @@ public class ThemeController {
         resultMap.put("theme", themeResponse);
 
         logger.info("[themeInfo] response : theme={}", themeResponse);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @Operation(summary = "테마의 리뷰 목록 조회", description = "해당 테마의 리뷰 목록을 불러온다")
+    @GetMapping("{themeId}/reviews")
+    private ResponseEntity<Map<String, Object>> getReviews(
+            @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int themeId) throws Exception {
+        logger.info("[getReviews] request : themeId={}", themeId);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        List<ReviewOfThemeResponse> reviewOfThemeResponses = themeService.getReviews(themeId);
+
+        resultMap.put("reviews", reviewOfThemeResponses);
+
+        logger.info("[getReviews] response : reviews={}", reviewOfThemeResponses);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }

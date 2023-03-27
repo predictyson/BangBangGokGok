@@ -19,9 +19,8 @@ public class ReviewOfThemeResponse {
     private double userDifficulty; // 체감 난이도
     private LocalDateTime createTime; // 리뷰 작성 날짜
     private int isSuccess; // 성공 여부 (0:실패, 1:성공)
-//    private LocalTime record; // 성공 기록 (hh:mm:ss)
-
-    private PreviewUserResponse previewUserResponse; // 작성자 간략 정보
+    private int userId; // 작성자 id
+    private String nickname; // 작성자 닉네임
 
     public ReviewOfThemeResponse(Review review){
         this.reviewId = review.getId();
@@ -32,9 +31,8 @@ public class ReviewOfThemeResponse {
         this.userDifficulty = review.getUserDifficulty();
         this.createTime = review.getCreatedDate();
         this.isSuccess = review.getIsSuccess();
-//        this.record = review.getRecord();
-
-        this.previewUserResponse = new PreviewUserResponse(review.getUser());
+        this.userId = review.getUser().getId();
+        this.nickname = review.getUser().getNickname();
     }
 
 

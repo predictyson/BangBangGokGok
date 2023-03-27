@@ -35,21 +35,21 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @Operation(summary = "테마의 리뷰 목록 조회", description = "해당 테마의 리뷰 목록을 불러온다")
-    @GetMapping("{themeId}")
-    private ResponseEntity<Map<String, Object>> getReviews(
-            @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int themeId) throws Exception {
-        logger.info("[getReviews] request : themeId={}", themeId);
-
-        Map<String, Object> resultMap = new HashMap<>();
-        List<ReviewOfThemeResponse> reviewOfThemeResponses = reviewService.getReviews(themeId);
-
-        resultMap.put("reviews", reviewOfThemeResponses);
-
-        logger.info("[getReviews] response : reviews={}", reviewOfThemeResponses);
-
-        return new ResponseEntity<>(resultMap, HttpStatus.OK);
-    }
+//    @Operation(summary = "테마의 리뷰 목록 조회", description = "해당 테마의 리뷰 목록을 불러온다")
+//    @GetMapping("{themeId}")
+//    private ResponseEntity<Map<String, Object>> getReviews(
+//            @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int themeId) throws Exception {
+//        logger.info("[getReviews] request : themeId={}", themeId);
+//
+//        Map<String, Object> resultMap = new HashMap<>();
+//        List<ReviewOfThemeResponse> reviewOfThemeResponses = reviewService.getReviews(themeId);
+//
+//        resultMap.put("reviews", reviewOfThemeResponses);
+//
+//        logger.info("[getReviews] response : reviews={}", reviewOfThemeResponses);
+//
+//        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+//    }
 
     @Operation(summary = "테마에 리뷰를 작성", description = "해당 테마에 새로운 리뷰를 작성한다")
     @PostMapping
