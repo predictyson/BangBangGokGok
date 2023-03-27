@@ -1,5 +1,6 @@
 export interface IReviewData {
-  user: IUserData;
+  userId: number;
+  nickname: string;
   reviewId: number; // 리뷰 id
   content: string; // 리뷰 내용
   userRating: number; // 평점

@@ -12,7 +12,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LikesModal from "./LikesModal";
 import { IReviewData, IDetailData } from "types/detail";
-import { postInterest, deleteInterest } from "@/api/likes";
+import { postInterest, deleteInterest, getIsLiked } from "@/api/likes";
 import { getReviews } from "@/api/review";
 interface IProps {
   open: boolean;
@@ -23,7 +23,7 @@ interface IProps {
 
 export default function DetailModal({ open, onClose, themeId, data }: IProps) {
   const [childOpen, setchildOpen] = React.useState(false);
-  const [isLiked, setIsLiked] = useState(0);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [reviews, setReviews] = useState(REVIEWDUMMY);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
   const requestReviews = async (themeId: number) => {
@@ -36,7 +36,37 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
       }
     }
   };
+  const requestIsLiked = async (themeId: number) => {
+    try {
+      const res = await getIsLiked(themeId);
+      setIsLiked(res.data.isInterest);
+      console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const postLikes = async (themeId: number) => {
+    try {
+      await postInterest(themeId);
+      setIsLiked(true);
+      console.log("POST SUCCESS");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteLikes = async (themeId: number) => {
+    try {
+      await deleteInterest(themeId);
+      setIsLiked(false);
+      console.log("DELETE SUCCESS");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
+    isLogin && requestIsLiked(themeId);
     requestReviews(themeId);
   }, [themeId]);
 
@@ -46,20 +76,17 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
   ) => {
     showToast({ type, message });
     // setIsLiked((prev) => !prev);
-    // try {
-    //   const res = isLiked
-    //     ? await postInterest(themeId)
-    //     : await deleteInterest(themeId);
-    //   console.log(res.data);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      console.log(isLiked);
+      !isLiked ? postLikes(themeId) : deleteLikes(themeId);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const handleOpen = () => {
     setchildOpen(true);
   };
   const handleClose = () => {
-    console.log("cLOSE");
     setchildOpen(false);
   };
   return (
@@ -138,7 +165,7 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
                   readOnly
                 />
               )}
-              {isLiked ? (
+              {isLogin && isLiked && (
                 <LikeButton
                   onClick={() =>
                     handleClick("error", "관심 등록이 해제되었습니다.")
@@ -147,7 +174,8 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
                   <FavoriteIcon />
                   <span> 관심 해제하기</span>
                 </LikeButton>
-              ) : (
+              )}
+              {isLogin && !isLiked && (
                 <>
                   <LikeButton onClick={handleOpen}>
                     <FavoriteBorderIcon /> <span> 관심 등록하기</span>
@@ -316,7 +344,8 @@ const USERDUMMY: IUserData = {
 };
 const REVIEWDUMMY: IReviewData[] = [
   {
-    user: USERDUMMY,
+    userId: 1,
+    nickname: "",
     reviewId: 1,
     content: "너무너무 재밌어요 눈물나요",
     userRating: 4.2,
@@ -328,7 +357,8 @@ const REVIEWDUMMY: IReviewData[] = [
     record: "0:12:50", // 분.초
   },
   {
-    user: USERDUMMY,
+    userId: 1,
+    nickname: "",
     reviewId: 1,
     content: "너무너무 재밌어요 눈물나요",
     userRating: 4.2,

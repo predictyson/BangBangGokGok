@@ -20,7 +20,7 @@ export default function ReviewItem({ data }: IProps) {
       <ReviewBox>
         <Header>
           <div className="left-wrapper">
-            {/* {data.user.nickname} */}
+            {data.nickname}
             {data.isSuccess ? (
               <>
                 <Badge className="green">성공</Badge>
@@ -86,8 +86,11 @@ export default function ReviewItem({ data }: IProps) {
 }
 
 const Content = styled.div`
-  margin-top: 1rem;
-  font-size: 1.4rem;
+  margin-top: 1.2rem;
+  font-size: 1.6rem;
+  /* border: solid 1px darkgray;
+  padding: 2rem;
+  border-radius: 1rem; */
 `;
 const RatingWrapper = styled.div`
   margin-top: 1rem;
@@ -111,7 +114,7 @@ const Header = styled.div`
   display: flex;
   color: white;
   justify-content: space-between;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   align-items: center;
   .time-left {
     margin-left: 1.5rem;
