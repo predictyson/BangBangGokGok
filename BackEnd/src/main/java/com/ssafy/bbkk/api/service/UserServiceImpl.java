@@ -193,7 +193,7 @@ public class UserServiceImpl implements UserService {
         // 유저 조회
         Optional<User> user = userRepository.findByEmail(email);
         // 유저가 존재하고 소셜 로그인이 아니라면
-        if(user.isPresent() && user.get().getProvider() != null && user.get().getProviderId() != null){
+        if(user.isPresent() && user.get().getProvider() == null && user.get().getProviderId() == null){
             result = true;
         }
         return result;
