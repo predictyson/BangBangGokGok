@@ -3,11 +3,10 @@ import { theme } from "@/styles/theme";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Avatar1, Avatar2, Avatar3 } from "@/assets/user";
-import { UserProfileProps } from "types/mypage";
-// import { ProfileIcon, ReviewIcon, LikesIcon } from "@/assets/mypage.Profile";
 import ProfileIcon from "@/assets/mypage/ProfileIcon.svg";
 import ReviewIcon from "@/assets/mypage/ReviewIcon.svg";
 import LikesIcon from "@/assets/mypage/LikesIcon.svg";
+import { UserProfile } from "types/mypage";
 
 interface StringMapByNumber {
   [key: number]: string;
@@ -19,7 +18,9 @@ const imageSrcMap: StringMapByNumber = {
   3: Avatar3,
 };
 
-export default function LeftNavBar({ userProfile }: UserProfileProps) {
+const dummyData = "HelloUseLocation!";
+
+export default function LeftNavBar(props: UserProfile) {
   // // API 연결 후 사용
   const [imageNumber, setImageNumber] = useState<number>(3); // 프로필 이미지 번호
 
@@ -29,18 +30,14 @@ export default function LeftNavBar({ userProfile }: UserProfileProps) {
     <Wrapper>
       <ProfileWrapper>
         <ProfileImageWrapper>
-          <ProfileImage
-            // src={imageSrcMap[userProfile.profileImageType]}
-            src={imageSrcMap[imageNumber]}
-            alt="profile image"
-          />
+          <ProfileImage src={imageSrcMap[imageNumber]} alt="profile image" />
         </ProfileImageWrapper>
-        <ProfileName>{userProfile.nickname}</ProfileName>
+        <ProfileName>{props.nickname}</ProfileName>
         {/* 칭호(?)는 아직 정해진 바가 없음! */}
         {/* <ProfileTitle>{userProfile.title}</ProfileTitle> */}
       </ProfileWrapper>
       <NavWrapper>
-        <NavItem onClick={() => navigate("")}>
+        <NavItem onClick={() => navigate("", { state: props })}>
           <img src={ProfileIcon} />
           <span> Profile</span>
         </NavItem>

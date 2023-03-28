@@ -2,8 +2,22 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import ProfileChart from "@components/mypage/RightSection/Profile/ProfileChart";
+import { UserProfile } from "types/mypage";
+import { useLocation } from "react-router-dom";
 
 export default function ProfileInfoSection() {
+  const location = useLocation();
+  const {
+    // age,
+    gender,
+    genres,
+    // id,
+    nickname,
+    // profileImageType,
+    regionBig,
+    regionSmall,
+  } = location.state as UserProfile;
+
   return (
     <ProfileWrapper>
       <SectionTitle>내 정보</SectionTitle>
@@ -11,25 +25,27 @@ export default function ProfileInfoSection() {
         <SectionFirstColumn>
           <ContentWrapper>
             <ContentTitle>닉네임</ContentTitle>
-            <Content>정개미</Content>
+            <Content>{nickname}</Content>
           </ContentWrapper>
-          <ContentWrapper>
+          {/* <ContentWrapper>
             <ContentTitle>이메일</ContentTitle>
-            <Content>example@example.com</Content>
-          </ContentWrapper>
+            <Content>이메일은 안보내줘요!</Content>
+          </ContentWrapper> */}
           <ContentWrapper>
             <ContentTitle>성별</ContentTitle>
-            <Content>남자</Content>
+            <Content>{gender === "M" ? "남자" : "여자"}</Content>
           </ContentWrapper>
         </SectionFirstColumn>
         <SectionSecondColumn>
           <ContentWrapper>
             <ContentTitle>선호 장르</ContentTitle>
-            <Content>공포, 뭐시기, 뭐시기</Content>
+            <Content>{genres.join(", ")}</Content>
           </ContentWrapper>
           <ContentWrapper>
             <ContentTitle>선호 지역</ContentTitle>
-            <Content>서울, 경기, 강원</Content>
+            <Content>
+              {regionBig}, {regionSmall}
+            </Content>
           </ContentWrapper>
         </SectionSecondColumn>
       </SectionContentWrapper>
