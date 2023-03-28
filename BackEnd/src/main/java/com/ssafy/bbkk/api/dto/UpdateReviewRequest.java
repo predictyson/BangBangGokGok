@@ -14,13 +14,13 @@ public class UpdateReviewRequest {
     @Schema(description = "access 토큰", required = true)
     private String content; // 수정할 리뷰 내용
     @Schema(description = "access 토큰", required = true)
-    private double rating; // 평점
+    private double userRating; // 평점
     @Schema(description = "access 토큰", required = true)
-    private double activity; // 활동성
+    private double userActivity; // 활동성
     @Schema(description = "access 토큰", required = true)
-    private double fear; // 공포도
+    private double userFear; // 공포도
     @Schema(description = "access 토큰", required = true)
-    private double difficulty; // 체감 난이도
+    private double userDifficulty; // 체감 난이도
     @Schema(description = "access 토큰", required = true)
     private int isSuccess; // 성공 여부 (0,1)
 //    @Schema(description = "access 토큰", required = true)
