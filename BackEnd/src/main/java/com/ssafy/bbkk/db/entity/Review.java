@@ -54,10 +54,10 @@ public class Review extends BaseTimeEntity {
 
     public Review(User user, Theme theme, CreateReviewRequest createReviewRequest) {
         this.content = createReviewRequest.getContent();
-        this.userRating = createReviewRequest.getRating();
-        this.userActivity = createReviewRequest.getActivity();
-        this.userFear = createReviewRequest.getFear();
-        this.userDifficulty = createReviewRequest.getDifficulty();
+        this.userRating = createReviewRequest.getUserRating();
+        this.userActivity = createReviewRequest.getUserActivity();
+        this.userFear = createReviewRequest.getUserFear();
+        this.userDifficulty = createReviewRequest.getUserDifficulty();
         this.isSuccess = createReviewRequest.getIsSuccess();
 
         this.user = user;
@@ -66,10 +66,10 @@ public class Review extends BaseTimeEntity {
 
     public void updateReviewInfo(UpdateReviewRequest updateReviewRequest) {
         this.content = updateReviewRequest.getContent();
-        this.userRating = updateReviewRequest.getRating();
-        this.userActivity = updateReviewRequest.getActivity();
-        this.userFear = updateReviewRequest.getFear();
-        this.userDifficulty = updateReviewRequest.getDifficulty();
+        this.userRating = updateReviewRequest.getUserRating();
+        this.userActivity = updateReviewRequest.getUserActivity();
+        this.userFear = updateReviewRequest.getUserFear();
+        this.userDifficulty = updateReviewRequest.getUserDifficulty();
         this.isSuccess = updateReviewRequest.getIsSuccess();
     }
 
