@@ -5,8 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
 import { getGenres } from "@/api/others";
-import { GenreResponse } from "@/api/others";
-import { FilterValue, ReducerAction } from "types/search";
+import { FilterValue, ReducerAction, GenreResponse } from "types/search";
 
 interface GenreFormProps {
   filterValue: FilterValue;
@@ -63,7 +62,7 @@ export default function GenreForm(props: GenreFormProps) {
       // );
     };
     requestGenres();
-  });
+  }, []);
 
   // 장르id로 장르이름 찾기
   // setGenreInputValue(
