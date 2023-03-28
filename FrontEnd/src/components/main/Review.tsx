@@ -72,7 +72,9 @@ export default function Review({ data, themeId, reviews }: IProps) {
       />
       <InfoWrapper>
         <InfoBox>
-          <div className="title">사용자 총 평점 ( {data.userCnt} )</div>
+          <div className="title">
+            사용자 총 평점 ( {data.userCnt + reviews.length} )
+          </div>
           <div className="content-wrapper">
             <CustomFavorite width={"3rem"} fill={`${theme.colors.pink}`} />
             <span className="rating">{data.userRating}/5</span>
