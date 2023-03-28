@@ -84,8 +84,13 @@ public class UserController {
 
     @Operation(summary = "추가 정보 작성", description = "회원 가입 후 추가 정보를 작성한다")
     @PostMapping("join/additional")
-    public ResponseEntity<Void> addInfo(@RequestBody JoinAdditionalRequest joinAdditionalRequest) throws Exception {
+    public ResponseEntity<Void> addInfo(@RequestBody @Valid JoinAdditionalRequest joinAdditionalRequest, Errors errors) throws Exception {
         logger.info("[addInfo] request : joinAdditionalRequest={}", joinAdditionalRequest);
+
+        // JoinAdditionalRequest 입력값 유효성 검사
+        for (FieldError error : errors.getFieldErrors())
+            throw new Exception(error.getDefaultMessage());
+        joinAdditionalRequest.validation();
 
         userService.setUserAdditionalInfo(joinAdditionalRequest);
         String email = userService.findUserEmailByUserId(joinAdditionalRequest.getUserId());
