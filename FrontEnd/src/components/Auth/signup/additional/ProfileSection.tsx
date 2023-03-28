@@ -11,10 +11,12 @@ export default function ProfileSection(props: ProfileProps) {
         <LeftPorfile
           userAdditionalInfo={props.userAdditionalInfo}
           changeUserInfo={props.changeUserInfo}
+          handleToastClick={props.handleToastClick}
         />
         <RightProfile
           userAdditionalInfo={props.userAdditionalInfo}
           changeUserInfo={props.changeUserInfo}
+          handleToastClick={props.handleToastClick}
         />
       </ProfileBox>
     </>
