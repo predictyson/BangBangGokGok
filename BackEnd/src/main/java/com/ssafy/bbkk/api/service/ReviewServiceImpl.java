@@ -37,7 +37,7 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = new Review(user, theme, createReviewRequest);
         review = reviewRepository.save(review);
         // 테마의 평점 반영하기
-        theme.addReview(review.getUserActivity(), review.getUserDifficulty(), review.getUserFear(), review.getUserRating());
+        theme.addReview(review);
         themeRepository.save(theme);
     }
 
@@ -58,9 +58,8 @@ public class ReviewServiceImpl implements ReviewService {
             throw new Exception("해당 리뷰를 삭제할 권한이 없습니다.");
         // 리뷰 삭제하기
         reviewRepository.deleteById(reviewId);
-
         // 테마의 평점 반영하기
-        theme.deleteReview(review.getUserActivity(), review.getUserDifficulty(), review.getUserFear(), review.getUserRating());
+        theme.deleteReview(review);
         themeRepository.save(theme);
     }
 
@@ -76,6 +75,12 @@ public class ReviewServiceImpl implements ReviewService {
         // 해당 유저가 작성한 리뷰인지 확인하기
         if (user.getId() != review.getUser().getId())
             throw new Exception("해당 리뷰를 수정할 권한이 없습니다.");
+        // 테마 찾아오기
+        int themeId = review.getTheme().getId();
+        Theme theme = themeRepository.findById(themeId)
+                .orElseThrow(() -> new Exception("해당 테마를 찾을 수 없습니다."));
+        // 평점 반영하기
+        theme.modifyReview(review, updateReviewRequest);
         // 리뷰 수정하기
         review.updateReviewInfo(updateReviewRequest);
         return new ReviewOfUserResponse(review);

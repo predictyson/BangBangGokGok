@@ -1,5 +1,6 @@
 package com.ssafy.bbkk.db.entity;
 
+import com.ssafy.bbkk.api.dto.UpdateReviewRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -67,11 +68,11 @@ public class Theme extends BaseTimeEntity{
     @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>(); // 테마의 리뷰 목록
 
-    public void addReview(double userActivity, double userDifficulty, double userFear, double userRating){
-        this.userActivity = this.userActivity * this.userCnt + userActivity;
-        this.userDifficulty = this.userDifficulty * this.userCnt + userDifficulty;
-        this.userFear = this.userFear * this.userCnt + userFear;
-        this.userRating = this.userRating * this.userCnt + userRating;
+    public void addReview(Review review){
+        this.userActivity = this.userActivity * this.userCnt + review.getUserActivity();
+        this.userDifficulty = this.userDifficulty * this.userCnt + review.getUserDifficulty();
+        this.userFear = this.userFear * this.userCnt + review.getUserFear();
+        this.userRating = this.userRating * this.userCnt + review.getUserRating();
 
         this.userCnt++;
         this.userActivity = this.userActivity / (double)this.userCnt;
@@ -80,11 +81,18 @@ public class Theme extends BaseTimeEntity{
         this.userRating = this.userRating / (double)this.userCnt;
     }
 
-    public void deleteReview(double userActivity, double userDifficulty, double userFear, double userRating){
-        this.userActivity = this.userActivity * this.userCnt - userActivity;
-        this.userDifficulty = this.userDifficulty * this.userCnt - userDifficulty;
-        this.userFear = this.userFear * this.userCnt - userFear;
-        this.userRating = this.userRating * this.userCnt - userRating;
+    public void modifyReview(Review beforeReview, UpdateReviewRequest afterReview){
+        this.userActivity += (afterReview.getUserActivity() - beforeReview.getUserActivity()) / (double)this.userCnt;
+        this.userDifficulty += (afterReview.getUserDifficulty() - beforeReview.getUserDifficulty()) / (double)this.userCnt;
+        this.userFear += (afterReview.getUserFear() - beforeReview.getUserFear()) / (double)this.userCnt;
+        this.userRating += (afterReview.getUserRating() - beforeReview.getUserRating()) / (double)this.userCnt;
+    }
+
+    public void deleteReview(Review review){
+        this.userActivity = this.userActivity * this.userCnt - review.getUserActivity();
+        this.userDifficulty = this.userDifficulty * this.userCnt - review.getUserDifficulty();
+        this.userFear = this.userFear * this.userCnt - review.getUserFear();
+        this.userRating = this.userRating * this.userCnt - review.getUserRating();
 
         this.userCnt--;
         this.userActivity = this.userActivity / (double)this.userCnt;
