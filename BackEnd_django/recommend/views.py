@@ -12,13 +12,14 @@ import json
 warnings.filterwarnings('ignore')
 pd.set_option('mode.chained_assignment', None)  # 경고 off
 
-conn = pymysql.connect(host='bbkk.site', user='root', password='bbkk1234', port=3306,
-                      db='bbkk', charset='utf8',autocommit=True)
-curs = conn.cursor()
 
 
 @api_view(['POST'])
 def cbfAPI(request):
+    conn = pymysql.connect(host='bbkk.site', user='root', password='bbkk1234', port=3306,
+                           db='bbkk', charset='utf8', autocommit=True)
+    curs = conn.cursor()
+
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
     email = body["email"]
@@ -123,12 +124,18 @@ def cbfAPI(request):
 
     response = HttpResponse('CBF 추천 완료', status=200)
 
+
+    conn.close()
     return response
 
 
 
 @api_view(['POST'])
 def cfAPI(request):
+    conn = pymysql.connect(host='bbkk.site', user='root', password='bbkk1234', port=3306,
+                           db='bbkk', charset='utf8', autocommit=True)
+    curs = conn.cursor()
+
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
     email = body["email"]
@@ -418,6 +425,8 @@ def cfAPI(request):
 
     response = HttpResponse('CF 추천 완료', status=200)
 
+    conn.close()
+
     return response
 
 
@@ -432,7 +441,9 @@ def cfAPI(request):
 '''
 @api_view(['POST'])
 def groupsetAPI(request):
-
+    conn = pymysql.connect(host='bbkk.site', user='root', password='bbkk1234', port=3306,
+                           db='bbkk', charset='utf8', autocommit=True)
+    curs = conn.cursor()
 
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
@@ -735,6 +746,8 @@ def groupsetAPI(request):
             # 추천결과 새로운 df생성, 평균평점(score)으로 정렬
             result = df.iloc[sim_index]
 
+            conn.close()
+
             return result
 
         # 이걸 DB에 저장하면 끄읏
@@ -774,4 +787,6 @@ def groupsetAPI(request):
 
         # HTTP 응답 생성
         response = Response(res, status=200)
+
+        conn.close()
         return response
