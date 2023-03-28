@@ -16,13 +16,13 @@ public class CreateReviewRequest {
     @Schema(description = "리뷰 내용", required = true)
     private String content;
     @Schema(description = "평점(0~5)", required = true)
-    private double rating;
+    private double userRating;
     @Schema(description = "활동성(0~5)", required = true)
-    private double activity;
+    private double userActivity;
     @Schema(description = "공포도(0~5)", required = true)
-    private double fear;
+    private double userFear;
     @Schema(description = "체감 난이도(0~5)", required = true)
-    private double difficulty;
+    private double userDifficulty;
     @Schema(description = "성공 여부(0 or 1)", required = true)
     private int isSuccess;
 //    @Schema(description = "성공 기록(시)", required = false)
