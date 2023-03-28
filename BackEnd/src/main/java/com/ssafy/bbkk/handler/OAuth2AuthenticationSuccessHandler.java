@@ -49,8 +49,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
         User user = principalDetails.getUser();
 
-//        logger.info("[determineTargetUrl] : principalDetails={}", principalDetails);
-
         // localhost 테스트 용 URL 주소
         String localUrl = "http://localhost:5173";
 
@@ -58,7 +56,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String targetUrl = "/oauth";
 
         if(user.getEmail() == null) {
-//            throw new NullPointerException("이메일 동의를 하지 않아 회원가입이 불가능합니다.");
             targetUrl = "/login";
             return UriComponentsBuilder.fromUriString(localUrl+targetUrl)
                     .queryParam("error", "이메일 동의를 하지 않아 회원가입이 불가능합니다.")
@@ -94,17 +91,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             // 타겟 URL로 토큰 정보를 함께 보내줌
             return UriComponentsBuilder.fromUriString(localUrl+targetUrl)
                     .queryParam("accessToken", tokenDto.getAccessToken())
-                    .queryParam("refreshToken", tokenDto.getRefreshToken())
+//                    .queryParam("refreshToken", tokenDto.getRefreshToken())
                     .build().toUriString();
         }
 
         // 추가 정보가 입력되어 있지 않다면 추가 정보 입력창으로 보냄
         return UriComponentsBuilder.fromUriString(localUrl+targetUrl+"/"+user.getId())
                 .build().toUriString();
-
-//        // 추가 정보가 입력되어 있지 않다면 추가 정보 입력창으로 보냄
-//        return UriComponentsBuilder.fromUriString(localUrl+targetUrl)
-//                .queryParam("userId", user.getId())
-//                .build().toUriString();
     }
 }
