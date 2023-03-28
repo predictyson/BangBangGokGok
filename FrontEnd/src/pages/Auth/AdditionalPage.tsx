@@ -52,8 +52,6 @@ export default function AdditionalPage() {
       } catch (err) {
         console.log(err);
       }
-      requestAdditional(userAdditionalInfo);
-      navigate("/login");
     }
   };
 
