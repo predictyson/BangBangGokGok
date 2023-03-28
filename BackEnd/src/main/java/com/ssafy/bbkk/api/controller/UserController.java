@@ -5,6 +5,7 @@ import com.ssafy.bbkk.api.service.EmailService;
 import com.ssafy.bbkk.api.service.OtherService;
 import com.ssafy.bbkk.api.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -50,15 +53,21 @@ public class UserController {
 
     @Operation(summary = "회원 가입", description = "회원 가입을 진행한다")
     @PostMapping("join")
-    public ResponseEntity<Map<String, Object>> join(@RequestBody JoinRequest joinRequest) throws Exception {
-        logger.info("[join] request : joinRequest={}",joinRequest);
+    public ResponseEntity<Map<String, Object>> join(@RequestBody @Valid JoinRequest joinRequest, Errors errors) throws Exception {
+
+        logger.info("[join] request : joinRequest={}", joinRequest);
+
+        // JoinRequest 입력값 유효성 검사
+        for (FieldError error : errors.getFieldErrors())
+            throw new Exception(error.getDefaultMessage());
 
         Map<String, Object> resultMap = new HashMap<>();
+
         int userId = userService.join(joinRequest);
 
         resultMap.put("userId", userId);
 
-        logger.info("[join] response : userId={}",userId);
+        logger.info("[join] response : userId={}", userId);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
