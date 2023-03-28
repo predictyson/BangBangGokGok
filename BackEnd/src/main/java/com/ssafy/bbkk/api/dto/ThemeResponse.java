@@ -48,21 +48,16 @@ public class ThemeResponse {
         this.imgUrl = theme.getImgUrl();
         this.pageUrl = theme.getPageUrl();
         this.synopsis = theme.getSynopsis();
-        this.userRating = theme.getUserRating();
-        this.userActivity = theme.getUserActivity();
-        this.userFear = theme.getUserFear();
-        this.userDifficulty = theme.getUserDifficulty();
+        this.userRating = Math.round(theme.getUserRating()*100)/100.0;
+        this.userActivity = Math.round(theme.getUserActivity()*100)/100.0;
+        this.userFear = Math.round(theme.getUserFear()*100)/100.0;
+        this.userDifficulty = Math.round(theme.getDifficulty()*100)/100.0;
         this.userCnt = theme.getUserCnt() + theme.getReviews().size();
 
         this.genre = theme.getGenreOfThemes()
                 .stream()
                 .map(x -> x.getGenre().getCategory())
                 .collect(Collectors.toList());
-
-//        this.reviews = theme.getReviews()
-//                .stream()
-//                .map(x -> new ReviewOfThemeResponse(x))
-//                .collect(Collectors.toList());
     }
 
 }
