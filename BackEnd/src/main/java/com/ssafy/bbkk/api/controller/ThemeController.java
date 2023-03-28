@@ -1,13 +1,18 @@
 package com.ssafy.bbkk.api.controller;
 
-import com.ssafy.bbkk.api.dto.*;
+import com.ssafy.bbkk.api.dto.AwardThemeBundleResponse;
+import com.ssafy.bbkk.api.dto.PreviewThemeResponse;
+import com.ssafy.bbkk.api.dto.ReviewOfThemeResponse;
+import com.ssafy.bbkk.api.dto.SearchThemeRequest;
+import com.ssafy.bbkk.api.dto.ThemeBundleResponse;
+import com.ssafy.bbkk.api.dto.ThemeResponse;
 import com.ssafy.bbkk.api.service.ThemeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +20,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("theme")
@@ -30,7 +42,7 @@ public class ThemeController {
     @GetMapping("user")
     private ResponseEntity<Map<String, Object>> recommendedTheme(
             @AuthenticationPrincipal User user) throws Exception {
-        logger.info("[recommendedTheme] request : myEmail={}",user.getUsername());
+        logger.info("[recommendedTheme] request : myEmail={}", user.getUsername());
 
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -69,17 +81,23 @@ public class ThemeController {
         resultMap.put("awardThemes", awardThemes);
 
         logger.info("[topTheme] response : hotThemes={}", hotThemes);
-        logger.info("[topTheme] response : topThemes={}",topThemes);
+        logger.info("[topTheme] response : topThemes={}", topThemes);
         logger.info("[topTheme] response : awardThemes={}", awardThemes);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @Operation(summary = "테마 검색", description = "필터를 기반으로 일치하는 테마를 불러온다")
+    @Operation(summary = "테마 검색", description = "검색 필터를 기반으로 일치하는 테마를 불러온다")
     @GetMapping("search")
     private ResponseEntity<Map<String, Object>> searchedTheme(
-            @ModelAttribute SearchThemeRequest searchThemeRequest) throws Exception {
+            @ModelAttribute @Valid SearchThemeRequest searchThemeRequest, Errors errors) throws Exception {
+
         logger.info("[searchedTheme] request : SearchThemeRequest={}", searchThemeRequest);
+
+        // searchThemeRequest 입력값 유효성 검사
+        for (FieldError error : errors.getFieldErrors())
+            throw new Exception(error.getDefaultMessage());
+        searchThemeRequest.validation();
 
         Map<String, Object> resultMap = new HashMap<>();
         List<PreviewThemeResponse> previewThemeResponses = themeService.getSearchThemes(searchThemeRequest);
