@@ -119,7 +119,7 @@ def cbfAPI(request):
     sql = "insert into recommended_theme_of_user(created_date, modified_date, type, theme_id, user_id) values (now(), now(), 1, %s, %s)"
 
     for theme_id in recommend_theme:
-        curs.execute(sql, (theme_id, user_id))
+        curs.execute(sql, (theme_id+1, user_id))
     conn.commit()
 
     response = HttpResponse('CBF 추천 완료', status=200)
@@ -240,7 +240,7 @@ def cfAPI(request):
         sql = "insert into recommended_theme_of_user(created_date, modified_date, type, theme_id, user_id) values (now(), now(), 2, %s, %s)"
 
         for theme_id in recommend_theme:
-                curs.execute(sql, (theme_id, user_id))
+                curs.execute(sql, (theme_id+1, user_id))
         conn.commit()
 
         response = HttpResponse('review 개수 0개 CBF 추천 완료', status=200)
