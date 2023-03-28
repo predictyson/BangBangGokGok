@@ -5,22 +5,35 @@ import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.bbkk.api.dto.*;
+import com.ssafy.bbkk.api.dto.AwardThemeBundleResponse;
+import com.ssafy.bbkk.api.dto.PreviewThemeResponse;
+import com.ssafy.bbkk.api.dto.ReviewOfThemeResponse;
+import com.ssafy.bbkk.api.dto.SearchThemeRequest;
+import com.ssafy.bbkk.api.dto.ThemeBundleResponse;
+import com.ssafy.bbkk.api.dto.ThemeCountResponse;
+import com.ssafy.bbkk.api.dto.ThemeResponse;
 import com.ssafy.bbkk.db.entity.QGenreOfTheme;
 import com.ssafy.bbkk.db.entity.QTheme;
 import com.ssafy.bbkk.db.entity.Region;
 import com.ssafy.bbkk.db.entity.Theme;
 import com.ssafy.bbkk.db.entity.User;
-import com.ssafy.bbkk.db.repository.*;
-
+import com.ssafy.bbkk.db.repository.AwardThemeRepository;
+import com.ssafy.bbkk.db.repository.InterestedThemeOfUserRepository;
+import com.ssafy.bbkk.db.repository.RecommendedThemeOfUserRepository;
+import com.ssafy.bbkk.db.repository.RegionRepository;
+import com.ssafy.bbkk.db.repository.ReviewRepository;
+import com.ssafy.bbkk.db.repository.ThemeRepository;
+import com.ssafy.bbkk.db.repository.UserRepository;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -192,7 +205,7 @@ public class ThemeServiceImpl implements ThemeService {
         List<PreviewThemeResponse> CFList = new ArrayList<>();
         int cnt = recommendedThemeOfUserRepository.countByUserId(user.getId());
 
-        if(cnt > 0){
+        if (cnt > 0) {
             result = new ArrayList<>();
             // 유저의 추천 테마 목록 조회
             recommendedThemeOfUserRepository.findByUserId(user.getId())
@@ -222,7 +235,7 @@ public class ThemeServiceImpl implements ThemeService {
         Theme topTheme = themeRepository.findFirstByOrderByIdDesc()
                 .orElseThrow(() -> new Exception("해당 테마를 찾을 수 없습니다."));
         int themeArraySize = topTheme.getId();
-        themeIds = new int[themeArraySize+1];
+        themeIds = new int[themeArraySize + 1];
 
         ////////////////////////////////////////////////////////////////////////////////
         // 리뷰 개수 체크
@@ -240,30 +253,30 @@ public class ThemeServiceImpl implements ThemeService {
                 });
 
         // 개수 체크된 배열을 리스트로 변경
-        List<ThemeCountResponse> list =  new ArrayList<>();
-        for(int i=0;i<=themeArraySize;i++){
-            if(themeIds[i] > 0){
-                list.add(new ThemeCountResponse(i,themeIds[i]));
+        List<ThemeCountResponse> list = new ArrayList<>();
+        for (int i = 0; i <= themeArraySize; i++) {
+            if (themeIds[i] > 0) {
+                list.add(new ThemeCountResponse(i, themeIds[i]));
             }
         }
 
         // 핫 한 테마의 개수가 적을 경우
-        if(list.size() < 9){
+        if (list.size() < 9) {
             // userCnt가 높은 순으로 반환
             result = themeRepository.findTop9ByOrderByUserCntDesc()
                     .stream()
-                    .map(x->new PreviewThemeResponse(x))
+                    .map(x -> new PreviewThemeResponse(x))
                     .collect(Collectors.toList());
         }
         // 핫 한 테마의 개수가 많을 경우
-        else{
+        else {
             // 개수 순으로 내림차순 정렬
-            Collections.sort(list,(o1, o2) -> {
+            Collections.sort(list, (o1, o2) -> {
                 return o2.getCount() - o1.getCount();
             });
 
             result = new ArrayList<>();
-            for (int i = 0; i<9; i++){
+            for (int i = 0; i < 9; i++) {
                 result.add(
                         new PreviewThemeResponse(themeRepository.findById(list.get(i).getThemeId())
                                 .orElseThrow())
@@ -384,11 +397,11 @@ public class ThemeServiceImpl implements ThemeService {
 
         int page = searchThemeRequest.getPage(); // 몇 번째 페이지의 정보를 불러올 것인지
         int size = 14; // 한 페이지에 보여줄 정보의 수
-        List<Theme> target = jpaQueryFactory.selectFrom(qTheme)
+        List<Theme> target = jpaQueryFactory.selectFrom(qTheme).distinct()
                 .join(qTheme.genreOfThemes, qGenreOfTheme)
                 .where(builder)
                 .orderBy(new OrderSpecifier<>(order, sort))
-                .offset((page) * size)
+                .offset((page - 1) * size)
                 .limit(size)
                 .fetch();
 
