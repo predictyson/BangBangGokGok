@@ -31,14 +31,14 @@ public class GroupSetController {
     private ResponseEntity<Map<String, Object>> getUser(
             @Parameter(description = "입력값", required = true) @PathVariable String emailOrNickname) throws Exception{
 
-        logger.info("[getUserInterest] request : emailOrNickname={}", emailOrNickname);
+        logger.info("[getUser] request : emailOrNickname={}", emailOrNickname);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         List<PreviewUserResponse> previewUserResponses = groupSetService.getUserListByEmailOrNickname(emailOrNickname);
         resultMap.put("users",previewUserResponses);
 
-        logger.info("[getUserInterest] response : users={}", previewUserResponses);
+        logger.info("[getUser] response : users={}", previewUserResponses);
 
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
     }
