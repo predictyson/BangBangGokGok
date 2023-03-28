@@ -1,27 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "styled-components";
 
-export default function SearchInput() {
-  const [searchText, setSearchText] = useState("");
+interface SearchInputProps {
+  searchWord: string;
+  handleInputChange: (input: string) => void;
+  handleSubmit: () => void;
+}
 
+export default function SearchInput(props: SearchInputProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(event.target.value);
+    props.handleInputChange(event.target.value);
   };
 
-  const handleSubmit = () => {
-    console.log(searchText);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    props.handleSubmit();
   };
 
   return (
-    <Container>
-      <InputContainer>
-        <Input onChange={handleChange} placeholder="검색어를 입력하세요." />
-      </InputContainer>
-      <SearchButton onClick={handleSubmit}>
-        <SearchIcon fontSize="large" color="warning" />
-      </SearchButton>
-    </Container>
+    <form onSubmit={handleSubmit}>
+      <Container>
+        <InputContainer>
+          <Input
+            onChange={handleChange}
+            value={props.searchWord}
+            placeholder="검색어를 입력하세요."
+          />
+        </InputContainer>
+        <SearchButton type="submit">
+          <SearchIcon fontSize="large" color="warning" />
+        </SearchButton>
+      </Container>
+    </form>
   );
 }
 
@@ -38,14 +49,12 @@ const Container = styled.div`
 
 const InputContainer = styled.div`
   width: 85%;
-  /* height: 100%; */
   cursor: pointer;
 `;
 
 const Input = styled.input`
   width: 100%;
   height: 100%;
-  /* height: 5rem; */
   padding: 0 1rem;
   font-size: 2rem;
   border: none;

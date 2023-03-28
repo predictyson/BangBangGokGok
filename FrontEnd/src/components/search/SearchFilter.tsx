@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useMediaQuery } from "@mui/material";
@@ -10,44 +10,76 @@ import TimeForm from "./filter/TimeForm";
 import TuneIcon from "@mui/icons-material/Tune";
 import { styled as mstyled } from "@mui/material/styles";
 import { theme } from "@/styles/theme";
-import { useState } from "react";
 import styled from "styled-components";
+import { FilterValue, ReducerAction } from "types/search";
 
-export default function SearchFilter() {
-  const [filterButtonState, setFilterButtonState] = useState(false);
+interface SearchFilterProps {
+  filterValue: FilterValue;
+  handleFilterValueChange: (action: ReducerAction) => void;
+  dumpFilterGenreCategoryInputValue: string;
+  handleDumpFilterGenreCategoryInputValueChange: (
+    genreCategoryInputValue: string
+  ) => void;
+}
+
+export default function SearchFilter(props: SearchFilterProps) {
+  const [filterOpenState, setFilterOpenState] = useState<boolean>(false);
   const openFilter = () => {
-    setFilterButtonState(true);
+    setFilterOpenState(true);
   };
   const closeFilter = () => {
-    setFilterButtonState(false);
+    setFilterOpenState(false);
   };
-  // 필터 적용 API를 사용
-  const setFilter = () => {
-    setFilterButtonState(false);
+
+  // 이 함수는 필터 적용 버튼을 눌렀을 때 실행되어야 함
+  // 필터 결과를 적용시켜서 검색 API를 보내는 역할을 한다.
+  const requestSearchWithFilter = () => {
+    closeFilter();
   };
 
   const isLabtop = useMediaQuery("(max-height: 800px)");
 
   return (
     <>
-      <FilterButton onClick={filterButtonState ? closeFilter : openFilter}>
+      <FilterButton onClick={filterOpenState ? closeFilter : openFilter}>
         <TuneIcon fontSize="inherit" />
         <p>필터</p>
       </FilterButton>
       <Modal
-        open={filterButtonState}
-        onClose={setFilterButtonState}
+        open={filterOpenState}
+        onClose={closeFilter}
         sx={isLabtop ? ModalStyleOnLabtop768p : ModalStyleOnDesktop1080p}
         hideBackdrop={true}
       >
         <FilterContainer>
-          <LocationForm />
-          <GenreForm />
-          <DifficultyForm />
-          <PeopleForm />
-          <TimeForm />
+          <LocationForm
+            filterValue={props.filterValue}
+            handleFilterValueChange={props.handleFilterValueChange}
+          />
+          <GenreForm
+            filterValue={props.filterValue}
+            handleFilterValueChange={props.handleFilterValueChange}
+            dumpFilterGenreCategoryInputValue={
+              props.dumpFilterGenreCategoryInputValue
+            }
+            handleDumpFilterGenreCategoryInputValueChange={
+              props.handleDumpFilterGenreCategoryInputValueChange
+            }
+          />
+          <DifficultyForm
+            filterValue={props.filterValue}
+            handleFilterValueChange={props.handleFilterValueChange}
+          />
+          <PeopleForm
+            filterValue={props.filterValue}
+            handleFilterValueChange={props.handleFilterValueChange}
+          />
+          <TimeForm
+            filterValue={props.filterValue}
+            handleFilterValueChange={props.handleFilterValueChange}
+          />
           <ButtonContainer>
-            <OkButton onClick={setFilter}>필터 적용</OkButton>
+            <OkButton onClick={requestSearchWithFilter}>필터 적용</OkButton>
             <CancelButton onClick={closeFilter}>취소</CancelButton>
           </ButtonContainer>
         </FilterContainer>

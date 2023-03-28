@@ -4,9 +4,20 @@ import InputLabel from "@mui/material/InputLabel";
 import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
 import { theme } from "@/styles/theme";
+import { FilterValue, ReducerAction, DifficultyOption } from "types/search";
 
-export default function DifficultyForm() {
-  const [value, setValue] = useState([1, 5]);
+interface DifficultyFormProps {
+  filterValue: FilterValue;
+  handleFilterValueChange: (action: ReducerAction) => void;
+}
+
+export default function DifficultyForm(props: DifficultyFormProps) {
+  const [sliderValue, setValue] = useState([
+    props.filterValue.difficultyS,
+    props.filterValue.difficultyE,
+  ]);
+
+  // 슬라이더 이동 시 실행되는 콜백함수
   const handleChange = (
     event: Event,
     newValue: number | number[],
@@ -17,10 +28,32 @@ export default function DifficultyForm() {
     }
 
     if (activeThumb === 0) {
-      setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
+      setValue([
+        Math.min(newValue[0], sliderValue[1] - minDistance) as DifficultyOption,
+        sliderValue[1],
+      ]);
     } else {
-      setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
+      setValue([
+        sliderValue[0],
+        Math.max(newValue[1], sliderValue[0] + minDistance) as DifficultyOption,
+      ]);
     }
+
+    // filterValue dispatch
+    props.handleFilterValueChange({
+      type: "difficultyS",
+      newValue: {
+        ...props.filterValue,
+        difficultyS: newValue[0] as DifficultyOption,
+      },
+    });
+    props.handleFilterValueChange({
+      type: "difficultyE",
+      newValue: {
+        ...props.filterValue,
+        difficultyE: newValue[1] as DifficultyOption,
+      },
+    });
   };
 
   return (
@@ -34,14 +67,13 @@ export default function DifficultyForm() {
         <div style={{ width: "100%" }}>
           <CustomSlider
             id="difficulty-slider"
-            // color="info"
             size="small"
             min={1}
             max={5}
             step={0.5}
             marks
             valueLabelDisplay="auto"
-            value={value}
+            value={sliderValue}
             onChange={handleChange}
             disableSwap
           />

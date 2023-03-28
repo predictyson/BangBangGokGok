@@ -1,15 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
+import { getGenres } from "@/api/others";
+import { FilterValue, ReducerAction, GenreResponse } from "types/search";
 
-export default function GenreForm() {
-  const [genre, setGenre] = useState("전체");
+interface GenreFormProps {
+  filterValue: FilterValue;
+  handleFilterValueChange: (action: ReducerAction) => void;
+  dumpFilterGenreCategoryInputValue: string;
+  handleDumpFilterGenreCategoryInputValueChange: (
+    genreCategoryInputValue: string
+  ) => void;
+}
+
+export default function GenreForm(props: GenreFormProps) {
+  const [genresOptions, setGenresOptions] = useState<GenreResponse[]>([
+    { genreId: 0, category: "전체" },
+  ]);
+
+  const [genreInputValue, setGenreInputValue] = useState(
+    props.dumpFilterGenreCategoryInputValue
+  );
+
   const handleGenreChange = (event: SelectChangeEvent<unknown>) => {
-    setGenre(event.target.value as string);
+    // 장르명 변경
+    setGenreInputValue(event.target.value as string);
+    // 덤프값 변경(덤프값은 초기렌더링시에 이전 렌더링에서 사용했던 값을 그대로 가져오는 역할을 함)
+    props.handleDumpFilterGenreCategoryInputValueChange(
+      event.target.value as string
+    );
+
+    // 장르명 -> genreId로 변환
+    const genreId = genresOptions.find(
+      (genre) => genre.category === event.target.value
+    )?.genreId;
+
+    // 조부모 컴포넌트(SearchPage)의 filterValue를 변경
+    props.handleFilterValueChange({
+      type: "genreId",
+      newValue: { ...props.filterValue, genreId: genreId as number },
+    });
   };
+
+  useEffect(() => {
+    // 장르 옵션 불러오기
+    const requestGenres = async () => {
+      const response = await getGenres();
+      setGenresOptions([
+        { genreId: 0, category: "전체" },
+        ...response.data.genres,
+      ]); // prev => [prev, ...response.data.genres] 로 짜고 싶은데 안됨
+
+      // 장르id로 장르이름 찾기
+      // setGenreInputValue(
+      //   genresOptions.find(
+      //     (genre) => genre.genreId === props.filterValue.genreId
+      //   )?.category as string
+      // );
+    };
+    requestGenres();
+  }, []);
+
+  // 장르id로 장르이름 찾기
+  // setGenreInputValue(
+  //   genresOptions.find(
+  //     (genre) => genre.genreId === props.filterValue.genreId
+  //   )?.category as string
+  // );
 
   return (
     <Wrapper>
@@ -19,15 +79,15 @@ export default function GenreForm() {
       <div style={{ flexBasis: "85%" }}>
         <CustomSelect
           labelId="genre-select"
-          value={genre}
+          value={genreInputValue}
           color="warning"
           onChange={handleGenreChange}
         >
-          <MenuItem value="전체">전체</MenuItem>
-          <MenuItem value="공포">공포</MenuItem>
-          <MenuItem value="추리">추리</MenuItem>
-          <MenuItem value="스릴러">스릴러</MenuItem>
-          <MenuItem value="판타지">판타지</MenuItem>
+          {genresOptions.map((genre) => (
+            <MenuItem value={genre.category} key={genre.genreId}>
+              {genre.category}
+            </MenuItem>
+          ))}
         </CustomSelect>
       </div>
     </Wrapper>

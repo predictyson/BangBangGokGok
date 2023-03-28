@@ -4,11 +4,25 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
+import { FilterValue, ReducerAction, TimeOption } from "types/search";
 
-export default function TimeForm() {
-  const [time, setTime] = useState("0");
+interface TimeFormProps {
+  filterValue: FilterValue;
+  handleFilterValueChange: (action: ReducerAction) => void;
+}
+export default function TimeForm(props: TimeFormProps) {
+  const [time, setTime] = useState(props.filterValue.time);
   const handleTimeChange = (event: SelectChangeEvent<unknown>) => {
-    setTime(event.target.value as string);
+    setTime(event.target.value as TimeOption);
+
+    // filterValue dispatch
+    props.handleFilterValueChange({
+      type: "time",
+      newValue: {
+        ...props.filterValue,
+        time: event.target.value as TimeOption,
+      },
+    });
   };
 
   return (
@@ -23,10 +37,9 @@ export default function TimeForm() {
           color="warning"
           onChange={handleTimeChange}
         >
-          <MenuItem value="0">전체</MenuItem>
-          <MenuItem value="1">60분 이내</MenuItem>
-          <MenuItem value="2">60분 ~ 90분</MenuItem>
-          <MenuItem value="3">90분 이상</MenuItem>
+          <MenuItem value={0}>전체</MenuItem>
+          <MenuItem value={1}>60분 이하</MenuItem>
+          <MenuItem value={2}>60분 초과</MenuItem>
         </CustomSelect>
       </div>
     </Wrapper>
