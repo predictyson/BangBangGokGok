@@ -149,7 +149,7 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
         boolean isExisted = false;
 
-        if(userService.existsByEmail(email)){
+        if(userService.existsByEmailNotSocial(email)){
             isExisted = true;
             emailService.sendMessage(email);
         }

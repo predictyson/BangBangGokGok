@@ -26,6 +26,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -182,6 +184,18 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
         // 유저를 Dto에 감싸기
         result = new LoginResponse(user);
+        return result;
+    }
+
+    @Override
+    public boolean existsByEmailNotSocial(String email) throws Exception{
+        boolean result = false;
+        // 유저 조회
+        Optional<User> user = userRepository.findByEmail(email);
+        // 유저가 존재하고 소셜 로그인이 아니라면
+        if(user.isPresent() && user.get().getProvider() != null && user.get().getProviderId() != null){
+            result = true;
+        }
         return result;
     }
 
