@@ -46,7 +46,6 @@ export default function UserListSection({
       const {
         data: { users },
       } = await requestUser(event.target.value);
-      console.log(users);
       setSearchResults(users);
       // console.log("searchResults");
       // console.log(searchResults);

@@ -51,7 +51,10 @@ export default function GroupSetPage() {
             handleDeleteUser={handleDeleteUser}
             handleAddUser={handleAddUser}
           />
-          <ThemeRecSection userList={userList} />
+          <ThemeRecSection
+            userList={userList}
+            handleToastClick={handleToastClick}
+          />
         </Container>
         <Toast />
       </RootContainer>

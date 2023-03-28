@@ -8,6 +8,9 @@ export const requestUser = async (keyword: string) => {
 };
 
 // 그룹 테마 추천
-export const themeRec = async (userIds: number[]) => {
-  return axios.post(`${DJANGO_URL}/groupset`, userIds);
+export const themeRec = async (users: number[]) => {
+  const data = {
+    userIds: users,
+  };
+  return axios.post(`${DJANGO_URL}/groupset`, data);
 };
