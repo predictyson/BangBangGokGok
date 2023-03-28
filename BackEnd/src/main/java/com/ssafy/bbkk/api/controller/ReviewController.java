@@ -61,12 +61,15 @@ public class ReviewController {
 
     @Operation(summary = "테마의 리뷰를 수정", description = "해당 테마에 작성된 리뷰를 수정한다")
     @PutMapping
-    private ResponseEntity<Map<String, Object>> setReview(
-            @AuthenticationPrincipal User user,
-            @RequestBody UpdateReviewRequest updateReviewRequest) throws Exception {
-
+    private ResponseEntity<Map<String, Object>> setReview(@AuthenticationPrincipal User user,
+            @RequestBody @Valid UpdateReviewRequest updateReviewRequest, Errors errors) throws Exception {
         logger.info("[setReview] request : myEmail={}", user.getUsername());
         logger.info("[setReview] request : updateReviewRequest={}", updateReviewRequest);
+
+        // UpdateReviewRequest 입력값 유효성 검사
+        for (FieldError error : errors.getFieldErrors())
+            throw new Exception(error.getDefaultMessage());
+        updateReviewRequest.validation();
 
         Map<String, Object> resultMap = new HashMap<>();
         ReviewOfUserResponse reviewOfUserResponse = reviewService.setReview(user.getUsername(), updateReviewRequest);
