@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import styled from "styled-components";
@@ -48,28 +48,18 @@ export default function WriteReview({
     await setContent(event.target.value);
     console.log(content);
   };
-  const handleValueChange = async (
-    event: React.MouseEvent<HTMLElement>,
-    newValue: string | null
-  ) => {
-    console.log("HANDLE SUCCESSS CHANGE");
-    if (newValue !== null) {
-      await setIsSuccess(newValue);
-    }
-    console.log(isSuccess);
-  };
-  const handleRatingChange = async (
-    e: React.SyntheticEvent<Element, Event>,
-    value: number | null
-  ) => {
-    console.log("HANDLE RATING CHANGE");
-    const { name } = e.target as HTMLButtonElement;
-    await setRate((prevData) => ({
-      ...prevData,
-      [name]: value ?? 0,
-    }));
-    console.log(rate.rating);
-  };
+  const handleRatingChange = useCallback(
+    async (e: React.SyntheticEvent<Element, Event>, value: number | null) => {
+      console.log("HANDLE RATING CHANGE");
+      const { name } = e.target as HTMLButtonElement;
+      await setRate((prevData) => ({
+        ...prevData,
+        [name]: value ?? 0,
+      }));
+      console.log(rate.rating);
+    },
+    [setRate, rate.rating]
+  );
 
   const sendReviewData = async () => {
     try {
@@ -143,7 +133,7 @@ export default function WriteReview({
               <ToggleButtonGroup
                 value={isSuccess}
                 exclusive
-                onChange={handleValueChange}
+                onChange={handleRatingChange}
               >
                 <CustomToggleButton value="success">성공</CustomToggleButton>
                 <CustomToggleButton value="fail">실패</CustomToggleButton>
@@ -181,7 +171,11 @@ export default function WriteReview({
               ))}
             </RatingWrapper>
             <form>
-              <CustomText value={content} onChange={handleTextareaChange} />
+              <CustomText
+                value={content}
+                onChange={handleTextareaChange}
+                maxLength={200}
+              />
             </form>
           </ReviewBox>
           <ButtonWrapper>
