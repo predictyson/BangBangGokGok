@@ -314,7 +314,7 @@ const AwardThemesData: IAwardSlider = {
 };
 const RecommendThemesData: ISliderData[] = [
   {
-    label: "GG님을 위한 방탈출 테마 추천",
+    label: "님을 위한 방탈출 테마 추천",
     themes: [
       {
         themeId: 1,
@@ -367,7 +367,7 @@ const RecommendThemesData: ISliderData[] = [
     ],
   },
   {
-    label: "GG님과 비슷한 유저들이 방문한 테마 추천",
+    label: "님과 비슷한 유저들이 방문한 테마 추천",
     themes: [
       {
         themeId: 1,

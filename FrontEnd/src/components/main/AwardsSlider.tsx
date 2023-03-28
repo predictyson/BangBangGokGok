@@ -8,8 +8,10 @@ import "slick-carousel/slick/slick-theme.css";
 import Modal from "./Modal";
 import { IAwardSlider, IAwardTheme } from "types/slider";
 import { style } from "@mui/system";
-import { IDetailData } from "types/detail";
+import { IDetailData, IReviewData } from "types/detail";
 import { getDetail } from "@/api/theme";
+import { getReviews } from "@/api/review";
+import { getIsLiked } from "@/api/likes";
 interface IProps {
   awardData: IAwardSlider;
 }
@@ -19,17 +21,44 @@ interface ArrowProps extends CustomArrowProps {
 
 export default function AwardsSlider(awardData: IProps) {
   const [open, setOpen] = useState(false);
+  const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
   const [themeId, setThemeId] = useState(0);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [data, setData] = useState<IDetailData>(initData);
-  const handleOpen = (themeId: number) => {
-    setThemeId(themeId);
-    setOpen(true);
+  const handleOpen = async (themeId: number) => {
+    await setThemeId(themeId);
+    await requestReviews(themeId);
+    // await requestDetailData(themeId);
+    await requestIsLiked(themeId);
+    await setOpen(true);
     console.log("handleOpen Award : " + themeId);
   };
   const handleClose = () => {
     setOpen(false);
   };
 
+  const requestIsLiked = async (themeId: number) => {
+    if (themeId !== 0) {
+      try {
+        const res = await getIsLiked(themeId);
+        setIsLiked(res.data.isInterest);
+        console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const requestReviews = async (themeId: number) => {
+    if (themeId !== 0) {
+      try {
+        const res = await getReviews(themeId);
+        themeId !== 0 && setReviews(res.data.reviews);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
   const CustomPrevArrow: FC<ArrowProps> = ({ className, onClick }) => {
     return (
       <div className={className} onClick={onClick}>
@@ -119,10 +148,12 @@ export default function AwardsSlider(awardData: IProps) {
       </Slider>
       {themeId !== undefined && (
         <Modal
+          reviews={reviews}
           open={open}
           onClose={handleClose}
           themeId={themeId}
           data={data}
+          isLiked={isLiked}
         />
       )}
     </Container>
@@ -291,3 +322,32 @@ const initData: IDetailData = {
   userCnt: 8, // 평가 인원
   isInterested: false,
 };
+
+const REVIEWDUMMY: IReviewData[] = [
+  {
+    userId: 1,
+    nickname: "",
+    reviewId: 1,
+    content: "너무너무 재밌어요 눈물나요",
+    userRating: 4.2,
+    userActivity: 3.3,
+    userFear: 4.4,
+    userDifficulty: 2.2,
+    createTime: "2023-03-13",
+    isSuccess: 0, // 1: 성공 0 : 실파
+    record: "0:12:50", // 분.초
+  },
+  {
+    userId: 1,
+    nickname: "",
+    reviewId: 1,
+    content: "너무너무 재밌어요 눈물나요",
+    userRating: 4.2,
+    userActivity: 3.3,
+    userFear: 4.4,
+    userDifficulty: 2.2,
+    createTime: "2023-03-13",
+    isSuccess: 1, // 1: 성공 0 : 실파
+    record: "0:12:50", // 분.초
+  },
+];

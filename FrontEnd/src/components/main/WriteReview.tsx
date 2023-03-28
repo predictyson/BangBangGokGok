@@ -9,7 +9,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import { styled as mstyled } from "@mui/material/styles";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
-import { IDetailData, IPostData } from "types/detail";
+import { IDetailData, IPostData, IReviewData } from "types/detail";
 import { postReview } from "@/api/review";
 interface IRatingData {
   rating: number;
@@ -41,48 +41,60 @@ export default function WriteReview({
 
   const [postdata, setPostdata] = useState<IPostData>(initData);
 
-  const handleTextareaChange = (
+  const handleTextareaChange = async (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setContent(event.target.value);
+    console.log("HANDLE TEXT CHANGE");
+    await setContent(event.target.value);
     console.log(content);
   };
-  const handleValueChange = (
+  const handleValueChange = async (
     event: React.MouseEvent<HTMLElement>,
     newValue: string | null
   ) => {
+    console.log("HANDLE SUCCESSS CHANGE");
     if (newValue !== null) {
-      setIsSuccess(newValue);
+      await setIsSuccess(newValue);
     }
+    console.log(isSuccess);
   };
-  const handleRatingChange = (
+  const handleRatingChange = async (
     e: React.SyntheticEvent<Element, Event>,
     value: number | null
   ) => {
+    console.log("HANDLE RATING CHANGE");
     const { name } = e.target as HTMLButtonElement;
-    setRate((prevData) => ({
+    await setRate((prevData) => ({
       ...prevData,
       [name]: value ?? 0,
     }));
+    console.log(rate.rating);
+  };
+
+  const sendReviewData = async () => {
+    try {
+      const newPostData = {
+        themeId: themeId,
+        content: content,
+        userRating: rate.rating,
+        userActivity: rate.activity,
+        userFear: rate.fear,
+        userDifficulty: rate.difficulty,
+        isSuccess: isSuccess === "true" ? 1 : 0,
+      };
+      setPostdata(newPostData);
+      const res = await postReview(newPostData);
+      console.log(res.data);
+      setPostdata(initData);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    setPostdata({
-      themeId: 1,
-      content: content,
-      userRating: rate.rating,
-      userActivity: rate.activity,
-      userFear: rate.fear,
-      userDifficulty: rate.difficulty,
-      isSuccess: isSuccess === "true" ? 1 : 0,
-    });
-    try {
-      const res = await postReview(postdata);
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
+    console.log(postdata);
+    await sendReviewData();
     handleClose();
   };
 

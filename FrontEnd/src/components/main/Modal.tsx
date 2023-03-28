@@ -19,56 +19,70 @@ interface IProps {
   onClose: () => void;
   themeId: number;
   data: IDetailData;
+  reviews: IReviewData[];
+  isLiked: boolean;
 }
 
-export default function DetailModal({ open, onClose, themeId, data }: IProps) {
+export default function DetailModal({
+  open,
+  onClose,
+  themeId,
+  data,
+  reviews,
+  isLiked,
+}: IProps) {
   const [childOpen, setchildOpen] = React.useState(false);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-  const [reviews, setReviews] = useState(REVIEWDUMMY);
+  // const [isLiked, setIsLiked] = useState<boolean>(false);
+  // const [reviews, setReviews] = useState(REVIEWDUMMY);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
-  const requestReviews = async (themeId: number) => {
-    if (themeId !== 0) {
-      try {
-        const res = await getReviews(themeId);
-        themeId !== 0 && setReviews(res.data.reviews);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-  const requestIsLiked = async (themeId: number) => {
-    try {
-      const res = await getIsLiked(themeId);
-      setIsLiked(res.data.isInterest);
-      console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const requestReviews = async (themeId: number) => {
+  //   if (themeId !== 0) {
+  //     try {
+  //       const res = await getReviews(themeId);
+  //       themeId !== 0 && setReviews(res.data.reviews);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
+  // const requestIsLiked = async (themeId: number) => {
+  //   if (themeId !== 0) {
+  //     try {
+  //       const res = await getIsLiked(themeId);
+  //       setIsLiked(res.data.isInterest);
+  //       console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
 
-  const postLikes = async (themeId: number) => {
-    try {
-      await postInterest(themeId);
-      setIsLiked(true);
-      console.log("POST SUCCESS");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const postLikes = async (themeId: number) => {
+  //   if (themeId !== 0) {
+  //     try {
+  //       await postInterest(themeId);
+  //       setIsLiked(true);
+  //       console.log("POST SUCCESS");
+  //     } catch (err) {
+  //       console.log(err);
+  //       console.log("POST FAILED");
+  //     }
+  //   }
+  // };
 
-  const deleteLikes = async (themeId: number) => {
-    try {
-      await deleteInterest(themeId);
-      setIsLiked(false);
-      console.log("DELETE SUCCESS");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const deleteLikes = async (themeId: number) => {
+  //   try {
+  //     await deleteInterest(themeId);
+  //     setIsLiked(false);
+  //     console.log("DELETE SUCCESS");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   useEffect(() => {
-    isLogin && requestIsLiked(themeId);
-    requestReviews(themeId);
-  }, [themeId]);
+    // isLogin && requestIsLiked(themeId);
+    // requestReviews(themeId);
+  }, []);
 
   const handleClick = async (
     type: IToastProps["type"],
@@ -78,7 +92,7 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
     // setIsLiked((prev) => !prev);
     try {
       console.log(isLiked);
-      !isLiked ? postLikes(themeId) : deleteLikes(themeId);
+      // !isLiked ? postLikes(themeId) : deleteLikes(themeId);
     } catch (err) {
       console.log(err);
     }
