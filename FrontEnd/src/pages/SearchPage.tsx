@@ -60,7 +60,6 @@ export default function SearchPage() {
   // SearchResult 관련 변수
   const [results, setResults] =
     useState<PreviewThemeResponse[]>(INITIAL_RESULT_DATA);
-  console.log(results);
   // SearchInput 관련 변수, 함수
   const [searchWord, setInputValue] = useState<string>("");
   const handleInputChange = (newInput: string) => {
@@ -74,12 +73,12 @@ export default function SearchPage() {
     const response = await getSearchThemes({
       word: searchWord,
       ...filterValue,
-      pages: page,
+      page: page,
       sortby: sortOption,
       orderby: sortOrder,
     });
-    setPage((prev) => prev + 1);
     setResults(response.data.themes);
+    setPage((prev) => prev + 1);
   };
 
   // SearchFilter 관련 변수, 함수

@@ -7,7 +7,7 @@ export interface SearchParams {
   difficultyE: DifficultyOption;
   people: PeopleOption;
   time: TimeOption;
-  pages: number;
+  page: number;
   sortby: SortOption;
   orderby: SortOrder;
 }

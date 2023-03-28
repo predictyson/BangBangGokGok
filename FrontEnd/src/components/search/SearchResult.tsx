@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { PreviewThemeResponse } from "types/search";
 
@@ -7,15 +7,6 @@ interface SearchResultProps {
 }
 
 export default function SearchResult(props: SearchResultProps) {
-  const [searchResults, setSearchResults] = useState<PreviewThemeResponse[]>([
-    ...props.results,
-  ]);
-  // const [searchResults, setSearchResults] = useState<PreviewThemeResponse[]>(
-  //   props.results
-  // );
-
-  console.log(searchResults);
-
   return (
     <Wrapper>
       <Container>
