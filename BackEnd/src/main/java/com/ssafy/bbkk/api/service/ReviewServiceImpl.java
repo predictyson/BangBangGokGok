@@ -49,11 +49,19 @@ public class ReviewServiceImpl implements ReviewService {
         // 리뷰 id를 통해 리뷰 찾아오기
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new Exception("해당 리뷰를 찾을 수 없습니다."));
+        // 리뷰의 테마 찾아오기
+        int themeId = review.getTheme().getId();
+        Theme theme = themeRepository.findById(themeId)
+                .orElseThrow(() -> new Exception("해당 테마를 찾을 수 없습니다."));
         // 해당 유저가 작성한 리뷰인지 확인하기
         if (user.getId() != review.getUser().getId())
             throw new Exception("해당 리뷰를 삭제할 권한이 없습니다.");
         // 리뷰 삭제하기
         reviewRepository.deleteById(reviewId);
+
+        // 테마의 평점 반영하기
+        theme.deleteReview(review.getUserActivity(), review.getUserDifficulty(), review.getUserFear(), review.getUserRating());
+        themeRepository.save(theme);
     }
 
     @Override
