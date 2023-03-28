@@ -59,11 +59,6 @@ public class Review extends BaseTimeEntity {
         this.userFear = createReviewRequest.getFear();
         this.userDifficulty = createReviewRequest.getDifficulty();
         this.isSuccess = createReviewRequest.getIsSuccess();
-//        if(createReviewRequest.getIsSuccess() == 1){
-//            this.record = LocalTime.of(createReviewRequest.getRecordHH(),
-//                                        createReviewRequest.getRecordMM(),
-//                                        createReviewRequest.getRecordSS());
-//        }
 
         this.user = user;
         this.theme = theme;
@@ -76,12 +71,6 @@ public class Review extends BaseTimeEntity {
         this.userFear = updateReviewRequest.getFear();
         this.userDifficulty = updateReviewRequest.getDifficulty();
         this.isSuccess = updateReviewRequest.getIsSuccess();
-
-//        if(updateReviewRequest.getIsSuccess() == 1){
-//            this.record = LocalTime.of(updateReviewRequest.getRecordHH(),
-//                    updateReviewRequest.getRecordMM(),
-//                    updateReviewRequest.getRecordSS());
-//        }
     }
 
 }

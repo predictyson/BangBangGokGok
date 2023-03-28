@@ -35,7 +35,10 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() -> new Exception("해당 테마를 찾을 수 없습니다."));
         // 리뷰 생성
         Review review = new Review(user, theme, createReviewRequest);
-        reviewRepository.save(review);
+        review = reviewRepository.save(review);
+        // 테마의 평점 반영하기
+        theme.addReview(review.getUserActivity(), review.getUserDifficulty(), review.getUserFear(), review.getUserRating());
+        themeRepository.save(theme);
     }
 
     @Override

@@ -66,4 +66,17 @@ public class Theme extends BaseTimeEntity{
 
     @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>(); // 테마의 리뷰 목록
+
+    public void addReview(double userActivity, double userDifficulty, double userFear, double userRating){
+        double activity = this.userActivity * this.userCnt + userActivity;
+        double difficulty = this.userDifficulty * this.userCnt + userDifficulty;
+        double fear = this.userFear * this.userCnt + userFear;
+        double rating = this.userRating * this.userCnt + userRating;
+
+        this.userCnt++;
+        this.userActivity = activity / (double)this.userCnt;
+        this.userDifficulty = difficulty / (double)this.userCnt;
+        this.userFear = fear / (double)this.userCnt;
+        this.userRating = rating / (double)this.userCnt;
+    }
 }
