@@ -33,7 +33,6 @@ public class OtherController {
         logger.info("[getSelectList] request : ");
 
         Map<String, Object> resultMap = new HashMap<>();
-
         List<GenreResponse> genres = otherService.getGenreList();
 
         // ?, 기타 제외
@@ -55,8 +54,8 @@ public class OtherController {
         logger.info("[getRegionSmallList] request : regionBig={}", regionBig);
 
         Map<String, Object> resultMap = new HashMap<>();
-
         List<String> regionSmalls = otherService.getRegionSmallList(regionBig);
+
         resultMap.put("regionSmalls", regionSmalls);
 
         logger.info("[getSelectList] response : regionSmalls={}", regionSmalls);

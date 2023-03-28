@@ -37,6 +37,65 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final OtherService otherService;
 
+    @Operation(summary = "테마에 리뷰를 작성", description = "해당 테마에 새로운 리뷰를 작성한다")
+    @PostMapping
+    private ResponseEntity<Void> addReview(
+            @AuthenticationPrincipal User user,
+            @RequestBody CreateReviewRequest createReviewRequest) throws Exception {
+
+        logger.info("[addReview] request : myEmail={}", user.getUsername());
+        logger.info("[addReview] request : createReviewRequest={}", createReviewRequest);
+
+        reviewService.addReview(user.getUsername(), createReviewRequest);
+
+        otherService.recCF(user.getUsername());
+
+        logger.info("[addReview] response : ");
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "테마의 리뷰를 수정", description = "해당 테마에 작성된 리뷰를 수정한다")
+    @PutMapping
+    private ResponseEntity<Map<String, Object>> setReview(
+            @AuthenticationPrincipal User user,
+            @RequestBody UpdateReviewRequest updateReviewRequest) throws Exception {
+
+        logger.info("[setReview] request : myEmail={}", user.getUsername());
+        logger.info("[setReview] request : updateReviewRequest={}", updateReviewRequest);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        ReviewOfUserResponse reviewOfUserResponse = reviewService.setReview(user.getUsername(), updateReviewRequest);
+
+        resultMap.put("review", reviewOfUserResponse);
+
+        otherService.recCF(user.getUsername());
+
+        logger.info("[setReview] response : review={}", reviewOfUserResponse);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @Operation(summary = "테마의 리뷰를 제거", description = "해당 테마의 리뷰를 제거한다")
+    @DeleteMapping("{reviewId}")
+    private ResponseEntity<Void> deleteReview(
+            @AuthenticationPrincipal User user,
+            @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int reviewId) throws Exception {
+
+        logger.info("[deleteReview] request : myEmail={}", user.getUsername());
+        logger.info("[deleteReview] request : reviewId={}", reviewId);
+
+        reviewService.deleteReview(user.getUsername(), reviewId);
+
+        otherService.recCF(user.getUsername());
+
+        logger.info("[deleteReview] response : ");
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+}
+
+
 //    @Operation(summary = "테마의 리뷰 목록 조회", description = "해당 테마의 리뷰 목록을 불러온다")
 //    @GetMapping("{themeId}")
 //    private ResponseEntity<Map<String, Object>> getReviews(
@@ -52,56 +111,3 @@ public class ReviewController {
 //
 //        return new ResponseEntity<>(resultMap, HttpStatus.OK);
 //    }
-
-    @Operation(summary = "테마에 리뷰를 작성", description = "해당 테마에 새로운 리뷰를 작성한다")
-    @PostMapping
-    private ResponseEntity<Void> addReview(
-            @AuthenticationPrincipal User user,
-            @RequestBody CreateReviewRequest createReviewRequest) throws Exception {
-
-        logger.info("[addReview] request : myEmail={}, createReviewRequest={}", user.getUsername(), createReviewRequest);
-
-        reviewService.addReview(user.getUsername(), createReviewRequest);
-        otherService.recCF(user.getUsername());
-
-        logger.info("[addReview] response : ");
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @Operation(summary = "테마의 리뷰를 수정", description = "해당 테마에 작성된 리뷰를 수정한다")
-    @PutMapping
-    private ResponseEntity<Map<String, Object>> setReview(
-            @AuthenticationPrincipal User user,
-            @RequestBody UpdateReviewRequest updateReviewRequest) throws Exception {
-
-        logger.info("[setReview] request : myEmail={}, updateReviewRequest={}", user.getUsername(), updateReviewRequest);
-
-        Map<String, Object> resultMap = new HashMap<>();
-
-        ReviewOfUserResponse reviewOfUserResponse = reviewService.setReview(user.getUsername(), updateReviewRequest);
-
-        resultMap.put("review", reviewOfUserResponse);
-        otherService.recCF(user.getUsername());
-
-        logger.info("[setReview] response : review={}", reviewOfUserResponse);
-
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-    }
-
-    @Operation(summary = "테마의 리뷰를 제거", description = "해당 테마의 리뷰를 제거한다")
-    @DeleteMapping("{reviewId}")
-    private ResponseEntity<Void> deleteReview(
-            @AuthenticationPrincipal User user,
-            @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int reviewId) throws Exception {
-
-        logger.info("[deleteReview] request : myEmail={}, reviewId={}", user.getUsername(), reviewId);
-
-        reviewService.deleteReview(user.getUsername(), reviewId);
-        otherService.recCF(user.getUsername());
-
-        logger.info("[deleteReview] response : ");
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-}

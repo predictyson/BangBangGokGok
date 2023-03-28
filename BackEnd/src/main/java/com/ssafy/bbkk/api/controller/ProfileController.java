@@ -46,16 +46,16 @@ public class ProfileController {
         logger.info("[getUserInfo] request : myEmail={}, userId={}", user.getUsername(), userId);
 
         Map<String, Object> resultMap = new HashMap<>();
-
         boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
         UserInfoResponse userInfoResponse = profileService.getUserInfoByEmail(user.getUsername());
 
         resultMap.put("isMe", isMe);
         resultMap.put("userInfo", userInfoResponse);
 
-        logger.info("[getUserInfo] response : isMe={}, userInfo={}", isMe, userInfoResponse);
+        logger.info("[getUserInfo] response : isMe={}", isMe);
+        logger.info("[getUserInfo] response : userInfo={}", userInfoResponse);
 
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @Operation(summary = "유저가 작성한 리뷰 목록 조회", description = "해당 유저가 작성한 리뷰 목록을 불러온다")
@@ -66,13 +66,13 @@ public class ProfileController {
         logger.info("[getUserReviews] request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
-
         List<ReviewOfUserResponse> reviewOfThemeResponses = profileService.getUserReviews(userId);
+
         resultMap.put("reviews", reviewOfThemeResponses);
 
         logger.info("[getUserReviews] response : reviews={}", reviewOfThemeResponses);
 
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
 
@@ -84,6 +84,7 @@ public class ProfileController {
 
         Map<String, Object> resultMap = new HashMap<>();
         List<PreferenceResponse> preference = profileService.getUserPreference(userId);
+
         resultMap.put("preference", preference);
 
         logger.info("[getUserPreference] response : preference={}", preference);
@@ -99,32 +100,34 @@ public class ProfileController {
         logger.info("[getUserInterest] request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
-
         List<InterestThemeResponse> interestThemeResponses = profileService.getUserInterestThemes(userId);
+
         resultMap.put("interestThemes", interestThemeResponses);
 
         logger.info("[getUserInterest] response : interestThemes={}", interestThemeResponses);
 
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @Operation(summary = "유저의 정보 수정", description = "해당 유저의 프로필 정보를 수정한다")
     @PutMapping
-    private ResponseEntity<Map<String, Object>> setUserInfo(@AuthenticationPrincipal User user,
+    private ResponseEntity<Map<String, Object>> setUserInfo(
+            @AuthenticationPrincipal User user,
             @RequestBody UpdateUserInfoRequest updateUserInfoRequest) throws Exception {
 
         logger.info("[setUserInfo] request : updateUserInfoRequest={}", updateUserInfoRequest);
 
         Map<String, Object> resultMap = new HashMap<>();
-
         profileService.setUserInfo(updateUserInfoRequest);
         UserInfoResponse userInfoResponse = profileService.getUserInfoByUserId(updateUserInfoRequest.getUserId());
+
         resultMap.put("userInfo", userInfoResponse);
+
         otherService.recCBF(user.getUsername());
 
         logger.info("[setUserInfo] response : userInfo={}", userInfoResponse);
 
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @Operation(summary = "회원 탈퇴", description = "해당 유저의 회원 탈퇴를 진행한다")

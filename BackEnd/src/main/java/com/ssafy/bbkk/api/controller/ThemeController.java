@@ -28,7 +28,7 @@ public class ThemeController {
 
     @Operation(summary = "로그인 테마 목록 조회", description = "로그인시 메인 화면의 테마를 불러온다")
     @GetMapping("user")
-    public ResponseEntity<Map<String, Object>> recommendedTheme(
+    private ResponseEntity<Map<String, Object>> recommendedTheme(
             @AuthenticationPrincipal User user) throws Exception {
         logger.info("[recommendedTheme] request : myEmail={}",user.getUsername());
 
@@ -44,7 +44,10 @@ public class ThemeController {
         resultMap.put("topThemes", topThemes);
         resultMap.put("awardThemes", awardThemes);
 
-        logger.info("[recommendedTheme] response : recommendThemes={}, topThemes={}, awardThemes={}", recommendThemes, topThemes, awardThemes);
+        logger.info("[recommendedTheme] response : recommendThemes={}", recommendThemes);
+        logger.info("[recommendedTheme] response : hotThemes={}", hotThemes);
+        logger.info("[recommendedTheme] response : topThemes={}", topThemes);
+        logger.info("[recommendedTheme] response : awardThemes={}", topThemes);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -52,7 +55,7 @@ public class ThemeController {
     @CrossOrigin("*")
     @Operation(summary = "게스트 테마 목록 조회", description = "메인 화면의 기본 테마 목록을 불러온다")
     @GetMapping("guest")
-    public ResponseEntity<Map<String, Object>> topTheme() throws Exception {
+    private ResponseEntity<Map<String, Object>> topTheme() throws Exception {
         logger.info("[topTheme] request : ");
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -65,20 +68,22 @@ public class ThemeController {
         resultMap.put("topThemes", topThemes);
         resultMap.put("awardThemes", awardThemes);
 
-        logger.info("[topTheme] response : topThemes={}, awardThemes={}", topThemes, awardThemes);
+        logger.info("[topTheme] response : hotThemes={}", hotThemes);
+        logger.info("[topTheme] response : topThemes={}",topThemes);
+        logger.info("[topTheme] response : awardThemes={}", awardThemes);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @Operation(summary = "테마 검색", description = "필터를 기반으로 일치하는 테마를 불러온다")
     @GetMapping("search")
-    public ResponseEntity<Map<String, Object>> searchedTheme(
+    private ResponseEntity<Map<String, Object>> searchedTheme(
             @ModelAttribute SearchThemeRequest searchThemeRequest) throws Exception {
         logger.info("[searchedTheme] request : SearchThemeRequest={}", searchThemeRequest);
 
         Map<String, Object> resultMap = new HashMap<>();
-
         List<PreviewThemeResponse> previewThemeResponses = themeService.getSearchThemes(searchThemeRequest);
+
         resultMap.put("themes", previewThemeResponses);
 
         logger.info("[searchedTheme] response : themes={}", previewThemeResponses);
@@ -88,13 +93,13 @@ public class ThemeController {
 
     @Operation(summary = "테마의 상세 정보 조회", description = "해당 테마의 상세 정보를 불러온다")
     @GetMapping("{themeId}")
-    public ResponseEntity<Map<String, Object>> themeInfo(
+    private ResponseEntity<Map<String, Object>> themeInfo(
             @Parameter(description = "해당 테마의 Id", required = true) @PathVariable("themeId") int themeId) throws Exception {
         logger.info("[themeInfo] request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
-
         ThemeResponse themeResponse = themeService.getThemeInfo(themeId);
+
         resultMap.put("theme", themeResponse);
 
         logger.info("[themeInfo] response : theme={}", themeResponse);

@@ -47,10 +47,6 @@ public class OtherServiceImpl implements OtherService {
         result = regionRepository.findByRegionBig(regionBig).stream()
                 .map(x -> x.getRegionSmall())
                 .collect(Collectors.toList());
-//        result = regionRepository.findRegionBigDistinctBy()
-//                .stream()
-//                .map(x-> new RegionResponse(x, regionRepository.findAllRegionSmallByRegionBig(x)))
-//                .collect(Collectors.toList());
         return result;
     }
 

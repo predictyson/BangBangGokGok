@@ -34,7 +34,8 @@ public class InterestController {
             @AuthenticationPrincipal User user,
             @Parameter(description = "상세 테마의 Id", required = true) @PathVariable int themeId) throws Exception{
 
-        logger.info("[getInterestTheme] request : myEmail={}, themeId={}", user.getUsername(), themeId);
+        logger.info("[getInterestTheme] request : myEmail={}", user.getUsername());
+        logger.info("[getInterestTheme] request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
         boolean isInterest = interestThemeService.isInterestTheme(user.getUsername(), themeId);
@@ -52,7 +53,8 @@ public class InterestController {
             @AuthenticationPrincipal User user,
             @Parameter(description = "관심 버튼을 누른 테마의 Id", required = true) @PathVariable int themeId) throws Exception{
 
-        logger.info("[addInterestTheme] request : myEmail={}, themeId={}", user.getUsername(), themeId);
+        logger.info("[addInterestTheme] request : myEmail={}", user.getUsername());
+        logger.info("[addInterestTheme] request : themeId={}", themeId);
 
         interestThemeService.addInterestTheme(user.getUsername(), themeId);
         otherService.recCBF(user.getUsername());
@@ -68,7 +70,8 @@ public class InterestController {
             @AuthenticationPrincipal User user,
             @Parameter(description = "관심 버튼을 누른 테마의 Id", required = true) @PathVariable int themeId) throws Exception{
 
-        logger.info("[deleteInterestTheme] request : myEmail={}, themeId={}", user.getUsername(), themeId);
+        logger.info("[deleteInterestTheme] request : myEmail={}", user.getUsername());
+        logger.info("[deleteInterestTheme] request : themeId={}", themeId);
 
         interestThemeService.deleteInterestTheme(user.getUsername(), themeId);
         otherService.recCBF(user.getUsername());

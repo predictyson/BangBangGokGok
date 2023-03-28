@@ -29,8 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ThemeServiceImpl implements ThemeService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ThemeServiceImpl.class);
-
     private final UserRepository userRepository;
     private final RegionRepository regionRepository;
     private final ReviewRepository reviewRepository;
@@ -38,16 +36,17 @@ public class ThemeServiceImpl implements ThemeService {
     private final InterestedThemeOfUserRepository interestedRepository;
     private final AwardThemeRepository awardThemeRepository;
     private final RecommendedThemeOfUserRepository recommendedThemeOfUserRepository;
+
     private final int THEME_RETURN_COUNT = 5;
     private final int THEME_COUNT = 10;
+
     @PersistenceContext
     private EntityManager entityManager;
-    private Random rnd;
 
     // 지역 id에 해당되는 지역의 인기 테마를 반환
     public ThemeBundleResponse getRegionBundle(int regionId) throws Exception {
         ThemeBundleResponse result = null;
-        rnd = new Random();
+        Random rnd = new Random();
         String label;
         // 테마의 지역
         Region region = regionRepository.findById(regionId)
@@ -117,7 +116,7 @@ public class ThemeServiceImpl implements ThemeService {
     public ThemeBundleResponse getFeelBundle(int type) throws Exception {
         ThemeBundleResponse result = null;
         List<PreviewThemeResponse> themes = null;
-        rnd = new Random();
+        Random rnd = new Random();
         List<PreviewThemeResponse> list = null;
         String label = "";
         switch (type) {
@@ -192,7 +191,7 @@ public class ThemeServiceImpl implements ThemeService {
         List<PreviewThemeResponse> CBFList = new ArrayList<>();
         List<PreviewThemeResponse> CFList = new ArrayList<>();
         int cnt = recommendedThemeOfUserRepository.countByUserId(user.getId());
-        logger.info("[cnt]={}",cnt);
+
         if(cnt > 0){
             result = new ArrayList<>();
             // 유저의 추천 테마 목록 조회
@@ -278,7 +277,7 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public List<ThemeBundleResponse> getTopThemes() throws Exception {
         List<ThemeBundleResponse> result = new ArrayList<>();
-        rnd = new Random();
+        Random rnd = new Random();
         // 체감 테마
         result.add(getFeelBundle(rnd.nextInt(4) + 1));
 
@@ -294,7 +293,7 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public List<ThemeBundleResponse> getTopThemesOfUser(String email) throws Exception {
         List<ThemeBundleResponse> result = new ArrayList<>();
-        rnd = new Random();
+        Random rnd = new Random();
         if (rnd.nextBoolean()) {
             // 체감 테마
             result.add(getFeelBundle(rnd.nextInt(4)));
@@ -311,7 +310,7 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public AwardThemeBundleResponse getAwardThemes() throws Exception {
         AwardThemeBundleResponse result = null;
-        rnd = new Random();
+        Random rnd = new Random();
         int year = rnd.nextInt(4) + 2019;
         result = new AwardThemeBundleResponse(year, awardThemeRepository.findByYear(year));
 

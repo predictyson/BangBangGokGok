@@ -40,6 +40,6 @@ public class GroupSetController {
 
         logger.info("[getUser] response : users={}", previewUserResponses);
 
-        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }

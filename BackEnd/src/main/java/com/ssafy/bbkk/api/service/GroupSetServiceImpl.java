@@ -19,26 +19,13 @@ public class GroupSetServiceImpl implements GroupSetService {
     @Override
     public List<PreviewUserResponse> getUserListByEmailOrNickname(String emailOrNickname) throws Exception {
         List<PreviewUserResponse> result = new ArrayList<>();
-
         userRepository.findByEmailContainingOrNicknameContaining(emailOrNickname, emailOrNickname)
             .forEach(x->{
                 if(x.getEmail()!=null && x.getNickname()!=null){
                     result.add(new PreviewUserResponse(x));
                 }
             });
-
-//        // email로 유저 찾아오기
-//        userRepository.findByEmailContaining(emailOrNickname)
-//                .forEach(x->{
-//                    if(x.getNickname()!=null) result.add(new PreviewUserResponse(x));
-//                });
-//        // nickname으로 유저 찾아오기
-//        userRepository.findByNicknameContaining(emailOrNickname)
-//                .forEach(x->{
-//                    if(x.getNickname()!=null) result.add(new PreviewUserResponse(x));
-//                });
-//        Collections.sort(result, Comparator.comparing(PreviewUserResponse::getNickname));
-
+        Collections.sort(result, Comparator.comparing(PreviewUserResponse::getNickname));
         return result;
     }
 }

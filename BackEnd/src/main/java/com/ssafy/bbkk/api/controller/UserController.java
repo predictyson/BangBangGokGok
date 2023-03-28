@@ -42,7 +42,8 @@ public class UserController {
         resultMap.put("token", tokenResponse);
         resultMap.put("user", loginResponse);
 
-        logger.info("[login] response : token={}, user={}", tokenResponse, loginResponse);
+        logger.info("[login] response : token={}", tokenResponse);
+        logger.info("[login] response : user={}", loginResponse);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -69,7 +70,7 @@ public class UserController {
 
         userService.setUserAdditionalInfo(joinAdditionalRequest);
         String email = userService.findUserEmailByUserId(joinAdditionalRequest.getUserId());
-//        otherService.recCF(email);
+
         otherService.recCBF(email);
 
         logger.info("[addInfo] response : ");
@@ -89,7 +90,8 @@ public class UserController {
         resultMap.put("refreshToken", refreshToken);
         resultMap.put("user", loginResponse);
 
-        logger.info("[oauthLogin] response : refreshToken={}, user={}",refreshToken, loginResponse);
+        logger.info("[oauthLogin] response : refreshToken={}", refreshToken);
+        logger.info("[oauthLogin] response : user={}", loginResponse);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -165,7 +167,8 @@ public class UserController {
     @GetMapping("check/emailCode/{email}/{code}")
     public ResponseEntity<Map<String, Object>> checkEmailCode(@PathVariable String email,
                                                               @PathVariable String code) throws Exception {
-        logger.info("[checkEmailCode] request : email={}, code={}",email,code);
+        logger.info("[checkEmailCode] request : email={}", email);
+        logger.info("[checkEmailCode] request : code={}", code);
 
         Map<String, Object> resultMap = new HashMap<>();
         boolean isCheck = emailService.checkEmailCode(email,code);
