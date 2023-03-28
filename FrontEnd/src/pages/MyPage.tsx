@@ -7,22 +7,15 @@ import { theme } from "@/styles/theme";
 import { UserProfile } from "types/mypage";
 import { getUserProfile } from "@/api/profile";
 
-const GENRE_INITIAL_VALUE: IGenreData[] = [
-  {
-    genreId: -1,
-    category: "",
-  },
-];
-
 const INITIAL_USER_PROFILE: UserProfile = {
-  userId: -1,
+  id: -1,
   nickname: "",
   regionBig: "",
   regionSmall: "",
   age: -1,
   gender: "",
   profileImageType: "",
-  genre: GENRE_INITIAL_VALUE,
+  genres: [""],
 };
 
 export default function MyPage() {
@@ -57,7 +50,7 @@ export default function MyPage() {
       <Header />
       <BackGround>
         <ContentWrapper>
-          <LeftNavBar userProfile={userProfile} />
+          <LeftNavBar {...userProfile} />
           <RightContent />
         </ContentWrapper>
       </BackGround>

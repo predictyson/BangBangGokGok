@@ -4,18 +4,14 @@ export interface UserProfileReponse {
 }
 
 export interface UserProfile {
-  userId: number;
+  id: number;
   nickname: string;
   regionBig: string;
   regionSmall: string;
   age: number;
   gender: string;
   profileImageType: string;
-  genre: IGenreData[];
-}
-
-export interface UserProfileProps {
-  userProfile: UserProfile;
+  genres: string[];
 }
 
 export interface UserReviewsResponse {
