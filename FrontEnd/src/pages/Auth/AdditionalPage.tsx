@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import GenreSection from "@components/Auth/signup/additional/GenreSection";
 import styled from "styled-components";
+import { styled as mstyled } from "@mui/material/styles";
 import { theme } from "@/styles/theme";
 import ProfileSection from "@components/Auth/signup/additional/ProfileSection";
 import { IAdditionalInfo } from "types/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { requestAdditional } from "@/api/auth";
 import Toast, { showToast } from "@/components/common/Toast";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 const InitAdditionalInfo: IAdditionalInfo = {
   userId: -1,
@@ -62,6 +64,13 @@ export default function AdditionalPage() {
     }));
   };
 
+  const handleReset = () => {
+    setUserAdditionalInfo((cur) => ({
+      ...cur,
+      ["genreIds"]: [],
+    }));
+  };
+
   useEffect(() => {
     // 넘어오면서 회원가입 페이지의 고유 유저 ID를 넘겨준다. (식별자)
     changeUserInfo("userId", userId);
@@ -79,9 +88,11 @@ export default function AdditionalPage() {
                 선호 장르를 한 개 이상 선택하시면, 방탈출 테마를 추천받으실 수
                 있어요!
               </h2>
+              <ResetIcon onClick={handleReset} />
               <GenreSection
                 userAdditionalInfo={userAdditionalInfo}
                 changeUserInfo={changeUserInfo}
+                handleToastClick={handleToastClick}
               />
             </>
           ) : (
@@ -92,6 +103,7 @@ export default function AdditionalPage() {
               <ProfileSection
                 userAdditionalInfo={userAdditionalInfo}
                 changeUserInfo={changeUserInfo}
+                handleToastClick={handleToastClick}
               />
             </>
           )}
@@ -104,6 +116,16 @@ export default function AdditionalPage() {
     </Container1>
   );
 }
+
+const ResetIcon = mstyled(RestartAltIcon)({
+  width: "4rem",
+  height: "4rem",
+  position: "absolute",
+  top: "17.3%",
+  right: "10%",
+  cursor: "pointer",
+});
+
 const Container1 = styled.div`
   display: flex;
   justify-content: center;

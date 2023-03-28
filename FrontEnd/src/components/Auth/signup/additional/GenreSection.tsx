@@ -11,7 +11,11 @@ export default function GenreSection(props: ProfileProps) {
     _event: React.MouseEvent<HTMLElement, MouseEvent>,
     newAlignment: number[]
   ) => {
-    props.changeUserInfo("genreIds", newAlignment);
+    if (props.userAdditionalInfo.genreIds.length > 3) {
+      props.handleToastClick("error", "장르는 최대 4개까지만 설정가능합니다.");
+    } else {
+      props.changeUserInfo("genreIds", newAlignment);
+    }
   };
 
   useEffect(() => {
