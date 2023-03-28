@@ -6,7 +6,8 @@ export interface UserProfileReponse {
 export interface UserProfile {
   userId: number;
   nickname: string;
-  region: string;
+  regionBig: string;
+  regionSmall: string;
   age: number;
   gender: string;
   profileImageType: string;

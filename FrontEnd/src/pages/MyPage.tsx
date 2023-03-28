@@ -1,52 +1,56 @@
 import Header from "@components/common/Header";
 import LeftNavBar from "@components/mypage/LeftSection/LeftNavBar";
 import RightContent from "@components/mypage/RightSection/RightContent";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import { UserProfile } from "types/mypage";
+import { getUserProfile } from "@/api/profile";
+
+const GENRE_INITIAL_VALUE: IGenreData[] = [
+  {
+    genreId: -1,
+    category: "",
+  },
+];
+
+const INITIAL_USER_PROFILE: UserProfile = {
+  userId: -1,
+  nickname: "",
+  regionBig: "",
+  regionSmall: "",
+  age: -1,
+  gender: "",
+  profileImageType: "",
+  genre: GENRE_INITIAL_VALUE,
+};
 
 export default function MyPage() {
-  const [userProfile, setUserProfile] = useState<UserProfile>({
-    userId: 0,
-    nickname: "김성수",
-    region: "서울",
-    age: 30,
-    gender: "남자",
-    profileImageType: "",
-    genre: [
-      {
-        genreId: 0,
-        category: "공포",
-      },
-      {
-        genreId: 1,
-        category: "액션",
-      },
-    ],
-  });
+  const [userProfile, setUserProfile] =
+    useState<UserProfile>(INITIAL_USER_PROFILE);
 
-  // 회원 정보 조회 API
-  // useEffect(() => {
-  //   const email = localStorage.getItem("email"); // recoil로 변경
-  //   const getUserProfile = async () => {
-  //     const response = await axios({
-  //       method: "GET",
-  //       url: `http://localhost:8080/api/profile/${email}/info}`,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     console.log(response); // { isMe: boolean, userInfo: UserProfile }
-  //     if (response.data.isMe === false) {
-  //       throw new Error(
-  //         "마이페이지에서 자신의 정보가 아닌 다른 회원의 정보를 조회할 수 없습니다."
-  //       );
-  //     }
-  //     setUserProfile(response.data.userInfo);
-  //   };
-  //   getUserProfile();
-  // }, []);
+  const fetchUser = useCallback(async (userId: number) => {
+    const response = await getUserProfile(userId);
+    if (response.data.isMe === false) {
+      throw Promise.reject(
+        `마이페이지에서 자신의 정보가 아닌 다른 회원의 정보를 조회할 수 없습니다. ${response.status}`
+      );
+    }
+    return response.data.userInfo;
+  }, []);
+
+  useEffect(() => {
+    const userId = Number(localStorage.getItem("userId"));
+    const requestMyProfile = async () => {
+      const fetchedData = await fetchUser(userId);
+      setUserProfile(fetchedData);
+    };
+    try {
+      requestMyProfile();
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   return (
     <>

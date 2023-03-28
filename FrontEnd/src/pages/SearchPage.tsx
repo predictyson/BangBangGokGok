@@ -78,7 +78,7 @@ export default function SearchPage() {
       orderby: sortOrder,
     });
     setResults(response.data.themes);
-    setPage((prev) => prev + 1);
+    // setPage((prev) => prev + 1);
   };
 
   // SearchFilter 관련 변수, 함수
