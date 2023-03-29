@@ -16,6 +16,7 @@ import com.ssafy.bbkk.db.repository.RegionRepository;
 import com.ssafy.bbkk.db.repository.ReviewRepository;
 import com.ssafy.bbkk.db.repository.UserRepository;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -76,6 +77,10 @@ public class ProfileServiceImpl implements ProfileService {
                 .stream()
                 .map(x -> new ReviewOfUserResponse(x))
                 .collect(Collectors.toList());
+        // 리뷰를 최신순으로 정렬
+        Collections.sort(result,(o1, o2) -> {
+            return o1.getCreateTime().isBefore(o2.getCreateTime()) ? 1 : -1;
+        });
         return result;
     }
 
