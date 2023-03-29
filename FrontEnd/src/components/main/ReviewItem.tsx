@@ -38,7 +38,7 @@ export default function ReviewItem({ data }: IProps) {
             후기 평점
             <Rating
               name="readonly"
-              value={Math.round(data.userRating)}
+              value={data.userRating}
               style={{ marginLeft: "1rem" }}
               size="large"
               precision={0.5}
@@ -49,7 +49,7 @@ export default function ReviewItem({ data }: IProps) {
             체감 난이도
             <Rating
               name="readonly"
-              value={Math.round(data.userDifficulty)}
+              value={data.userDifficulty}
               style={{ marginLeft: "1rem" }}
               size="large"
               precision={0.5}
@@ -60,7 +60,7 @@ export default function ReviewItem({ data }: IProps) {
             체감 공포도
             <Rating
               name="readonly"
-              value={Math.round(data.userFear)}
+              value={data.userFear}
               style={{ marginLeft: "1rem" }}
               size="large"
               precision={0.5}
@@ -71,7 +71,7 @@ export default function ReviewItem({ data }: IProps) {
             체감 활동성
             <Rating
               name="readonly"
-              value={Math.round(data.userActivity)}
+              value={data.userActivity}
               style={{ marginLeft: "1rem" }}
               size="large"
               precision={0.5}
