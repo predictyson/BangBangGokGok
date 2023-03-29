@@ -43,12 +43,16 @@ public class UserController {
 
     @Operation(summary = "로그인", description = "로그인을 진행한다")
     @PostMapping("login")
-    private ResponseEntity<Map<String, Object>> login(
-            @RequestBody LoginRequest loginRequest) throws Exception {
+    private ResponseEntity<Map<String, Object>> login(@RequestBody @Valid LoginRequest loginRequest, Errors errors) throws Exception {
 
         logger.info("[login] request : loginRequest={}", loginRequest);
 
+        // LoginRequest 입력값 유효성 검사
+        for (FieldError error : errors.getFieldErrors())
+            throw new Exception(error.getDefaultMessage());
+
         Map<String, Object> resultMap = new HashMap<>();
+
         TokenResponse tokenResponse = userService.login(loginRequest);
         LoginResponse loginResponse = userService.getLoginUser(loginRequest.getEmail());
 
