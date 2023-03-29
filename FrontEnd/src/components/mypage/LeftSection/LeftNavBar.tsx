@@ -154,7 +154,7 @@ interface NavItemProps {
   readonly select?: boolean;
 }
 
-const NavItem = styled.button<NavItemProps>`
+const NavItem = styled.div<NavItemProps>`
   display: inline-flex;
   align-items: center;
   gap: 1rem;
@@ -171,6 +171,11 @@ const NavItem = styled.button<NavItemProps>`
   border-radius: 1.5rem;
   background-color: ${theme.colors.container};
   background-color: ${(props) => props.select && theme.colors.pink};
+  &:hover {
+    ${(props) =>
+      !props.select &&
+      `box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem ${theme.colors.pink};`}
+  }
 `;
 
 const NavItemImg = styled.img`
