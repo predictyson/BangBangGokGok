@@ -6,10 +6,19 @@ import { theme } from "@/styles/theme";
 import { styled as mstyled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import { clearCookie } from "@/api/api";
+
 export default function Header() {
   const navigate = useNavigate();
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
   // const username = localStorage.getItem("username");
+
+  const logout = () => {
+    clearCookie();
+    localStorage.clear();
+    location.reload();
+  };
+
   return (
     <Container>
       <div className="left-container">
@@ -33,11 +42,14 @@ export default function Header() {
           <NavButton onClick={() => navigate("/login")}>Login</NavButton>
         )}
         {isLogin && (
-          <NavItem onClick={() => navigate("/mypage")}>
-            {/* <AccountCircleOutlinedIcon style={{ fontSize: "3rem" }} /> */}
-            {/* <span> {username}</span> */}
-            Mypage
-          </NavItem>
+          <>
+            <NavItem onClick={() => navigate("/mypage")}>
+              {/* <AccountCircleOutlinedIcon style={{ fontSize: "3rem" }} /> */}
+              {/* <span> {username}</span> */}
+              Mypage
+            </NavItem>
+            <NavButton onClick={logout}>Logout</NavButton>
+          </>
         )}
       </div>
     </Container>
