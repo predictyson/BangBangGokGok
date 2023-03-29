@@ -1,3 +1,8 @@
+export interface ProfileLoader {
+  profileInfo: UserProfile;
+  preferences: UserPreference[];
+}
+
 export interface UserProfileReponse {
   isMe: boolean;
   userInfo: UserProfile;

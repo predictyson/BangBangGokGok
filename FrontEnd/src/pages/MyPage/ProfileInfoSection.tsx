@@ -1,22 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import ProfileChart from "@components/mypage/RightSection/Profile/ProfileChart";
-import { UserProfile } from "types/mypage";
-import { useLocation } from "react-router-dom";
+import { getUserProfile, getUserPreferences } from "@/api/profile";
+import { UserProfile, UserPreference } from "types/mypage";
+
+const PROFILE_INFO_INIT_VALUE: UserProfile = {
+  id: 0,
+  nickname: "",
+  regionBig: "",
+  regionSmall: "",
+  age: 0,
+  gender: "",
+  profileImageType: "",
+  genres: [],
+};
+
+const PREFERENCES_INIT_VALUE: UserPreference[] = [
+  {
+    genre: "",
+    count: 0,
+  },
+];
 
 export default function ProfileInfoSection() {
-  const location = useLocation();
-  const {
-    // age,
-    gender,
-    genres,
-    // id,
-    nickname,
-    // profileImageType,
-    regionBig,
-    regionSmall,
-  } = location.state as UserProfile;
+  const [profileInfo, setProfileInfo] = useState<UserProfile>(
+    PROFILE_INFO_INIT_VALUE
+  );
+  const [isFetched, setIsFetched] = useState(false);
+  const [preferences, setPreferences] = useState<UserPreference[]>(
+    PREFERENCES_INIT_VALUE
+  );
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const userId = Number(localStorage.getItem("userId"));
+      const [response1, response2] = await Promise.all([
+        getUserProfile(userId),
+        getUserPreferences(userId),
+      ]);
+
+      setProfileInfo(response1.data.userInfo as UserProfile);
+      setPreferences(response2.data.preference as UserPreference[]);
+      setIsFetched(true);
+    };
+
+    fetchUserProfile();
+  }, []);
 
   return (
     <ProfileWrapper>
@@ -25,32 +55,34 @@ export default function ProfileInfoSection() {
         <SectionFirstColumn>
           <ContentWrapper>
             <ContentTitle>닉네임</ContentTitle>
-            <Content>{nickname}</Content>
+            <Content>{profileInfo.nickname}</Content>
           </ContentWrapper>
-          {/* <ContentWrapper>
-            <ContentTitle>이메일</ContentTitle>
-            <Content>이메일은 안보내줘요!</Content>
-          </ContentWrapper> */}
           <ContentWrapper>
             <ContentTitle>성별</ContentTitle>
-            <Content>{gender === "M" ? "남자" : "여자"}</Content>
+            {!isFetched && <Content></Content>}
+            {isFetched && (
+              <Content>{profileInfo.gender === "M" ? "남자" : "여자"}</Content>
+            )}
           </ContentWrapper>
         </SectionFirstColumn>
         <SectionSecondColumn>
           <ContentWrapper>
             <ContentTitle>선호 장르</ContentTitle>
-            <Content>{genres.join(", ")}</Content>
+            <Content>{profileInfo.genres.join(", ")}</Content>
           </ContentWrapper>
           <ContentWrapper>
             <ContentTitle>선호 지역</ContentTitle>
-            <Content>
-              {regionBig}, {regionSmall}
-            </Content>
+            {!isFetched && <Content></Content>}
+            {isFetched && (
+              <Content>
+                {profileInfo.regionBig}, {profileInfo.regionSmall}
+              </Content>
+            )}
           </ContentWrapper>
         </SectionSecondColumn>
       </SectionContentWrapper>
       <SectionTitle>나의 장르 선호도</SectionTitle>
-      <ProfileChart />
+      {isFetched && <ProfileChart preferences={preferences} />}
     </ProfileWrapper>
   );
 }
