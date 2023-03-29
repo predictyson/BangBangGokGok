@@ -111,6 +111,7 @@ export default function AwardsSlider(awardData: IProps) {
   useEffect(() => {
     requestDetailData(themeId);
   }, [themeId]);
+
   const awarddata = awardData.awardData;
   return (
     <Container>

@@ -21,3 +21,6 @@ export async function getSearchThemes(
 export async function getDetail(themeId: number) {
   return await instance.get(`/theme/${themeId}`);
 }
+export async function getDetailLogin(themeId: number) {
+  return await instance.get(`/theme/${themeId}/user`);
+}
