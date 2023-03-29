@@ -21,9 +21,9 @@ interface ArrowProps extends CustomArrowProps {
 
 export default function AwardsSlider(awardData: IProps) {
   const [open, setOpen] = useState(false);
-  const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
   const [themeId, setThemeId] = useState(0);
   const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
   const [data, setData] = useState<IDetailData>(initData);
   const handleOpen = async (themeId: number) => {
     await setThemeId(themeId);
