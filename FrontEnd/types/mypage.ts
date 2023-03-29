@@ -59,8 +59,8 @@ export interface UserInterestsResponse {
 }
 
 export interface UserInterestTheme {
-  interestId: number;
-  theme: PreviewThemeResponse;
+  interestedThemeOfUserId: number;
+  previewThemeResponse: PreviewThemeResponse;
 }
 
 export interface PreviewThemeResponse {

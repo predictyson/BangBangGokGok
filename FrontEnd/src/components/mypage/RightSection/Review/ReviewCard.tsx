@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
-import GradeIcon from "@mui/icons-material/Grade";
 import { styled as mstyled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
