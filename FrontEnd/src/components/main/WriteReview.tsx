@@ -9,7 +9,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import { styled as mstyled } from "@mui/material/styles";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
-import { IDetailData, IPostData, IReviewData } from "types/detail";
+import { IDetailData, IPostData } from "types/detail";
 import { postReview } from "@/api/review";
 interface IRatingData {
   rating: number;
@@ -30,7 +30,7 @@ export default function WriteReview({
   data,
   themeId,
 }: IProps) {
-  const [isSuccess, setIsSuccess] = useState<string>("false");
+  const [isSuccess, setIsSuccess] = useState<number>(0);
   const [content, setContent] = useState<string>("");
   const [rate, setRate] = useState<IRatingData>({
     rating: 0.0,
@@ -57,9 +57,21 @@ export default function WriteReview({
         [name]: value ?? 0,
       }));
       console.log(rate.rating);
+      console.log(rate.fear);
+      console.log(rate.activity);
+      console.log(rate.difficulty);
     },
     [setRate, rate.rating]
   );
+  const handleValueChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newValue: number | null
+  ) => {
+    if (newValue !== null) {
+      setIsSuccess(newValue);
+    }
+    console.log(isSuccess);
+  };
 
   const sendReviewData = async () => {
     try {
@@ -70,9 +82,11 @@ export default function WriteReview({
         userActivity: rate.activity,
         userFear: rate.fear,
         userDifficulty: rate.difficulty,
-        isSuccess: isSuccess === "true" ? 1 : 0,
+        isSuccess: isSuccess,
       };
+      console.log(newPostData);
       setPostdata(newPostData);
+      console.log(postdata);
       const res = await postReview(newPostData);
       console.log(res.data);
       setPostdata(initData);
@@ -133,10 +147,10 @@ export default function WriteReview({
               <ToggleButtonGroup
                 value={isSuccess}
                 exclusive
-                onChange={handleRatingChange}
+                onChange={handleValueChange}
               >
-                <CustomToggleButton value="success">성공</CustomToggleButton>
-                <CustomToggleButton value="fail">실패</CustomToggleButton>
+                <CustomToggleButton value={1}>성공</CustomToggleButton>
+                <CustomToggleButton value={0}>실패</CustomToggleButton>
               </ToggleButtonGroup>
             </div>
           </InfoBox>
@@ -174,7 +188,7 @@ export default function WriteReview({
               <CustomText
                 value={content}
                 onChange={handleTextareaChange}
-                maxLength={200}
+                maxLength={500}
               />
             </form>
           </ReviewBox>

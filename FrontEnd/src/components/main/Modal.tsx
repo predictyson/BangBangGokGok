@@ -32,7 +32,7 @@ export default function DetailModal({
   isLiked,
 }: IProps) {
   const [childOpen, setchildOpen] = React.useState(false);
-  // const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isLikedChecked, setIsLikedChecked] = useState<boolean>(isLiked);
   // const [reviews, setReviews] = useState(REVIEWDUMMY);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
   // const requestReviews = async (themeId: number) => {
@@ -57,42 +57,50 @@ export default function DetailModal({
   //   }
   // };
 
-  // const postLikes = async (themeId: number) => {
-  //   if (themeId !== 0) {
-  //     try {
-  //       await postInterest(themeId);
-  //       setIsLiked(true);
-  //       console.log("POST SUCCESS");
-  //     } catch (err) {
-  //       console.log(err);
-  //       console.log("POST FAILED");
-  //     }
-  //   }
-  // };
+  const postLikes = async (themeId: number) => {
+    if (themeId !== 0) {
+      try {
+        await postInterest(themeId);
+        setIsLikedChecked(true);
+        console.log("POST SUCCESS");
+      } catch (err) {
+        console.log(err);
+        console.log("POST FAILED");
+      }
+    }
+  };
 
-  // const deleteLikes = async (themeId: number) => {
-  //   try {
-  //     await deleteInterest(themeId);
-  //     setIsLiked(false);
-  //     console.log("DELETE SUCCESS");
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  useEffect(() => {
-    // isLogin && requestIsLiked(themeId);
-    // requestReviews(themeId);
-  }, []);
+  const deleteLikes = async (themeId: number) => {
+    try {
+      await deleteInterest(themeId);
+      setIsLikedChecked(false);
+      console.log("DELETE SUCCESS");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleClick = async (
     type: IToastProps["type"],
     message: IToastProps["message"]
   ) => {
     showToast({ type, message });
-    // setIsLiked((prev) => !prev);
+  };
+
+  const handleDeleteLikes = async () => {
     try {
-      console.log(isLiked);
-      // !isLiked ? postLikes(themeId) : deleteLikes(themeId);
+      await deleteLikes(themeId);
+      setIsLikedChecked(false);
+      handleClick("error", "좋아요 해제 완료");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handlePostLikes = async () => {
+    try {
+      await postLikes(themeId);
+      setIsLikedChecked(true);
+      handleClick("success", "좋아요 등록 성공!");
     } catch (err) {
       console.log(err);
     }
@@ -180,11 +188,7 @@ export default function DetailModal({
                 />
               )}
               {isLogin && isLiked && (
-                <LikeButton
-                  onClick={() =>
-                    handleClick("error", "관심 등록이 해제되었습니다.")
-                  }
-                >
+                <LikeButton onClick={() => handleDeleteLikes}>
                   <FavoriteIcon />
                   <span> 관심 해제하기</span>
                 </LikeButton>
@@ -197,7 +201,7 @@ export default function DetailModal({
                   <LikesModal
                     childOpen={childOpen}
                     handleClose={handleClose}
-                    handleClick={handleClick}
+                    handleClick={handlePostLikes}
                   />
                 </>
               )}
