@@ -64,15 +64,19 @@ public class ProfileController {
     @Operation(summary = "유저가 작성한 리뷰 목록 조회", description = "해당 유저가 작성한 리뷰 목록을 불러온다")
     @GetMapping("reviews/{userId}")
     private ResponseEntity<Map<String, Object>> getUserReviews(
+            @AuthenticationPrincipal User user,
             @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
 
         logger.info("[getUserReviews] request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
+        boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
         List<ReviewOfUserResponse> reviewOfThemeResponses = profileService.getUserReviews(userId);
 
+        resultMap.put("isMe", isMe);
         resultMap.put("reviews", reviewOfThemeResponses);
 
+        logger.info("[getUserReviews] response : isMe={}", isMe);
         logger.info("[getUserReviews] response : reviews={}", reviewOfThemeResponses);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -82,14 +86,18 @@ public class ProfileController {
     @Operation(summary = "유저의 장르 선호도를 조회", description = "해당 유저가 방문한 테마들의 장르별 방문횟수를 불러온다.")
     @GetMapping("preference/{userId}")
     private ResponseEntity<Map<String, Object>> getUserPreference(
+            @AuthenticationPrincipal User user,
             @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
         logger.info("[getUserPreference] request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
+        boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
         List<PreferenceResponse> preference = profileService.getUserPreference(userId);
 
+        resultMap.put("isMe", isMe);
         resultMap.put("preference", preference);
 
+        logger.info("[getUserPreference] response : isMe={}", isMe);
         logger.info("[getUserPreference] response : preference={}", preference);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -98,15 +106,19 @@ public class ProfileController {
     @Operation(summary = "유저의 관심 테마 목록 조회", description = "해당 유저가 관심 등록한 테마 목록을 불러온다")
     @GetMapping("interestThemes/{userId}")
     private ResponseEntity<Map<String, Object>> getUserInterestThemes(
+            @AuthenticationPrincipal User user,
             @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
 
         logger.info("[getUserInterest] request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
+        boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
         List<InterestThemeResponse> interestThemeResponses = profileService.getUserInterestThemes(userId);
 
+        resultMap.put("isMe", isMe);
         resultMap.put("interestThemes", interestThemeResponses);
 
+        logger.info("[getUserInterest] response : isMe={}", isMe);
         logger.info("[getUserInterest] response : interestThemes={}", interestThemeResponses);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -137,6 +149,10 @@ public class ProfileController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
+    /**
+     *  연관 관계를 모두 끊어주는 동작을 추가해야함
+     *
+     */
     @Operation(summary = "회원 탈퇴", description = "해당 유저의 회원 탈퇴를 진행한다")
     @DeleteMapping
     private ResponseEntity<Void> deleteUser(

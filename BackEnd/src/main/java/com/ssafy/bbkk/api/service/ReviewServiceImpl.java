@@ -26,6 +26,20 @@ public class ReviewServiceImpl implements ReviewService {
     private final ThemeRepository themeRepository;
 
     @Override
+    public boolean isMyReview(String email, int themeId) throws Exception {
+        boolean result;
+        // 이메일을 통해 유저를 불러온다
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
+        // 테마 id를 통해 테마를 불러온다.
+        Theme theme = themeRepository.findById(themeId)
+                .orElseThrow(() -> new Exception("해당 테마를 찾을 수 없습니다."));
+        // 유저 id와 테마 id를 통해 리뷰가 존재하는지 확인
+        result = reviewRepository.existsByUserIdAndThemeId(user.getId(), theme.getId());
+        return result;
+    }
+
+    @Override
     public void addReview(String email, CreateReviewRequest createReviewRequest) throws Exception {
         // email을 통해 유저 찾아오기
         User user = userRepository.findByEmail(email)
