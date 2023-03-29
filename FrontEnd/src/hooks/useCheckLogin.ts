@@ -6,7 +6,6 @@ import { CheckLoginUserResponse } from "types/auth";
  */
 export const useCheckLogin = () => {
   const { isLoginUser } = useLoaderData() as CheckLoginUserResponse;
-  console.log("isLoginUser", isLoginUser);
   const navigate = useNavigate();
   if (!isLoginUser) {
     navigate("/login");

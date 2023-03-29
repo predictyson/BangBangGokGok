@@ -6,10 +6,11 @@ import ProfileIcon from "@/assets/mypage/ProfileIcon.svg";
 import ReviewIcon from "@/assets/mypage/ReviewIcon.svg";
 import LikesIcon from "@/assets/mypage/LikesIcon.svg";
 import { handleAvatar } from "@/api/user";
+import { useLocation } from "react-router-dom";
 
 export default function LeftNavBar() {
-  const [selectedNavItem, setSelectedNavItem] = useState("profile");
-  console.log("selectedNavItem: ", selectedNavItem);
+  const { pathname } = useLocation();
+
   const navigate = useNavigate();
 
   const getProfileImageTypeFromLocalStorage = () => {
@@ -28,21 +29,6 @@ export default function LeftNavBar() {
     return nickname;
   };
 
-  const handleProfileClick = () => {
-    setSelectedNavItem("profile");
-    navigate("");
-  };
-
-  const handleReviewsClick = () => {
-    setSelectedNavItem("reviews");
-    navigate("reviews");
-  };
-
-  const handleLikesClick = () => {
-    setSelectedNavItem("likes");
-    navigate("likes");
-  };
-
   return (
     <Wrapper>
       <ProfileWrapper>
@@ -57,23 +43,20 @@ export default function LeftNavBar() {
         {/* <ProfileTitle>{userProfile.title}</ProfileTitle> */}
       </ProfileWrapper>
       <NavWrapper>
-        <NavItem
-          select={selectedNavItem === "profile"}
-          onClick={handleProfileClick}
-        >
+        <NavItem select={pathname === "/mypage"} onClick={() => navigate("")}>
           <NavItemImg src={ProfileIcon} />
           <div>Profile</div>
         </NavItem>
         <NavItem
-          select={selectedNavItem === "reviews"}
-          onClick={handleReviewsClick}
+          select={pathname === "/mypage/reviews"}
+          onClick={() => navigate("reviews")}
         >
           <NavItemImg src={ReviewIcon} />
           <span> Reviews</span>
         </NavItem>
         <NavItem
-          select={selectedNavItem === "likes"}
-          onClick={handleLikesClick}
+          select={pathname === "/mypage/likes"}
+          onClick={() => navigate("likes")}
         >
           <NavItemImg src={LikesIcon} />
           <span> Likes</span>
