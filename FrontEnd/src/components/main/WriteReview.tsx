@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import styled from "styled-components";
@@ -11,12 +11,6 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
 import { IDetailData, IPostData } from "types/detail";
 import { postReview } from "@/api/review";
-interface IRatingData {
-  rating: number;
-  difficulty: number;
-  fear: number;
-  activity: number;
-}
 
 interface IProps {
   childOpen: boolean;
@@ -30,64 +24,43 @@ export default function WriteReview({
   data,
   themeId,
 }: IProps) {
-  const [isSuccess, setIsSuccess] = useState<number>(0);
-  const [content, setContent] = useState<string>("");
-  const [rate, setRate] = useState<IRatingData>({
-    rating: 0.0,
-    difficulty: 0.0,
-    fear: 0.0,
-    activity: 0.0,
-  });
-
   const [postdata, setPostdata] = useState<IPostData>(initData);
 
   const handleTextareaChange = async (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     console.log("HANDLE TEXT CHANGE");
-    await setContent(event.target.value);
-    console.log(content);
+    await setPostdata({ ...postdata, content: event.target.value });
+    console.log(postdata.content);
   };
   const handleRatingChange = useCallback(
     async (e: React.SyntheticEvent<Element, Event>, value: number | null) => {
       console.log("HANDLE RATING CHANGE");
       const { name } = e.target as HTMLButtonElement;
-      await setRate((prevData) => ({
-        ...prevData,
-        [name]: value ?? 0,
-      }));
-      console.log(rate.rating);
-      console.log(rate.fear);
-      console.log(rate.activity);
-      console.log(rate.difficulty);
+      if (value !== null) {
+        await setPostdata((prevData) => ({
+          ...prevData,
+          [name]: value ?? 0,
+        }));
+      }
     },
-    [setRate, rate.rating]
+    [setPostdata]
   );
-  const handleValueChange = (
+  const handleValueChange = async (
     event: React.MouseEvent<HTMLElement>,
     newValue: number | null
   ) => {
     if (newValue !== null) {
-      setIsSuccess(newValue);
+      await setPostdata({ ...postdata, isSuccess: newValue });
     }
-    console.log(isSuccess);
+    console.log(postdata.isSuccess);
   };
 
   const sendReviewData = async () => {
     try {
-      const newPostData = {
-        themeId: themeId,
-        content: content,
-        userRating: rate.rating,
-        userActivity: rate.activity,
-        userFear: rate.fear,
-        userDifficulty: rate.difficulty,
-        isSuccess: isSuccess,
-      };
-      console.log(newPostData);
-      setPostdata(newPostData);
-      console.log(postdata);
-      const res = await postReview(newPostData);
+      await setPostdata({ ...postdata, themeId: themeId });
+      console.log(postdata.themeId);
+      const res = await postReview(postdata);
       console.log(res.data);
       setPostdata(initData);
     } catch (err) {
@@ -99,31 +72,36 @@ export default function WriteReview({
     e.preventDefault();
     console.log(postdata);
     await sendReviewData();
-    handleClose();
+    await handleClose();
   };
+
+  useEffect(() => {
+    setPostdata({ ...postdata, themeId: themeId });
+    postdata.themeId !== 0 && sendReviewData();
+  }, [themeId]);
 
   const ratings: RatingProps[] = [
     {
-      name: "rating",
+      name: "userRating",
       emptyLabelText: "후기 평점",
       defaultValue: 0,
-      value: rate["rating"] ?? 0,
+      value: postdata.userRating ?? 0,
     },
     {
-      name: "difficulty",
+      name: "userDifficulty",
       emptyLabelText: "체감 난이도",
       defaultValue: 0,
-      value: rate["difficulty"] ?? 0,
+      value: postdata.userDifficulty ?? 0,
     },
     {
-      name: "fear",
+      name: "userFear",
       emptyLabelText: "체감 공포도",
-      value: rate["fear"] ?? 0,
+      value: postdata.userFear ?? 0,
     },
     {
-      name: "activity",
+      name: "userActivity",
       emptyLabelText: "체감 활동성",
-      value: rate["activity"] ?? 0,
+      value: postdata.userActivity ?? 0,
     },
   ];
   return (
@@ -145,7 +123,7 @@ export default function WriteReview({
             <div className="info">
               성공 여부 &nbsp;&nbsp;
               <ToggleButtonGroup
-                value={isSuccess}
+                value={postdata.isSuccess}
                 exclusive
                 onChange={handleValueChange}
               >
@@ -186,7 +164,7 @@ export default function WriteReview({
             </RatingWrapper>
             <form>
               <CustomText
-                value={content}
+                value={postdata.content}
                 onChange={handleTextareaChange}
                 maxLength={500}
               />
@@ -328,7 +306,7 @@ const WriteButton = styled.div`
 `;
 
 const initData: IPostData = {
-  themeId: 1, // 테마 id
+  themeId: 0, // 테마 id
   content: "", // 리뷰 내용
   userRating: 0.0, // 평점
   userActivity: 0.0, // 활동성
