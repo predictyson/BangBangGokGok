@@ -10,6 +10,8 @@ import com.ssafy.bbkk.db.entity.User;
 import com.ssafy.bbkk.db.repository.ReviewRepository;
 import com.ssafy.bbkk.db.repository.ThemeRepository;
 import com.ssafy.bbkk.db.repository.UserRepository;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +51,9 @@ public class ReviewServiceImpl implements ReviewService {
         result = theme.getReviews().stream()
                 .map(x -> new ReviewOfThemeResponse(x))
                 .collect(Collectors.toList());
+        Collections.sort(result,(o1,o2) -> {
+            return o1.getCreateTime().isBefore(o2.getCreateTime()) ? 1 : -1;
+        });
         return result;
     }
 
