@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -111,13 +114,17 @@ public class ProfileController {
 
     @Operation(summary = "유저의 정보 수정", description = "해당 유저의 프로필 정보를 수정한다")
     @PutMapping
-    private ResponseEntity<Map<String, Object>> setUserInfo(
-            @AuthenticationPrincipal User user,
-            @RequestBody UpdateUserInfoRequest updateUserInfoRequest) throws Exception {
-
+    private ResponseEntity<Map<String, Object>> setUserInfo(@AuthenticationPrincipal User user,
+            @RequestBody @Valid UpdateUserInfoRequest updateUserInfoRequest, Errors errors) throws Exception {
         logger.info("[setUserInfo] request : updateUserInfoRequest={}", updateUserInfoRequest);
 
+        // UpdateUserInfoRequest 입력값 유효성 검사
+        for (FieldError error : errors.getFieldErrors())
+            throw new Exception(error.getDefaultMessage());
+        updateUserInfoRequest.validation();
+
         Map<String, Object> resultMap = new HashMap<>();
+
         profileService.setUserInfo(updateUserInfoRequest);
         UserInfoResponse userInfoResponse = profileService.getUserInfoByUserId(updateUserInfoRequest.getUserId());
 
