@@ -43,6 +43,7 @@ export default function EmailSection() {
     } else {
       try {
         const { data: isExisted } = await requestSendEmail(email);
+        // console.log(isExisted + " " + typeof isExisted);
         if (isExisted) {
           handleToastClick("success", "5분간 유효한 코드가 전송되었습니다.");
         } else {

@@ -5,7 +5,9 @@ import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { IThemeData } from "types/slider";
 import Modal from "@components/main/Modal";
-import { IDetailData } from "types/detail";
+import { IDetailData, IReviewData } from "types/detail";
+import { getIsLiked } from '@/api/likes';
+import { getReviews } from '@/api/review';
 
 export default function ThemeRecSection({
   userList,
@@ -23,13 +25,41 @@ export default function ThemeRecSection({
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
   const [data, setData] = useState<IDetailData>(initData);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
+
   const handleOpen = async (themeId: number) => {
     await setThemeId(themeId);
     await requestDetailData(themeId);
+    await requestReviews(themeId);
+    await requestIsLiked(themeId);
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const requestIsLiked = async (themeId: number) => {
+    if (themeId !== 0) {
+      try {
+        const res = await getIsLiked(themeId);
+        setIsLiked(res.data.isInterest);
+        console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const requestReviews = async (themeId: number) => {
+    if (themeId !== 0) {
+      try {
+        const res = await getReviews(themeId);
+        themeId !== 0 && setReviews(res.data.reviews);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   const handleResult = async () => {
@@ -64,6 +94,12 @@ export default function ThemeRecSection({
     }
   };
 
+  const handleReviews = async (review: IReviewData) => {
+    await setReviews((prev) => {
+      return [...prev, review];
+    });
+  };
+
   return (
     <Container>
       {!isShow && (
@@ -94,11 +130,17 @@ export default function ThemeRecSection({
               </SliderItem>
             );
           })}
+          {/* reviews={reviews}
+          isLiked={isLiked}
+          handleReviews={handleReviews} */}
           <Modal
             open={open}
             onClose={handleClose}
             themeId={themeId}
             data={data}
+            reviews={reviews}
+            isLiked={isLiked}
+            handleReviews={handleReviews}
           />
         </BottomContainer>
       )}
@@ -230,3 +272,18 @@ const initData: IDetailData = {
   userCnt: 8, // 평가 인원
   isInterested: false,
 };
+
+const REVIEWDUMMY: IReviewData[] = [
+  {
+    userId: 1,
+    nickname: "",
+    reviewId: 1,
+    content: "너무너무 재밌어요 눈물나요",
+    userRating: 4.2,
+    userActivity: 3.3,
+    userFear: 4.4,
+    userDifficulty: 2.2,
+    createTime: "2023-03-13",
+    isSuccess: 0, // 1: 성공 0 : 실파
+  },
+];

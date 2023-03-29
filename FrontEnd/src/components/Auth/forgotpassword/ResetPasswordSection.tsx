@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import Toast, { showToast } from "@/components/common/Toast";
 import { useLocation } from "react-router-dom";
 import { IUserInfo } from "types/auth";
-import { requestChangePassword } from "@/api/auth";
+import { passwordValidCheck, requestChangePassword } from "@/api/auth";
 
 export default function ResetPasswordSection() {
   const navigate = useNavigate();
@@ -20,6 +20,8 @@ export default function ResetPasswordSection() {
     const target = e.target as HTMLInputElement;
     const name = target.name;
     const value = target.value;
+
+    console.log(passwordValidCheck(value));
 
     if (name === "password") setPassword(value);
     else if (name === "passwordValid") {
@@ -48,7 +50,7 @@ export default function ResetPasswordSection() {
       };
       try {
         const response = await requestChangePassword(userData);
-        
+
         if (response.status === 200) {
           handleToastClick("success", "비밀번호가 변경되었습니다.");
           setTimeout(() => {
@@ -65,7 +67,6 @@ export default function ResetPasswordSection() {
       handleToastClick("error", "새 비밀번호를 확인해주세요.");
     }
   };
-  
 
   return (
     <Container>

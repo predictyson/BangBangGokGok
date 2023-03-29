@@ -42,7 +42,7 @@ export default function LoginSection() {
       const {
         data: {
           token: { refreshToken, accessToken },
-          user: { nickname, userId },
+          user: { nickname, userId, profileImageType },
         },
       } = await requestLogin(user);
       console.log(refreshToken);
@@ -60,6 +60,7 @@ export default function LoginSection() {
       });
       localStorage.setItem("nickname", nickname);
       localStorage.setItem("userId", userId);
+      localStorage.setItem("profileImageType", profileImageType);
       navigate("/");
     } catch (err) {
       console.log(err);
