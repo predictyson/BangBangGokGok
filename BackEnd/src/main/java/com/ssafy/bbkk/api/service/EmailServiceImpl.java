@@ -61,21 +61,6 @@ public class EmailServiceImpl implements EmailService{
         message.setSubject("[방방곡곡] 비밀번호 찾기 안내 메일"); //제목
 
         String msgg="";
-//        msgg+= "<div style='margin:20px;'>";
-//        msgg+= "<p><strong>방방곡곡 비밀번호 찾기 안내 메일 </strong></p>";
-//        msgg+= "<br>";
-//        msgg+= "<p>안녕하세요. <p>";
-//        msgg+= "<p>방방곡곡(bbkk.store) 서비스 입니다.<p>";
-//        msgg+= "<br>";
-//        msgg+= "<p>아래 코드를 복사해 입력해주세요.<p>";
-//        msgg+= "<br>";
-//        msgg+= "<p>비밀번호 찾기 코드 : <strong>" + ePw + "</strong></p> ";
-//        msgg+= "<br>";
-//        msgg+= "<p>감사합니다.<p>";
-//        msgg+= "<br>";
-//        msgg+= "</div>";
-
-        msgg += "<!-- 회색 배경 -->";
         msgg += "<table";
         msgg += "  border='0'";
         msgg += "  cellpadding='0'";
@@ -92,7 +77,6 @@ public class EmailServiceImpl implements EmailService{
         msgg += "  <tbody style='display: block; max-width: 600px; margin: 0 auto'>";
         msgg += "    <tr width='100%' style='display: block'>";
         msgg += "      <td width='100%' style='display: block'>";
-        msgg += "        <!-- 본문 -->";
         msgg += "        <table";
         msgg += "          width='100%'";
         msgg += "          border='0'";
@@ -109,7 +93,6 @@ public class EmailServiceImpl implements EmailService{
         msgg += "          class='container'";
         msgg += "        >";
         msgg += "          <tbody style='display: block'>";
-        msgg += "            <!-- BIGPICTURE 로고 -->";
         msgg += "            <tr>";
         msgg += "              <td";
         msgg += "                style='padding-bottom: 32px; font-size: 20px; font-weight: bold'";
@@ -130,11 +113,8 @@ public class EmailServiceImpl implements EmailService{
         msgg += "                방방곡곡 비밀번호 찾기 안내 메일";
         msgg += "              </td>";
         msgg += "            </tr>";
-        msgg += "            <!-- 본문 제목 -->";
         msgg += "            <tr></tr>";
-        msgg += "            <!-- 본문 내용 -->";
         msgg += "            <tr></tr>";
-        msgg += "            <!-- 본문 컨텐츠 영역 -->";
         msgg += "            <tr width='100%' style='display: block; margin-bottom: 32px'>";
         msgg += "              <td width='100%' style='display: block'>";
         msgg += "                <table";
@@ -160,7 +140,7 @@ public class EmailServiceImpl implements EmailService{
         msgg += "                      </td>";
         msgg += "                      <td>";
         msgg += "                        <p>아래 코드를 복사해 입력해주세요.</p>";
-        msgg += "                        <p>비밀번호 찾기 코드 : <b>123</b></p>";
+        msgg += "                        <p>비밀번호 찾기 코드 : <b>"+ePw+"</b></p>";
         msgg += "                        <p>감사합니다.</p>";
         msgg += "                      </td>";
         msgg += "                    </tr>";
@@ -168,7 +148,6 @@ public class EmailServiceImpl implements EmailService{
         msgg += "                </table>";
         msgg += "              </td>";
         msgg += "            </tr>";
-        msgg += "            <!-- 발신전용 & 저작권 -->";
         msgg += "            <tr></tr>";
         msgg += "            <tr>";
         msgg += "              <td";
