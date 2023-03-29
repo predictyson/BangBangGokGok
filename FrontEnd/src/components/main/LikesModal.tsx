@@ -7,10 +7,7 @@ import { useNavigate } from "react-router-dom";
 interface IProps {
   childOpen: boolean;
   handleClose: () => void;
-  handleClick: (
-    type: IToastProps["type"],
-    message: IToastProps["message"]
-  ) => void;
+  handleClick: () => void;
 }
 export default function LikesModal({
   childOpen,
@@ -29,15 +26,10 @@ export default function LikesModal({
         <Box sx={{ ...style }}>
           <Container onClick={handleClose}>
             <iframe src="https://embed.lottiefiles.com/animation/4837"></iframe>
-            <h1>관심 목록에 추가하시겠습니까?</h1>
+            <h1>관심 목록에 추가하였습니다.</h1>
             <ButtonWrapper>
-              <CustomButton
-                className="post"
-                onClick={() =>
-                  handleClick("success", "관심 목록에 등록되었습니다.")
-                }
-              >
-                등록하기
+              <CustomButton className="post" onClick={() => handleClick()}>
+                확인
               </CustomButton>
               <CustomButton
                 className="mylist"

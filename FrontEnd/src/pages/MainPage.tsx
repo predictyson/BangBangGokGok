@@ -12,7 +12,7 @@ import {
   IAwardTheme,
   IThemeData,
 } from "types/slider";
-import { getThemeUser, getThemeGuest, getThemeAward } from "@/api/theme";
+import { getThemeUser, getThemeGuest } from "@/api/theme";
 
 export default function MainPage() {
   const [hotData, setHotData] = useState<IThemeData[]>(HotThemesData);
@@ -20,15 +20,16 @@ export default function MainPage() {
   const [awardData, setAwardData] = useState<IAwardSlider>(AwardThemesData);
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
-  const isLogin = true;
-
+  const isLogin = localStorage.getItem("userId") !== null ? true : false;
   const requestThemeUser = async () => {
     try {
       const res = await getThemeUser();
-      const { recommendThemes, hotThemes, topThemes } = res.data;
+      const { recommendThemes, hotThemes, topThemes, awardThemes } = res.data;
+      console.log(res.data);
       setRecommendData(recommendThemes);
       setHotData(hotThemes);
       setTopData(topThemes);
+      setAwardData(awardThemes);
     } catch (err) {
       throw new Error("Internal Server Error ");
     }
@@ -45,27 +46,19 @@ export default function MainPage() {
     }
   };
 
-  const requestThemeAward = async () => {
-    try {
-      const res = await getThemeAward();
-      setAwardData(res.data);
-    } catch (err) {
-      throw new Error("Internal Server Error");
-    }
-  };
   useEffect(() => {
-    requestThemeGuest();
+    isLogin ? requestThemeUser() : requestThemeGuest();
   }, []);
   return (
     <Container>
       <Header />
       <div className="box">
-        {isLogin && <Banner />}
-        {/* {!isLogin && (
+        {!isLogin && <Banner />}
+        {isLogin && (
           <RecommendWrapper>
             <BasicSlider isRecommendSlider={true} topData={recommendData} />
           </RecommendWrapper>
-        )} */}
+        )}
         <RankSlider data={hotData} />
         <BasicSlider isRecommendSlider={false} topData={topData} />
         <AwardsSlider awardData={awardData} />
@@ -321,7 +314,7 @@ const AwardThemesData: IAwardSlider = {
 };
 const RecommendThemesData: ISliderData[] = [
   {
-    label: "GG님을 위한 방탈출 테마 추천",
+    label: "님을 위한 방탈출 테마 추천",
     themes: [
       {
         themeId: 1,
@@ -374,7 +367,7 @@ const RecommendThemesData: ISliderData[] = [
     ],
   },
   {
-    label: "GG님과 비슷한 유저들이 방문한 테마 추천",
+    label: "님과 비슷한 유저들이 방문한 테마 추천",
     themes: [
       {
         themeId: 1,

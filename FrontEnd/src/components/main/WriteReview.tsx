@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import styled from "styled-components";
@@ -9,105 +9,132 @@ import ToggleButton from "@mui/material/ToggleButton";
 import { styled as mstyled } from "@mui/material/styles";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
-import { IDetailData, IPostData } from "types/detail";
+import { IDetailData, IPostData, IReviewData } from "types/detail";
 import { postReview } from "@/api/review";
-interface IRatingData {
-  rating: number;
-  difficulty: number;
-  fear: number;
-  activity: number;
-}
-
 interface IProps {
   childOpen: boolean;
   handleClose: () => void;
   data: IDetailData;
   themeId: number;
+  handleReviews: (review: IReviewData) => Promise<void>;
 }
 export default function WriteReview({
   childOpen,
   handleClose,
   data,
   themeId,
+  handleReviews,
 }: IProps) {
-  const [isSuccess, setIsSuccess] = useState<string>("false");
-  const [content, setContent] = useState<string>("");
-  const [rate, setRate] = useState<IRatingData>({
-    rating: 0.0,
-    difficulty: 0.0,
-    fear: 0.0,
-    activity: 0.0,
-  });
-
   const [postdata, setPostdata] = useState<IPostData>(initData);
 
-  const handleTextareaChange = (
+  const handleTextareaChange = async (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setContent(event.target.value);
-    console.log(content);
+    console.log("HANDLE TEXT CHANGE");
+    await setPostdata({ ...postdata, content: event.target.value });
+    console.log(postdata.content);
   };
-  const handleValueChange = (
+  const handleRatingChange = useCallback(
+    async (e: React.SyntheticEvent<Element, Event>, value: number | null) => {
+      console.log("HANDLE RATING CHANGE");
+      const { name } = e.target as HTMLButtonElement;
+      if (value !== null) {
+        await setPostdata((prevData) => ({
+          ...prevData,
+          [name]: value ?? 0,
+        }));
+      }
+    },
+    [setPostdata]
+  );
+  const handleValueChange = async (
     event: React.MouseEvent<HTMLElement>,
-    newValue: string | null
+    newValue: number | null
   ) => {
     if (newValue !== null) {
-      setIsSuccess(newValue);
+      await setPostdata({ ...postdata, isSuccess: newValue });
     }
+    console.log(postdata.isSuccess);
   };
-  const handleRatingChange = (
-    e: React.SyntheticEvent<Element, Event>,
-    value: number | null
-  ) => {
-    const { name } = e.target as HTMLButtonElement;
-    setRate((prevData) => ({
-      ...prevData,
-      [name]: value ?? 0,
-    }));
+
+  const sendReviewData = async () => {
+    try {
+      // await setPostdata({ ...postdata, themeId: themeId });
+      const dataToSend = { ...postdata, themeId: themeId };
+      console.log(dataToSend.themeId);
+      const res = await postReview(dataToSend);
+      console.log(res.data);
+      setPostdata(initData);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    setPostdata({
-      themeId: 1,
-      content: content,
-      userRating: rate.rating,
-      userActivity: rate.activity,
-      userFear: rate.fear,
-      userDifficulty: rate.difficulty,
-      isSuccess: isSuccess === "true" ? 1 : 0,
-    });
-    try {
-      const res = await postReview(postdata);
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
+    console.log(postdata);
     handleClose();
+    await sendReviewData();
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    const formattedDate =
+      year +
+      "-" +
+      (month < 10 ? "0" : "") +
+      month +
+      "-" +
+      (day < 10 ? "0" : "") +
+      day;
+
+    const reviewData: IReviewData = {
+      userId: Number(localStorage.getItem("userId")),
+      nickname: localStorage.getItem("nickname")?.toString(),
+      reviewId: 1,
+      content: postdata.content,
+      userRating: postdata.userRating,
+      userActivity: postdata.userActivity,
+      userFear: postdata.userFear,
+      userDifficulty: postdata.userDifficulty,
+      createTime: formattedDate,
+      isSuccess: postdata.isSuccess,
+    };
+
+    await handleReviews(reviewData);
   };
+
+  useEffect(() => {
+    if (postdata.themeId !== 0) {
+      sendReviewData();
+      // setPostdata({ ...postdata, themeId: themeId });
+      // postdata.themeId !== 0 && sendReviewData();
+    }
+  }, [postdata.themeId]);
 
   const ratings: RatingProps[] = [
     {
-      name: "rating",
+      name: "userRating",
       emptyLabelText: "후기 평점",
       defaultValue: 0,
-      value: rate["rating"] ?? 0,
+      value: postdata.userRating ?? 0,
     },
     {
-      name: "difficulty",
+      name: "userDifficulty",
       emptyLabelText: "체감 난이도",
       defaultValue: 0,
-      value: rate["difficulty"] ?? 0,
+      value: postdata.userDifficulty ?? 0,
     },
     {
-      name: "fear",
+      name: "userFear",
       emptyLabelText: "체감 공포도",
-      value: rate["fear"] ?? 0,
+      value: postdata.userFear ?? 0,
     },
     {
-      name: "activity",
+      name: "userActivity",
       emptyLabelText: "체감 활동성",
-      value: rate["activity"] ?? 0,
+      value: postdata.userActivity ?? 0,
     },
   ];
   return (
@@ -129,12 +156,12 @@ export default function WriteReview({
             <div className="info">
               성공 여부 &nbsp;&nbsp;
               <ToggleButtonGroup
-                value={isSuccess}
+                value={postdata.isSuccess}
                 exclusive
                 onChange={handleValueChange}
               >
-                <CustomToggleButton value="success">성공</CustomToggleButton>
-                <CustomToggleButton value="fail">실패</CustomToggleButton>
+                <CustomToggleButton value={1}>성공</CustomToggleButton>
+                <CustomToggleButton value={0}>실패</CustomToggleButton>
               </ToggleButtonGroup>
             </div>
           </InfoBox>
@@ -169,7 +196,11 @@ export default function WriteReview({
               ))}
             </RatingWrapper>
             <form>
-              <CustomText value={content} onChange={handleTextareaChange} />
+              <CustomText
+                value={postdata.content}
+                onChange={handleTextareaChange}
+                maxLength={500}
+              />
             </form>
           </ReviewBox>
           <ButtonWrapper>
@@ -308,7 +339,7 @@ const WriteButton = styled.div`
 `;
 
 const initData: IPostData = {
-  themeId: 1, // 테마 id
+  themeId: 0, // 테마 id
   content: "", // 리뷰 내용
   userRating: 0.0, // 평점
   userActivity: 0.0, // 활동성

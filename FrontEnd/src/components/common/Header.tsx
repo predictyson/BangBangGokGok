@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 export default function Header() {
   const navigate = useNavigate();
-  const isLogin = false;
-  const username = "나는야 상기";
+  const isLogin = localStorage.getItem("userId") !== null ? true : false;
+  // const username = localStorage.getItem("username");
   return (
     <Container>
       <div className="left-container">

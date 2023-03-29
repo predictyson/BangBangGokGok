@@ -13,6 +13,7 @@ interface IProps {
   data: IDetailData;
   themeId: number;
   reviews: IReviewData[];
+  handleReviews: (review: IReviewData) => Promise<void>;
 }
 interface IBarData {
   labels: string[];
@@ -25,7 +26,12 @@ interface IBarData {
   }[];
 }
 
-export default function Review({ data, themeId, reviews }: IProps) {
+export default function Review({
+  data,
+  themeId,
+  reviews,
+  handleReviews,
+}: IProps) {
   const CHARTDATA = [data.userActivity, data.userFear, data.userDifficulty];
 
   const BARDATA: IBarData = {
@@ -63,6 +69,7 @@ export default function Review({ data, themeId, reviews }: IProps) {
           handleClose={handleClose}
           childOpen={childOpen}
           data={data}
+          handleReviews={handleReviews}
         />
       </Header>
       <img

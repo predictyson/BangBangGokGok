@@ -7,8 +7,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ISliderData, IThemeData } from "types/slider";
 import Modal from "./Modal";
-import { IDetailData } from "types/detail";
+import { IReviewData, IDetailData } from "types/detail";
 import { getDetail } from "@/api/theme";
+import { getReviews } from "@/api/review";
+import { getIsLiked } from "@/api/likes";
 interface IProps {
   topData: ISliderData[];
   isRecommendSlider: boolean;
@@ -17,16 +19,47 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
   interface ArrowProps extends CustomArrowProps {
     onClick?: MouseEventHandler<HTMLDivElement>;
   }
+  const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [data, setData] = useState<IDetailData>(initData);
   const handleOpen = async (themeId: number) => {
     await setThemeId(themeId);
     await requestDetailData(themeId);
+    await requestReviews(themeId);
+    await requestIsLiked(themeId);
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleReviews = async (review: IReviewData) => {
+    await setReviews((prev) => {
+      return [...prev, review];
+    });
+  };
+  const requestIsLiked = async (themeId: number) => {
+    if (themeId !== 0) {
+      try {
+        const res = await getIsLiked(themeId);
+        setIsLiked(res.data.isInterest);
+        console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const requestReviews = async (themeId: number) => {
+    if (themeId !== 0) {
+      try {
+        const res = await getReviews(themeId);
+        themeId !== 0 && setReviews(res.data.reviews);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   const CustomPrevArrow: FC<ArrowProps> = ({ className, onClick }) => {
@@ -65,12 +98,14 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
     responsive: BREAKPOINT,
   };
   const requestDetailData = async (themeId: number) => {
-    try {
-      const res = await getDetail(themeId);
-      setData(res.data.theme);
-      console.log(res.data.theme);
-    } catch (err) {
-      throw new Error("Internal Server Error!");
+    if (themeId !== 0) {
+      try {
+        const res = await getDetail(themeId);
+        setData(res.data.theme);
+        console.log(res.data.theme);
+      } catch (err) {
+        throw new Error("Internal Server Error!");
+      }
     }
   };
 
@@ -79,7 +114,9 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
       {topData.map((item, idx) => (
         <>
           {isRecommendSlider ? (
-            <RecommendTitle className="recommend">{item.label}</RecommendTitle>
+            <RecommendTitle className="recommend">
+              {localStorage.getItem("nickname") + item.label}
+            </RecommendTitle>
           ) : (
             <TitleWrapper>
               <Icon src={ICONLIST[idx]} alt="icon" />
@@ -107,6 +144,9 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
               onClose={handleClose}
               themeId={themeId}
               data={data}
+              reviews={reviews}
+              isLiked={isLiked}
+              handleReviews={handleReviews}
             />
           )}
         </>
@@ -263,3 +303,30 @@ const initData: IDetailData = {
   userCnt: 8, // 평가 인원
   isInterested: false,
 };
+
+const REVIEWDUMMY: IReviewData[] = [
+  {
+    userId: 1,
+    nickname: "",
+    reviewId: 1,
+    content: "너무너무 재밌어요 눈물나요",
+    userRating: 4.2,
+    userActivity: 3.3,
+    userFear: 4.4,
+    userDifficulty: 2.2,
+    createTime: "2023-03-13",
+    isSuccess: 0, // 1: 성공 0 : 실파
+  },
+  {
+    userId: 1,
+    nickname: "",
+    reviewId: 1,
+    content: "너무너무 재밌어요 눈물나요",
+    userRating: 4.2,
+    userActivity: 3.3,
+    userFear: 4.4,
+    userDifficulty: 2.2,
+    createTime: "2023-03-13",
+    isSuccess: 1, // 1: 성공 0 : 실파
+  },
+];

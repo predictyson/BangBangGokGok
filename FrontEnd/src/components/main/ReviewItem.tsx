@@ -20,7 +20,7 @@ export default function ReviewItem({ data }: IProps) {
       <ReviewBox>
         <Header>
           <div className="left-wrapper">
-            {/* {data.user.nickname} */}
+            {data.nickname}
             {data.isSuccess ? (
               <>
                 <Badge className="green">성공</Badge>
@@ -38,7 +38,7 @@ export default function ReviewItem({ data }: IProps) {
             후기 평점
             <Rating
               name="readonly"
-              value={Math.round(data.userRating)}
+              value={data.userRating}
               style={{ marginLeft: "1rem" }}
               size="large"
               precision={0.5}
@@ -49,7 +49,7 @@ export default function ReviewItem({ data }: IProps) {
             체감 난이도
             <Rating
               name="readonly"
-              value={Math.round(data.userDifficulty)}
+              value={data.userDifficulty}
               style={{ marginLeft: "1rem" }}
               size="large"
               precision={0.5}
@@ -60,7 +60,7 @@ export default function ReviewItem({ data }: IProps) {
             체감 공포도
             <Rating
               name="readonly"
-              value={Math.round(data.userFear)}
+              value={data.userFear}
               style={{ marginLeft: "1rem" }}
               size="large"
               precision={0.5}
@@ -71,7 +71,7 @@ export default function ReviewItem({ data }: IProps) {
             체감 활동성
             <Rating
               name="readonly"
-              value={Math.round(data.userActivity)}
+              value={data.userActivity}
               style={{ marginLeft: "1rem" }}
               size="large"
               precision={0.5}
@@ -86,8 +86,11 @@ export default function ReviewItem({ data }: IProps) {
 }
 
 const Content = styled.div`
-  margin-top: 1rem;
-  font-size: 1.4rem;
+  margin-top: 1.2rem;
+  font-size: 1.6rem;
+  /* border: solid 1px darkgray;
+  padding: 2rem;
+  border-radius: 1rem; */
 `;
 const RatingWrapper = styled.div`
   margin-top: 1rem;
@@ -111,7 +114,7 @@ const Header = styled.div`
   display: flex;
   color: white;
   justify-content: space-between;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   align-items: center;
   .time-left {
     margin-left: 1.5rem;

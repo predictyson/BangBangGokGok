@@ -12,55 +12,105 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LikesModal from "./LikesModal";
 import { IReviewData, IDetailData } from "types/detail";
-import { postInterest, deleteInterest } from "@/api/likes";
+import { postInterest, deleteInterest, getIsLiked } from "@/api/likes";
 import { getReviews } from "@/api/review";
 interface IProps {
   open: boolean;
   onClose: () => void;
   themeId: number;
   data: IDetailData;
+  reviews: IReviewData[];
+  isLiked: boolean;
+  handleReviews: (review: IReviewData) => Promise<void>;
 }
 
-export default function DetailModal({ open, onClose, themeId, data }: IProps) {
+export default function DetailModal({
+  open,
+  onClose,
+  themeId,
+  data,
+  reviews,
+  isLiked,
+  handleReviews,
+}: IProps) {
   const [childOpen, setchildOpen] = React.useState(false);
-  const [isLiked, setIsLiked] = useState(0);
-  const [reviews, setReviews] = useState(REVIEWDUMMY);
+  const [isLikedChecked, setIsLikedChecked] = useState<boolean>(isLiked);
+  // const [reviews, setReviews] = useState(REVIEWDUMMY);
+  const isLogin = localStorage.getItem("userId") !== null ? true : false;
+  // const requestReviews = async (themeId: number) => {
+  //   if (themeId !== 0) {
+  //     try {
+  //       const res = await getReviews(themeId);
+  //       themeId !== 0 && setReviews(res.data.reviews);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
+  // const requestIsLiked = async (themeId: number) => {
+  //   if (themeId !== 0) {
+  //     try {
+  //       const res = await getIsLiked(themeId);
+  //       setIsLiked(res.data.isInterest);
+  //       console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
 
-  const requestReviews = async (themeId: number) => {
+  const postLikes = async (themeId: number) => {
+    if (themeId !== 0) {
+      try {
+        await postInterest(themeId);
+        setIsLikedChecked(true);
+        console.log("POST SUCCESS");
+      } catch (err) {
+        console.log(err);
+        console.log("POST FAILED");
+      }
+    }
+  };
+
+  const deleteLikes = async (themeId: number) => {
     try {
-      const res = await getReviews(themeId);
-      setReviews(res.data.reviews);
-      console.log(res.data.reviews);
+      await deleteInterest(themeId);
+      setIsLikedChecked(false);
+      console.log("DELETE SUCCESS");
     } catch (err) {
       console.log(err);
     }
   };
-  useEffect(() => {
-    requestReviews(themeId);
-  }, [themeId]);
-  // requestReviews(themeId);
-  // requestDetailData(themeId);
 
   const handleClick = async (
     type: IToastProps["type"],
     message: IToastProps["message"]
   ) => {
     showToast({ type, message });
-    // setIsLiked((prev) => !prev);
-    // try {
-    //   const res = isLiked
-    //     ? await postInterest(themeId)
-    //     : await deleteInterest(themeId);
-    //   console.log(res.data);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+  };
+
+  const handleDeleteLikes = async () => {
+    try {
+      await deleteLikes(themeId);
+      setIsLikedChecked(false);
+      handleClick("error", "좋아요 해제 완료");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handlePostLikes = async () => {
+    try {
+      await postLikes(themeId);
+      setIsLikedChecked(true);
+      handleClick("success", "좋아요 등록 성공!");
+    } catch (err) {
+      console.log(err);
+    }
   };
   const handleOpen = () => {
     setchildOpen(true);
   };
   const handleClose = () => {
-    console.log("cLOSE");
     setchildOpen(false);
   };
   return (
@@ -139,16 +189,13 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
                   readOnly
                 />
               )}
-              {isLiked ? (
-                <LikeButton
-                  onClick={() =>
-                    handleClick("error", "관심 등록이 해제되었습니다.")
-                  }
-                >
+              {isLogin && isLiked && (
+                <LikeButton onClick={() => handleDeleteLikes}>
                   <FavoriteIcon />
                   <span> 관심 해제하기</span>
                 </LikeButton>
-              ) : (
+              )}
+              {isLogin && !isLiked && (
                 <>
                   <LikeButton onClick={handleOpen}>
                     <FavoriteBorderIcon /> <span> 관심 등록하기</span>
@@ -156,7 +203,7 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
                   <LikesModal
                     childOpen={childOpen}
                     handleClose={handleClose}
-                    handleClick={handleClick}
+                    handleClick={handlePostLikes}
                   />
                 </>
               )}
@@ -167,7 +214,12 @@ export default function DetailModal({ open, onClose, themeId, data }: IProps) {
         <Synopsis>
           <pre>{data.synopsis}</pre>
         </Synopsis>
-        <Review data={data} themeId={themeId} reviews={reviews} />
+        <Review
+          data={data}
+          themeId={themeId}
+          reviews={reviews}
+          handleReviews={handleReviews}
+        />
       </Box>
     </Modal>
   );
@@ -317,7 +369,8 @@ const USERDUMMY: IUserData = {
 };
 const REVIEWDUMMY: IReviewData[] = [
   {
-    user: USERDUMMY,
+    userId: 1,
+    nickname: "",
     reviewId: 1,
     content: "너무너무 재밌어요 눈물나요",
     userRating: 4.2,
@@ -326,10 +379,10 @@ const REVIEWDUMMY: IReviewData[] = [
     userDifficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 0, // 1: 성공 0 : 실파
-    record: "0:12:50", // 분.초
   },
   {
-    user: USERDUMMY,
+    userId: 1,
+    nickname: "",
     reviewId: 1,
     content: "너무너무 재밌어요 눈물나요",
     userRating: 4.2,
@@ -338,7 +391,6 @@ const REVIEWDUMMY: IReviewData[] = [
     userDifficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 1, // 1: 성공 0 : 실파
-    record: "0:12:50", // 분.초
   },
 ];
 const initData: IDetailData = {
