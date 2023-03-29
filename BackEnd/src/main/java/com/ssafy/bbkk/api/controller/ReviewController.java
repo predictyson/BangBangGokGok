@@ -51,10 +51,10 @@ public class ReviewController {
         createReviewRequest.validation();
 
         reviewService.addReview(user.getUsername(), createReviewRequest);
+        logger.info("[addReview] response : none");
 
         otherService.recCF(user.getUsername());
-
-        logger.info("[addReview] response : ");
+        logger.info("[addReview] response : recCF({})",user.getUsername());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -72,13 +72,13 @@ public class ReviewController {
         updateReviewRequest.validation();
 
         Map<String, Object> resultMap = new HashMap<>();
-        ReviewOfUserResponse reviewOfUserResponse = reviewService.setReview(user.getUsername(), updateReviewRequest);
 
+        ReviewOfUserResponse reviewOfUserResponse = reviewService.setReview(user.getUsername(), updateReviewRequest);
         resultMap.put("review", reviewOfUserResponse);
+        logger.info("[setReview] response : review={}", reviewOfUserResponse);
 
         otherService.recCF(user.getUsername());
-
-        logger.info("[setReview] response : review={}", reviewOfUserResponse);
+        logger.info("[setReview] response : recCF({})", user.getUsername());
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -93,27 +93,11 @@ public class ReviewController {
         logger.info("[deleteReview] request : reviewId={}", reviewId);
 
         reviewService.deleteReview(user.getUsername(), reviewId);
+        logger.info("[deleteReview] response : none");
 
         otherService.recCF(user.getUsername());
-
-        logger.info("[deleteReview] response : ");
+        logger.info("[deleteReview] response : recCF({})",user.getUsername());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
-
-//    @Operation(summary = "테마의 리뷰 목록 조회", description = "해당 테마의 리뷰 목록을 불러온다")
-//    @GetMapping("{themeId}")
-//    private ResponseEntity<Map<String, Object>> getReviews(
-//            @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int themeId) throws Exception {
-//        logger.info("[getReviews] request : themeId={}", themeId);
-//
-//        Map<String, Object> resultMap = new HashMap<>();
-//        List<ReviewOfThemeResponse> reviewOfThemeResponses = reviewService.getReviews(themeId);
-//
-//        resultMap.put("reviews", reviewOfThemeResponses);
-//
-//        logger.info("[getReviews] response : reviews={}", reviewOfThemeResponses);
-//
-//        return new ResponseEntity<>(resultMap, HttpStatus.OK);
-//    }

@@ -37,7 +37,6 @@ public class GroupSetController {
 
         List<PreviewUserResponse> previewUserResponses = groupSetService.getUserListByEmailOrNickname(emailOrNickname);
         resultMap.put("users",previewUserResponses);
-
         logger.info("[getUser] response : users={}", previewUserResponses);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);

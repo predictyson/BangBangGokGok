@@ -103,10 +103,9 @@ public class ThemeController {
         searchThemeRequest.validation();
 
         Map<String, Object> resultMap = new HashMap<>();
+
         List<PreviewThemeResponse> previewThemeResponses = themeService.getSearchThemes(searchThemeRequest);
-
         resultMap.put("themes", previewThemeResponses);
-
         logger.info("[searchedTheme] response : themes={}", previewThemeResponses);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -119,10 +118,9 @@ public class ThemeController {
         logger.info("[getThemeInfo] request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
+
         ThemeResponse themeResponse = themeService.getThemeInfo(themeId);
-
         resultMap.put("theme", themeResponse);
-
         logger.info("[getThemeInfo] response : theme={}", themeResponse);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -135,10 +133,9 @@ public class ThemeController {
         logger.info("[getReviewsOfTheme] request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
+
         List<ReviewOfThemeResponse> reviewOfThemeResponses = reviewService.getReviewsOfTheme(themeId);
-
         resultMap.put("reviews", reviewOfThemeResponses);
-
         logger.info("[getReviewsOfTheme] response : reviews={}", reviewOfThemeResponses);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);

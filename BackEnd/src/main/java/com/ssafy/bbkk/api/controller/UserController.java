@@ -54,12 +54,11 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
 
         TokenResponse tokenResponse = userService.login(loginRequest);
-        LoginResponse loginResponse = userService.getLoginUser(loginRequest.getEmail());
-
         resultMap.put("token", tokenResponse);
-        resultMap.put("user", loginResponse);
-
         logger.info("[login] response : token={}", tokenResponse);
+
+        LoginResponse loginResponse = userService.getLoginUser(loginRequest.getEmail());
+        resultMap.put("user", loginResponse);
         logger.info("[login] response : user={}", loginResponse);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -78,9 +77,7 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
 
         int userId = userService.join(joinRequest);
-
         resultMap.put("userId", userId);
-
         logger.info("[join] response : userId={}", userId);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -98,10 +95,10 @@ public class UserController {
 
         userService.setUserAdditionalInfo(joinAdditionalRequest);
         String email = userService.findUserEmailByUserId(joinAdditionalRequest.getUserId());
+        logger.info("[addInfo] response : none");
 
         otherService.recCBF(email);
-
-        logger.info("[addInfo] response : ");
+        logger.info("[addInfo] response : recCBF({})",email);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -112,13 +109,13 @@ public class UserController {
         logger.info("[oauthLogin] request : myEmail={}", user.getUsername());
 
         Map<String, Object> resultMap = new HashMap<>();
+
         String refreshToken = userService.oauthLogin(user.getUsername());
-        LoginResponse loginResponse = userService.getLoginUser(user.getUsername());
-
         resultMap.put("refreshToken", refreshToken);
-        resultMap.put("user", loginResponse);
-
         logger.info("[oauthLogin] response : refreshToken={}", refreshToken);
+
+        LoginResponse loginResponse = userService.getLoginUser(user.getUsername());
+        resultMap.put("user", loginResponse);
         logger.info("[oauthLogin] response : user={}", loginResponse);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -132,10 +129,9 @@ public class UserController {
         logger.info("[reissue] request : tokenRequest={}", tokenRequest);
 
         Map<String, Object> resultMap = new HashMap<>();
+
         String accessToken = userService.reissue(tokenRequest);
-
         resultMap.put("accessToken", accessToken);
-
         logger.info("[reissue] response : accessToken={}", accessToken);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -147,10 +143,9 @@ public class UserController {
         logger.info("[checkEmail] request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
+
         boolean isDuplicated = userService.existsByEmail(email);
-
         resultMap.put("isDuplicated", isDuplicated);
-
         logger.info("[checkEmail] response : isDuplicated={}", isDuplicated);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -162,10 +157,9 @@ public class UserController {
         logger.info("[checkNickname] request : nickname={}", nickname);
 
         Map<String, Object> resultMap = new HashMap<>();
+
         boolean isDuplicated = userService.existsByNickname(nickname);
-
         resultMap.put("isDuplicated", isDuplicated);
-
         logger.info("[checkNickname] response : isDuplicated={}", isDuplicated);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -185,7 +179,6 @@ public class UserController {
         }
 
         resultMap.put("isExisted", isExisted);
-
         logger.info("[sendEmailCode] response : isExisted={}", isExisted);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -199,10 +192,9 @@ public class UserController {
         logger.info("[checkEmailCode] request : code={}", code);
 
         Map<String, Object> resultMap = new HashMap<>();
+
         boolean isCheck = emailService.checkEmailCode(email, code);
-
         resultMap.put("isCheck", isCheck);
-
         logger.info("[checkEmailCode] response : isCheck={}", isCheck);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -218,8 +210,7 @@ public class UserController {
             throw new Exception(error.getDefaultMessage());
 
         userService.setPassword(changePasswordRequest);
-
-        logger.info("[changePassword] response : ");
+        logger.info("[changePassword] response : none");
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -233,10 +224,9 @@ public class UserController {
         logger.info("[isLoginUser] request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
+
         boolean isLoginUser = userService.existsByEmailAndUserId(user.getUsername(), userId);
-
         resultMap.put("isLoginUser",isLoginUser);
-
         logger.info("[isLoginUser] response : isLoginUser={}",isLoginUser);
 
         return new ResponseEntity<>(resultMap,HttpStatus.OK);

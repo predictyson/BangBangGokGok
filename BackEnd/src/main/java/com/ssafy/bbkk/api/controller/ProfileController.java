@@ -49,13 +49,13 @@ public class ProfileController {
         logger.info("[getUserInfo] request : myEmail={}, userId={}", user.getUsername(), userId);
 
         Map<String, Object> resultMap = new HashMap<>();
+
         boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
-        UserInfoResponse userInfoResponse = profileService.getUserInfoByEmail(user.getUsername());
-
         resultMap.put("isMe", isMe);
-        resultMap.put("userInfo", userInfoResponse);
-
         logger.info("[getUserInfo] response : isMe={}", isMe);
+
+        UserInfoResponse userInfoResponse = profileService.getUserInfoByEmail(user.getUsername());
+        resultMap.put("userInfo", userInfoResponse);
         logger.info("[getUserInfo] response : userInfo={}", userInfoResponse);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -70,13 +70,13 @@ public class ProfileController {
         logger.info("[getUserReviews] request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
+
         boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
-        List<ReviewOfUserResponse> reviewOfThemeResponses = profileService.getUserReviews(userId);
-
         resultMap.put("isMe", isMe);
-        resultMap.put("reviews", reviewOfThemeResponses);
-
         logger.info("[getUserReviews] response : isMe={}", isMe);
+
+        List<ReviewOfUserResponse> reviewOfThemeResponses = profileService.getUserReviews(userId);
+        resultMap.put("reviews", reviewOfThemeResponses);
         logger.info("[getUserReviews] response : reviews={}", reviewOfThemeResponses);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -91,13 +91,13 @@ public class ProfileController {
         logger.info("[getUserPreference] request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
+
         boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
-        List<PreferenceResponse> preference = profileService.getUserPreference(userId);
-
         resultMap.put("isMe", isMe);
-        resultMap.put("preference", preference);
-
         logger.info("[getUserPreference] response : isMe={}", isMe);
+
+        List<PreferenceResponse> preference = profileService.getUserPreference(userId);
+        resultMap.put("preference", preference);
         logger.info("[getUserPreference] response : preference={}", preference);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -112,13 +112,13 @@ public class ProfileController {
         logger.info("[getUserInterest] request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
+
         boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
-        List<InterestThemeResponse> interestThemeResponses = profileService.getUserInterestThemes(userId);
-
         resultMap.put("isMe", isMe);
-        resultMap.put("interestThemes", interestThemeResponses);
-
         logger.info("[getUserInterest] response : isMe={}", isMe);
+
+        List<InterestThemeResponse> interestThemeResponses = profileService.getUserInterestThemes(userId);
+        resultMap.put("interestThemes", interestThemeResponses);
         logger.info("[getUserInterest] response : interestThemes={}", interestThemeResponses);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -139,12 +139,11 @@ public class ProfileController {
 
         profileService.setUserInfo(updateUserInfoRequest);
         UserInfoResponse userInfoResponse = profileService.getUserInfoByUserId(updateUserInfoRequest.getUserId());
-
         resultMap.put("userInfo", userInfoResponse);
+        logger.info("[setUserInfo] response : userInfo={}", userInfoResponse);
 
         otherService.recCBF(user.getUsername());
-
-        logger.info("[setUserInfo] response : userInfo={}", userInfoResponse);
+        logger.info("[setUserInfo] response : recCBF({})", user.getUsername());
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -161,8 +160,7 @@ public class ProfileController {
         logger.info("[deleteUser] request : myEmail={}", user.getUsername());
 
         profileService.deleteUser(user.getUsername());
-
-        logger.info("[deleteUser] response : ");
+        logger.info("[deleteUser] response : none");
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

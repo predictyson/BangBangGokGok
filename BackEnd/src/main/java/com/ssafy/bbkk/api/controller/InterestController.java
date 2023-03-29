@@ -38,9 +38,10 @@ public class InterestController {
         logger.info("[addInterestTheme] request : themeId={}", themeId);
 
         interestThemeService.addInterestTheme(user.getUsername(), themeId);
-        otherService.recCBF(user.getUsername());
+        logger.info("[addInterestTheme] response : none");
 
-        logger.info("[addInterestTheme] response : ");
+        otherService.recCBF(user.getUsername());
+        logger.info("[addInterestTheme] response : recCBF({})", user.getUsername());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -55,9 +56,10 @@ public class InterestController {
         logger.info("[deleteInterestTheme] request : themeId={}", themeId);
 
         interestThemeService.deleteInterestTheme(user.getUsername(), themeId);
-        otherService.recCBF(user.getUsername());
+        logger.info("[deleteInterestTheme] response : none");
 
-        logger.info("[deleteInterestTheme] response : ");
+        otherService.recCBF(user.getUsername());
+        logger.info("[deleteInterestTheme] response : recCBF({})",user.getUsername());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
