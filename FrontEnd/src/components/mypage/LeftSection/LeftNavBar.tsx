@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { theme } from "@/styles/theme";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -8,6 +8,8 @@ import LikesIcon from "@/assets/mypage/LikesIcon.svg";
 import { handleAvatar } from "@/api/user";
 
 export default function LeftNavBar() {
+  const [selectedNavItem, setSelectedNavItem] = useState("profile");
+  console.log("selectedNavItem: ", selectedNavItem);
   const navigate = useNavigate();
 
   const getProfileImageTypeFromLocalStorage = () => {
@@ -25,7 +27,21 @@ export default function LeftNavBar() {
     }
     return nickname;
   };
-  console.log(getProfileImageTypeFromLocalStorage());
+
+  const handleProfileClick = () => {
+    setSelectedNavItem("profile");
+    navigate("");
+  };
+
+  const handleReviewsClick = () => {
+    setSelectedNavItem("reviews");
+    navigate("reviews");
+  };
+
+  const handleLikesClick = () => {
+    setSelectedNavItem("likes");
+    navigate("likes");
+  };
 
   return (
     <Wrapper>
@@ -41,16 +57,25 @@ export default function LeftNavBar() {
         {/* <ProfileTitle>{userProfile.title}</ProfileTitle> */}
       </ProfileWrapper>
       <NavWrapper>
-        <NavItem onClick={() => navigate("")}>
-          <img src={ProfileIcon} />
-          <span> Profile</span>
+        <NavItem
+          select={selectedNavItem === "profile"}
+          onClick={handleProfileClick}
+        >
+          <NavItemImg src={ProfileIcon} />
+          <div>Profile</div>
         </NavItem>
-        <NavItem onClick={() => navigate("reviews")}>
-          <img src={ReviewIcon} />
+        <NavItem
+          select={selectedNavItem === "reviews"}
+          onClick={handleReviewsClick}
+        >
+          <NavItemImg src={ReviewIcon} />
           <span> Reviews</span>
         </NavItem>
-        <NavItem onClick={() => navigate("likes")}>
-          <img src={LikesIcon} />
+        <NavItem
+          select={selectedNavItem === "likes"}
+          onClick={handleLikesClick}
+        >
+          <NavItemImg src={LikesIcon} />
           <span> Likes</span>
         </NavItem>
       </NavWrapper>
@@ -125,10 +150,18 @@ const NavWrapper = styled.div`
   border-radius: 1.5rem;
 `;
 
-const NavItem = styled.div`
+interface NavItemProps {
+  readonly select?: boolean;
+}
+
+const NavItem = styled.button<NavItemProps>`
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+
   color: ${theme.colors.white};
   font-size: 3rem;
-  font-weight: ${theme.fontWeight.bold};
+  font-weight: ${theme.fontWeight.semibold};
   padding: 2rem;
   @media (max-height: 800px) {
     padding: 1rem;
@@ -137,4 +170,10 @@ const NavItem = styled.div`
   border: none;
   border-radius: 1.5rem;
   background-color: ${theme.colors.container};
+  background-color: ${(props) => props.select && theme.colors.pink};
+`;
+
+const NavItemImg = styled.img`
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 `;
