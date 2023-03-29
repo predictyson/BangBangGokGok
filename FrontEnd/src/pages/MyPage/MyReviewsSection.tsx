@@ -20,7 +20,7 @@ export default function MyReviewsSection() {
 
   return (
     <SectionWrapper>
-      <SectionTitle>MyReviewsSection</SectionTitle>
+      <SectionTitle>내 리뷰</SectionTitle>
       <SectionContentWrapper>
         {reviews.map((review) => (
           <ReviewCard key={review.reviewId} {...review} />

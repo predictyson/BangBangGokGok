@@ -23,7 +23,7 @@ export default function LikeThemesSection() {
 
   return (
     <SectionWrapper>
-      <SectionTitle>Likes List</SectionTitle>
+      <SectionTitle>관심 테마</SectionTitle>
       <SectionContentWrapper>
         <OverflowWrapper>
           {interests.map((interest) => (
