@@ -136,7 +136,7 @@ public class ThemeController {
         logger.info("[getReviewsOfTheme] request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
-        List<ReviewOfThemeResponse> reviewOfThemeResponses = themeService.getReviews(themeId);
+        List<ReviewOfThemeResponse> reviewOfThemeResponses = reviewService.getReviewsOfTheme(themeId);
 
         resultMap.put("reviews", reviewOfThemeResponses);
 

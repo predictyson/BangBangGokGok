@@ -419,19 +419,4 @@ public class ThemeServiceImpl implements ThemeService {
         result = new ThemeResponse(theme);
         return result;
     }
-
-    @Override
-    public List<ReviewOfThemeResponse> getReviews(int themeId) throws Exception {
-        List<ReviewOfThemeResponse> result = null;
-        // 테마 id를 통해 테마 불러오기
-        Theme theme = themeRepository.findById(themeId)
-                .orElseThrow(() -> new Exception("해당 테마를 찾을 수 없습니다."));
-        // 리뷰를 Dto에 감싸기
-        result = theme.getReviews()
-                .stream()
-                .map(x -> new ReviewOfThemeResponse(x))
-                .collect(Collectors.toList());
-        return result;
-    }
-
 }

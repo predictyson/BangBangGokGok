@@ -12,5 +12,4 @@ public interface ThemeService {
     AwardThemeBundleResponse getAwardThemes() throws Exception;
     List<PreviewThemeResponse> getSearchThemes(SearchThemeRequest searchThemeRequest) throws Exception;
     ThemeResponse getThemeInfo(int themeId) throws Exception;
-    List<ReviewOfThemeResponse> getReviews(int reviewId) throws Exception;
 }

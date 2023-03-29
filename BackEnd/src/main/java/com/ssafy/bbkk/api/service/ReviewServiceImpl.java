@@ -40,6 +40,19 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public List<ReviewOfThemeResponse> getReviewsOfTheme(int themeId) throws Exception {
+        List<ReviewOfThemeResponse> result = null;
+        // 테마 id를 통해 테마 불러오기
+        Theme theme = themeRepository.findById(themeId)
+                .orElseThrow(() -> new Exception("해당 테마를 찾을 수 없습니다."));
+        // 리뷰를 Dto에 감싸기
+        result = theme.getReviews().stream()
+                .map(x -> new ReviewOfThemeResponse(x))
+                .collect(Collectors.toList());
+        return result;
+    }
+
+    @Override
     public void addReview(String email, CreateReviewRequest createReviewRequest) throws Exception {
         // email을 통해 유저 찾아오기
         User user = userRepository.findByEmail(email)
@@ -100,28 +113,3 @@ public class ReviewServiceImpl implements ReviewService {
         return new ReviewOfUserResponse(review);
     }
 }
-
-//    @Override
-//    public ReviewOfUserResponse getReview(int reviewId) throws Exception {
-//        ReviewOfUserResponse result = null;
-//        // 리뷰 id를 통해 리뷰 찾아오기
-//        Review review = reviewRepository.findById(reviewId).orElseThrow(
-//                () -> new Exception("reviewId=" + reviewId + "에 맞는 리뷰를 찾을 수 없습니다."));
-//        // 리뷰를 Dto에 감싸기
-//        result = new ReviewOfUserResponse(review);
-//        return result;
-//    }
-
-//    @Override
-//    public List<ReviewOfThemeResponse> getReviews(int themeId) throws Exception {
-//        List<ReviewOfThemeResponse> result = null;
-//        // 테마 id를 통해 테마 불러오기
-//        Theme theme = themeRepository.findById(themeId).orElseThrow(
-//                () -> new Exception("themeId=" + themeId + "에 맞는 테마를 찾을 수 없습니다."));
-//        // 리뷰를 Dto에 감싸기
-//        result = theme.getReviews()
-//                .stream()
-//                .map(x -> new ReviewOfThemeResponse(x))
-//                .collect(Collectors.toList());
-//        return result;
-//    }
