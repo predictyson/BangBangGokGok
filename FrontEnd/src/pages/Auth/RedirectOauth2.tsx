@@ -27,7 +27,7 @@ export default function RedirectOauth2() {
       const {
         data: {
           refreshToken,
-          user: { userId, nickname },
+          user: { userId, nickname, profileImageType },
         },
       } = await requestUserInfo();
       console.log(userId);
@@ -38,6 +38,7 @@ export default function RedirectOauth2() {
       });
       localStorage.setItem("userId", userId);
       localStorage.setItem("nickname", nickname);
+      localStorage.setItem("profileImageType", profileImageType);
       navigate("/");
     } catch (err) {
       console.log(err);
