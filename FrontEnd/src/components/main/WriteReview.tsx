@@ -58,9 +58,10 @@ export default function WriteReview({
 
   const sendReviewData = async () => {
     try {
-      await setPostdata({ ...postdata, themeId: themeId });
-      console.log(postdata.themeId);
-      const res = await postReview(postdata);
+      // await setPostdata({ ...postdata, themeId: themeId });
+      const dataToSend = { ...postdata, themeId: themeId };
+      console.log(dataToSend.themeId);
+      const res = await postReview(dataToSend);
       console.log(res.data);
       setPostdata(initData);
     } catch (err) {
@@ -72,13 +73,16 @@ export default function WriteReview({
     e.preventDefault();
     console.log(postdata);
     await sendReviewData();
-    await handleClose();
+    handleClose();
   };
 
   useEffect(() => {
-    setPostdata({ ...postdata, themeId: themeId });
-    postdata.themeId !== 0 && sendReviewData();
-  }, [themeId]);
+    if (postdata.themeId !== 0) {
+      sendReviewData();
+      // setPostdata({ ...postdata, themeId: themeId });
+      // postdata.themeId !== 0 && sendReviewData();
+    }
+  }, [postdata.themeId]);
 
   const ratings: RatingProps[] = [
     {
