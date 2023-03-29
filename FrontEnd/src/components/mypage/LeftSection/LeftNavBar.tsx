@@ -2,42 +2,26 @@ import React, { useState } from "react";
 import { theme } from "@/styles/theme";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Avatar1, Avatar2, Avatar3 } from "@/assets/user";
 import ProfileIcon from "@/assets/mypage/ProfileIcon.svg";
 import ReviewIcon from "@/assets/mypage/ReviewIcon.svg";
 import LikesIcon from "@/assets/mypage/LikesIcon.svg";
-import { UserProfile } from "types/mypage";
+import { handleAvatar } from "@/api/user";
 
-interface StringMapByNumber {
-  [key: number]: string;
-}
-
-const imageSrcMap: StringMapByNumber = {
-  1: Avatar1,
-  2: Avatar2,
-  3: Avatar3,
-};
-
-const dummyData = "HelloUseLocation!";
-
-export default function LeftNavBar(props: UserProfile) {
-  // // API 연결 후 사용
-  const [imageNumber, setImageNumber] = useState<number>(3); // 프로필 이미지 번호
-
+export default function LeftNavBar() {
   const navigate = useNavigate();
 
   return (
     <Wrapper>
       <ProfileWrapper>
         <ProfileImageWrapper>
-          <ProfileImage src={imageSrcMap[imageNumber]} alt="profile image" />
+          <ProfileImage src={handleAvatar("Avatar3")} alt="profile image" />
         </ProfileImageWrapper>
-        <ProfileName>{props.nickname}</ProfileName>
+        <ProfileName>{"로컬스토리지에서닉네임가져오기"}</ProfileName>
         {/* 칭호(?)는 아직 정해진 바가 없음! */}
         {/* <ProfileTitle>{userProfile.title}</ProfileTitle> */}
       </ProfileWrapper>
       <NavWrapper>
-        <NavItem onClick={() => navigate("", { state: props })}>
+        <NavItem onClick={() => navigate("")}>
           <img src={ProfileIcon} />
           <span> Profile</span>
         </NavItem>
