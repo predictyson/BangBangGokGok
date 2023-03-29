@@ -33,7 +33,7 @@ export interface UserReview {
   userDifficulty: number;
   createTime: Date;
   isSuccess: number;
-  theme: Theme;
+  previewThemeResponse: Theme;
 }
 
 export interface Theme {

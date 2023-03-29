@@ -6,51 +6,41 @@ import { styled as mstyled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import StarIcon from "@mui/icons-material/Star";
-
-interface ReviewCardProps {
-  review: Review;
-}
-
-interface Theme {
-  themeId: number;
-  title: string;
-  imgUrl: string;
-}
-
-interface Review {
-  reviewId: number;
-  content: string;
-  rating: number;
-  activity: number;
-  fear: number;
-  difficulty: number;
-  isSuccess: number;
-  theme: Theme;
-}
+import { UserReview } from "types/mypage";
 
 interface RatingCategory {
   name: string;
   value: number;
 }
 
-export default function ReviewCard({ review }: ReviewCardProps) {
+export default function ReviewCard({
+  // reviewId,
+  content,
+  userRating,
+  userActivity,
+  userFear,
+  userDifficulty,
+  // createTime,
+  isSuccess,
+  previewThemeResponse,
+}: UserReview) {
   const RatingItems: RatingCategory[] = [
-    { name: "평점", value: review.rating },
-    { name: "활동성", value: review.activity },
-    { name: "공포도", value: review.fear },
-    { name: "난이도", value: review.difficulty },
+    { name: "평점", value: userRating },
+    { name: "활동성", value: userActivity },
+    { name: "공포도", value: userFear },
+    { name: "난이도", value: userDifficulty },
   ];
   return (
     <ContentWrapper>
       <FirstColumn>
-        <ThemeImage src={review.theme.imgUrl} alt="theme image" />
+        <ThemeImage src={previewThemeResponse.imgUrl} alt="theme image" />
       </FirstColumn>
 
       <SecondColumn>
         <TopWrapper>
-          <Title>{review.theme.title}</Title>
-          {review.isSuccess === 1 && <Badge className="success">성공</Badge>}
-          {review.isSuccess === 0 && <Badge className="failure">실패</Badge>}
+          <Title>{previewThemeResponse.title}</Title>
+          {isSuccess === 1 && <Badge className="success">성공</Badge>}
+          {isSuccess === 0 && <Badge className="failure">실패</Badge>}
         </TopWrapper>
 
         <RatingWrapper>
@@ -74,7 +64,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
           ))}
         </RatingWrapper>
 
-        <Content>{review.content}</Content>
+        <Content>{content}</Content>
 
         <ButtonWrapper>
           <UpdateButton>수정</UpdateButton>
