@@ -51,18 +51,19 @@ public class ThemeController {
         Map<String, Object> resultMap = new HashMap<>();
 
         List<ThemeBundleResponse> recommendThemes = themeService.getRecommendedThemes(user.getUsername());
-        List<PreviewThemeResponse> hotThemes = themeService.getHotThemes();
-        List<ThemeBundleResponse> topThemes = themeService.getTopThemesOfUser(user.getUsername());
-        AwardThemeBundleResponse awardThemes = themeService.getAwardThemes();
-
         resultMap.put("recommendThemes", recommendThemes);
-        resultMap.put("hotThemes", hotThemes);
-        resultMap.put("topThemes", topThemes);
-        resultMap.put("awardThemes", awardThemes);
-
         logger.info("[recommendedTheme] response : recommendThemes={}", recommendThemes);
+
+        List<PreviewThemeResponse> hotThemes = themeService.getHotThemes();
+        resultMap.put("hotThemes", hotThemes);
         logger.info("[recommendedTheme] response : hotThemes={}", hotThemes);
+
+        List<ThemeBundleResponse> topThemes = themeService.getTopThemesOfUser(user.getUsername());
+        resultMap.put("topThemes", topThemes);
         logger.info("[recommendedTheme] response : topThemes={}", topThemes);
+
+        AwardThemeBundleResponse awardThemes = themeService.getAwardThemes();
+        resultMap.put("awardThemes", awardThemes);
         logger.info("[recommendedTheme] response : awardThemes={}", topThemes);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
