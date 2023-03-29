@@ -6,6 +6,8 @@ import com.ssafy.bbkk.api.dto.ReviewOfThemeResponse;
 import com.ssafy.bbkk.api.dto.SearchThemeRequest;
 import com.ssafy.bbkk.api.dto.ThemeBundleResponse;
 import com.ssafy.bbkk.api.dto.ThemeResponse;
+import com.ssafy.bbkk.api.service.InterestThemeService;
+import com.ssafy.bbkk.api.service.ReviewService;
 import com.ssafy.bbkk.api.service.ThemeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -37,6 +39,8 @@ public class ThemeController {
     private static final Logger logger = LoggerFactory.getLogger(ThemeController.class);
 
     private final ThemeService themeService;
+    private final InterestThemeService interestThemeService;
+    private final ReviewService reviewService;
 
     @Operation(summary = "로그인 테마 목록 조회", description = "로그인시 메인 화면의 테마를 불러온다")
     @GetMapping("user")
@@ -111,32 +115,49 @@ public class ThemeController {
 
     @Operation(summary = "테마의 상세 정보 조회", description = "해당 테마의 상세 정보를 불러온다")
     @GetMapping("{themeId}")
-    private ResponseEntity<Map<String, Object>> themeInfo(
+    private ResponseEntity<Map<String, Object>> getThemeInfo(
             @Parameter(description = "해당 테마의 Id", required = true) @PathVariable("themeId") int themeId) throws Exception {
-        logger.info("[themeInfo] request : themeId={}", themeId);
+        logger.info("[getThemeInfo] request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
         ThemeResponse themeResponse = themeService.getThemeInfo(themeId);
 
         resultMap.put("theme", themeResponse);
 
-        logger.info("[themeInfo] response : theme={}", themeResponse);
+        logger.info("[getThemeInfo] response : theme={}", themeResponse);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @Operation(summary = "테마의 리뷰 목록 조회", description = "해당 테마의 리뷰 목록을 불러온다")
     @GetMapping("{themeId}/reviews")
-    private ResponseEntity<Map<String, Object>> getReviews(
+    private ResponseEntity<Map<String, Object>> getReviewsOfTheme(
             @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int themeId) throws Exception {
-        logger.info("[getReviews] request : themeId={}", themeId);
+        logger.info("[getReviewsOfTheme] request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
         List<ReviewOfThemeResponse> reviewOfThemeResponses = themeService.getReviews(themeId);
 
         resultMap.put("reviews", reviewOfThemeResponses);
 
-        logger.info("[getReviews] response : reviews={}", reviewOfThemeResponses);
+        logger.info("[getReviewsOfTheme] response : reviews={}", reviewOfThemeResponses);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @Operation(summary = "테마 상세 로그인 정보", description = "사용자가 관심있는 테마인지, 리뷰를 작성했는지 여부를 불러온다.")
+    @GetMapping("{themeId}/reviews")
+    private ResponseEntity<Map<String, Object>> getUserOfTheme(
+            @AuthenticationPrincipal User user,
+            @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int themeId) throws Exception {
+        logger.info("[getUserOfTheme] request : themeId={}", themeId);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        boolean isInterest = interestThemeService.isInterestTheme(user.getUsername(), themeId);
+        boolean isMyReview = reviewService.isMyReview(user.getUsername(), themeId);
+
+        logger.info("[getUserOfTheme] response : isInterest={}",isInterest);
+        logger.info("[getUserOfTheme] response : isMyReview={}",isMyReview);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
