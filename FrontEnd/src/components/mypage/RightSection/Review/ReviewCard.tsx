@@ -81,7 +81,7 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  gap: 1rem;
+  gap: 2rem;
   padding: 2rem;
   width: 100%;
   aspect-ratio: 100 / 40;
@@ -118,7 +118,7 @@ const SecondColumn = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 1.5rem;
   flex-basis: 75%;
 `;
 
@@ -148,9 +148,9 @@ const RatingWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   @media (max-height: 800px) {
-    gap: 1rem;
+    gap: 0.7rem;
   }
-  gap: 1.5rem;
+  gap: 0.5rem;
 `;
 
 const RatingSection = styled.div`
@@ -178,6 +178,7 @@ const Content = styled.div`
   @media (max-height: 800px) {
     font-size: 1.8rem;
   }
+  color: rgba(255, 255, 255, 0.7);
   word-break: break-all;
   text-overflow: ellipsis;
   overflow: auto;
