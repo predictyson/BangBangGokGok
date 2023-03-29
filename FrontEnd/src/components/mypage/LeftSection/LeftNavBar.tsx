@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { theme } from "@/styles/theme";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -10,13 +10,33 @@ import { handleAvatar } from "@/api/user";
 export default function LeftNavBar() {
   const navigate = useNavigate();
 
+  const getProfileImageTypeFromLocalStorage = () => {
+    const profileImageType = localStorage.getItem("profileImageType");
+    if (profileImageType === null) {
+      throw new Error("profileImageType is null");
+    }
+    return profileImageType;
+  };
+
+  const getNicknameFromLocalStorage = () => {
+    const nickname = localStorage.getItem("nickname");
+    if (nickname === null) {
+      throw new Error("nickname is null");
+    }
+    return nickname;
+  };
+  console.log(getProfileImageTypeFromLocalStorage());
+
   return (
     <Wrapper>
       <ProfileWrapper>
         <ProfileImageWrapper>
-          <ProfileImage src={handleAvatar("Avatar3")} alt="profile image" />
+          <ProfileImage
+            src={handleAvatar(getProfileImageTypeFromLocalStorage())}
+            alt="profile image"
+          />
         </ProfileImageWrapper>
-        <ProfileName>{"로컬스토리지에서닉네임가져오기"}</ProfileName>
+        <ProfileName>{getNicknameFromLocalStorage()}</ProfileName>
         {/* 칭호(?)는 아직 정해진 바가 없음! */}
         {/* <ProfileTitle>{userProfile.title}</ProfileTitle> */}
       </ProfileWrapper>
@@ -87,7 +107,7 @@ const ProfileName = styled.h1`
   margin: 0;
 `;
 
-// const ProfileTitle = styled.h2`
+// const ProfileTitle = styled.h2` // 칭호에 쓸 컴포넌트
 //   color: ${theme.colors.white};
 //   font-size: 2rem;
 //   text-align: center;
