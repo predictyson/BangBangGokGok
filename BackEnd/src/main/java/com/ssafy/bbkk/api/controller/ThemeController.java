@@ -146,7 +146,7 @@ public class ThemeController {
     }
 
     @Operation(summary = "테마 상세 로그인 정보", description = "사용자가 관심있는 테마인지, 리뷰를 작성했는지 여부를 불러온다.")
-    @GetMapping("{themeId}/reviews")
+    @GetMapping("{themeId}/user")
     private ResponseEntity<Map<String, Object>> getUserOfTheme(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int themeId) throws Exception {
