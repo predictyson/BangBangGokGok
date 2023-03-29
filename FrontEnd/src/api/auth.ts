@@ -1,5 +1,7 @@
 import instance from "./api";
 import { IUserInfo, IAdditionalInfo } from "types/auth";
+import { AxiosResponse } from "axios";
+import { CheckLoginUserResponse } from "types/auth";
 
 export const tempRequest = () => {
   return instance.get(`/jwt`, { withCredentials: true });
@@ -122,4 +124,11 @@ export const requestToken = (
     refreshToken: refreshToken,
   };
   return instance.post(`/user/reissue`, tokens);
+};
+
+// 로그인 정보 검증
+export const requestCheckLoginUser = async (
+  userId: number
+): Promise<AxiosResponse<CheckLoginUserResponse>> => {
+  return await instance.get(`/user/check/login/${userId}`);
 };

@@ -32,3 +32,7 @@ export interface Region {
   regionBig: string; // 지역 대분류
   regionSmalls: string[]; // 지역 소분류
 }
+
+export interface CheckLoginUserResponse {
+  isLoginUser: boolean;
+}
