@@ -24,7 +24,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,7 +68,6 @@ public class ThemeController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
     @Operation(summary = "게스트 테마 목록 조회", description = "메인 화면의 기본 테마 목록을 불러온다")
     @GetMapping("guest")
     private ResponseEntity<Map<String, Object>> getThemeOfGuest() throws Exception {

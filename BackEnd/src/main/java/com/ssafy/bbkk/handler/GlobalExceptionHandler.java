@@ -15,7 +15,7 @@ public class GlobalExceptionHandler{
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleAllException(Exception e) {
-        log.warn("handleAllException={}", e.getMessage());
+        log.warn("handler catch Exception = {}", e.getMessage());
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         resultMap.put("error", e.getMessage());

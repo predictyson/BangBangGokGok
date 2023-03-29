@@ -26,8 +26,8 @@ public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
-//    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 30;            // 30초
+//    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 12;            // 12시간
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
 
     private final Key key;
@@ -114,6 +114,7 @@ public class TokenProvider {
         try {
             return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
         } catch (ExpiredJwtException e) {
+            log.warn("[parseClaims] ExpiredJwtException 에러가 났습니다. ={}, {}",e.getClaims(),e.getMessage());
             return e.getClaims();
         }
     }
