@@ -154,10 +154,13 @@ public class ThemeController {
         logger.info("[getUserOfTheme] request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
-        boolean isInterest = interestThemeService.isInterestTheme(user.getUsername(), themeId);
-        boolean isMyReview = reviewService.isMyReview(user.getUsername(), themeId);
 
+        boolean isInterest = interestThemeService.isInterestTheme(user.getUsername(), themeId);
+        resultMap.put("isInterest",isInterest);
         logger.info("[getUserOfTheme] response : isInterest={}",isInterest);
+
+        boolean isMyReview = reviewService.isMyReview(user.getUsername(), themeId);
+        resultMap.put("isMyReview",isMyReview);
         logger.info("[getUserOfTheme] response : isMyReview={}",isMyReview);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
