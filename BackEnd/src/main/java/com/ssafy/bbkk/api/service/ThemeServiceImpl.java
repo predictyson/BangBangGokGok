@@ -127,6 +127,7 @@ public class ThemeServiceImpl implements ThemeService {
 
     // 사람들이 ~~다고 느낀 테마를 반환
     public ThemeBundleResponse getFeelBundle(int type) throws Exception {
+        System.out.println("type!!! : "+type);
         ThemeBundleResponse result = null;
         List<PreviewThemeResponse> themes = null;
         Random rnd = new Random();
