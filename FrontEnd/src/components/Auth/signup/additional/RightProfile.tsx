@@ -8,7 +8,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { theme } from "@/styles/theme";
 import { ProfileProps } from "types/auth";
-import { requestSmallRegion } from "@/api/auth";
+import { requestNickname, requestSmallRegion } from "@/api/auth";
 
 export default function LeftPorfile(props: ProfileProps) {
   const [bigRegion, setBigRegion] = useState<string>("");
@@ -51,19 +51,45 @@ export default function LeftPorfile(props: ProfileProps) {
     }
   };
 
+  const nicknameValidCheck = async () => {
+    const nickname = props.userAdditionalInfo.nickname;
+    if (nickname === "") {
+      props.handleToastClick("error", "닉네임을 입력하세요.");
+      return;
+    }
+    try {
+      const {
+        data: { isDuplicated },
+      } = await requestNickname(props.userAdditionalInfo.nickname);
+      if (!isDuplicated) {
+        props.handleToastClick("success", "사용 가능한 닉네임입니다.");
+      } else {
+        props.handleToastClick("error", "이미 사용중인 닉네임입니다.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <RightBox>
-      <CustomTextField
-        autoComplete="current-password"
-        color="warning"
-        name="nickname"
-        focused
-        sx={{ input: { color: "white" } }}
-        value={props.userAdditionalInfo.nickname}
-        placeholder="닉네임을 입력하세요"
-        onChange={handleInputChange}
-        hiddenLabel
-      />
+      <SelectBox>
+        <CustomTextField
+          autoComplete="current-password"
+          color="warning"
+          name="nickname"
+          focused
+          sx={{ input: { color: "white" } }}
+          value={props.userAdditionalInfo.nickname}
+          placeholder="닉네임을 입력하세요"
+          onChange={handleInputChange}
+          hiddenLabel
+        />
+        <ValidCheckButton onClick={nicknameValidCheck}>
+          {" "}
+          중복 체크{" "}
+        </ValidCheckButton>
+      </SelectBox>
       <SelectBox>
         <p>선호 방문 지역을 선택해주세요.</p>
         <CustomSelect
@@ -135,6 +161,19 @@ export default function LeftPorfile(props: ProfileProps) {
     </RightBox>
   );
 }
+
+const ValidCheckButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10rem;
+  height: 5rem;
+  border-radius: 0.5rem;
+  font-size: 1.7rem;
+  background-color: ${theme.colors.pink};
+  cursor: pointer;
+  margin-left: 1rem;
+`;
 
 const RightBox = styled.div`
   flex: 2;

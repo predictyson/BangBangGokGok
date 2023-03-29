@@ -11,7 +11,11 @@ export default function GenreSection(props: ProfileProps) {
     _event: React.MouseEvent<HTMLElement, MouseEvent>,
     newAlignment: number[]
   ) => {
-    props.changeUserInfo("genreIds", newAlignment);
+    if (props.userAdditionalInfo.genreIds.length > 3) {
+      props.handleToastClick("error", "장르는 최대 4개까지만 설정가능합니다.");
+    } else {
+      props.changeUserInfo("genreIds", newAlignment);
+    }
   };
 
   useEffect(() => {
@@ -62,16 +66,27 @@ const Container = styled.div`
 const CustomToggleButton = mstyled(ToggleButton)({
   width: "18rem",
   height: "12rem",
-  backgroundColor: "#FFF1F8",
+  backgroundColor: "#58424D",
   borderRadius: "1.5rem !important",
   fontSize: "3rem",
   fontWeight: "medium",
-  color: "#58424D",
+  color: "#FFF1F8",
 
-  "&.Mui-selected, &:hover": {
-    backgroundColor: "#58424D",
+  ":hover": {
+    backgroundColor: "#FFF1F8",
+    color: "#58424D",
+  },
+
+  "&.Mui-selected": {
+    backgroundColor: "#FFF1F8",
     fontWeight: "bold",
-    color: "#FFF1F8",
+    color: "#58424D",
+  },
+
+  "&.Mui-selected :hover": {
+    backgroundColor: "#FFF1F8",
+    fontWeight: "bold",
+    color: "#58424D",
   },
 });
 

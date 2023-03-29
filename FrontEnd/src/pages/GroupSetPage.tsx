@@ -16,15 +16,15 @@ export default function GroupSetPage() {
   };
 
   const handleAddUser = (newUser: GroupSetUer) => {
-    if (userList.includes(newUser)) {
+    // if (userList.includes(newUser)) {
+    if (userList.filter((user) => user.userId === newUser.userId).length > 0) {
       handleToastClick("error", "이미 추가된 유저입니다.");
-      return;
+    } else {
+      handleToastClick("success", "성공적으로 추가되었습니다.");
+      setUserList((prev) => {
+        return [...prev, newUser];
+      });
     }
-
-    handleToastClick("success", "성공적으로 추가되었습니다.");
-    setUserList((prev) => {
-      return [...prev, newUser];
-    });
   };
 
   const handleToastClick = (
@@ -51,7 +51,10 @@ export default function GroupSetPage() {
             handleDeleteUser={handleDeleteUser}
             handleAddUser={handleAddUser}
           />
-          <ThemeRecSection userList={userList} />
+          <ThemeRecSection
+            userList={userList}
+            handleToastClick={handleToastClick}
+          />
         </Container>
         <Toast />
       </RootContainer>

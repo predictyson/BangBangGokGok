@@ -1,6 +1,10 @@
 export interface ProfileProps {
   userAdditionalInfo: IAdditionalInfo;
   changeUserInfo: (key: string, value: string | number | number[]) => void;
+  handleToastClick: (
+    type: IToastProps["type"],
+    message: IToastProps["message"]
+  ) => void;
 }
 
 export interface IUserInfo {

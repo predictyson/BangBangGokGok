@@ -59,6 +59,11 @@ export const requestAdditional = async (user: IAdditionalInfo) => {
   return await instance.post(`/user/join/additional`, additionalData);
 };
 
+// 이메일 중복 검사
+export const requestNickname = async (nickname: string) => {
+  return await instance.get(`/user/check/nickname/${nickname}`);
+};
+
 // 이메일 인증 코드 전송
 export const requestSendEmail = async (email: string) => {
   return await instance.get(`/user/send/email/${email}`);
