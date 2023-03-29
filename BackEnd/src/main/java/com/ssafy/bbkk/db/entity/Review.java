@@ -29,7 +29,7 @@ public class Review extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private int id;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String content; // 리뷰 내용
     @Column(nullable = false)
     private double userRating; // 리뷰 평점

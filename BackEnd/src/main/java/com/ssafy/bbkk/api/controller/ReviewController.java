@@ -1,7 +1,6 @@
 package com.ssafy.bbkk.api.controller;
 
 import com.ssafy.bbkk.api.dto.CreateReviewRequest;
-import com.ssafy.bbkk.api.dto.ReviewOfThemeResponse;
 import com.ssafy.bbkk.api.dto.ReviewOfUserResponse;
 import com.ssafy.bbkk.api.dto.UpdateReviewRequest;
 import com.ssafy.bbkk.api.service.OtherService;
@@ -9,8 +8,8 @@ import com.ssafy.bbkk.api.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -37,14 +37,18 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final OtherService otherService;
 
-    @Operation(summary = "테마에 리뷰를 작성", description = "해당 테마에 새로운 리뷰를 작성한다")
+    @Operation(summary = "테마에 리뷰를 작성", description = "테마에 새로운 리뷰를 작성한다")
     @PostMapping
-    private ResponseEntity<Void> addReview(
-            @AuthenticationPrincipal User user,
-            @RequestBody CreateReviewRequest createReviewRequest) throws Exception {
+    private ResponseEntity<Void> addReview(@AuthenticationPrincipal User user,
+            @RequestBody @Valid CreateReviewRequest createReviewRequest, Errors errors) throws Exception {
 
         logger.info("[addReview] request : myEmail={}", user.getUsername());
         logger.info("[addReview] request : createReviewRequest={}", createReviewRequest);
+
+        // createReviewRequest 입력값 유효성 검사
+        for (FieldError error : errors.getFieldErrors())
+            throw new Exception(error.getDefaultMessage());
+        createReviewRequest.validation();
 
         reviewService.addReview(user.getUsername(), createReviewRequest);
 
@@ -57,12 +61,15 @@ public class ReviewController {
 
     @Operation(summary = "테마의 리뷰를 수정", description = "해당 테마에 작성된 리뷰를 수정한다")
     @PutMapping
-    private ResponseEntity<Map<String, Object>> setReview(
-            @AuthenticationPrincipal User user,
-            @RequestBody UpdateReviewRequest updateReviewRequest) throws Exception {
-
+    private ResponseEntity<Map<String, Object>> setReview(@AuthenticationPrincipal User user,
+            @RequestBody @Valid UpdateReviewRequest updateReviewRequest, Errors errors) throws Exception {
         logger.info("[setReview] request : myEmail={}", user.getUsername());
         logger.info("[setReview] request : updateReviewRequest={}", updateReviewRequest);
+
+        // UpdateReviewRequest 입력값 유효성 검사
+        for (FieldError error : errors.getFieldErrors())
+            throw new Exception(error.getDefaultMessage());
+        updateReviewRequest.validation();
 
         Map<String, Object> resultMap = new HashMap<>();
         ReviewOfUserResponse reviewOfUserResponse = reviewService.setReview(user.getUsername(), updateReviewRequest);
@@ -94,7 +101,6 @@ public class ReviewController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
-
 
 //    @Operation(summary = "테마의 리뷰 목록 조회", description = "해당 테마의 리뷰 목록을 불러온다")
 //    @GetMapping("{themeId}")
