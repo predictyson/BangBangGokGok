@@ -7,11 +7,15 @@ import lombok.ToString;
 @ToString
 @Getter
 public class LoginResponse {
+
     private int userId;
     private String nickname;
+    private String profileImageType;
 
-    public LoginResponse(User user){
+    public LoginResponse(User user) {
         this.userId = user.getId();
         this.nickname = user.getNickname();
+        this.profileImageType = user.getProfileImageType();
     }
+
 }
