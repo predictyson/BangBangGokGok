@@ -32,7 +32,9 @@ export default function ReviewCard({
   return (
     <ContentWrapper>
       <FirstColumn>
-        <ThemeImage src={previewThemeResponse.imgUrl} alt="theme image" />
+        <ThemeImageWrapper>
+          <ThemeImage src={previewThemeResponse.imgUrl} alt="theme image" />
+        </ThemeImageWrapper>
       </FirstColumn>
 
       <SecondColumn>
@@ -75,10 +77,12 @@ export default function ReviewCard({
 }
 
 const ContentWrapper = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
+  width: 100%;
   gap: 1rem;
-  padding: 2.5rem;
+  padding: 2rem;
   width: 100%;
   aspect-ratio: 100 / 40;
   border-radius: 1.5rem;
@@ -91,13 +95,23 @@ const ContentWrapper = styled.div`
 const FirstColumn = styled.div`
   display: flex;
   flex-direction: column;
+  /* justify-content: center; */
   gap: 1rem;
-  flex-basis: 30%;
+  flex-basis: 25%;
+`;
+
+const ThemeImageWrapper = styled.div`
+  box-sizing: content-box;
+  display: flex;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 1.5rem;
 `;
 
 const ThemeImage = styled.img`
-  height: 100%;
-  aspect-ratio: 3 / 4;
+  display: block;
+  width: 100%;
+  object-fit: cover;
 `;
 
 const SecondColumn = styled.div`
@@ -105,7 +119,7 @@ const SecondColumn = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 0.5rem;
-  flex-basis: 70%;
+  flex-basis: 75%;
 `;
 
 const TopWrapper = styled.div`
@@ -114,7 +128,7 @@ const TopWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* gap: 1rem; */
+  gap: 1rem;
 `;
 
 const Title = styled.h1`
@@ -154,7 +168,7 @@ const CustomTypography = mstyled(Typography)({
 });
 
 const CustomRating = mstyled(Rating)({
-  fontSize: "2.7rem",
+  fontSize: "2.5rem",
   flexBasis: "75%",
 });
 
@@ -170,7 +184,7 @@ const Content = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  flex-basis: 10%;
+  /* flex-basis: 10%; */
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -192,7 +206,7 @@ const Badge = styled.div`
       ? theme.colors.success
       : theme.colors.failure};
   border-radius: 2rem;
-  padding: 1.5rem 2.5rem;
+  padding: 1rem 2rem;
 `;
 
 const UpdateButton = styled.div`
@@ -205,7 +219,7 @@ const UpdateButton = styled.div`
   margin: 0;
   border: 2px solid ${theme.colors.update};
   border-radius: 2rem;
-  padding: 1.5rem 2.5rem;
+  padding: 1rem 2rem;
   :hover {
     background-color: ${theme.colors.update};
     color: ${theme.colors.white};
@@ -223,7 +237,7 @@ const DeleteButton = styled.div`
   margin: 0;
   border: 2px solid ${theme.colors.pink};
   border-radius: 2rem;
-  padding: 1.5rem 2.5rem;
+  padding: 1rem 2rem;
   :hover {
     background-color: ${theme.colors.pink};
     color: ${theme.colors.white};

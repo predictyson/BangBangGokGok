@@ -12,7 +12,6 @@ export default function MyReviewsSection() {
     const fetchUserReviews = async () => {
       const userId = Number(localStorage.getItem("userId"));
       const response = await getUserReviews(userId);
-      console.log(response);
       setReviews(response.data.reviews as UserReview[]);
     };
     fetchUserReviews();
@@ -21,10 +20,13 @@ export default function MyReviewsSection() {
   return (
     <SectionWrapper>
       <SectionTitle>내 리뷰</SectionTitle>
+
       <SectionContentWrapper>
+        {/* <div style={{ width: "100%" }}> */}
         {reviews.map((review) => (
           <ReviewCard key={review.reviewId} {...review} />
         ))}
+        {/* </div> */}
       </SectionContentWrapper>
     </SectionWrapper>
   );
@@ -46,6 +48,8 @@ const SectionTitle = styled.h1`
 `;
 
 const SectionContentWrapper = styled.div`
+  box-sizing: content-box;
+  max-width: 100%;
   overflow: auto;
   display: flex;
   flex-direction: row;
