@@ -7,10 +7,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ISliderData, IThemeData } from "types/slider";
 import Modal from "./Modal";
-import { IReviewData, IDetailData } from "types/detail";
-import { getDetail } from "@/api/theme";
+import { IReviewData, IDetailData, IDetailLogin } from "types/detail";
+import { getDetail, getDetailLogin } from "@/api/theme";
 import { getReviews } from "@/api/review";
-import { getIsLiked } from "@/api/likes";
 interface IProps {
   topData: ISliderData[];
   isRecommendSlider: boolean;
@@ -22,13 +21,31 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
   const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [data, setData] = useState<IDetailData>(initData);
+  const [logindata, setLoginData] = useState<IDetailLogin>({
+    isInterest: false,
+    isMyReview: false,
+  });
+  /* 로그인 시 추가 상세 정보 받아오기 */
+  const isLogin = localStorage.getItem("userId") !== null ? true : false;
+  const requestDetailLoginData = async (themeId: number) => {
+    if (themeId !== 0) {
+      try {
+        const res = await getDetailLogin(themeId);
+        setLoginData(res.data);
+        console.log(res.data);
+        console.log(logindata);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  // requestDetailLoginData(themeId);
   const handleOpen = async (themeId: number) => {
     await setThemeId(themeId);
     await requestDetailData(themeId);
     await requestReviews(themeId);
-    await requestIsLiked(themeId);
     setOpen(true);
   };
   const handleClose = () => {
@@ -38,17 +55,6 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
     await setReviews((prev) => {
       return [...prev, review];
     });
-  };
-  const requestIsLiked = async (themeId: number) => {
-    if (themeId !== 0) {
-      try {
-        const res = await getIsLiked(themeId);
-        setIsLiked(res.data.isInterest);
-        console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
-      } catch (err) {
-        console.log(err);
-      }
-    }
   };
 
   const requestReviews = async (themeId: number) => {
@@ -145,7 +151,6 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
               themeId={themeId}
               data={data}
               reviews={reviews}
-              isLiked={isLiked}
               handleReviews={handleReviews}
             />
           )}

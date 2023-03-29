@@ -11,16 +11,16 @@ import Review from "./Review";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LikesModal from "./LikesModal";
-import { IReviewData, IDetailData } from "types/detail";
+import { IReviewData, IDetailData, IDetailLogin } from "types/detail";
 import { postInterest, deleteInterest, getIsLiked } from "@/api/likes";
 import { getReviews } from "@/api/review";
+import { getDetailLogin } from "@/api/theme";
 interface IProps {
   open: boolean;
   onClose: () => void;
   themeId: number;
   data: IDetailData;
   reviews: IReviewData[];
-  isLiked: boolean;
   handleReviews: (review: IReviewData) => Promise<void>;
 }
 
@@ -30,40 +30,17 @@ export default function DetailModal({
   themeId,
   data,
   reviews,
-  isLiked,
   handleReviews,
 }: IProps) {
   const [childOpen, setchildOpen] = React.useState(false);
-  const [isLikedChecked, setIsLikedChecked] = useState<boolean>(isLiked);
-  // const [reviews, setReviews] = useState(REVIEWDUMMY);
+  const [isInterest, setIsInterest] = useState<boolean>(false);
+  const [isMyReview, setIsMyReview] = useState<boolean>(false);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
-  // const requestReviews = async (themeId: number) => {
-  //   if (themeId !== 0) {
-  //     try {
-  //       const res = await getReviews(themeId);
-  //       themeId !== 0 && setReviews(res.data.reviews);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // };
-  // const requestIsLiked = async (themeId: number) => {
-  //   if (themeId !== 0) {
-  //     try {
-  //       const res = await getIsLiked(themeId);
-  //       setIsLiked(res.data.isInterest);
-  //       console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // };
 
   const postLikes = async (themeId: number) => {
     if (themeId !== 0) {
       try {
         await postInterest(themeId);
-        setIsLikedChecked(true);
         console.log("POST SUCCESS");
       } catch (err) {
         console.log(err);
@@ -75,7 +52,6 @@ export default function DetailModal({
   const deleteLikes = async (themeId: number) => {
     try {
       await deleteInterest(themeId);
-      setIsLikedChecked(false);
       console.log("DELETE SUCCESS");
     } catch (err) {
       console.log(err);
@@ -92,7 +68,6 @@ export default function DetailModal({
   const handleDeleteLikes = async () => {
     try {
       await deleteLikes(themeId);
-      setIsLikedChecked(false);
       handleClick("error", "좋아요 해제 완료");
     } catch (err) {
       console.log(err);
@@ -101,7 +76,6 @@ export default function DetailModal({
   const handlePostLikes = async () => {
     try {
       await postLikes(themeId);
-      setIsLikedChecked(true);
       handleClick("success", "좋아요 등록 성공!");
     } catch (err) {
       console.log(err);
@@ -113,6 +87,27 @@ export default function DetailModal({
   const handleClose = () => {
     setchildOpen(false);
   };
+
+  const requestLogindata = async (themeId: number) => {
+    if (themeId !== 0) {
+      try {
+        const res = await getDetailLogin(themeId);
+        setIsInterest(res.data.isInterest);
+        setIsMyReview(res.data.isMyReview);
+        console.log(res.data);
+        console.log(isInterest);
+        console.log(isMyReview);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  useEffect(() => {
+    console.log("MODAL");
+    const isLogin = localStorage.getItem("userId") !== null ? true : false;
+    isLogin && requestLogindata(themeId);
+  }, [themeId]);
   return (
     <Modal
       open={open}
@@ -189,13 +184,13 @@ export default function DetailModal({
                   readOnly
                 />
               )}
-              {isLogin && isLiked && (
+              {isLogin && (
                 <LikeButton onClick={() => handleDeleteLikes}>
                   <FavoriteIcon />
                   <span> 관심 해제하기</span>
                 </LikeButton>
               )}
-              {isLogin && !isLiked && (
+              {/* {isLogin && !isLiked && (
                 <>
                   <LikeButton onClick={handleOpen}>
                     <FavoriteBorderIcon /> <span> 관심 등록하기</span>
@@ -206,7 +201,7 @@ export default function DetailModal({
                     handleClick={handlePostLikes}
                   />
                 </>
-              )}
+              )} */}
               <Toast />
             </DetailInfo>
           </div>
