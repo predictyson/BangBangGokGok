@@ -9,20 +9,21 @@ import ToggleButton from "@mui/material/ToggleButton";
 import { styled as mstyled } from "@mui/material/styles";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
-import { IDetailData, IPostData } from "types/detail";
+import { IDetailData, IPostData, IReviewData } from "types/detail";
 import { postReview } from "@/api/review";
-
 interface IProps {
   childOpen: boolean;
   handleClose: () => void;
   data: IDetailData;
   themeId: number;
+  handleReviews: (review: IReviewData) => Promise<void>;
 }
 export default function WriteReview({
   childOpen,
   handleClose,
   data,
   themeId,
+  handleReviews,
 }: IProps) {
   const [postdata, setPostdata] = useState<IPostData>(initData);
 
@@ -72,8 +73,36 @@ export default function WriteReview({
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log(postdata);
-    await sendReviewData();
     handleClose();
+    await sendReviewData();
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    const formattedDate =
+      year +
+      "-" +
+      (month < 10 ? "0" : "") +
+      month +
+      "-" +
+      (day < 10 ? "0" : "") +
+      day;
+
+    const reviewData: IReviewData = {
+      userId: Number(localStorage.getItem("userId")),
+      nickname: localStorage.getItem("nickname")?.toString(),
+      reviewId: 1,
+      content: postdata.content,
+      userRating: postdata.userRating,
+      userActivity: postdata.userActivity,
+      userFear: postdata.userFear,
+      userDifficulty: postdata.userDifficulty,
+      createTime: formattedDate,
+      isSuccess: postdata.isSuccess,
+    };
+
+    await handleReviews(reviewData);
   };
 
   useEffect(() => {

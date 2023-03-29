@@ -21,6 +21,7 @@ interface IProps {
   data: IDetailData;
   reviews: IReviewData[];
   isLiked: boolean;
+  handleReviews: (review: IReviewData) => Promise<void>;
 }
 
 export default function DetailModal({
@@ -30,6 +31,7 @@ export default function DetailModal({
   data,
   reviews,
   isLiked,
+  handleReviews,
 }: IProps) {
   const [childOpen, setchildOpen] = React.useState(false);
   const [isLikedChecked, setIsLikedChecked] = useState<boolean>(isLiked);
@@ -212,7 +214,12 @@ export default function DetailModal({
         <Synopsis>
           <pre>{data.synopsis}</pre>
         </Synopsis>
-        <Review data={data} themeId={themeId} reviews={reviews} />
+        <Review
+          data={data}
+          themeId={themeId}
+          reviews={reviews}
+          handleReviews={handleReviews}
+        />
       </Box>
     </Modal>
   );
@@ -372,7 +379,6 @@ const REVIEWDUMMY: IReviewData[] = [
     userDifficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 0, // 1: 성공 0 : 실파
-    record: "0:12:50", // 분.초
   },
   {
     userId: 1,
@@ -385,7 +391,6 @@ const REVIEWDUMMY: IReviewData[] = [
     userDifficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 1, // 1: 성공 0 : 실파
-    record: "0:12:50", // 분.초
   },
 ];
 const initData: IDetailData = {

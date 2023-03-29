@@ -1,7 +1,7 @@
 export interface IReviewData {
   userId: number;
-  nickname: string;
-  reviewId: number; // 리뷰 id
+  nickname?: string;
+  reviewId?: number; // 리뷰 id
   content: string; // 리뷰 내용
   userRating: number; // 평점
   userActivity: number; // 활동성
@@ -9,7 +9,6 @@ export interface IReviewData {
   userDifficulty: number; // 체감 난이도
   createTime: string; // 생성 날짜
   isSuccess: number; // 성공 여부
-  record: string; // 남은 시간 기록
 }
 export interface IPostData {
   themeId: number; // 테마 id
