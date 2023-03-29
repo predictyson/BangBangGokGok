@@ -15,6 +15,17 @@ export const emailValidCheck = (email: string) => {
   return reg.test(email);
 };
 
+/**
+ * @param password 유효성 체크하고싶은 비밀번호
+ * @returns {boolean}
+ * @comment 비밀번호 유효성 체크
+ */
+export const passwordValidCheck = (password: string) => {
+  const reg =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()\\-_=+])[A-Za-z\d~!@#$%^&*()\\-_=+]{8,16}$/;
+  return reg.test(password);
+};
+
 // 로컬 로그인
 export const requestLogin = async (user: IUserInfo) => {
   const userData: IUserInfo = {

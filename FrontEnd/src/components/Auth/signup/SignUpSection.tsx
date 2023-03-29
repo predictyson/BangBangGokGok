@@ -4,7 +4,12 @@ import { styled as mstyled } from "@mui/material/styles";
 import { theme } from "@/styles/theme";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router";
-import { emailValidCheck, requestEmailCheck, requestSignUp } from "@/api/auth";
+import {
+  emailValidCheck,
+  passwordValidCheck,
+  requestEmailCheck,
+  requestSignUp,
+} from "@/api/auth";
 import Toast, { showToast } from "@/components/common/Toast";
 import { IUserInfo } from "types/auth";
 
@@ -14,23 +19,30 @@ export default function SignUpSection() {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [passwordValid, setPasswordValid] = useState<string>("");
-  const [showHelperText, setShowHelperText] = useState(false);
+  const [showValidHelperText, setShowValidHelperText] = useState(false);
+  const [showPasswordHelperText, setShowPasswordHelperText] = useState(false);
 
   const handleSignUpData = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
     const name = target.name;
     const value = target.value;
 
+    console.log(value);
+    console.log(passwordValidCheck(value));
+
     if (name === "email") setEmail(value);
-    else if (name === "password") setPassword(value);
-    else if (name === "passwordValid") {
+    else if (name === "password") {
+      if (passwordValidCheck(value)) setShowPasswordHelperText(false);
+      else setShowPasswordHelperText(true);
+      setPassword(value);
+      console.log(passwordValidCheck(value));
+    } else if (name === "passwordValid") {
       if (password !== value) {
-        setShowHelperText(true);
-        setPasswordValid(value);
+        setShowValidHelperText(true);
       } else {
-        setShowHelperText(false);
-        setPasswordValid(value);
+        setShowValidHelperText(false);
       }
+      setPasswordValid(value);
     }
   };
 
@@ -105,6 +117,11 @@ export default function SignUpSection() {
         value={password}
         name="password"
         onChange={handleSignUpData}
+        helperText={
+          showPasswordHelperText
+            ? "비밀번호는 영문자, 숫자, 특수문자를 모두 구성하여 8~16자로 입력하세요."
+            : ""
+        }
       />
       <CustomTextField
         label="비밀번호 확인"
@@ -116,7 +133,7 @@ export default function SignUpSection() {
         value={passwordValid}
         name="passwordValid"
         onChange={handleSignUpData}
-        helperText={showHelperText ? "비밀번호와 일치하지 않습니다." : ""}
+        helperText={showValidHelperText ? "비밀번호와 일치하지 않습니다." : ""}
       />
       <SignUpButton onClick={sendNextPage}>회원가입</SignUpButton>
       <Toast />
