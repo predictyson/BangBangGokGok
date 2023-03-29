@@ -222,6 +222,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean existsByEmailAndUserId(String email, int userId) throws Exception {
-        return userRepository.existsByEmailAndUserId(email, userId);
+        boolean result = false;
+        // 이메일을 통해 유저 조회
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
+        // 유저 비교
+        if(user.getId() == userId){
+            result = true;
+        }
+        return result;
     }
 }
