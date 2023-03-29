@@ -6,17 +6,25 @@ import { theme } from "@/styles/theme";
 import { styled as mstyled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { clearCookie } from "@/api/api";
+import { clearUserInfo } from "@/api/api";
+import Toast, { showToast } from "@/components/common/Toast";
 
 export default function Header() {
   const navigate = useNavigate();
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
   // const username = localStorage.getItem("username");
 
+  const handleToastClick = (
+    type: IToastProps["type"],
+    message: IToastProps["message"]
+  ) => {
+    showToast({ type, message });
+  };
+
   const logout = () => {
-    clearCookie();
-    localStorage.clear();
-    location.reload();
+    clearUserInfo();
+    handleToastClick("success", "성공적으로 로그아웃 되었습니다.");
+    navigate("/");
   };
 
   return (
@@ -52,6 +60,7 @@ export default function Header() {
           </>
         )}
       </div>
+      <Toast />
     </Container>
   );
 }

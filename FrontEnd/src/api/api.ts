@@ -77,11 +77,16 @@ export function getCookie(name: string): string | null {
       })[0] || null
   );
 }
-
-export function clearCookie() {
+/**
+ * 로그아웃시, 유저 Info 모두 삭제
+ */
+export function clearUserInfo() {
+  // 쿠키 삭제
   document.cookie.split(";").forEach(function (c) {
     document.cookie = c
       .replace(/^ +/, "")
       .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
   });
+  // 로컬 스토리지 삭제
+  localStorage.clear();
 }
