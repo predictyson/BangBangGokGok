@@ -224,4 +224,22 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "로그인 정보 검증", description = "로그인한 정보가 일치하는지 확인")
+    @GetMapping("check/login/{userId}")
+    public ResponseEntity<Map<String, Object>> isLoginUser(
+            @AuthenticationPrincipal User user,
+            @PathVariable int userId) throws Exception {
+        logger.info("[isLoginUser] request : myEmail={}", user.getUsername());
+        logger.info("[isLoginUser] request : userId={}", userId);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        boolean isLoginUser = userService.existsByEmailAndUserId(user.getUsername(), userId);
+
+        resultMap.put("isLoginUser",isLoginUser);
+
+        logger.info("[isLoginUser] response : isLoginUser={}",isLoginUser);
+
+        return new ResponseEntity<>(resultMap,HttpStatus.OK);
+    }
+
 }

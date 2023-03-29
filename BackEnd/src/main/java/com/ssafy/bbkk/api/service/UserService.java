@@ -20,4 +20,5 @@ public interface UserService {
     boolean existsByEmail(String email) throws Exception;
     boolean existsByNickname(String nickname) throws Exception;
     void setPassword(ChangePasswordRequest changePasswordRequest) throws Exception;
+    boolean existsByEmailAndUserId(String email, int userId) throws Exception;
 }

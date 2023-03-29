@@ -219,4 +219,9 @@ public class UserServiceImpl implements UserService {
         // 유저 저장
         userRepository.save(user);
     }
+
+    @Override
+    public boolean existsByEmailAndUserId(String email, int userId) throws Exception {
+        return userRepository.existsByEmailAndUserId(email, userId);
+    }
 }
