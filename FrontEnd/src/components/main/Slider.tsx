@@ -34,7 +34,11 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleReviews = async (review: IReviewData) => {
+    await setReviews((prev) => {
+      return [...prev, review];
+    });
+  };
   const requestIsLiked = async (themeId: number) => {
     if (themeId !== 0) {
       try {
@@ -142,6 +146,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
               data={data}
               reviews={reviews}
               isLiked={isLiked}
+              handleReviews={handleReviews}
             />
           )}
         </>
@@ -311,7 +316,6 @@ const REVIEWDUMMY: IReviewData[] = [
     userDifficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 0, // 1: 성공 0 : 실파
-    record: "0:12:50", // 분.초
   },
   {
     userId: 1,
@@ -324,6 +328,5 @@ const REVIEWDUMMY: IReviewData[] = [
     userDifficulty: 2.2,
     createTime: "2023-03-13",
     isSuccess: 1, // 1: 성공 0 : 실파
-    record: "0:12:50", // 분.초
   },
 ];
