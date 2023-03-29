@@ -7,10 +7,13 @@ import com.ssafy.bbkk.db.repository.RegionRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder.BindingResolver.StreamWriting;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -18,6 +21,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@EnableAsync
 @Transactional
 @RequiredArgsConstructor
 public class OtherServiceImpl implements OtherService {
@@ -51,6 +55,7 @@ public class OtherServiceImpl implements OtherService {
     }
 
     @Override
+    @Async
     public void recCF(String email) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -65,6 +70,7 @@ public class OtherServiceImpl implements OtherService {
     }
 
     @Override
+    @Async
     public void recCBF(String email) {
         RestTemplate restTemplate = new RestTemplate();
 
