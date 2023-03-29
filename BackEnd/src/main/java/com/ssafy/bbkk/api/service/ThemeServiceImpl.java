@@ -126,36 +126,37 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     // 사람들이 ~~다고 느낀 테마를 반환
-    public ThemeBundleResponse getFeelBundle(int type) throws Exception {
-        System.out.println("type!!! : "+type);
+    public ThemeBundleResponse getFeelBundle() throws Exception {
+        Random rnd = new Random();
+        int type = rnd.nextInt(4);
+
         ThemeBundleResponse result = null;
         List<PreviewThemeResponse> themes = null;
-        Random rnd = new Random();
         List<PreviewThemeResponse> list = null;
         String label = "";
         switch (type) {
-            case 1: // 난이도 최고
+            case 0: // 난이도 최고
                 list = themeRepository.findByUserCntGreaterThanOrderByUserDifficultyDesc(4)
                         .stream()
                         .map(x -> new PreviewThemeResponse(x))
                         .collect(Collectors.toList());
                 label = "유저들이 어렵다고 느낀 테마";
                 break;
-            case 2: // 난이도 최하
+            case 1: // 난이도 최하
                 list = themeRepository.findByUserCntGreaterThanOrderByUserDifficultyAsc(4)
                         .stream()
                         .map(x -> new PreviewThemeResponse(x))
                         .collect(Collectors.toList());
                 label = "유저들이 쉽다고 느낀 테마";
                 break;
-            case 3: // 공포도 최고
+            case 2: // 공포도 최고
                 list = themeRepository.findByUserCntGreaterThanOrderByUserFearDesc(4)
                         .stream()
                         .map(x -> new PreviewThemeResponse(x))
                         .collect(Collectors.toList());
                 label = "유저들이 무섭다고 느낀 테마";
                 break;
-            case 4: // 공포도 최하
+            case 3: // 공포도 최하
                 list = themeRepository.findByUserCntGreaterThanOrderByUserFearAsc(4)
                         .stream()
                         .map(x -> new PreviewThemeResponse(x))
@@ -293,7 +294,7 @@ public class ThemeServiceImpl implements ThemeService {
         List<ThemeBundleResponse> result = new ArrayList<>();
         Random rnd = new Random();
         // 체감 테마
-        result.add(getFeelBundle(rnd.nextInt(4) + 1));
+        result.add(getFeelBundle());
 
         // 지역 인기 테마
         List<Region> regionList = regionRepository.findAll();
@@ -310,7 +311,7 @@ public class ThemeServiceImpl implements ThemeService {
         Random rnd = new Random();
         if (rnd.nextBoolean()) {
             // 체감 테마
-            result.add(getFeelBundle(rnd.nextInt(4)));
+            result.add(getFeelBundle());
         } else {
             User user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));

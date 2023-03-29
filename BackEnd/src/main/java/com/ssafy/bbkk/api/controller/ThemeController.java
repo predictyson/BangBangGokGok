@@ -44,27 +44,27 @@ public class ThemeController {
 
     @Operation(summary = "로그인 테마 목록 조회", description = "로그인시 메인 화면의 테마를 불러온다")
     @GetMapping("user")
-    private ResponseEntity<Map<String, Object>> recommendedTheme(
+    private ResponseEntity<Map<String, Object>> getThemeOfLoginUser(
             @AuthenticationPrincipal User user) throws Exception {
-        logger.info("[recommendedTheme] request : myEmail={}", user.getUsername());
+        logger.info("[getThemeOfLoginUser] request : myEmail={}", user.getUsername());
 
         Map<String, Object> resultMap = new HashMap<>();
 
         List<ThemeBundleResponse> recommendThemes = themeService.getRecommendedThemes(user.getUsername());
         resultMap.put("recommendThemes", recommendThemes);
-        logger.info("[recommendedTheme] response : recommendThemes={}", recommendThemes);
+        logger.info("[getThemeOfLoginUser] response : recommendThemes={}", recommendThemes);
 
         List<PreviewThemeResponse> hotThemes = themeService.getHotThemes();
         resultMap.put("hotThemes", hotThemes);
-        logger.info("[recommendedTheme] response : hotThemes={}", hotThemes);
+        logger.info("[getThemeOfLoginUser] response : hotThemes={}", hotThemes);
 
         List<ThemeBundleResponse> topThemes = themeService.getTopThemesOfUser(user.getUsername());
         resultMap.put("topThemes", topThemes);
-        logger.info("[recommendedTheme] response : topThemes={}", topThemes);
+        logger.info("[getThemeOfLoginUser] response : topThemes={}", topThemes);
 
         AwardThemeBundleResponse awardThemes = themeService.getAwardThemes();
         resultMap.put("awardThemes", awardThemes);
-        logger.info("[recommendedTheme] response : awardThemes={}", topThemes);
+        logger.info("[getThemeOfLoginUser] response : awardThemes={}", topThemes);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -72,22 +72,22 @@ public class ThemeController {
     @CrossOrigin("*")
     @Operation(summary = "게스트 테마 목록 조회", description = "메인 화면의 기본 테마 목록을 불러온다")
     @GetMapping("guest")
-    private ResponseEntity<Map<String, Object>> topTheme() throws Exception {
-        logger.info("[topTheme] request : ");
+    private ResponseEntity<Map<String, Object>> getThemeOfGuest() throws Exception {
+        logger.info("[getThemeOfGuest] request : ");
 
         Map<String, Object> resultMap = new HashMap<>();
 
         List<PreviewThemeResponse> hotThemes = themeService.getHotThemes();
-        List<ThemeBundleResponse> topThemes = themeService.getTopThemes();
-        AwardThemeBundleResponse awardThemes = themeService.getAwardThemes();
-
         resultMap.put("hotThemes", hotThemes);
-        resultMap.put("topThemes", topThemes);
-        resultMap.put("awardThemes", awardThemes);
+        logger.info("[getThemeOfGuest] response : hotThemes={}", hotThemes);
 
-        logger.info("[topTheme] response : hotThemes={}", hotThemes);
-        logger.info("[topTheme] response : topThemes={}", topThemes);
-        logger.info("[topTheme] response : awardThemes={}", awardThemes);
+        List<ThemeBundleResponse> topThemes = themeService.getTopThemes();
+        resultMap.put("topThemes", topThemes);
+        logger.info("[getThemeOfGuest] response : topThemes={}", topThemes);
+
+        AwardThemeBundleResponse awardThemes = themeService.getAwardThemes();
+        resultMap.put("awardThemes", awardThemes);
+        logger.info("[getThemeOfGuest] response : awardThemes={}", awardThemes);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
