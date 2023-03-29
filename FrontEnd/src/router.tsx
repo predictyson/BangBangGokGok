@@ -14,6 +14,7 @@ import LikeThemesSection from "./pages/MyPage/LikeThemesSection";
 import ResetPasswordPage from "./pages/Auth/ResetPasswordPage";
 import OAuthPage from "./pages/Auth/RedirectSignUp";
 import OAuth2Page from "./pages/Auth/RedirectOauth2";
+import { myPageLoader } from "@/api/routerLoader";
 
 const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -27,9 +28,10 @@ const router = createBrowserRouter([
   { path: "/resetpassword", element: <ResetPasswordPage /> },
   {
     path: "mypage",
+    loader: myPageLoader,
     element: <MyPage />,
     children: [
-      { path: "", element: <ProfileInfoSection />, index: true },
+      { element: <ProfileInfoSection />, index: true },
       { path: "reviews", element: <MyReviesSection /> },
       { path: "likes", element: <LikeThemesSection /> },
     ],

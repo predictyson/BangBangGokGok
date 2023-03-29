@@ -1,41 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
 import { theme } from "@/styles/theme";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Avatar1, Avatar2, Avatar3 } from "@/assets/user";
-import { UserProfileProps } from "types/mypage";
-// import { ProfileIcon, ReviewIcon, LikesIcon } from "@/assets/mypage.Profile";
 import ProfileIcon from "@/assets/mypage/ProfileIcon.svg";
 import ReviewIcon from "@/assets/mypage/ReviewIcon.svg";
 import LikesIcon from "@/assets/mypage/LikesIcon.svg";
+import { handleAvatar } from "@/api/user";
 
-interface StringMapByNumber {
-  [key: number]: string;
-}
-
-const imageSrcMap: StringMapByNumber = {
-  1: Avatar1,
-  2: Avatar2,
-  3: Avatar3,
-};
-
-export default function LeftNavBar({ userProfile }: UserProfileProps) {
-  // // API 연결 후 사용
-  const [imageNumber, setImageNumber] = useState<number>(3); // 프로필 이미지 번호
-
+export default function LeftNavBar() {
   const navigate = useNavigate();
+
+  const getProfileImageTypeFromLocalStorage = () => {
+    const profileImageType = localStorage.getItem("profileImageType");
+    if (profileImageType === null) {
+      throw new Error("profileImageType is null");
+    }
+    return profileImageType;
+  };
+
+  const getNicknameFromLocalStorage = () => {
+    const nickname = localStorage.getItem("nickname");
+    if (nickname === null) {
+      throw new Error("nickname is null");
+    }
+    return nickname;
+  };
+  console.log(getProfileImageTypeFromLocalStorage());
 
   return (
     <Wrapper>
       <ProfileWrapper>
         <ProfileImageWrapper>
           <ProfileImage
-            // src={imageSrcMap[userProfile.profileImageType]}
-            src={imageSrcMap[imageNumber]}
+            src={handleAvatar(getProfileImageTypeFromLocalStorage())}
             alt="profile image"
           />
         </ProfileImageWrapper>
-        <ProfileName>{userProfile.nickname}</ProfileName>
+        <ProfileName>{getNicknameFromLocalStorage()}</ProfileName>
         {/* 칭호(?)는 아직 정해진 바가 없음! */}
         {/* <ProfileTitle>{userProfile.title}</ProfileTitle> */}
       </ProfileWrapper>
@@ -106,7 +107,7 @@ const ProfileName = styled.h1`
   margin: 0;
 `;
 
-// const ProfileTitle = styled.h2`
+// const ProfileTitle = styled.h2` // 칭호에 쓸 컴포넌트
 //   color: ${theme.colors.white};
 //   font-size: 2rem;
 //   text-align: center;

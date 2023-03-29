@@ -1,32 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
+import { getUserInterests } from "@/api/profile";
+import { UserInterestTheme } from "types/mypage";
 
 export default function LikeThemesSection() {
-  const [dummyLikes, setDummyLikes] = useState([
-    { id: 1, title: "Result 1" },
-    { id: 2, title: "Result 2" },
-    { id: 3, title: "Result 3" },
-    { id: 4, title: "Result 4" },
-    { id: 5, title: "Result 5" },
-    { id: 6, title: "Result 6" },
-    { id: 7, title: "Result 7" },
-    { id: 8, title: "Result 8" },
-    { id: 9, title: "Result 9" },
-    { id: 10, title: "Result 10" },
-    { id: 11, title: "Result 11" },
-    { id: 12, title: "Result 12" },
-    { id: 13, title: "Result 13" },
-    { id: 14, title: "Result 14" },
-  ]);
+  const [interests, setInterests] = useState<UserInterestTheme[]>([]);
+
+  useEffect(() => {
+    const fetchInterests = async () => {
+      const userId = Number(localStorage.getItem("userId"));
+      try {
+        const response = await getUserInterests(userId);
+        // console.log(response);
+        setInterests(response.data.interestThemes as UserInterestTheme[]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchInterests();
+  }, []);
 
   return (
     <SectionWrapper>
-      <SectionTitle>Likes List</SectionTitle>
+      <SectionTitle>관심 테마</SectionTitle>
       <SectionContentWrapper>
         <OverflowWrapper>
-          {dummyLikes.map((like) => (
-            <ThemeItem key={like.id}>{like.title}</ThemeItem>
+          {interests.map((interest) => (
+            <ThemeItem key={interest.interestedThemeOfUserId}>
+              {interest.previewThemeResponse.title}
+            </ThemeItem>
           ))}
         </OverflowWrapper>
       </SectionContentWrapper>
