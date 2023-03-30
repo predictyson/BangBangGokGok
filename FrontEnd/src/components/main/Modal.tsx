@@ -13,7 +13,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import LikesModal from "./LikesModal";
 import { IReviewData, IDetailData } from "types/detail";
 import { postInterest, deleteInterest } from "@/api/likes";
-import { getReviews } from "@/api/review";
 import { getDetailLogin } from "@/api/theme";
 interface IProps {
   open: boolean;
@@ -82,7 +81,14 @@ export default function DetailModal({
   const handleClose = () => {
     setchildOpen(false);
   };
-
+  const handleMyReview = async () => {
+    try {
+      setIsMyReview(true);
+      console.log("HANDLE MY REVIEW");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const requestLogindata = async (themeId: number) => {
     if (themeId !== 0) {
       try {
@@ -206,6 +212,7 @@ export default function DetailModal({
           reviews={reviews}
           handleReviews={handleReviews}
           isMyReview={isMyReview}
+          handleMyReview={handleMyReview}
         />
       </Box>
     </Modal>

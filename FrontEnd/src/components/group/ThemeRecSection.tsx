@@ -6,8 +6,8 @@ import styled, { keyframes } from "styled-components";
 import { IThemeData } from "types/slider";
 import Modal from "@components/main/Modal";
 import { IDetailData, IReviewData } from "types/detail";
-import { getIsLiked } from '@/api/likes';
-import { getReviews } from '@/api/review';
+import { getIsLiked } from "@/api/likes";
+import { getReviews } from "@/api/review";
 
 export default function ThemeRecSection({
   userList,
@@ -96,7 +96,7 @@ export default function ThemeRecSection({
 
   const handleReviews = async (review: IReviewData) => {
     await setReviews((prev) => {
-      return [...prev, review];
+      return [review, ...prev];
     });
   };
 
@@ -139,7 +139,6 @@ export default function ThemeRecSection({
             themeId={themeId}
             data={data}
             reviews={reviews}
-            isLiked={isLiked}
             handleReviews={handleReviews}
           />
         </BottomContainer>

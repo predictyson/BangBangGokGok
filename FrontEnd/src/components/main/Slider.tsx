@@ -53,7 +53,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
   };
   const handleReviews = async (review: IReviewData) => {
     await setReviews((prev) => {
-      return [...prev, review];
+      return [review, ...prev];
     });
   };
 

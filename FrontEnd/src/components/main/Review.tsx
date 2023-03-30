@@ -15,6 +15,7 @@ interface IProps {
   reviews: IReviewData[];
   handleReviews: (review: IReviewData) => Promise<void>;
   isMyReview: boolean;
+  handleMyReview: () => Promise<void>;
 }
 interface IBarData {
   labels: string[];
@@ -33,6 +34,7 @@ export default function Review({
   reviews,
   handleReviews,
   isMyReview,
+  handleMyReview,
 }: IProps) {
   const CHARTDATA = [data.userActivity, data.userFear, data.userDifficulty];
 
@@ -79,6 +81,7 @@ export default function Review({
           childOpen={childOpen}
           data={data}
           handleReviews={handleReviews}
+          handleMyReview={handleMyReview}
         />
       </Header>
       <img
