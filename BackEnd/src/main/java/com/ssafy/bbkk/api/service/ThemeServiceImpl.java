@@ -406,23 +406,21 @@ public class ThemeServiceImpl implements ThemeService {
 
         final int size = 14; // 한 페이지에 보여줄 정보의 수
         int page = searchThemeRequest.getPage() - 1; // 불러올 페이지
-        List<PreviewThemeResponse> content = jpaQueryFactory
+        Pageable pageable = PageRequest.of(page, size);
+
+        JPAQuery<Theme> contentQuery = jpaQueryFactory
                 .selectFrom(qTheme).distinct()
                 .join(qTheme.genreOfThemes, qGenreOfTheme)
-                .where(builder)
+                .where(builder);
+
+        List<PreviewThemeResponse> content = contentQuery
                 .orderBy(new OrderSpecifier<>(order, sort))
                 .offset((long) size * page)
                 .limit(size).fetch()
                 .stream().map(PreviewThemeResponse::new)
                 .collect(Collectors.toList());
 
-        Pageable pageable = PageRequest.of(page, size);
-        JPAQuery<Long> countQuery = jpaQueryFactory
-                .select(qTheme.count())
-                .from(qTheme)
-                .where(builder);
-
-        Page<PreviewThemeResponse> result = PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
+        Page<PreviewThemeResponse> result = PageableExecutionUtils.getPage(content, pageable, contentQuery::fetchCount);
 
 //        System.out.println("이번 페이지 번호 : " + (result.getNumber()+1)   + " / " + result.getTotalPages());
 //        System.out.println("이번 페이지에 보이는 테마 : " + result.getNumberOfElements() + " / " + result.getSize());
