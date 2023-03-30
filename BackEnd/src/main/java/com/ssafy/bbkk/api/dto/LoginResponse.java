@@ -11,11 +11,13 @@ public class LoginResponse {
     private int userId;
     private String nickname;
     private String profileImageType;
+    private String email;
 
     public LoginResponse(User user) {
         this.userId = user.getId();
         this.nickname = user.getNickname();
         this.profileImageType = user.getProfileImageType();
+        this.email = user.getEmail();
     }
 
 }
