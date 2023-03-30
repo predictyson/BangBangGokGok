@@ -6,10 +6,59 @@ import { theme } from "@/styles/theme";
 import { styled as mstyled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import { clearUserInfo } from "@/api/api";
+import Toast, { showToast } from "@/components/common/Toast";
+import { myPageLoader } from "@/api/routerLoader";
+
 export default function Header() {
   const navigate = useNavigate();
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
   // const username = localStorage.getItem("username");
+
+  const handleToastClick = (
+    type: IToastProps["type"],
+    message: IToastProps["message"]
+  ) => {
+    showToast({ type, message });
+  };
+
+  const logout = () => {
+    clearUserInfo();
+    handleToastClick("success", "성공적으로 로그아웃 되었습니다.");
+    navigate("/");
+  };
+
+  const routeGroupSet = async () => {
+    try {
+      if (await myPageLoader()) {
+        navigate("/groupset");
+      } else {
+        handleToastClick("error", "올바르지 않은 접근입니다.");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    } catch (error) {
+      handleToastClick("error", "로그인 후 이용해주세요.");
+      console.log(error);
+    }
+  };
+
+  const routeMypage = async () => {
+    try {
+      if (await myPageLoader()) {
+        navigate("/mypage");
+      } else {
+        handleToastClick("error", "올바르지 않은 접근입니다.");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container>
       <div className="left-container">
@@ -27,19 +76,23 @@ export default function Header() {
       </div>
       <div className="middle-container"></div>
       <div className="right-container">
-        <NavItem onClick={() => navigate("/groupset")}>Group Set</NavItem>
+        <NavItem onClick={routeGroupSet}>Group Set</NavItem>
         <NavItem onClick={() => navigate("/search")}>Search</NavItem>
         {!isLogin && (
           <NavButton onClick={() => navigate("/login")}>Login</NavButton>
         )}
         {isLogin && (
-          <NavItem onClick={() => navigate("/mypage")}>
-            {/* <AccountCircleOutlinedIcon style={{ fontSize: "3rem" }} /> */}
-            {/* <span> {username}</span> */}
-            Mypage
-          </NavItem>
+          <>
+            <NavItem onClick={routeMypage}>
+              {/* <AccountCircleOutlinedIcon style={{ fontSize: "3rem" }} /> */}
+              {/* <span> {username}</span> */}
+              Mypage
+            </NavItem>
+            <NavButton onClick={logout}>Logout</NavButton>
+          </>
         )}
       </div>
+      <Toast />
     </Container>
   );
 }

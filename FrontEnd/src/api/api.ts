@@ -63,7 +63,7 @@ export default instance;
  * @param name cookie의 key
  * @returns 해당 key의 value
  */
-function getCookie(name: string): string | null {
+export function getCookie(name: string): string | null {
   const nameLenPlus = name.length + 1;
   return (
     document.cookie
@@ -76,4 +76,17 @@ function getCookie(name: string): string | null {
         return decodeURIComponent(cookie.substring(nameLenPlus));
       })[0] || null
   );
+}
+/**
+ * 로그아웃시, 유저 Info 모두 삭제
+ */
+export function clearUserInfo() {
+  // 쿠키 삭제
+  document.cookie.split(";").forEach(function (c) {
+    document.cookie = c
+      .replace(/^ +/, "")
+      .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+  });
+  // 로컬 스토리지 삭제
+  localStorage.clear();
 }

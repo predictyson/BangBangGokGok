@@ -4,10 +4,8 @@ import LeftNavBar from "@components/mypage/LeftSection/LeftNavBar";
 import RightContent from "@components/mypage/RightSection/RightContent";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
-import { useCheckLogin } from "@/hooks/useCheckLogin";
 
 export default function MyPage() {
-  useCheckLogin();
   return (
     <>
       <Header />

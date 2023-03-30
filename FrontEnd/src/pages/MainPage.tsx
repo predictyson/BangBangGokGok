@@ -13,6 +13,7 @@ import {
   IThemeData,
 } from "types/slider";
 import { getThemeUser, getThemeGuest } from "@/api/theme";
+import Footer from "@components/common/Footer";
 
 export default function MainPage() {
   const [hotData, setHotData] = useState<IThemeData[]>(HotThemesData);
@@ -62,6 +63,7 @@ export default function MainPage() {
         <RankSlider data={hotData} />
         <BasicSlider isRecommendSlider={false} topData={topData} />
         <AwardsSlider awardData={awardData} />
+        <Footer />
       </div>
     </Container>
   );

@@ -25,30 +25,16 @@ export default function ThemeRecSection({
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
   const [data, setData] = useState<IDetailData>(initData);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
 
   const handleOpen = async (themeId: number) => {
     await setThemeId(themeId);
     await requestDetailData(themeId);
     await requestReviews(themeId);
-    await requestIsLiked(themeId);
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const requestIsLiked = async (themeId: number) => {
-    if (themeId !== 0) {
-      try {
-        const res = await getIsLiked(themeId);
-        setIsLiked(res.data.isInterest);
-        console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
-      } catch (err) {
-        console.log(err);
-      }
-    }
   };
 
   const requestReviews = async (themeId: number) => {
