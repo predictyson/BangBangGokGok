@@ -404,7 +404,7 @@ public class ThemeServiceImpl implements ThemeService {
                 break;
         }
 
-        final int size = 25; // 한 페이지에 보여줄 정보의 수
+        final int size = 14; // 한 페이지에 보여줄 정보의 수
         int page = searchThemeRequest.getPage() - 1; // 불러올 페이지
         List<PreviewThemeResponse> content = jpaQueryFactory
                 .selectFrom(qTheme).distinct()

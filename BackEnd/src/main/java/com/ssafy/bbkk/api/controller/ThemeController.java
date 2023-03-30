@@ -106,8 +106,8 @@ public class ThemeController {
         Map<String, Object> resultMap = new HashMap<>();
 
         Page<PreviewThemeResponse> resultPage = themeService.getSearchThemes(searchThemeRequest);
-        resultMap.put("hasMore", resultPage.isLast());
-        logger.info("[searchedTheme] response : hasMore={}", resultPage.isLast());
+        resultMap.put("isLast", resultPage.isLast());
+        logger.info("[searchedTheme] response : isLast={}", resultPage.isLast());
 
         resultMap.put("themes", resultPage.getContent());
         logger.info("[searchedTheme] response : themes={}", resultPage.getContent());
