@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { clearUserInfo } from "@/api/api";
 import Toast, { showToast } from "@/components/common/Toast";
+import { myPageLoader } from "@/api/routerLoader";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -27,6 +28,22 @@ export default function Header() {
     navigate("/");
   };
 
+  const routeGroupSet = async () => {
+    try {
+      if (await myPageLoader()) {
+        navigate("/groupset");
+      } else {
+        handleToastClick("error", "올바르지 않은 접근입니다.");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    } catch (error) {
+      handleToastClick("error", "로그인 후 이용해주세요.");
+      console.log(error);
+    }
+  };
+
   return (
     <Container>
       <div className="left-container">
@@ -44,7 +61,7 @@ export default function Header() {
       </div>
       <div className="middle-container"></div>
       <div className="right-container">
-        <NavItem onClick={() => navigate("/groupset")}>Group Set</NavItem>
+        <NavItem onClick={routeGroupSet}>Group Set</NavItem>
         <NavItem onClick={() => navigate("/search")}>Search</NavItem>
         {!isLogin && (
           <NavButton onClick={() => navigate("/login")}>Login</NavButton>
