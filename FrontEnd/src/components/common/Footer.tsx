@@ -1,4 +1,3 @@
-import { fontSize } from "@mui/system";
 import React from "react";
 import styled from "styled-components";
 
@@ -7,6 +6,11 @@ export default function Footer() {
     <Container>
       <Line />
       <Content>
+        <img
+          src="https://user-images.githubusercontent.com/55784772/228745312-d8d5e7a9-79ce-41a2-a89e-078b10799586.png"
+          alt="logo"
+          style={{ width: "5.5rem" }}
+        />
         <MiddleL>
           <Desc className="left">
             <b>SSAFY 8기 A204</b>
@@ -14,17 +18,18 @@ export default function Footer() {
           <Desc className="left">
             정상기 김성수 손예지 우상빈 이상민 이지원{" "}
           </Desc>
-          <Desc className="left">
+          {/* <Desc className="left">
             COPYRIGHT ⓒ 2023 BBKK, All right reserved.
-          </Desc>
+          </Desc> */}
         </MiddleL>
         <MiddleR>
-          <Desc className="right">Email: bangbanggokgokservice@gmail.com</Desc>
+          <Desc className="right">bangbanggokgokservice@gmail.com</Desc>
           <Desc className="right">
-            Address: 서울특별시 강남구 테헤란로 212 멀티캠퍼스 역삼 801호
+            서울특별시 강남구 테헤란로 212 멀티캠퍼스 역삼
           </Desc>
         </MiddleR>
       </Content>
+      <CopyRight> COPYRIGHT ⓒ 2023 BBKK, All right reserved.</CopyRight>
     </Container>
   );
 }
@@ -34,12 +39,17 @@ const Content = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+const CopyRight = styled.div`
+  width: 92%;
+  margin-top: 1.2rem;
+`;
 
 const MiddleL = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   width: 50%;
+  margin-left: 1rem;
 `;
 
 const MiddleR = styled.div`
@@ -48,6 +58,7 @@ const MiddleR = styled.div`
   justify-content: flex-end;
   /* white-space: nowrap; */
   width: 50%;
+  align-items: flex-end;
 `;
 
 const Container = styled.div`

@@ -111,13 +111,13 @@ const HeaderSection = styled.div`
   }
 `;
 
-const myUserData = [
-  {
-    userId: JSON.parse(localStorage.getItem("userId") || ""),
-    nickname: JSON.parse(localStorage.getItem("nickname") || ""),
-    email: JSON.parse(localStorage.getItem("email") || ""),
-    profileImageType: JSON.parse(
-      localStorage.getItem("profileImageType") || ""
-    ),
-  },
-];
+// const myUserData = [
+//   {
+//     userId: JSON.parse(localStorage.getItem("userId") || ""),
+//     nickname: JSON.parse(localStorage.getItem("nickname") || ""),
+//     email: JSON.parse(localStorage.getItem("email") || ""),
+//     profileImageType: JSON.parse(
+//       localStorage.getItem("profileImageType") || ""
+//     ),
+//   },
+// ];
