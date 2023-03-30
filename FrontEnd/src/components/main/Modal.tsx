@@ -138,7 +138,7 @@ export default function DetailModal({
             <img
               src={`${data.imgUrl}`}
               alt="poster-img"
-              style={{ height: "100%" }}
+              style={{ height: "100%", maxWidth: "90%" }}
             />
           </div>
           <div className="right-container">
