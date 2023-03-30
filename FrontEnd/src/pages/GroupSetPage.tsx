@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@/components/common/Header";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
@@ -7,7 +7,7 @@ import ThemeRecSection from "@components/group/ThemeRecSection";
 import Toast, { showToast } from "@/components/common/Toast";
 
 export default function GroupSetPage() {
-  const [userList, setUserList] = useState<GroupSetUer[]>([]);
+  const [userList, setUserList] = useState<GroupSetUer[]>(myUserData);
 
   const handleDeleteUser = (nickname: string) => {
     setUserList((prev) => {
@@ -110,3 +110,14 @@ const HeaderSection = styled.div`
     font-weight: ${theme.fontWeight.extraBold};
   }
 `;
+
+const myUserData = [
+  {
+    userId: JSON.parse(localStorage.getItem("userId") || ""),
+    nickname: JSON.parse(localStorage.getItem("nickname") || ""),
+    email: JSON.parse(localStorage.getItem("email") || ""),
+    profileImageType: JSON.parse(
+      localStorage.getItem("profileImageType") || ""
+    ),
+  },
+];
