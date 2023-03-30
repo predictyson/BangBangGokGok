@@ -4,7 +4,6 @@ import { PreviewThemeResponse } from "types/search";
 import { getDetail } from "@/api/theme";
 import { IReviewData, IDetailData } from "types/detail";
 import { getReviews } from "@/api/review";
-import { getIsLiked } from "@/api/likes";
 import Modal from "@/components/main/Modal";
 
 interface SearchResultProps {
@@ -72,7 +71,6 @@ export default function SearchResult({
 }: SearchResultProps) {
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [data, setData] = useState<IDetailData>(initData);
   const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
 
@@ -80,7 +78,6 @@ export default function SearchResult({
     setThemeId(themeId);
     await requestDetailData(themeId);
     await requestReviews(themeId);
-    await requestIsLiked(themeId);
     setOpen(true);
   };
 
@@ -117,18 +114,6 @@ export default function SearchResult({
     }
   };
 
-  const requestIsLiked = async (themeId: number) => {
-    if (themeId !== 0) {
-      try {
-        const res = await getIsLiked(themeId);
-        setIsLiked(res.data.isInterest);
-        console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-
   return (
     <Wrapper>
       {!searchHappened && <div>원하는 테마 검색할 수 있습니다.</div>}
@@ -158,7 +143,6 @@ export default function SearchResult({
               themeId={themeId}
               data={data}
               reviews={reviews}
-              isLiked={isLiked}
               handleReviews={handleReviews}
             />
           )}
@@ -183,17 +167,17 @@ const Container = styled.div`
   gap: 2.5rem;
 `;
 
-const ThemeItem = styled.div`
-  border-radius: 1rem;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  width: 20rem;
-  height: 25rem;
-  @media (max-height: 800px) {
-    width: 15rem;
-    height: 20rem;
-  }
-  background-color: #3e2133;
-`;
+// const ThemeItem = styled.div`
+//   border-radius: 1rem;
+//   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+//   width: 20rem;
+//   height: 25rem;
+//   @media (max-height: 800px) {
+//     width: 15rem;
+//     height: 20rem;
+//   }
+//   background-color: #3e2133;
+// `;
 
 const SliderItem = styled.div`
   border-radius: 1rem;
