@@ -20,7 +20,6 @@ interface ArrowProps extends CustomArrowProps {
 export default function AwardsSlider(awardData: IProps) {
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
   const [data, setData] = useState<IDetailData>(initData);
 
@@ -30,7 +29,6 @@ export default function AwardsSlider(awardData: IProps) {
     await requestReviews(themeId);
     await requestDetailData(themeId);
     await setOpen(true);
-    // isLogin && (await requestDetailLoginData(themeId));
     console.log("handleOpen Award : " + themeId);
   };
   const handleClose = () => {
@@ -41,17 +39,6 @@ export default function AwardsSlider(awardData: IProps) {
       return [review, ...prev];
     });
   };
-  // const requestIsLiked = async (themeId: number) => {
-  //   if (themeId !== 0) {
-  //     try {
-  //       const res = await getIsLiked(themeId);
-  //       setIsLiked(res.data.isInterest);
-  //       console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // };
 
   const requestReviews = async (themeId: number) => {
     if (themeId !== 0) {
@@ -108,12 +95,6 @@ export default function AwardsSlider(awardData: IProps) {
       }
     }
   };
-
-  // useEffect(() => {
-  //   requestDetailData(themeId);
-  //   const isLogin = localStorage.getItem("userId") !== null ? true : false;
-  //   isLogin && requestDetailLoginData(themeId);
-  // }, [themeId]);
 
   const awarddata = awardData.awardData;
   return (

@@ -8,12 +8,9 @@ import Rating from "@mui/material/Rating";
 import Toast, { showToast } from "@/components/common/Toast";
 import "react-toastify/dist/ReactToastify.css";
 import Review from "./Review";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import LikesModal from "./LikesModal";
 import { IReviewData, IDetailData, IDetailLogin } from "types/detail";
 import { postInterest, deleteInterest, getIsLiked } from "@/api/likes";
-import { getReviews } from "@/api/review";
 import { getDetailLogin } from "@/api/theme";
 interface IProps {
   open: boolean;
@@ -214,6 +211,7 @@ export default function DetailModal({
           themeId={themeId}
           reviews={reviews}
           handleReviews={handleReviews}
+          isMyReview={isMyReview}
         />
       </Box>
     </Modal>

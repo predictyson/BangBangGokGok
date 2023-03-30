@@ -14,6 +14,7 @@ interface IProps {
   themeId: number;
   reviews: IReviewData[];
   handleReviews: (review: IReviewData) => Promise<void>;
+  isMyReview: boolean;
 }
 interface IBarData {
   labels: string[];
@@ -31,6 +32,7 @@ export default function Review({
   themeId,
   reviews,
   handleReviews,
+  isMyReview,
 }: IProps) {
   const CHARTDATA = [data.userActivity, data.userFear, data.userDifficulty];
 
@@ -53,17 +55,24 @@ export default function Review({
   const handleClose = () => {
     setchildOpen(false);
   };
+
+  console.log("IS MY REVIEW " + isMyReview);
   return (
     <>
       <Header>
         Reviews
-        <WriteButton onClick={handleOpen}>
-          <img
-            src="https://user-images.githubusercontent.com/55784772/224926890-105d5d61-de32-47ca-ad36-5af4ee5fe137.png"
-            style={{ width: "2rem", height: "2rem", marginRight: "0.5rem" }}
-          />
-          후기 작성하기
-        </WriteButton>
+        {isMyReview && (
+          <DisableAnnounce>이미 후기를 작성한 테마입니다 </DisableAnnounce>
+        )}
+        {!isMyReview && (
+          <WriteButton onClick={handleOpen}>
+            <img
+              src="https://user-images.githubusercontent.com/55784772/224926890-105d5d61-de32-47ca-ad36-5af4ee5fe137.png"
+              style={{ width: "2rem", height: "2rem", marginRight: "0.5rem" }}
+            />
+            후기 작성하기
+          </WriteButton>
+        )}
         <WriteReview
           themeId={themeId}
           handleClose={handleClose}
@@ -162,6 +171,15 @@ const Header = styled.div`
   font-size: 1.6rem;
   font-family: Pretendard;
   font-weight: bold;
+`;
+
+const DisableAnnounce = styled.div`
+  display: flex;
+  font-weight: bold;
+  color: ${theme.colors.pink};
+  font-size: 1.4rem;
+  height: 3.5rem;
+  align-items: center;
 `;
 const WriteButton = styled.div`
   border: solid 2px white;
