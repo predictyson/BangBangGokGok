@@ -4,10 +4,10 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.bbkk.api.dto.AwardThemeBundleResponse;
 import com.ssafy.bbkk.api.dto.PreviewThemeResponse;
-import com.ssafy.bbkk.api.dto.ReviewOfThemeResponse;
 import com.ssafy.bbkk.api.dto.SearchThemeRequest;
 import com.ssafy.bbkk.api.dto.ThemeBundleResponse;
 import com.ssafy.bbkk.api.dto.ThemeCountResponse;
@@ -34,6 +34,10 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -333,7 +337,7 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public List<PreviewThemeResponse> getSearchThemes(SearchThemeRequest searchThemeRequest) throws Exception {
+    public Page<PreviewThemeResponse> getSearchThemes(SearchThemeRequest searchThemeRequest) throws Exception {
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(entityManager);
         QTheme qTheme = QTheme.theme;
         QGenreOfTheme qGenreOfTheme = QGenreOfTheme.genreOfTheme;
@@ -362,14 +366,17 @@ public class ThemeServiceImpl implements ThemeService {
             builder.and(qGenreOfTheme.genre.id.eq(genreId));
         }
 
-        // 난이도는 항상 조건 추가
-        builder.and(qTheme.difficulty.between(searchThemeRequest.getDifficultyS(),
-                searchThemeRequest.getDifficultyE()));
+        // 난이도를 선택했으면 해당 난이도 범위의 테마들만 가져오도록 조건 추가
+        float difficultyS = searchThemeRequest.getDifficultyS();
+        float difficultyE = searchThemeRequest.getDifficultyE();
+        if (difficultyS != 1.0 || difficultyE != 5.0) {
+            builder.and(qTheme.difficulty.between(difficultyS, difficultyE));
+        }
 
         // 인원수를 선택했으면 해당 인원이 갈 수 있는 테마들만 가져오도록 조건 추가
         int people = searchThemeRequest.getPeople();
         if (0 < people) {
-            builder.and(qTheme.minPeople.goe(people)).and(qTheme.maxPeople.loe(people));
+            builder.and(qTheme.minPeople.loe(people)).and(qTheme.maxPeople.goe(people));
         }
 
         // 시간을 선택했으면 해당 시간 범위에 해당하는 테마들만 가져오도록 조건 추가(1일 시 60분 이하, 2일 시 60분 초과)
@@ -384,7 +391,7 @@ public class ThemeServiceImpl implements ThemeService {
         }
 
         Order order = (searchThemeRequest.getOrderby().equals("asc")) ? Order.ASC : Order.DESC; // 정렬 방식
-        Expression sort = qTheme.userRating; // 무엇을 기준으로 정렬할지
+        Expression<Double> sort = qTheme.userRating; // 무엇을 기준으로 정렬할지
         switch (searchThemeRequest.getSortby()) {
             case "userActivity":
                 sort = qTheme.userActivity;
@@ -397,19 +404,36 @@ public class ThemeServiceImpl implements ThemeService {
                 break;
         }
 
-        int page = searchThemeRequest.getPage(); // 몇 번째 페이지의 정보를 불러올 것인지
-        int size = 14; // 한 페이지에 보여줄 정보의 수
-        List<Theme> target = jpaQueryFactory.selectFrom(qTheme).distinct()
+        final int size = 14; // 한 페이지에 보여줄 정보의 수
+        int page = searchThemeRequest.getPage() - 1; // 불러올 페이지
+        List<PreviewThemeResponse> content = jpaQueryFactory
+                .selectFrom(qTheme).distinct()
                 .join(qTheme.genreOfThemes, qGenreOfTheme)
                 .where(builder)
                 .orderBy(new OrderSpecifier<>(order, sort))
-                .offset((page - 1) * size)
-                .limit(size)
-                .fetch();
-
-        List<PreviewThemeResponse> result = target.stream()
-                .map(x -> new PreviewThemeResponse(x))
+                .offset((long) size * page)
+                .limit(size).fetch()
+                .stream().map(PreviewThemeResponse::new)
                 .collect(Collectors.toList());
+
+        Pageable pageable = PageRequest.of(page, size);
+        JPAQuery<Long> countQuery = jpaQueryFactory
+                .select(qTheme.count())
+                .from(qTheme)
+                .where(builder);
+
+        Page<PreviewThemeResponse> result = PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
+
+//        System.out.println("이번 페이지 번호 : " + (result.getNumber()+1)   + " / " + result.getTotalPages());
+//        System.out.println("이번 페이지에 보이는 테마 : " + result.getNumberOfElements() + " / " + result.getSize());
+//        System.out.println("필터와 일치한 총 테마 : " + result.getTotalElements() );
+//        System.out.println("첫 번째 페이지입니까? " + result.isFirst());
+//        System.out.println("마지막 페이지입니까? " + result.isLast());
+
+//        List<PreviewThemeResponse> result = content.stream()
+//                .map(x -> new PreviewThemeResponse(x))
+//                .collect(Collectors.toList());
+
         return result;
     }
 

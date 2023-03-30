@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -104,9 +105,12 @@ public class ThemeController {
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        List<PreviewThemeResponse> previewThemeResponses = themeService.getSearchThemes(searchThemeRequest);
-        resultMap.put("themes", previewThemeResponses);
-        logger.info("[searchedTheme] response : themes={}", previewThemeResponses);
+        Page<PreviewThemeResponse> resultPage = themeService.getSearchThemes(searchThemeRequest);
+        resultMap.put("isLast", resultPage.isLast());
+        logger.info("[searchedTheme] response : isLast={}", resultPage.isLast());
+
+        resultMap.put("themes", resultPage.getContent());
+        logger.info("[searchedTheme] response : themes={}", resultPage.getContent());
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
