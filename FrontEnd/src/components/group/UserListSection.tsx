@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { requestUser } from "@/api/group";
-import CircularProgress from "@mui/material/CircularProgress";
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -47,8 +46,6 @@ export default function UserListSection({
         data: { users },
       } = await requestUser(event.target.value);
       setSearchResults(users);
-      // console.log("searchResults");
-      // console.log(searchResults);
     } catch (err) {
       console.log(err);
     }
@@ -78,14 +75,15 @@ export default function UserListSection({
                 color="warning"
                 options={searchResults}
                 autoHighlight
-                getOptionLabel={(option) => option.nickname}
+                getOptionLabel={(option) =>
+                  `${option.nickname} (${option.email})`
+                }
                 renderOption={(props, option) => (
                   <Box
                     component="li"
                     sx={{ fontSize: 14 }}
                     {...props}
                     onClick={() => {
-                      console.log(option);
                       handleAddUser(option);
                     }}
                     key={option.userId}
