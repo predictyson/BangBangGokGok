@@ -25,7 +25,8 @@ export default function SearchInput(props: SearchInputProps) {
           <Input
             onChange={handleChange}
             value={props.searchWord}
-            placeholder="검색어를 입력하세요."
+            placeholder="검색어를 입력하세요.(20자 제한)"
+            maxLength={20}
           />
         </InputContainer>
         <SearchButton type="submit">

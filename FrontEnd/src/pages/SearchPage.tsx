@@ -15,14 +15,7 @@ import {
   ReducerAction,
 } from "types/search";
 
-const INITIAL_RESULT_DATA = [
-  {
-    themeId: -1,
-    title: "",
-    imgUrl: "",
-    genres: [""],
-  },
-];
+const INITIAL_RESULT_DATA: PreviewThemeResponse[] = [];
 
 const INITIAL_FILTER_SET_VALUE: FilterValue = {
   regionBig: "전체",
@@ -60,6 +53,7 @@ export default function SearchPage() {
   // SearchResult 관련 변수
   const [results, setResults] =
     useState<PreviewThemeResponse[]>(INITIAL_RESULT_DATA);
+  const [searchHappened, setSearchHappened] = useState<boolean>(false);
   // SearchInput 관련 변수, 함수
   const [searchWord, setInputValue] = useState<string>("");
   const handleInputChange = (newInput: string) => {
@@ -79,6 +73,7 @@ export default function SearchPage() {
     });
     setResults(response.data.themes);
     // setPage((prev) => prev + 1);
+    setSearchHappened(true);
   };
 
   // SearchFilter 관련 변수, 함수
@@ -140,7 +135,7 @@ export default function SearchPage() {
             sortOrder={sortOrder}
             handleSortOptionOrderChange={handleSortOptionOrderChange}
           />
-          <SearchResult results={results} />
+          <SearchResult results={results} searchHappened={searchHappened} />
         </ContentWrapper>
       </BackGround>
     </>
