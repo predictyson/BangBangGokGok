@@ -20,11 +20,8 @@ interface ArrowProps extends CustomArrowProps {
 export default function AwardsSlider(awardData: IProps) {
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
-<<<<<<< HEAD
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
-=======
->>>>>>> 7ba327e (💫 chore: 0329 임시저장)
   const [data, setData] = useState<IDetailData>(initData);
 
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
@@ -41,7 +38,7 @@ export default function AwardsSlider(awardData: IProps) {
   };
   const handleReviews = async (review: IReviewData) => {
     await setReviews((prev) => {
-      return [...prev, review];
+      return [review, ...prev];
     });
   };
   // const requestIsLiked = async (themeId: number) => {
