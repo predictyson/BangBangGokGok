@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "@/components/common/Header";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
@@ -34,21 +34,19 @@ export default function GroupSetPage() {
     showToast({ type, message });
   };
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("userId")) {
-  //     const myUserData = [
-  //       {
-  //         userId: JSON.parse(localStorage.getItem("userId") || ""),
-  //         nickname: JSON.parse(localStorage.getItem("nickname") || ""),
-  //         email: JSON.parse(localStorage.getItem("email") || ""),
-  //         profileImageType: JSON.parse(
-  //           localStorage.getItem("profileImageType") || ""
-  //         ),
-  //       },
-  //     ];
-  //     setUserList(myUserData);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem("userId")) {
+      const myUserData = [
+        {
+          userId: Number(localStorage.getItem("userId")),
+          nickname: String(localStorage.getItem("nickname")),
+          email: String(localStorage.getItem("email")),
+          profileImageType: String(localStorage.getItem("profileImageType")),
+        },
+      ];
+      setUserList(myUserData);
+    }
+  }, []);
 
   return (
     <>

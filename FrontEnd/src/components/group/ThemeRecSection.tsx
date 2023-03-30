@@ -92,8 +92,8 @@ export default function ThemeRecSection({
         <>
           {isWaiting && (
             <WaitAnimation>
-              <b>{localStorage.getItem("nickname")}</b> 님의 그룹의 맞춤 추천
-              테마를 찾는중입니다......
+              <b>{userList[0].nickname}</b> 님의 그룹의 맞춤 추천 테마를
+              찾는중입니다......
             </WaitAnimation>
           )}
           {!isWaiting && (
