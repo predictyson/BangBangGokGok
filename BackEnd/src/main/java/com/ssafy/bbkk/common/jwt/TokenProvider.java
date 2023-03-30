@@ -114,7 +114,7 @@ public class TokenProvider {
         try {
             return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
         } catch (ExpiredJwtException e) {
-            log.warn("[parseClaims] ExpiredJwtException 에러가 났습니다. ={}, {}",e.getClaims(),e.getMessage());
+            log.warn("[parseClaims] ExpiredJwtException 에러가 났습니다. {}, {}",e.getClaims(),e.getMessage());
             return e.getClaims();
         }
     }

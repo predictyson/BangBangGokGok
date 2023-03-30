@@ -36,7 +36,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         return processOAuth2User(userRequest, oAuth2User);
     }
 
-    private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
+    private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) throws OAuth2AuthenticationException{
 
         // Attribute를 파싱해서 공통 객체로 묶는다. 관리가 편함.
         OAuth2UserInfo oAuth2UserInfo = null;
@@ -59,7 +59,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         User user = null;
         if (userOptional.isPresent()) { // 유저가 존재하면 그대로 가져옴
             user = userOptional.get();
-        } else { // 유저가 존재하지 않다면 회원 가입을
+        }
+        else { // 소셜 로그인 유저가 존재하지 않다면
+            if(userRepository.existsByEmail(oAuth2UserInfo.getEmail())){ // 이미 해당 이메일로 로컬 회원가입이 되어있는 유저라면
+                throw new OAuth2AuthenticationException("이미 존재하는 사용자입니다.");
+            }
             // user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
             user = new User(oAuth2UserInfo);
             userRepository.save(user);
