@@ -44,6 +44,21 @@ export default function Header() {
     }
   };
 
+  const routeMypage = async () => {
+    try {
+      if (await myPageLoader()) {
+        navigate("/mypage");
+      } else {
+        handleToastClick("error", "올바르지 않은 접근입니다.");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container>
       <div className="left-container">
@@ -68,7 +83,7 @@ export default function Header() {
         )}
         {isLogin && (
           <>
-            <NavItem onClick={() => navigate("/mypage")}>
+            <NavItem onClick={routeMypage}>
               {/* <AccountCircleOutlinedIcon style={{ fontSize: "3rem" }} /> */}
               {/* <span> {username}</span> */}
               Mypage

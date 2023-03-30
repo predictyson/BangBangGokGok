@@ -28,7 +28,6 @@ const router = createBrowserRouter([
   { path: "/resetpassword", element: <ResetPasswordPage /> },
   {
     path: "mypage",
-    loader: myPageLoader,
     element: <MyPage />,
     children: [
       { element: <ProfileInfoSection />, index: true },
