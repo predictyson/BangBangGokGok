@@ -7,11 +7,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Modal from "./Modal";
 import { IAwardSlider, IAwardTheme } from "types/slider";
-import { style } from "@mui/system";
-import { IDetailData, IReviewData } from "types/detail";
-import { getDetail } from "@/api/theme";
+import { IDetailData, IReviewData, IDetailLogin } from "types/detail";
+import { getDetail, getDetailLogin } from "@/api/theme";
 import { getReviews } from "@/api/review";
-import { getIsLiked } from "@/api/likes";
 interface IProps {
   awardData: IAwardSlider;
 }
@@ -22,14 +20,14 @@ interface ArrowProps extends CustomArrowProps {
 export default function AwardsSlider(awardData: IProps) {
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
   const [data, setData] = useState<IDetailData>(initData);
+
+  const isLogin = localStorage.getItem("userId") !== null ? true : false;
   const handleOpen = async (themeId: number) => {
     await setThemeId(themeId);
     await requestReviews(themeId);
-    // await requestDetailData(themeId);
-    await requestIsLiked(themeId);
+    await requestDetailData(themeId);
     await setOpen(true);
     console.log("handleOpen Award : " + themeId);
   };
@@ -38,19 +36,8 @@ export default function AwardsSlider(awardData: IProps) {
   };
   const handleReviews = async (review: IReviewData) => {
     await setReviews((prev) => {
-      return [...prev, review];
+      return [review, ...prev];
     });
-  };
-  const requestIsLiked = async (themeId: number) => {
-    if (themeId !== 0) {
-      try {
-        const res = await getIsLiked(themeId);
-        setIsLiked(res.data.isInterest);
-        console.log("REQUEST IS LIKED SUCCESS " + res.data.isInterest);
-      } catch (err) {
-        console.log(err);
-      }
-    }
   };
 
   const requestReviews = async (themeId: number) => {
@@ -108,9 +95,7 @@ export default function AwardsSlider(awardData: IProps) {
       }
     }
   };
-  useEffect(() => {
-    requestDetailData(themeId);
-  }, [themeId]);
+
   const awarddata = awardData.awardData;
   return (
     <Container>
@@ -129,10 +114,7 @@ export default function AwardsSlider(awardData: IProps) {
                 src="https://user-images.githubusercontent.com/55784772/227142184-4680b14f-4d30-4699-a62e-8b258803b9db.png"
                 alt="left"
               />
-              <span className="title">
-                <span>최고의</span>
-                {theme.awardName}
-              </span>
+              <span className="title">{theme.awardName}</span>
               <img
                 src="https://user-images.githubusercontent.com/55784772/227142176-55d00e0c-d111-4fa0-880a-29a75030bb8d.png"
                 alt="right"
@@ -157,7 +139,6 @@ export default function AwardsSlider(awardData: IProps) {
           onClose={handleClose}
           themeId={themeId}
           data={data}
-          isLiked={isLiked}
           handleReviews={handleReviews}
         />
       )}
@@ -191,11 +172,13 @@ const SliderTitleWrapper = styled.div`
   justify-content: center;
   span {
     margin-bottom: 0.2rem;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 400;
+    align-items: center;
+    display: flex;
   }
   .title {
-    margin-top: auto;
+    margin: auto 0;
     display: flex;
     flex-direction: column;
     font-weight: bold;

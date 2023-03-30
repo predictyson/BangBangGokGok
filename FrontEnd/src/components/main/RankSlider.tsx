@@ -22,7 +22,6 @@ export default function RankSlider({ data }: IProps) {
     pauseOnHover: true,
     responsive: BREAKPOINT,
   };
-  console.log("HOT DATA : " + data);
   return (
     <Container>
       <Title>🔥 이번주 Hot한 테마</Title>

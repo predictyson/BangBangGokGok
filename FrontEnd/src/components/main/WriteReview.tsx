@@ -17,6 +17,7 @@ interface IProps {
   data: IDetailData;
   themeId: number;
   handleReviews: (review: IReviewData) => Promise<void>;
+  handleMyReview: () => Promise<void>;
 }
 export default function WriteReview({
   childOpen,
@@ -24,6 +25,7 @@ export default function WriteReview({
   data,
   themeId,
   handleReviews,
+  handleMyReview,
 }: IProps) {
   const [postdata, setPostdata] = useState<IPostData>(initData);
 
@@ -65,6 +67,7 @@ export default function WriteReview({
       const res = await postReview(dataToSend);
       console.log(res.data);
       setPostdata(initData);
+      handleMyReview();
     } catch (err) {
       console.log(err);
     }

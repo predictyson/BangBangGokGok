@@ -41,3 +41,8 @@ export interface IDetailData {
   userCnt: number; // 평가 인원
   isInterested: boolean;
 }
+
+export interface IDetailLogin {
+  isInterest: boolean;
+  isMyReview: boolean;
+}
