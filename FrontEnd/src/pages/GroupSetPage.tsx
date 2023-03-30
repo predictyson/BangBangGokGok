@@ -7,7 +7,7 @@ import ThemeRecSection from "@components/group/ThemeRecSection";
 import Toast, { showToast } from "@/components/common/Toast";
 
 export default function GroupSetPage() {
-  const [userList, setUserList] = useState<GroupSetUer[]>(myUserData);
+  const [userList, setUserList] = useState<GroupSetUer[]>([]);
 
   const handleDeleteUser = (nickname: string) => {
     setUserList((prev) => {
@@ -47,7 +47,6 @@ export default function GroupSetPage() {
       setUserList(myUserData);
     }
   }, []);
-
   return (
     <>
       <Header />
@@ -110,14 +109,3 @@ const HeaderSection = styled.div`
     font-weight: ${theme.fontWeight.extraBold};
   }
 `;
-
-// const myUserData = [
-//   {
-//     userId: JSON.parse(localStorage.getItem("userId") || ""),
-//     nickname: JSON.parse(localStorage.getItem("nickname") || ""),
-//     email: JSON.parse(localStorage.getItem("email") || ""),
-//     profileImageType: JSON.parse(
-//       localStorage.getItem("profileImageType") || ""
-//     ),
-//   },
-// ];
