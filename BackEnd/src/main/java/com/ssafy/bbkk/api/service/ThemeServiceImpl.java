@@ -366,9 +366,12 @@ public class ThemeServiceImpl implements ThemeService {
             builder.and(qGenreOfTheme.genre.id.eq(genreId));
         }
 
-        // 난이도는 항상 조건 추가
-        builder.and(qTheme.difficulty.between(searchThemeRequest.getDifficultyS(),
-                searchThemeRequest.getDifficultyE()));
+        // 난이도를 선택했으면 해당 난이도 범위의 테마들만 가져오도록 조건 추가
+        float difficultyS = searchThemeRequest.getDifficultyS();
+        float difficultyE = searchThemeRequest.getDifficultyE();
+        if (difficultyS != 1.0 || difficultyE != 5.0) {
+            builder.and(qTheme.difficulty.between(difficultyS, difficultyE));
+        }
 
         // 인원수를 선택했으면 해당 인원이 갈 수 있는 테마들만 가져오도록 조건 추가
         int people = searchThemeRequest.getPeople();
