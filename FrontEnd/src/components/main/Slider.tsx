@@ -223,7 +223,7 @@ const Hover = styled.div`
   opacity: 0;
   background-color: black;
   top: 0;
-  left: 0;
+  letft: 0;
   transition: all 0.5s;
   border-radius: 1rem;
   display: flex;
