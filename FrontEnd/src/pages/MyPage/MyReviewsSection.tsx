@@ -63,6 +63,9 @@ export default function MyReviewsSection() {
       console.error(error);
     }
     handleCloseDeleteModal();
+    setReviews((prevReviews) =>
+      prevReviews.filter((review) => review.reviewId !== reviewId)
+    );
     setCurrentSelectedReviewId(-1);
   };
 
@@ -182,14 +185,16 @@ export default function MyReviewsSection() {
       <SectionTitle>내 리뷰</SectionTitle>
 
       <SectionContentWrapper>
-        {reviews.map((review) => (
-          <ReviewCard
-            key={review.reviewId}
-            {...review}
-            handleOpenUpdateModal={handleOpenUpdateModal}
-            handleOpenDeleteModal={handleOpenDeleteModal}
-          />
-        ))}
+        {reviews.length === 0 && <div>작성한 리뷰가 없습니다.</div>}
+        {reviews.length !== 0 &&
+          reviews.map((review) => (
+            <ReviewCard
+              key={review.reviewId}
+              {...review}
+              handleOpenUpdateModal={handleOpenUpdateModal}
+              handleOpenDeleteModal={handleOpenDeleteModal}
+            />
+          ))}
       </SectionContentWrapper>
 
       <Modal open={updateModalOpen} onClose={handleCloseUpdateModal}>
@@ -264,19 +269,9 @@ export default function MyReviewsSection() {
             <WriteButton onClick={handleUpdateReview}>등록</WriteButton>
           </ButtonWrapper>
         </Box>
-        {/* <Box sx={{ ...style }}>
-          <Container>
-            <h1>수정</h1>
-            <ButtonWrapper>
-              <CustomButton onClick={() => handleUpdateReview()}>
-                수정
-              </CustomButton>
-            </ButtonWrapper>
-          </Container>
-        </Box> */}
       </Modal>
 
-      {/* <Modal open={deleteModalOpen} onClose={handleCloseDeleteModal}>
+      <Modal open={deleteModalOpen} onClose={handleCloseDeleteModal}>
         <Box sx={{ ...style }}>
           <Container>
             <h1>정말 삭제하시겠습니까?</h1>
@@ -289,7 +284,7 @@ export default function MyReviewsSection() {
             </ButtonWrapper>
           </Container>
         </Box>
-      </Modal> */}
+      </Modal>
     </SectionWrapper>
   );
 }
