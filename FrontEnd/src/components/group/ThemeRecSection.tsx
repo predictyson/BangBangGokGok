@@ -1,27 +1,35 @@
 import { themeRec } from "@/api/group";
 import { getDetail } from "@/api/theme";
 import { theme } from "@/styles/theme";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { IThemeData } from "types/slider";
 import Modal from "@components/main/Modal";
 import { IDetailData, IReviewData } from "types/detail";
-import { getIsLiked } from "@/api/likes";
 import { getReviews } from "@/api/review";
 
 export default function ThemeRecSection({
   userList,
   handleToastClick,
+  recTheme,
+  handleRecTheme,
+  isShow,
+  isWaiting,
+  handleThemeView,
 }: {
   userList: GroupSetUer[];
   handleToastClick: (
     type: IToastProps["type"],
     message: IToastProps["message"]
   ) => void;
+  recTheme: IThemeData[];
+  handleRecTheme: (newValue: IThemeData[]) => void;
+  isShow: boolean;
+  isWaiting: boolean;
+  handleThemeView: (type: string, value: boolean) => void;
 }) {
-  const [recTheme, setRectTheme] = useState<IThemeData[]>([]);
-  const [isShow, setIsShow] = useState<boolean>(false);
-  const [isWaiting, setIsWaiting] = useState<boolean>(false);
+  // const [isShow, setIsShow] = useState<boolean>(false);
+  // const [isWaiting, setIsWaiting] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
   const [data, setData] = useState<IDetailData>(initData);
@@ -55,14 +63,14 @@ export default function ThemeRecSection({
     if (data.length === 0) {
       handleToastClick("error", "최소 2명이상 유저를 추가해주세요.");
     } else {
-      setIsWaiting(true);
+      handleThemeView("isWaiting", true);
       try {
         const {
           data: { themes },
         } = await themeRec(data);
-        setRectTheme(themes);
-        setIsShow(true);
-        setIsWaiting(false);
+        handleRecTheme(themes);
+        handleThemeView("isShow", true);
+        handleThemeView("isWaiting", false);
         console.log(themes);
       } catch (err) {
         console.log(err);
@@ -140,7 +148,7 @@ const BottomContainer = styled.div`
   overflow-y: hidden;
 
   ::-webkit-scrollbar {
-    height: 4px;
+    height: 6px;
   }
   ::-webkit-scrollbar-thumb {
     background-color: #888;
@@ -149,8 +157,8 @@ const BottomContainer = styled.div`
 `;
 
 const Container = styled.div`
-  flex: 1;
   width: 98.5%;
+  height: 60%;
   background-color: ${theme.colors.containerLight};
   border-radius: 1rem;
   padding: 1rem;
@@ -196,7 +204,7 @@ const SliderItem = styled.div`
   position: relative;
   margin-right: 0.5rem;
   margin-left: 0.5rem;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.5rem;
   :hover {
     & > .card-hover {
       opacity: 0.8;
@@ -205,8 +213,8 @@ const SliderItem = styled.div`
 `;
 
 const Hover = styled.div`
-  width: 15rem;
-  height: 20rem;
+  width: 18rem;
+  height: 100%;
   position: absolute;
   opacity: 0;
   background-color: black;
@@ -224,8 +232,8 @@ const Hover = styled.div`
 `;
 
 const PosterItem = styled.img`
-  width: 15rem;
-  height: 20rem;
+  width: 18rem;
+  height: 100%;
   cursor: pointer;
   border-bottom: 1rem;
   border-radius: 1rem;

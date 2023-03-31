@@ -25,6 +25,7 @@ export default function UserListSection({
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
+    console.log("I'm open");
     setOpen(true);
     setSearchTerm("");
     setSearchResults([]);
@@ -65,56 +66,54 @@ export default function UserListSection({
           <AddButtonBox>
             <AddButton onClick={handleOpen}>+</AddButton>
           </AddButtonBox>
-          <Modal open={open} onClose={handleClose}>
-            <ModalBox>
-              <h1>유저 검색</h1>
-              <Autocomplete
-                sx={{ width: 500, input: { fontSize: 14 } }}
-                color="warning"
-                options={searchResults}
-                autoHighlight
-                getOptionLabel={(option) =>
-                  `${option.nickname} (${option.email})`
-                }
-                renderOption={(props, option) => (
-                  <Box
-                    component="li"
-                    sx={{ fontSize: 14 }}
-                    {...props}
-                    onClick={() => {
-                      handleAddUser(option);
-                    }}
-                    key={option.userId}
-                  >
-                    {option.nickname} ({option.email})
-                  </Box>
-                )}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    placeholder="닉네임 혹은 이메일을 입력해주세요."
-                    onChange={handleChange}
-                    color="warning"
-                    focused
-                    autoFocus
-                    hiddenLabel
-                    value={searchTerm}
-                    sx={{
-                      backgroundColor: "",
-                      input: { fontSize: 14, color: "white" },
-                      svg: { color: "white" },
-                    }}
-                    inputProps={{
-                      ...params.inputProps,
-                      autoComplete: "new-password", // disable autocomplete and autofill
-                    }}
-                  />
-                )}
-              />
-            </ModalBox>
-          </Modal>
         </>
       )}
+      <Modal open={open} onClose={handleClose}>
+        <ModalBox>
+          <h1>유저 검색</h1>
+          <Autocomplete
+            sx={{ width: 500, input: { fontSize: 14 } }}
+            color="warning"
+            options={searchResults}
+            autoHighlight
+            getOptionLabel={(option) => `${option.nickname} (${option.email})`}
+            renderOption={(props, option) => (
+              <Box
+                component="li"
+                sx={{ fontSize: 14 }}
+                {...props}
+                onClick={() => {
+                  handleAddUser(option);
+                }}
+                key={option.userId}
+              >
+                {option.nickname} ({option.email})
+              </Box>
+            )}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder="닉네임 혹은 이메일을 입력해주세요."
+                onChange={handleChange}
+                color="warning"
+                focused
+                autoFocus
+                hiddenLabel
+                value={searchTerm}
+                sx={{
+                  backgroundColor: "",
+                  input: { fontSize: 14, color: "white" },
+                  svg: { color: "white" },
+                }}
+                inputProps={{
+                  ...params.inputProps,
+                  autoComplete: "new-password", // disable autocomplete and autofill
+                }}
+              />
+            )}
+          />
+        </ModalBox>
+      </Modal>
     </Container>
   );
 }
@@ -140,13 +139,12 @@ const ModalBox = styled.div`
 `;
 
 const Container = styled.div`
-  flex: 1;
   display: flex;
-  margin-bottom: 1rem;
+  height: 40%;
 `;
 
 const AddButtonBox = styled.div`
-  width: 18rem;
+  width: 16%;
   margin-right: 1rem;
   border-radius: 1rem;
   padding: 1rem;
