@@ -12,67 +12,95 @@ interface RatingCategory {
   value: number;
 }
 
+interface ReviewCardProps extends UserReview {
+  handleOpenUpdateModal: (currentSelectedReviewData: UserReview) => void;
+  handleOpenDeleteModal: (reviewId: number) => void;
+}
+
 export default function ReviewCard({
-  // reviewId,
+  reviewId,
   content,
   userRating,
   userActivity,
   userFear,
   userDifficulty,
-  // createTime,
+  createTime,
   isSuccess,
   previewThemeResponse,
-}: UserReview) {
+  handleOpenUpdateModal,
+  handleOpenDeleteModal,
+}: ReviewCardProps) {
   const RatingItems: RatingCategory[] = [
     { name: "평점", value: userRating },
     { name: "활동성", value: userActivity },
     { name: "공포도", value: userFear },
     { name: "난이도", value: userDifficulty },
   ];
+
   return (
-    <ContentWrapper>
-      <FirstColumn>
-        <ThemeImageWrapper>
-          <ThemeImage src={previewThemeResponse.imgUrl} alt="theme image" />
-        </ThemeImageWrapper>
-      </FirstColumn>
+    <>
+      <ContentWrapper>
+        <FirstColumn>
+          <ThemeImageWrapper>
+            <ThemeImage src={previewThemeResponse.imgUrl} alt="theme image" />
+          </ThemeImageWrapper>
+        </FirstColumn>
 
-      <SecondColumn>
-        <TopWrapper>
-          <Title>{previewThemeResponse.title}</Title>
-          {isSuccess === 1 && <Badge className="success">성공</Badge>}
-          {isSuccess === 0 && <Badge className="failure">실패</Badge>}
-        </TopWrapper>
+        <SecondColumn>
+          <TopWrapper>
+            <Title>{previewThemeResponse.title}</Title>
+            {isSuccess === 1 && <Badge className="success">성공</Badge>}
+            {isSuccess === 0 && <Badge className="failure">실패</Badge>}
+          </TopWrapper>
 
-        <RatingWrapper>
-          {RatingItems.map((item, idx) => (
-            <RatingSection key={idx}>
-              <CustomTypography>{item.name}</CustomTypography>
-              <CustomRating
-                name="read-only"
-                value={item.value}
-                size="large"
-                precision={0.5}
-                readOnly
-                emptyIcon={
-                  <StarIcon
-                    style={{ opacity: 0.55, color: "gray" }}
-                    fontSize="inherit"
-                  />
-                }
-              />
-            </RatingSection>
-          ))}
-        </RatingWrapper>
+          <RatingWrapper>
+            {RatingItems.map((item, idx) => (
+              <RatingSection key={idx}>
+                <CustomTypography>{item.name}</CustomTypography>
+                <CustomRating
+                  name="read-only"
+                  value={item.value}
+                  size="large"
+                  precision={0.5}
+                  readOnly
+                  emptyIcon={
+                    <StarIcon
+                      style={{ opacity: 0.55, color: "gray" }}
+                      fontSize="inherit"
+                    />
+                  }
+                />
+              </RatingSection>
+            ))}
+          </RatingWrapper>
 
-        <Content>{content}</Content>
+          <Content>{content}</Content>
 
-        <ButtonWrapper>
-          <UpdateButton>수정</UpdateButton>
-          <DeleteButton>삭제</DeleteButton>
-        </ButtonWrapper>
-      </SecondColumn>
-    </ContentWrapper>
+          <ButtonWrapper>
+            <UpdateButton
+              onClick={() =>
+                handleOpenUpdateModal({
+                  reviewId,
+                  content,
+                  userRating,
+                  userActivity,
+                  userFear,
+                  userDifficulty,
+                  createTime,
+                  isSuccess,
+                  previewThemeResponse,
+                })
+              }
+            >
+              수정
+            </UpdateButton>
+            <DeleteButton onClick={() => handleOpenDeleteModal(reviewId)}>
+              삭제
+            </DeleteButton>
+          </ButtonWrapper>
+        </SecondColumn>
+      </ContentWrapper>
+    </>
   );
 }
 
