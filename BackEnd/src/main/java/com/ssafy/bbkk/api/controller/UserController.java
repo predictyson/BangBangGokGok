@@ -64,6 +64,25 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
+    @Operation(summary = "회원 가입시 이메일 전송", description = "회원 가입이 가능한 이메일에 인증 코드를 전송")
+    @GetMapping("join/check/{email}")
+    public ResponseEntity<Map<String, Object>> isExitedAndSendEmailCode(
+            @PathVariable String email) throws Exception {
+        logger.info("[isExitedAndSendEmailCode] request : email={}", email);
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        boolean isExisted = userService.existsByEmail(email);
+        resultMap.put("isExisted",isExisted);
+        logger.info("[isExitedAndSendEmailCode] response : isExisted={}", isExisted);
+
+        if(!isExisted){
+            emailService.sendMessage(email, 1);
+        }
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
     @Operation(summary = "회원 가입", description = "회원 가입을 진행한다")
     @PostMapping("join")
     public ResponseEntity<Map<String, Object>> join(@RequestBody @Valid JoinRequest joinRequest, Errors errors) throws Exception {
@@ -171,15 +190,14 @@ public class UserController {
         logger.info("[sendEmailCode] request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
-        boolean isExisted = false;
 
-        if (userService.existsByEmailNotSocial(email)) {
-            isExisted = true;
-            emailService.sendMessage(email);
-        }
-
+        boolean isExisted = userService.existsByEmailNotSocial(email);
         resultMap.put("isExisted", isExisted);
         logger.info("[sendEmailCode] response : isExisted={}", isExisted);
+
+        if (isExisted) {
+            emailService.sendMessage(email, 2);
+        }
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
