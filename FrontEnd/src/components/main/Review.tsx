@@ -59,14 +59,15 @@ export default function Review({
   };
 
   console.log("IS MY REVIEW " + isMyReview);
+  const isLogin = localStorage.getItem("userId") !== null ? true : false;
   return (
     <>
       <Header>
         Reviews
-        {isMyReview && (
+        {isLogin && isMyReview && (
           <DisableAnnounce>이미 후기를 작성한 테마입니다 </DisableAnnounce>
         )}
-        {!isMyReview && (
+        {isLogin && !isMyReview && (
           <WriteButton onClick={handleOpen}>
             <img
               src="https://user-images.githubusercontent.com/55784772/224926890-105d5d61-de32-47ca-ad36-5af4ee5fe137.png"
