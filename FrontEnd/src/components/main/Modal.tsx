@@ -152,7 +152,7 @@ export default function DetailModal({
             <DetailInfo>
               장르
               <GenreBox>
-                {data.genre.map((item, idx) => {
+                {data?.genre?.map((item, idx) => {
                   return (
                     <div className="item" key={idx}>
                       {item}
