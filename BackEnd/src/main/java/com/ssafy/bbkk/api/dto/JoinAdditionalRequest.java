@@ -17,7 +17,7 @@ import lombok.ToString;
 public class JoinAdditionalRequest {
 
     @Schema(description = "유저 id", required = true)
-    @Positive(message = "유저 id는 양수여야 합니다.")
+    @Positive(message = "유저 id는 자연수여야 합니다.")
     int userId;
     @Schema(description = "닉네임", required = true)
     @NotEmpty(message = "닉네임은 필수 입력 값입니다.")
@@ -33,6 +33,7 @@ public class JoinAdditionalRequest {
     @NotBlank(message = "선호 지역(소분류)는 필수 입력 값입니다.")
     String regionSmall;
     @Schema(description = "나이", required = true)
+    @Positive(message = "나이는 자연수여야 합니다.")
     int age;
     @Schema(description = "성별", required = true)
     @NotBlank(message = "성별은 필수 입력 값입니다.")
