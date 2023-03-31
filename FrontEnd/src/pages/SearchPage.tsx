@@ -60,10 +60,16 @@ export default function SearchPage() {
     setInputValue(newInput);
   };
 
+  const [isLastPage, setIsLastPage] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
 
   // 검색을 트리거하는 함수 => result에 저장
-  const handleSubmit = async () => {
+  const handleSubmit = async (isInitSearch: boolean) => {
+    console.log(isInitSearch);
+    if (isInitSearch) {
+      // 초기 검색일 경우 page를 1로 초기화
+      setPage(() => 1);
+    }
     const response = await getSearchThemes({
       word: searchWord,
       ...filterValue,
@@ -72,7 +78,13 @@ export default function SearchPage() {
       orderby: sortOrder,
     });
     setResults(response.data.themes);
-    // setPage((prev) => prev + 1);
+    setIsLastPage(response.data.isLast);
+
+    if (isInitSearch) {
+      setPage(() => 1);
+    } else {
+      setPage((prev) => prev + 1);
+    }
     setSearchHappened(true);
   };
 
@@ -135,7 +147,11 @@ export default function SearchPage() {
             sortOrder={sortOrder}
             handleSortOptionOrderChange={handleSortOptionOrderChange}
           />
-          <SearchResult results={results} searchHappened={searchHappened} />
+          <SearchResult
+            results={results}
+            searchHappened={searchHappened}
+            isLastPage={isLastPage}
+          />
         </ContentWrapper>
       </BackGround>
     </>
