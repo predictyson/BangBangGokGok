@@ -44,7 +44,7 @@ export default function AdditionalPage() {
         if (res.status === 200) {
           handleToastClick("success", "회원가입이 완료되었습니다.");
           setTimeout(() => {
-            navigate("/login");
+            // navigate("/login");
           }, 2000);
         } else {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -84,7 +84,7 @@ export default function AdditionalPage() {
             <>
               <h2 className="desc">
                 선호 장르를 한 개 이상 선택하시면, 방탈출 테마를 추천받으실 수
-                있어요!
+                있어요! (최대 4개)
               </h2>
               <ResetIcon onClick={handleReset} />
               <GenreSection
