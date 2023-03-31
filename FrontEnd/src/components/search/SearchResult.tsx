@@ -125,18 +125,15 @@ export default function SearchResult({
       {searchHappened && results.length !== 0 && (
         <Container>
           {results.map((result) => (
-            // <ThemeItem key={result.themeId}>{result.title}</ThemeItem>
-            <>
-              <SliderItem key={result.themeId}>
-                {/* <PosterItem src={result.imgUrl} /> */}
-                <Hover
-                  className="card-hover"
-                  onClick={() => handleOpen(result.themeId)}
-                >
-                  <span style={{ padding: "0 2rem" }}>{result.title}</span>
-                </Hover>
-              </SliderItem>
-            </>
+            <SliderItem key={result.themeId}>
+              <PosterItem src={result.imgUrl} />
+              <Hover
+                className="card-hover"
+                onClick={() => handleOpen(result.themeId)}
+              >
+                <span style={{ padding: "0 2rem" }}>{result.title}</span>
+              </Hover>
+            </SliderItem>
           ))}
           {themeId !== undefined && (
             <Modal
