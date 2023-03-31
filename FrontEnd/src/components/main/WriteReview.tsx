@@ -64,10 +64,20 @@ export default function WriteReview({
       // await setPostdata({ ...postdata, themeId: themeId });
       const dataToSend = { ...postdata, themeId: themeId };
       console.log(dataToSend.themeId);
-      const res = await postReview(dataToSend);
-      console.log(res.data);
-      setPostdata(initData);
-      handleMyReview();
+      if (
+        dataToSend.userActivity === 0 ||
+        dataToSend.userDifficulty === 0 ||
+        dataToSend.userFear === 0 ||
+        dataToSend.userRating === 0
+      ) {
+        alert("0.5이상의 별점을 매겨주세요!");
+        return;
+      } else {
+        const res = await postReview(dataToSend);
+        console.log(res.data);
+        setPostdata(initData);
+        handleMyReview();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -76,7 +86,17 @@ export default function WriteReview({
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log(postdata);
-    handleClose();
+    if (
+      postdata.userActivity === 0 ||
+      postdata.userDifficulty === 0 ||
+      postdata.userFear === 0 ||
+      postdata.userRating === 0
+    ) {
+      alert("0.5이상의 별점을 매겨주세요!");
+      return; // 등록을 불가하게 함
+    } else {
+      handleClose();
+    }
     await sendReviewData();
     const today = new Date();
     const year = today.getFullYear();
