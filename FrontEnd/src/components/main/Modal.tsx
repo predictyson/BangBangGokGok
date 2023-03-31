@@ -32,7 +32,7 @@ export default function DetailModal({
   reviews,
   handleReviews,
 }: IProps) {
-  const [childOpen, setchildOpen] = React.useState(false);
+  const [childOpen, setChildOpen] = React.useState(false);
   const [isInterest, setIsInterest] = useState<boolean>(false);
   const [isMyReview, setIsMyReview] = useState<boolean>(false);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
@@ -41,7 +41,9 @@ export default function DetailModal({
     if (themeId !== 0) {
       try {
         await postInterest(themeId);
-        requestLogindata(themeId);
+        console.log("POST LIKES SUCCESS");
+        // requestLogindata(themeId);
+        setIsInterest(true);
       } catch (err) {
         console.log(err);
         console.log("POST FAILED");
@@ -70,17 +72,19 @@ export default function DetailModal({
 
   const handlePostLikes = async () => {
     try {
-      await postLikes(themeId);
       handleClick("success", "좋아요 등록 성공!");
     } catch (err) {
       console.log(err);
     }
   };
   const handleOpen = () => {
-    setchildOpen(true);
+    postLikes(themeId);
+    setChildOpen(true);
+    console.log("HANDLE OPEN " + childOpen);
   };
   const handleClose = () => {
-    setchildOpen(false);
+    setChildOpen(false);
+    console.log("HANDLE CLOSE " + childOpen);
   };
   const handleMyReview = async () => {
     try {
@@ -192,13 +196,9 @@ export default function DetailModal({
                   <LikeButton onClick={handleOpen}>
                     <CustomFavoriteBorder /> <span>관심 등록하기</span>
                   </LikeButton>
-                  <LikesModal
-                    childOpen={childOpen}
-                    handleClose={handleClose}
-                    handleClick={handlePostLikes}
-                  />
                 </>
               )}
+              <LikesModal childOpen={childOpen} handleClose={handleClose} />
               <Toast />
             </DetailInfo>
           </div>
