@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @Operation(summary = "회원 가입시 이메일 전송", description = "회원 가입이 가능한 이메일에 인증 코드를 전송")
-    @GetMapping("join/{email}")
+    @GetMapping("join/check/{email}")
     public ResponseEntity<Map<String, Object>> isExitedAndSendEmailCode(
             @PathVariable String email) throws Exception {
         logger.info("[isExitedAndSendEmailCode] request : email={}", email);
@@ -79,6 +79,23 @@ public class UserController {
         if(!isExisted){
             emailService.sendMessage(email, 1);
         }
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @Operation(summary = "회원 가입시 이메일 전송", description = "회원 가입이 가능한 이메일에 인증 코드를 전송")
+    @GetMapping("join/check/{email}/{code}")
+    public ResponseEntity<Map<String, Object>> checkEmailCodeForJoin(
+            @PathVariable String email,
+            @PathVariable String code) throws Exception {
+        logger.info("[checkEmailCodeForJoin] request : email={}", email);
+        logger.info("[checkEmailCodeForJoin] request : code={}", code);
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        boolean isCheck = emailService.checkEmailCode(email, code);
+        resultMap.put("isCheck",isCheck);
+        logger.info("[checkEmailCodeForJoin] response : isCheck={}",isCheck);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
