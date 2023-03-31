@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Rating from "@mui/material/Rating";
 import { theme } from "@/styles/theme";
@@ -10,6 +10,12 @@ interface IProps {
 }
 
 export default function ReviewItem({ data }: IProps) {
+  const [isMine, setIsMine] = useState(false);
+  useEffect(() => {
+    const myNickname = localStorage.getItem("nickname");
+    data.nickname === myNickname ? setIsMine(true) : setIsMine(false);
+  }, []);
+
   return (
     <>
       <img
@@ -17,16 +23,28 @@ export default function ReviewItem({ data }: IProps) {
         alt="line"
         style={{ width: "100%", margin: "1rem auto" }}
       />
-      <ReviewBox>
+      <ReviewBox isMine={isMine}>
         <Header>
           <div className="left-wrapper">
             {data.nickname}
+
             {data.isSuccess ? (
               <>
                 <Badge className="blue">성공</Badge>
               </>
             ) : (
               <Badge className="red">실패</Badge>
+            )}
+            {isMine && (
+              <div
+                style={{
+                  marginLeft: "1rem",
+                  color: `${theme.colors.pink}`,
+                  fontWeight: "bold",
+                }}
+              >
+                나의 리뷰
+              </div>
             )}
           </div>
           <div className="right-wrapper">
@@ -128,10 +146,21 @@ const RatingWrapper = styled.div`
     align-items: center;
   }
 `;
-const ReviewBox = styled.div`
+const ReviewBox = styled.div<{ isMine: boolean }>`
   margin-top: 1rem;
-  padding: 0 1rem;
+  padding: 1rem;
   padding-bottom: 1rem;
+  ${(props) =>
+    props.isMine &&
+    `background-color: ${theme.colors.container};   border-radius: 1rem;  border: solid 2px ${theme.colors.pink}; padding: 2rem;`}
+`;
+`
+  margin-top: 1rem;
+  padding: 1rem;
+  padding-bottom: 1rem;
+  border: solid 2px grey;
+  background-color: ${theme.colors.container};
+  border-radius: 1rem;
 `;
 
 const Header = styled.div`
