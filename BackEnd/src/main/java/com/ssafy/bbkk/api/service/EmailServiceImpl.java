@@ -29,9 +29,18 @@ public class EmailServiceImpl implements EmailService{
     private final ConfirmationTokenRepository confirmationTokenRepository;
 
     @Override
-    public void sendMessage(String to) throws Exception {
+    public void sendMessage(String to, int type) throws Exception {
         String ePw = createKey();
-        MimeMessage message = createMessage(ePw, to);
+        MimeMessage message = null;
+        if(type == 1) {
+            message = createMessageForJoin(ePw, to);
+        }
+        else if(type == 2){
+            message = createMessageForModifyPassword(ePw, to);
+        }
+        else{
+            throw new Exception("잘못된 형식의 type 입니다.");
+        }
         javaMailSender.send(message);
         ConfirmationToken confirmationToken = ConfirmationToken.createEmailConfirmationToken(to, ePw);
         confirmationTokenRepository.save(confirmationToken);
@@ -54,7 +63,128 @@ public class EmailServiceImpl implements EmailService{
         return result;
     }
 
-    private MimeMessage createMessage(String ePw, String to)throws Exception{
+    private MimeMessage createMessageForJoin(String ePw, String to)throws Exception{
+        MimeMessage message = javaMailSender.createMimeMessage();
+
+        message.addRecipients(Message.RecipientType.TO, to); //보내는 대상
+        message.setSubject("[방방곡곡] 이메일 인증 안내 메일"); //제목
+
+        String msgg="";
+        msgg += "<table";
+        msgg += "  border='0'";
+        msgg += "  cellpadding='0'";
+        msgg += "  cellspacing='0'";
+        msgg += "  width='100%'";
+        msgg += "  bgcolor='#F4F5F7'";
+        msgg += "  style='";
+        msgg += "    padding: 20px 16px 82px;";
+        msgg += "    color: #191919;";
+        msgg += "    font-family: 'Noto Sans KR', sans-serif;";
+        msgg += "  '";
+        msgg += "  class='wrapper'";
+        msgg += ">";
+        msgg += "  <tbody style='display: block; max-width: 600px; margin: 0 auto'>";
+        msgg += "    <tr width='100%' style='display: block'>";
+        msgg += "      <td width='100%' style='display: block'>";
+        msgg += "        <table";
+        msgg += "          width='100%'";
+        msgg += "          border='0'";
+        msgg += "          cellpadding='0'";
+        msgg += "          cellspacing='0'";
+        msgg += "          bgcolor='#FFFFFF'";
+        msgg += "          style='";
+        msgg += "            display: inline-block;";
+        msgg += "            padding: 32px;";
+        msgg += "            text-align: left;";
+        msgg += "            border-top: 80px solid #ff5b79;";
+        msgg += "            border-collapse: collapse;";
+        msgg += "          '";
+        msgg += "          class='container'";
+        msgg += "        >";
+        msgg += "          <tbody style='display: block'>";
+        msgg += "            <tr>";
+        msgg += "              <td";
+        msgg += "                style='padding-bottom: 32px; font-size: 20px; font-weight: bold'";
+        msgg += "              >";
+        msgg += "                <img";
+        msgg += "                  width='70'";
+        msgg += "                  src='https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/pumpkin.png'";
+        msgg += "                />";
+        msgg += "              </td>";
+        msgg += "              <td";
+        msgg += "                style='";
+        msgg += "                  padding-left: 10px;";
+        msgg += "                  padding-bottom: 32px;";
+        msgg += "                  font-size: 20px;";
+        msgg += "                  font-weight: bold;";
+        msgg += "                '";
+        msgg += "              >";
+        msgg += "                방방곡곡 이메일 인증 안내 메일";
+        msgg += "              </td>";
+        msgg += "            </tr>";
+        msgg += "            <tr></tr>";
+        msgg += "            <tr></tr>";
+        msgg += "            <tr width='100%' style='display: block; margin-bottom: 32px'>";
+        msgg += "              <td width='100%' style='display: block'>";
+        msgg += "                <table";
+        msgg += "                  border='0'";
+        msgg += "                  cellpadding='0'";
+        msgg += "                  cellspacing='0'";
+        msgg += "                  width='100%'";
+        msgg += "                  bgcolor='#F8F9FA'";
+        msgg += "                  style='padding: 40px 20px; border-radius: 4px'";
+        msgg += "                  class='content'";
+        msgg += "                >";
+        msgg += "                  <tbody style='display: block'>";
+        msgg += "                    <tr style='display: block'>";
+        msgg += "                      <td";
+        msgg += "                        style='";
+        msgg += "                          display: block;";
+        msgg += "                          padding-bottom: 16px;";
+        msgg += "                          font-size: 16px;";
+        msgg += "                          font-weight: bold;";
+        msgg += "                        '";
+        msgg += "                      >";
+        msgg += "                        안녕하세요! 방방곡곡입니다.";
+        msgg += "                      </td>";
+        msgg += "                      <td>";
+        msgg += "                        <p>아래 코드를 복사해 입력해주세요.</p>";
+        msgg += "                        <p>이메일 인증 코드 : <b>"+ePw+"</b></p>";
+        msgg += "                        <p>감사합니다.</p>";
+        msgg += "                      </td>";
+        msgg += "                    </tr>";
+        msgg += "                  </tbody>";
+        msgg += "                </table>";
+        msgg += "              </td>";
+        msgg += "            </tr>";
+        msgg += "            <tr></tr>";
+        msgg += "            <tr>";
+        msgg += "              <td";
+        msgg += "                style='";
+        msgg += "                  padding-bottom: 24px;";
+        msgg += "                  color: #a7a7a7;";
+        msgg += "                  font-size: 12px;";
+        msgg += "                  line-height: 20px;";
+        msgg += "                '";
+        msgg += "              >";
+        msgg += "                © 2023 방방곡곡 SSAFY, Ltd. All Rights Reserved.";
+        msgg += "              </td>";
+        msgg += "            </tr>";
+        msgg += "          </tbody>";
+        msgg += "        </table>";
+        msgg += "      </td>";
+        msgg += "    </tr>";
+        msgg += "  </tbody>";
+        msgg += "</table>";
+        msgg += "";
+
+        message.setText(msgg, "utf-8", "html");//내용
+        message.setFrom(new InternetAddress(id,"bbkk_service"));//보내는 사람
+
+        return message;
+    }
+
+    private MimeMessage createMessageForModifyPassword(String ePw, String to)throws Exception{
         MimeMessage message = javaMailSender.createMimeMessage();
 
         message.addRecipients(Message.RecipientType.TO, to); //보내는 대상
