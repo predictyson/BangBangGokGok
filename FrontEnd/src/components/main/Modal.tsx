@@ -274,12 +274,11 @@ const Synopsis = styled.div`
   align-items: center;
   background-color: ${theme.colors.container};
   border-radius: 1rem;
-  /* overflow-x: hidden; */
-  /* overflow-y: auto; */
+  padding: 2rem; /* overflow-x: hidden; */ /* overflow-y: auto; */
   pre {
     font-family: Pretendard;
-    margin: 4rem;
     width: 95%;
+    font-size: 1.4rem;
   }
   ::-webkit-scrollbar {
     width: 4px;
