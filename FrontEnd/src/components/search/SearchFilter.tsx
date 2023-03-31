@@ -20,6 +20,7 @@ interface SearchFilterProps {
   handleDumpFilterGenreCategoryInputValueChange: (
     genreCategoryInputValue: string
   ) => void;
+  handleSubmit: (isInitSearch: boolean) => void;
 }
 
 export default function SearchFilter(props: SearchFilterProps) {
@@ -34,6 +35,7 @@ export default function SearchFilter(props: SearchFilterProps) {
   // 이 함수는 필터 적용 버튼을 눌렀을 때 실행되어야 함
   // 필터 결과를 적용시켜서 검색 API를 보내는 역할을 한다.
   const requestSearchWithFilter = () => {
+    props.handleSubmit(true);
     closeFilter();
   };
 
