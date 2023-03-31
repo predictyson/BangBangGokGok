@@ -10,6 +10,7 @@ import Kakao from "@/assets/Auth/KakaoLogin.png";
 import { requestLogin, tempRequest } from "@/api/auth";
 import { IUserInfo } from "types/auth";
 import { useCookies } from "react-cookie";
+import Toast, { showToast } from "@/components/common/Toast";
 
 const InitUser = {
   email: "",
@@ -20,6 +21,13 @@ export default function LoginSection() {
   const navigate = useNavigate();
   const [user, setUser] = useState<IUserInfo>(InitUser);
   const [cookies, setCookie] = useCookies(["refresh", "access", "nickname"]);
+
+  const handleToastClick = (
+    type: IToastProps["type"],
+    message: IToastProps["message"]
+  ) => {
+    showToast({ type, message });
+  };
 
   const handleInputValue = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
@@ -42,7 +50,7 @@ export default function LoginSection() {
       const {
         data: {
           token: { refreshToken, accessToken },
-          user: { nickname, userId, profileImageType },
+          user: { nickname, userId, profileImageType, email },
         },
       } = await requestLogin(user);
       console.log(refreshToken);
@@ -61,11 +69,12 @@ export default function LoginSection() {
       localStorage.setItem("nickname", nickname);
       localStorage.setItem("userId", userId);
       localStorage.setItem("profileImageType", profileImageType);
-      navigate("/");
+      localStorage.setItem("email", email);
+      navigate("/", { replace: true });
     } catch (err) {
       console.log(err);
       // TODO: 로그인 실패 TOAST 추가하자
-      alert("틀렸다 이자식아!!!");
+      handleToastClick("error", "이메일, 비밀번호를 확인해주세요.");
     }
   };
 

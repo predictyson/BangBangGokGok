@@ -63,9 +63,7 @@ export default function UserListSection({
       {userList.length < 6 && (
         <>
           <AddButtonBox>
-            <AddButton onClick={handleOpen}>
-              <p>+</p>
-            </AddButton>
+            <AddButton onClick={handleOpen}>+</AddButton>
           </AddButtonBox>
           <Modal open={open} onClose={handleClose}>
             <ModalBox>
@@ -166,14 +164,11 @@ const AddButton = styled.div`
   text-align: center;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
+  font-size: 8rem;
+  font-weight: ${theme.fontWeight.bold};
+  color: #f3e0e0;
+
   &:hover {
     transform: scale(1.1);
-  }
-
-  p {
-    font-weight: ${theme.fontWeight.extrabold};
-    font-size: 8rem;
-    margin: 0;
-    color: #f3e0e0;
   }
 `;

@@ -103,13 +103,14 @@ export default function Header() {
 }
 
 const Container = styled.div`
-  height: 10vh;
+  height: 9.5vh;
   display: flex;
   justify-content: space-between;
   background-color: ${theme.colors.background};
   padding: 0 10rem;
   align-items: center;
   position: sticky;
+  /* width: ${(props) => (props.className === "main" ? "" : "")}; */
   top: 0;
   left: 0;
   z-index: 999;

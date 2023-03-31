@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { requestAdditional } from "@/api/auth";
 import Toast, { showToast } from "@/components/common/Toast";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import axios, { AxiosError } from "axios";
 
 const InitAdditionalInfo: IAdditionalInfo = {
   userId: -1,
@@ -44,13 +45,18 @@ export default function AdditionalPage() {
         if (res.status === 200) {
           handleToastClick("success", "회원가입이 완료되었습니다.");
           setTimeout(() => {
-            // navigate("/login");
+            navigate("/login", { replace: true });
           }, 2000);
         } else {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.log(error.response?.data.message);
+          handleToastClick("error", error.response?.data.error);
+        } else {
+          console.log(error);
+        }
       }
     }
   };
