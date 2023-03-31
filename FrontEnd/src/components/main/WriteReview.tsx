@@ -11,6 +11,9 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
 import { IDetailData, IPostData, IReviewData } from "types/detail";
 import { postReview } from "@/api/review";
+interface Props {
+  value: number;
+}
 interface IProps {
   childOpen: boolean;
   handleClose: () => void;
@@ -61,7 +64,6 @@ export default function WriteReview({
 
   const sendReviewData = async () => {
     try {
-      // await setPostdata({ ...postdata, themeId: themeId });
       const dataToSend = { ...postdata, themeId: themeId };
       console.log(dataToSend.themeId);
       if (
@@ -174,7 +176,8 @@ export default function WriteReview({
           </Header>
           <InfoBox>
             <div className="info">
-              테마명 :&nbsp; <div className="title">{data.title}</div>
+              <span style={{ width: "10.5rem" }}>테마명</span>{" "}
+              <div className="title">{data.title}</div>
             </div>
             <div className="info">
               성공 여부 &nbsp;&nbsp;
@@ -245,7 +248,7 @@ const CustomToggleButton = mstyled(ToggleButton)({
   color: "white",
   "&.Mui-selected, &.Mui-selected:hover": {
     color: "white",
-    backgroundColor: `${theme.colors.pink}`,
+    // backgroundColor: value === 1 ? "red" : "green",
     fontWeight: "bold",
   },
 });
@@ -278,6 +281,10 @@ const InfoBox = styled.div`
     width: 50%;
     display: flex;
   }
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
 `;
 const RatingWrapper = styled.div`
   display: flex;
@@ -291,7 +298,7 @@ const ReviewBox = styled.div`
   display: flex;
   flex-direction: column;
   .title {
-    font-size: 1.6rem;
+    font-size: 2rem;
     margin-right: 1.5rem;
   }
   .rating-title {

@@ -57,10 +57,7 @@ export default function Review({
   const handleClose = () => {
     setchildOpen(false);
   };
-  const [isMine, setIsMine] = useState(false);
-  useEffect(() => {
-    const myNickname = localStorage.getItem("nickname");
-  }, []);
+
   console.log("IS MY REVIEW " + isMyReview);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
   return (
