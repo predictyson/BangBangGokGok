@@ -83,23 +83,6 @@ public class UserController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @Operation(summary = "회원 가입시 이메일 전송", description = "회원 가입이 가능한 이메일에 인증 코드를 전송")
-    @GetMapping("join/check/{email}/{code}")
-    public ResponseEntity<Map<String, Object>> checkEmailCodeForJoin(
-            @PathVariable String email,
-            @PathVariable String code) throws Exception {
-        logger.info("[checkEmailCodeForJoin] request : email={}", email);
-        logger.info("[checkEmailCodeForJoin] request : code={}", code);
-
-        Map<String, Object> resultMap = new HashMap<>();
-
-        boolean isCheck = emailService.checkEmailCode(email, code);
-        resultMap.put("isCheck",isCheck);
-        logger.info("[checkEmailCodeForJoin] response : isCheck={}",isCheck);
-
-        return new ResponseEntity<>(resultMap, HttpStatus.OK);
-    }
-
     @Operation(summary = "회원 가입", description = "회원 가입을 진행한다")
     @PostMapping("join")
     public ResponseEntity<Map<String, Object>> join(@RequestBody @Valid JoinRequest joinRequest, Errors errors) throws Exception {
