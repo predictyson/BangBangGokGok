@@ -4,7 +4,7 @@ import Rating from "@mui/material/Rating";
 import { theme } from "@/styles/theme";
 import Line from "@/assets/common/Line.png";
 import { IReviewData } from "types/detail";
-
+import StarIcon from "@mui/icons-material/Star";
 interface IProps {
   data: IReviewData;
 }
@@ -43,6 +43,12 @@ export default function ReviewItem({ data }: IProps) {
               size="large"
               precision={0.5}
               readOnly
+              emptyIcon={
+                <StarIcon
+                  style={{ opacity: 0.55, color: "gray" }}
+                  fontSize="inherit"
+                />
+              }
             />
           </div>
           <div className="ratingItem">
@@ -54,6 +60,12 @@ export default function ReviewItem({ data }: IProps) {
               size="large"
               precision={0.5}
               readOnly
+              emptyIcon={
+                <StarIcon
+                  style={{ opacity: 0.55, color: "gray" }}
+                  fontSize="inherit"
+                />
+              }
             />
           </div>
           <div className="ratingItem">
@@ -65,6 +77,12 @@ export default function ReviewItem({ data }: IProps) {
               size="large"
               precision={0.5}
               readOnly
+              emptyIcon={
+                <StarIcon
+                  style={{ opacity: 0.55, color: "gray" }}
+                  fontSize="inherit"
+                />
+              }
             />
           </div>
           <div className="ratingItem">
@@ -76,6 +94,12 @@ export default function ReviewItem({ data }: IProps) {
               size="large"
               precision={0.5}
               readOnly
+              emptyIcon={
+                <StarIcon
+                  style={{ opacity: 0.55, color: "gray" }}
+                  fontSize="inherit"
+                />
+              }
             />
           </div>
         </RatingWrapper>

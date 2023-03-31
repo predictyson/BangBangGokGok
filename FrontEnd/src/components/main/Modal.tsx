@@ -15,6 +15,7 @@ import LikesModal from "./LikesModal";
 import { IReviewData, IDetailData } from "types/detail";
 import { postInterest, deleteInterest } from "@/api/likes";
 import { getDetailLogin } from "@/api/theme";
+import StarIcon from "@mui/icons-material/Star";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -183,6 +184,12 @@ export default function DetailModal({
                   style={{ marginLeft: "1rem" }}
                   size="large"
                   precision={0.5}
+                  emptyIcon={
+                    <StarIcon
+                      style={{ opacity: 0.55, color: "gray" }}
+                      fontSize="inherit"
+                    />
+                  }
                   readOnly
                 />
               )}

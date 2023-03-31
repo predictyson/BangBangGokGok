@@ -176,9 +176,6 @@ export default function WriteReview({
                   <div className="rating-title">{emptyLabelText}</div>
                   <Rating
                     sx={{
-                      "& .MuiRating-iconEmpty": {
-                        stroke: "white",
-                      },
                       "&.MuiRating-root:focus": {
                         outline: "none",
                       },
@@ -190,7 +187,10 @@ export default function WriteReview({
                     name={name}
                     value={value}
                     emptyIcon={
-                      <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+                      <StarIcon
+                        style={{ opacity: 0.55, color: "gray" }}
+                        fontSize="inherit"
+                      />
                     }
                     onChange={handleRatingChange}
                   />
