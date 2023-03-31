@@ -8,6 +8,7 @@ import Rating from "@mui/material/Rating";
 import Toast, { showToast } from "@/components/common/Toast";
 import "react-toastify/dist/ReactToastify.css";
 import Review from "./Review";
+import { styled as mstyled } from "@mui/material/styles";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LikesModal from "./LikesModal";
@@ -183,14 +184,13 @@ export default function DetailModal({
               )}
               {isLogin && isInterest && (
                 <LikeButton onClick={() => deleteLikes(themeId)}>
-                  <FavoriteIcon />
-                  <span> 관심 해제하기</span>
+                  <CustomFavorite /> <span> 관심 해제하기</span>
                 </LikeButton>
               )}
               {isLogin && !isInterest && (
                 <>
                   <LikeButton onClick={handleOpen}>
-                    <FavoriteBorderIcon /> <span> 관심 등록하기</span>
+                    <CustomFavoriteBorder /> <span>관심 등록하기</span>
                   </LikeButton>
                   <LikesModal
                     childOpen={childOpen}
@@ -218,10 +218,20 @@ export default function DetailModal({
     </Modal>
   );
 }
+const CustomFavorite = mstyled(FavoriteIcon)`
+  .css-v6ftt0-MuiSvgIcon-root {
+    fill:  ${theme.colors.pink},
+  },
+`;
 
+const CustomFavoriteBorder = mstyled(FavoriteBorderIcon)`
+  .css-v6ftt0-MuiSvgIcon-root {
+    fill:  ${theme.colors.pink},
+  },
+`;
 const LikeButton = styled.div`
-  border: solid 2px lightgray;
-  color: lightgray;
+  border: solid 2px ${theme.colors.pink};
+  color: white;
   font-size: 1.6rem;
   margin-left: auto;
   border-radius: 1rem;
@@ -234,10 +244,17 @@ const LikeButton = styled.div`
   span {
     margin-left: 1rem;
   }
+  svg {
+    color: ${theme.colors.pink};
+    transform: scale(1.5);
+  }
   &:hover {
     color: ${theme.colors.container};
     background-color: lightgray;
     border: solid 2px ${theme.colors.container};
+    svg {
+      /* color: ${theme.colors.failure}; */
+    }
   }
 `;
 const Synopsis = styled.div`
