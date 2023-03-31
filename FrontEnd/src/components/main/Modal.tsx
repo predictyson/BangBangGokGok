@@ -241,19 +241,21 @@ const LikeButton = styled.div`
   }
 `;
 const Synopsis = styled.div`
-  margin-top: 2rem;
+  border: solid 1px grey;
+  margin: 2rem 0;
   font-size: 1.6rem;
   text-align: center;
-  padding: 0 5%;
-  height: 12rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
-  overflow-y: auto;
+  background-color: ${theme.colors.container};
+  border-radius: 1rem;
+  /* overflow-x: hidden; */
+  /* overflow-y: auto; */
   pre {
     font-family: Pretendard;
-    margin-top: 4rem;
+    margin: 4rem;
+    width: 95%;
   }
   ::-webkit-scrollbar {
     width: 4px;
