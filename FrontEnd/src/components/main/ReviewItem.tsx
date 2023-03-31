@@ -23,7 +23,7 @@ export default function ReviewItem({ data }: IProps) {
             {data.nickname}
             {data.isSuccess ? (
               <>
-                <Badge className="green">성공</Badge>
+                <Badge className="blue">성공</Badge>
               </>
             ) : (
               <Badge className="red">실패</Badge>
@@ -134,5 +134,5 @@ const Badge = styled.div`
   color: white;
   border: solid 2px white;
   background-color: ${(props) =>
-    props.className === "red" ? "#FF6161" : "#76FF7B"};
+    props.className === "red" ? "#FF6161" : "#0075FF"};
 `;
