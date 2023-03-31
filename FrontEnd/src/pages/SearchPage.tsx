@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import SearchInput from "@components/search/SearchInput";
 import SearchSortOptions from "@components/search/SearchSortOptions";
 import SearchFilter from "@components/search/SearchFilter";
@@ -65,7 +65,6 @@ export default function SearchPage() {
 
   // 검색을 트리거하는 함수 => result에 저장
   const handleSubmit = async (isInitSearch: boolean) => {
-    console.log(isInitSearch);
     if (isInitSearch) {
       // 초기 검색일 경우 page를 1로 초기화
       setPage(() => 1);
@@ -115,10 +114,19 @@ export default function SearchPage() {
     if (sortOption === option) {
       setSortOrder((prev: SortOrder) => (prev === "desc" ? "asc" : "desc"));
     } else {
-      setSortOption(option);
-      setSortOrder("desc");
+      setSortOption(() => option);
+      setSortOrder(() => "desc");
     }
   };
+
+  const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
+  useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+      return;
+    }
+    handleSubmit(true);
+  }, [sortOption, sortOrder]);
 
   return (
     <>
@@ -140,6 +148,7 @@ export default function SearchPage() {
               handleDumpFilterGenreCategoryInputValueChange={
                 handleDumpFilterGenreCategoryInputValueChange
               }
+              handleSubmit={handleSubmit}
             />
           </FormContainer>
           <SearchSortOptions
