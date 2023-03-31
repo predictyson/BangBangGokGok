@@ -65,7 +65,6 @@ export default function SearchPage() {
 
   // 검색을 트리거하는 함수 => result에 저장
   const handleSubmit = async (isInitSearch: boolean) => {
-    console.log("handleSubmit, isInitSearch: ", isInitSearch);
     if (isInitSearch) {
       // 초기 검색일 경우 page를 1로 초기화
       setPage(() => 1);
@@ -91,6 +90,10 @@ export default function SearchPage() {
     // }
     setSearchHappened(true);
   };
+
+  useEffect(() => {
+    handleSubmit(true);
+  }, []);
 
   // SearchFilter 관련 변수, 함수
   const [filterValue, filterValueDispatch] = useReducer(
