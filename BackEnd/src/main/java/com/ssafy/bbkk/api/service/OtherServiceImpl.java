@@ -4,6 +4,9 @@ package com.ssafy.bbkk.api.service;
 import com.ssafy.bbkk.api.dto.GenreResponse;
 import com.ssafy.bbkk.db.repository.GenreRepository;
 import com.ssafy.bbkk.db.repository.RegionRepository;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +40,8 @@ public class OtherServiceImpl implements OtherService {
                 .stream()
                 .map(x -> new GenreResponse(x))
                 .collect(Collectors.toList());
+        // 이름 순으로 정렬
+        Collections.sort(result, Comparator.comparing(GenreResponse::getCategory));
         return result;
     }
 
@@ -51,6 +56,8 @@ public class OtherServiceImpl implements OtherService {
         result = regionRepository.findByRegionBig(regionBig).stream()
                 .map(x -> x.getRegionSmall())
                 .collect(Collectors.toList());
+        // 이름 순으로 정렬
+        Collections.sort(result, Comparator.comparing(String::valueOf));
         return result;
     }
 

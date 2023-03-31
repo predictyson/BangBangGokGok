@@ -36,7 +36,7 @@ public class OtherController {
 
         List<GenreResponse> genres = otherService.getGenreList();
         // ?, 기타 제외
-        genres.remove(17); genres.remove(18);
+        genres.remove(0); genres.remove(3);
         resultMap.put("genres", genres);
         logger.info("[getSelectList] response : genres={}", genres);
 
