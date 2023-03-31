@@ -9,6 +9,7 @@ import Modal from "@/components/main/Modal";
 interface SearchResultProps {
   results: PreviewThemeResponse[];
   searchHappened: boolean;
+  isLastPage: boolean;
 }
 
 const initData: IDetailData = {
@@ -68,6 +69,7 @@ const REVIEWDUMMY: IReviewData[] = [
 export default function SearchResult({
   results,
   searchHappened,
+  isLastPage,
 }: SearchResultProps) {
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
@@ -126,7 +128,7 @@ export default function SearchResult({
             // <ThemeItem key={result.themeId}>{result.title}</ThemeItem>
             <>
               <SliderItem key={result.themeId}>
-                <PosterItem src={result.imgUrl} />
+                {/* <PosterItem src={result.imgUrl} /> */}
                 <Hover
                   className="card-hover"
                   onClick={() => handleOpen(result.themeId)}
@@ -147,6 +149,11 @@ export default function SearchResult({
             />
           )}
         </Container>
+      )}
+      {!isLastPage && (
+        <div>
+          <button>더 불러오기</button>
+        </div>
       )}
     </Wrapper>
   );
