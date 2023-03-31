@@ -65,6 +65,7 @@ export default function SearchPage() {
 
   // 검색을 트리거하는 함수 => result에 저장
   const handleSubmit = async (isInitSearch: boolean) => {
+    console.log("handleSubmit, isInitSearch: ", isInitSearch);
     if (isInitSearch) {
       // 초기 검색일 경우 page를 1로 초기화
       setPage(() => 1);
@@ -76,14 +77,18 @@ export default function SearchPage() {
       sortby: sortOption,
       orderby: sortOrder,
     });
-    setResults(response.data.themes);
+    if (isInitSearch) {
+      setResults(response.data.themes);
+    } else {
+      setResults((prev) => [...prev, ...response.data.themes]);
+    }
     setIsLastPage(response.data.isLast);
 
-    if (isInitSearch) {
-      setPage(() => 1);
-    } else {
-      setPage((prev) => prev + 1);
-    }
+    // if (isInitSearch) {
+    // setPage(() => 1);
+    // } else {
+    setPage((prev) => prev + 1);
+    // }
     setSearchHappened(true);
   };
 
@@ -160,6 +165,7 @@ export default function SearchPage() {
             results={results}
             searchHappened={searchHappened}
             isLastPage={isLastPage}
+            handleSubmit={handleSubmit}
           />
         </ContentWrapper>
       </BackGround>
