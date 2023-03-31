@@ -164,10 +164,12 @@ export default function DetailModal({
             <DetailInfo>
               인원수
               <span className="info">
-                {data.minPeople}-{data.maxPeople}명
+                {data.minPeople === data.maxPeople
+                  ? `${data.minPeople}명`
+                  : `${data.minPeople}-${data.maxPeople}명`}
               </span>{" "}
               &nbsp; | &nbsp; 시간
-              <span className="info">{data.runningTime}min</span>
+              <span className="info">{data.runningTime}분</span>
             </DetailInfo>
             <DetailInfo>
               오픈일<span className="info">{data.openDate}</span>

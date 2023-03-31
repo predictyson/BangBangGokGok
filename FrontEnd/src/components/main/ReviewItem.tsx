@@ -150,6 +150,10 @@ const ReviewBox = styled.div<{ isMine: boolean }>`
   margin-top: 1rem;
   padding: 1rem;
   padding-bottom: 1rem;
+  /* background-color: ${theme.colors.container}; */
+  /* border-radius: 1rem;
+  border: solid 2px grey;
+  padding: 2rem; */
   ${(props) =>
     props.isMine &&
     `background-color: ${theme.colors.container};   border-radius: 1rem;  border: solid 2px ${theme.colors.pink}; padding: 2rem;`}
