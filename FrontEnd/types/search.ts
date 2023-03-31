@@ -62,6 +62,7 @@ export interface GenreResponse {
 }
 
 export interface SearchResponse {
+  isLast: boolean;
   themes: PreviewThemeResponse[];
 }
 
