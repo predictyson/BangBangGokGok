@@ -28,8 +28,8 @@ export default function UserSection({
 }
 
 const ProfileBox = styled.div`
-  width: 13rem;
-  height: 13rem;
+  width: 11rem;
+  height: 11rem;
   border-radius: 50rem;
   display: flex;
   align-items: center;
@@ -38,8 +38,8 @@ const ProfileBox = styled.div`
 `;
 
 const Container = styled.div`
-  width: 13%;
-  margin-right: 1rem;
+  width: 15%;
+  margin: 0 0.5rem;
   background-color: ${theme.colors.containerLight};
   border-radius: 1rem;
   padding: 1rem;
@@ -68,5 +68,5 @@ const Container = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 6.3rem;
+  width: 5.5rem;
 `;

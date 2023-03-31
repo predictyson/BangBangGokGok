@@ -78,13 +78,17 @@ export default function SignUpSection() {
         password: password,
       };
 
-      try {
-        const { data } = await requestSignUp(userData);
-        const newUserId = data.userId;
-        navigate("/additional", { state: { userId: newUserId } });
-      } catch (error) {
-        console.log(error);
-        handleToastClick("error", "회원가입에 실패하였습니다.");
+      if (password === passwordValid) {
+        try {
+          const { data } = await requestSignUp(userData);
+          const newUserId = data.userId;
+          navigate("/additional", { state: { userId: newUserId } });
+        } catch (error) {
+          console.log(error);
+          handleToastClick("error", "회원가입에 실패하였습니다.");
+        }
+      } else {
+        handleToastClick("error", "비밀번호가 일치하지 않습니다.");
       }
     } else {
       handleToastClick("error", "이메일 중복확인을 해주세요.");

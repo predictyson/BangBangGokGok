@@ -17,7 +17,12 @@ export default function LeftPorfile(props: ProfileProps) {
   const handleInputChange = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
     console.log(target.name + " : " + target.value);
-    props.changeUserInfo(target.name, target.value);
+    console.log(typeof target.value);
+    if (target.name === "nickname" && String(target.value).length > 10) {
+      props.handleToastClick("error", "닉네임은 2~10자 사이입니다.");
+    } else {
+      props.changeUserInfo(target.name, target.value);
+    }
   };
 
   const handleSetSmallRegion = async (e: SelectChangeEvent<unknown>) => {
@@ -81,7 +86,7 @@ export default function LeftPorfile(props: ProfileProps) {
           focused
           sx={{ input: { color: "white" } }}
           value={props.userAdditionalInfo.nickname}
-          placeholder="닉네임을 입력하세요"
+          placeholder="2~10글자 사이 닉네임을 입력하세요."
           onChange={handleInputChange}
           hiddenLabel
         />
@@ -213,6 +218,11 @@ const CustomSelect = mstyled(Select)({
   svg: {
     color: "white",
   },
+
+  "&.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list":
+    {
+      height: "5rem",
+    },
 });
 
 const CustomToggleButton = mstyled(ToggleButton)({

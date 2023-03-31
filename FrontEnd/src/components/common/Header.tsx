@@ -4,7 +4,7 @@ import Ghost from "@/assets/common/Ghost.png";
 import Logo from "@/assets/common/Logo.png";
 import { theme } from "@/styles/theme";
 import { styled as mstyled } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { clearUserInfo } from "@/api/api";
 import Toast, { showToast } from "@/components/common/Toast";
@@ -12,6 +12,7 @@ import { myPageLoader } from "@/api/routerLoader";
 
 export default function Header() {
   const navigate = useNavigate();
+  const uselocation = useLocation();
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
   // const username = localStorage.getItem("username");
 
@@ -24,8 +25,12 @@ export default function Header() {
 
   const logout = () => {
     clearUserInfo();
+    if (uselocation.pathname === "/") {
+      location.reload();
+    } else {
+      navigate("/");
+    }
     handleToastClick("success", "성공적으로 로그아웃 되었습니다.");
-    navigate("/");
   };
 
   const routeGroupSet = async () => {
@@ -98,13 +103,14 @@ export default function Header() {
 }
 
 const Container = styled.div`
-  height: 10vh;
+  height: 9.5vh;
   display: flex;
   justify-content: space-between;
   background-color: ${theme.colors.background};
   padding: 0 10rem;
   align-items: center;
   position: sticky;
+  /* width: ${(props) => (props.className === "main" ? "" : "")}; */
   top: 0;
   left: 0;
   z-index: 999;
