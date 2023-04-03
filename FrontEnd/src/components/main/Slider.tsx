@@ -73,7 +73,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
       <div className={className} onClick={onClick}>
         <img
           src={PrevArrow}
-          style={{ width: "2rem", height: "5rem" }}
+          style={{ width: "2rem", height: "5rem", marginLeft: "-1rem" }}
           alt="prev-arrow"
         />
       </div>
@@ -85,7 +85,11 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
       <div className={className} onClick={onClick}>
         <img
           src={NextArrow}
-          style={{ width: "2rem", height: "5rem", marginLeft: "1rem" }}
+          style={{
+            width: "2rem",
+            height: "5rem",
+            marginLeft: "1rem",
+          }}
           alt="next-arrow"
         />
       </div>
@@ -208,7 +212,6 @@ const Title = styled.div`
 
 const SliderItem = styled.div`
   position: relative;
-  border: solid 1px red;
   display: flex;
   justify-content: center;
   :hover {
