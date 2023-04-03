@@ -20,7 +20,12 @@ const InitUser = {
 export default function LoginSection() {
   const navigate = useNavigate();
   const [user, setUser] = useState<IUserInfo>(InitUser);
-  const [cookies, setCookie] = useCookies(["refresh", "access", "nickname"]);
+  const [cookies, setCookie] = useCookies([
+    "refresh",
+    "access",
+    "rfToken",
+    "acToken",
+  ]);
 
   const handleToastClick = (
     type: IToastProps["type"],
@@ -64,6 +69,16 @@ export default function LoginSection() {
       setCookie("access", accessToken, {
         path: "/",
         // httpOnly: true,
+        secure: true,
+      });
+      setCookie("rfToken", refreshToken, {
+        path: "/",
+        httpOnly: true,
+        secure: true,
+      });
+      setCookie("acToken", accessToken, {
+        path: "/",
+        httpOnly: true,
         secure: true,
       });
       localStorage.setItem("nickname", nickname);
