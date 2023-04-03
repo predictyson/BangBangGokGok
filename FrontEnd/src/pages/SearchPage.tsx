@@ -63,30 +63,42 @@ export default function SearchPage() {
   // 검색 요청 관련 변수, 함수
   const [isLastPage, setIsLastPage] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
+  const handleResetPage = () => {
+    setPage(() => 1);
+  };
+
   // 검색을 트리거하는 함수 => result에 저장
   const handleSubmit = async (isInitSearch: boolean) => {
     if (isInitSearch) {
-      setPage(() => 1);
-    }
-    const response = await getSearchThemes({
-      word: searchWord,
-      ...filterValue,
-      page: page,
-      sortby: sortOption,
-      orderby: sortOrder,
-    });
-    if (isInitSearch) {
+      // 1페이지를 요청하는 경우
+      const INIT_PAGE = 1;
+      const response = await getSearchThemes({
+        word: searchWord,
+        ...filterValue,
+        page: INIT_PAGE,
+        sortby: sortOption,
+        orderby: sortOrder,
+      });
       setResults(response.data.themes);
+      setIsLastPage(response.data.isLast);
+      setPage(INIT_PAGE + 1);
     } else {
+      // 다음 페이지를 요청하는 경우
+      const response = await getSearchThemes({
+        word: searchWord,
+        ...filterValue,
+        page: page,
+        sortby: sortOption,
+        orderby: sortOrder,
+      });
       setResults((prev) => [...prev, ...response.data.themes]);
+      setIsLastPage(response.data.isLast);
+      setPage((prev) => prev + 1);
     }
-    setIsLastPage(response.data.isLast);
-
-    setPage((prev) => prev + 1);
-
     setSearchHappened(true);
   };
 
+  // 초기 검색 요청
   useEffect(() => {
     handleSubmit(true);
   }, []);
