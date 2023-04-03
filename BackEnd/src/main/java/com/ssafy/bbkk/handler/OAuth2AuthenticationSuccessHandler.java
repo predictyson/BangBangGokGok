@@ -50,10 +50,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         User user = principalDetails.getUser();
 
         // 소셜 로그인 성공 후 이동할 페이지 -> 추후 변경해야함
-        String targetUrl = "/oauth";
+        String targetUrl = "https://bbkk.store/oauth";
+//        String targetUrl = "/oauth";
 
         if(user.getEmail() == null) {
-            targetUrl = "/login";
+            targetUrl = "https://bbkk.store/login";
             return UriComponentsBuilder.fromUriString(targetUrl)
                     .queryParam("error", "이메일 동의를 하지 않아 회원가입이 불가능합니다.")
                     .build().toUriString();
@@ -66,7 +67,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 user.getRegion()!=null){
 
             // 토큰 정보 저장하는 페이지로 이동
-            targetUrl = "/oauth2";
+            targetUrl = "https://bbkk.store/oauth2";
 
             // 3. 인증 정보를 기반으로 JWT 토큰 생성
             String accessToken = tokenProvider.generateAccessToken(authentication);
