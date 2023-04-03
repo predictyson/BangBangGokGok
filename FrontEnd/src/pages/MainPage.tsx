@@ -6,9 +6,6 @@ import BasicSlider from "@components/main/Slider";
 import AwardsSlider from "@components/main/AwardsSlider";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
-import hotDummy from "@/assets/dummy/hotTheme.png";
-import basicDummy from "@/assets/dummy/basic.png";
-import awardDummy from "@/assets/dummy/award.png";
 import {
   IAwardSlider,
   ISliderData,
@@ -107,42 +104,50 @@ const HotThemesData: IThemeData[] = [
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl: hotDummy,
+    imgUrl:
+      "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl: hotDummy,
+    imgUrl:
+      "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl: hotDummy,
+    imgUrl:
+      "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl: hotDummy,
+    imgUrl:
+      "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl: hotDummy,
+    imgUrl:
+      "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl: hotDummy,
+    imgUrl:
+      "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl: hotDummy,
+    imgUrl:
+      "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl: hotDummy,
+    imgUrl:
+      "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
 ];
 
@@ -153,42 +158,50 @@ const TopThemesData: ISliderData[] = [
       {
         themeId: 1,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 2,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 3,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 4,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 5,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 6,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 7,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 8,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
     ],
   },
@@ -198,42 +211,50 @@ const TopThemesData: ISliderData[] = [
       {
         themeId: 1,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 2,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 3,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 4,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 5,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 6,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 7,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 8,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
     ],
   },
@@ -244,49 +265,49 @@ const AwardThemeDummy: IAwardTheme[] = [
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl: awardDummy, // 테마 포스터 링크
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl: awardDummy, // 테마 포스터 링크
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl: awardDummy, // 테마 포스터 링크
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl: awardDummy, // 테마 포스터 링크
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl: awardDummy, // 테마 포스터 링크
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl: awardDummy, // 테마 포스터 링크
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl: awardDummy, // 테마 포스터 링크
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl: awardDummy, // 테마 포스터 링크
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
 ];
 const AwardThemesData: IAwardSlider = {
@@ -300,42 +321,50 @@ const RecommendThemesData: ISliderData[] = [
       {
         themeId: 1,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 2,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 3,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 4,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 5,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 6,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 7,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 8,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
     ],
   },
@@ -345,42 +374,50 @@ const RecommendThemesData: ISliderData[] = [
       {
         themeId: 1,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 2,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 3,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 4,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 5,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 6,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 7,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
         themeId: 8,
         title: "",
-        imgUrl: basicDummy,
+        imgUrl:
+          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
     ],
   },
