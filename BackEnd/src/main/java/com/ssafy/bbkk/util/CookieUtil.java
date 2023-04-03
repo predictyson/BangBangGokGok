@@ -25,11 +25,13 @@ public class CookieUtil {
         return Optional.empty();
     }
 
-    public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
+    public static void addCookie(HttpServletResponse response, String name, String value) {
         Cookie cookie = new Cookie(name, value);
+        cookie.setDomain("bbkk.store");
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(maxAge);
+        cookie.setSecure(true);
+        cookie.setMaxAge(60 * 60 * 24 * 7); // 7일
 
         response.addCookie(cookie);
     }

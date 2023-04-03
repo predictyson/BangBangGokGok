@@ -3,6 +3,8 @@ package com.ssafy.bbkk.filter;
 import com.ssafy.bbkk.api.controller.UserController;
 import com.ssafy.bbkk.common.jwt.TokenProvider;
 import javax.servlet.http.Cookie;
+
+import com.ssafy.bbkk.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
@@ -54,8 +57,11 @@ public class JwtFilter extends OncePerRequestFilter {
     private String resolveToken(HttpServletRequest request) {
 
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        Optional<Cookie> accessTokenCookie = CookieUtil.getCookie(request,"accessToken");
 
-        logger.info("[bearerToken] bearerToken : bearerToken={}", bearerToken);
+        logger.info("[JwtFilter] bearerToken={}", bearerToken);
+        if(accessTokenCookie.isPresent())
+            logger.info("[JwtFilter] accessTokenCookie={}", accessTokenCookie.get().getValue());
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
             return bearerToken.substring(7);

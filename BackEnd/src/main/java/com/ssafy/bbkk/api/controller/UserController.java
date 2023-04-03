@@ -10,9 +10,14 @@ import com.ssafy.bbkk.api.dto.TokenResponse;
 import com.ssafy.bbkk.api.service.EmailService;
 import com.ssafy.bbkk.api.service.OtherService;
 import com.ssafy.bbkk.api.service.UserService;
+import com.ssafy.bbkk.util.CookieUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -43,7 +48,9 @@ public class UserController {
 
     @Operation(summary = "로그인", description = "로그인을 진행한다")
     @PostMapping("login")
-    private ResponseEntity<Map<String, Object>> login(@RequestBody @Valid LoginRequest loginRequest, Errors errors) throws Exception {
+    private ResponseEntity<Map<String, Object>> login(
+            @RequestBody @Valid LoginRequest loginRequest, Errors errors,
+            HttpServletResponse response) throws Exception {
 
         logger.info("[login] request : loginRequest={}", loginRequest);
 
@@ -60,6 +67,9 @@ public class UserController {
         LoginResponse loginResponse = userService.getLoginUser(loginRequest.getEmail());
         resultMap.put("user", loginResponse);
         logger.info("[login] response : user={}", loginResponse);
+
+        CookieUtil.addCookie(response, "accessToken", tokenResponse.getAccessToken());
+        CookieUtil.addCookie(response, "refreshToken", tokenResponse.getRefreshToken());
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -85,7 +95,8 @@ public class UserController {
 
     @Operation(summary = "회원 가입", description = "회원 가입을 진행한다")
     @PostMapping("join")
-    public ResponseEntity<Map<String, Object>> join(@RequestBody @Valid JoinRequest joinRequest, Errors errors) throws Exception {
+    public ResponseEntity<Map<String, Object>> join(
+            @RequestBody @Valid JoinRequest joinRequest, Errors errors) throws Exception {
 
         logger.info("[join] request : joinRequest={}", joinRequest);
 
@@ -104,7 +115,8 @@ public class UserController {
 
     @Operation(summary = "추가 정보 작성", description = "회원 가입 후 추가 정보를 작성한다")
     @PostMapping("join/additional")
-    public ResponseEntity<Void> addInfo(@RequestBody @Valid JoinAdditionalRequest joinAdditionalRequest, Errors errors) throws Exception {
+    public ResponseEntity<Void> addInfo(
+            @RequestBody @Valid JoinAdditionalRequest joinAdditionalRequest, Errors errors) throws Exception {
         logger.info("[addInfo] request : joinAdditionalRequest={}", joinAdditionalRequest);
 
         // JoinAdditionalRequest 입력값 유효성 검사
@@ -124,7 +136,8 @@ public class UserController {
 
     @Operation(summary = "소셜 로그인", description = "소셜 로그인을 진행한다")
     @GetMapping("oauth/login")
-    public ResponseEntity<Map<String, Object>> oauthLogin(@AuthenticationPrincipal User user) throws Exception {
+    public ResponseEntity<Map<String, Object>> oauthLogin(
+            @AuthenticationPrincipal User user) throws Exception {
         logger.info("[oauthLogin] request : myEmail={}", user.getUsername());
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -143,9 +156,18 @@ public class UserController {
     @Operation(summary = "토큰 재발급", description = "access token을 재발급한다")
     @PostMapping("/reissue")
     private ResponseEntity<Map<String, Object>> reissue(
-            @RequestBody TokenRequest tokenRequest) throws Exception {
+            @RequestBody TokenRequest tokenRequest,
+            HttpServletRequest request) throws Exception {
 
         logger.info("[reissue] request : tokenRequest={}", tokenRequest);
+
+        Optional<Cookie> refreshTokenCookie = CookieUtil.getCookie(request,"refreshToken");
+        if(refreshTokenCookie.isPresent())
+            logger.info("[reissue] request : refreshTokenCookie={}",refreshTokenCookie);
+
+        Optional<Cookie> accessTokenCookie = CookieUtil.getCookie(request,"accessToken");
+        if(accessTokenCookie.isPresent())
+            logger.info("[reissue] request : accessTokenCookie={}",accessTokenCookie);
 
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -158,7 +180,8 @@ public class UserController {
 
     @Operation(summary = "이메일 중복 확인", description = "이메일 중복 검사를 실시한다")
     @GetMapping("check/email/{email}")
-    public ResponseEntity<Map<String, Object>> checkEmail(@PathVariable String email) throws Exception {
+    public ResponseEntity<Map<String, Object>> checkEmail(
+            @PathVariable String email) throws Exception {
         logger.info("[checkEmail] request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -172,7 +195,8 @@ public class UserController {
 
     @Operation(summary = "닉네임 중복 확인", description = "닉네임 중복 검사를 실시한다")
     @GetMapping("check/nickname/{nickname}")
-    public ResponseEntity<Map<String, Object>> checkNickname(@PathVariable String nickname) throws Exception {
+    public ResponseEntity<Map<String, Object>> checkNickname(
+            @PathVariable String nickname) throws Exception {
         logger.info("[checkNickname] request : nickname={}", nickname);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -186,7 +210,8 @@ public class UserController {
 
     @Operation(summary = "이메일 인증 코드 발송", description = "해당 이메일로 인증 코드를 발송한다")
     @GetMapping("send/email/{email}")
-    public ResponseEntity<Map<String, Object>> sendEmailCode(@PathVariable String email) throws Exception {
+    public ResponseEntity<Map<String, Object>> sendEmailCode(
+            @PathVariable String email) throws Exception {
         logger.info("[sendEmailCode] request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -204,7 +229,8 @@ public class UserController {
 
     @Operation(summary = "이메일 인증 코드 확인", description = "해당 이메일로 발송한 인증 코드와 일치하는지 확인한다")
     @GetMapping("check/emailCode/{email}/{code}")
-    public ResponseEntity<Map<String, Object>> checkEmailCode(@PathVariable String email,
+    public ResponseEntity<Map<String, Object>> checkEmailCode(
+            @PathVariable String email,
             @PathVariable String code) throws Exception {
         logger.info("[checkEmailCode] request : email={}", email);
         logger.info("[checkEmailCode] request : code={}", code);
@@ -220,7 +246,8 @@ public class UserController {
 
     @Operation(summary = "비밀번호 변경", description = "비밀번호를 변경한다")
     @PostMapping("password")
-    public ResponseEntity<Void> changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest, Errors errors) throws Exception {
+    public ResponseEntity<Void> changePassword(
+            @RequestBody @Valid ChangePasswordRequest changePasswordRequest, Errors errors) throws Exception {
         logger.info("[changePassword] request : changePasswordRequest={}", changePasswordRequest);
 
         // ChangePasswordRequest 입력값 유효성 검사
