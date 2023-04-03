@@ -40,7 +40,7 @@ export default function RedirectOauth2() {
       localStorage.setItem("nickname", nickname);
       localStorage.setItem("profileImageType", profileImageType);
       localStorage.setItem("email", email);
-      navigate("/", { replace: true });
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
