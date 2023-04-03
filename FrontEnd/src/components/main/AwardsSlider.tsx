@@ -188,7 +188,6 @@ const Container = styled.div`
   width: 90%;
   margin: auto auto;
   margin-top: 0;
-
   .slick-prev:before {
     display: none;
   }

@@ -39,7 +39,7 @@ export default function Review({
   const CHARTDATA = [data.userActivity, data.userFear, data.userDifficulty];
 
   const BARDATA: IBarData = {
-    labels: ["활동성", "공포도", "체감 난이도"],
+    labels: ["체감 활동성", "체감 공포도", "체감 난이도"],
     datasets: [
       {
         label: "유저 평점",

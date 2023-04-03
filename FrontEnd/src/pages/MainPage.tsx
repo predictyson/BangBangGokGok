@@ -104,42 +104,50 @@ const HotThemesData: IThemeData[] = [
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl: "http://www.master-key.co.kr/upload/room/76_img1.jpg",
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl: "http://www.dumbndumber-sm.kr/img/sample_xtheme_26.png",
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
   },
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl: "http://www.master-key.co.kr/upload/room/76_img1.jpg",
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl: "http://www.dumbndumber-sm.kr/img/sample_xtheme_26.png",
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
   },
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl: "http://www.master-key.co.kr/upload/room/76_img1.jpg",
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl: "http://www.dumbndumber-sm.kr/img/sample_xtheme_26.png",
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
   },
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl: "http://www.master-key.co.kr/upload/room/76_img1.jpg",
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl: "http://www.dumbndumber-sm.kr/img/sample_xtheme_26.png",
+    imgUrl:
+      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
   },
 ];
 
@@ -151,49 +159,49 @@ const TopThemesData: ISliderData[] = [
         themeId: 1,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 2,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 3,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 4,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 5,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 6,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 7,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 8,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
     ],
   },
@@ -204,49 +212,49 @@ const TopThemesData: ISliderData[] = [
         themeId: 1,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 2,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 3,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 4,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 5,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 6,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 7,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 8,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
     ],
   },
@@ -258,56 +266,56 @@ const AwardThemeDummy: IAwardTheme[] = [
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
     imgUrl:
-      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
     imgUrl:
-      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
     imgUrl:
-      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
     imgUrl:
-      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
     imgUrl:
-      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
     imgUrl:
-      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
     imgUrl:
-      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
     imgUrl:
-      "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png", // 테마 포스터 링크
+      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
   },
 ];
 const AwardThemesData: IAwardSlider = {
@@ -322,49 +330,49 @@ const RecommendThemesData: ISliderData[] = [
         themeId: 1,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 2,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 3,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 4,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "vhttps://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 5,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 6,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 7,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 8,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.pngg",
       },
     ],
   },
@@ -375,49 +383,49 @@ const RecommendThemesData: ISliderData[] = [
         themeId: 1,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 2,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 3,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 4,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 5,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 6,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 7,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 8,
         title: "virus",
         imgUrl:
-          "https://user-images.githubusercontent.com/55784772/224228582-191f008f-7cee-43c4-83c2-9bbab1512955.png",
+          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
     ],
   },
