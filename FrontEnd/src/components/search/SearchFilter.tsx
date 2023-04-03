@@ -39,6 +39,7 @@ export default function SearchFilter(props: SearchFilterProps) {
       newValue: {} as FilterValue,
     });
     props.handleDumpFilterGenreCategoryInputValueChange("전체");
+    closeFilter();
   };
 
   // 이 함수는 필터 적용 버튼을 눌렀을 때 실행

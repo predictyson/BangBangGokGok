@@ -10,12 +10,12 @@ interface SearchSortOptionsProps {
   handleSortOptionOrderChange: (option: SortOption) => void;
 }
 
-const OPTIONS: string[] = ["평점", "활동성", "공포도", "체감 난이도"];
+const OPTIONS: string[] = ["평점", "체감 활동성", "체감 공포도", "체감 난이도"];
 
 const OPTION_MAP: { [key: string]: SortOption } = {
   평점: "userRating",
-  활동성: "userActivity",
-  공포도: "userFear",
+  "체감 활동성": "userActivity",
+  "체감 공포도": "userFear",
   "체감 난이도": "userDifficulty",
 };
 

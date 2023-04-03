@@ -107,7 +107,7 @@ export default function SearchPage() {
     filterReducer,
     INITIAL_FILTER_SET_VALUE
   );
-  console.log(filterValue);
+
   const handleFilterValueChange = (action: ReducerAction) => {
     filterValueDispatch(action);
   };
@@ -194,9 +194,15 @@ const BackGround = styled.div`
 const ContentWrapper = styled.div`
   width: 90%;
   box-sizing: border-box;
-  height: 95%;
-  margin: 0 auto;
+  height: 92%;
+  @media (min-height: 768px) {
+    height: 94%;
+  }
+  margin: 3rem auto;
   padding: 3rem;
+  @media (max-height: 768px) {
+    padding: 2rem;
+  }
   gap: 2rem;
   display: flex;
   flex-direction: column;

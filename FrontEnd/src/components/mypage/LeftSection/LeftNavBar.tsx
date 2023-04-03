@@ -39,8 +39,6 @@ export default function LeftNavBar() {
           />
         </ProfileImageWrapper>
         <ProfileName>{getNicknameFromLocalStorage()}</ProfileName>
-        {/* 칭호(?)는 아직 정해진 바가 없음! */}
-        {/* <ProfileTitle>{userProfile.title}</ProfileTitle> */}
       </ProfileWrapper>
       <NavWrapper>
         <NavItem select={pathname === "/mypage"} onClick={() => navigate("")}>
@@ -102,7 +100,7 @@ const ProfileImage = styled.img`
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 12rem;
+  width: 60%;
   border-radius: 1.5rem;
   text-align: center;
 `;
