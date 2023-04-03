@@ -37,7 +37,8 @@ export default function DetailModal({
   const [isInterest, setIsInterest] = useState<boolean>(false);
   const [isMyReview, setIsMyReview] = useState<boolean>(false);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
-
+  console.log(data.synopsis);
+  console.log(data.synopsis.replace("<br>", "\n"));
   const postLikes = async (themeId: number) => {
     if (themeId !== 0) {
       try {
@@ -213,7 +214,14 @@ export default function DetailModal({
           </div>
         </Container>
         <Synopsis>
-          <pre>{data.synopsis}</pre>
+          <article>
+            {data.synopsis.split("\\n").map((sentence) => (
+              <div key={sentence} className="word-break">
+                {sentence}
+                <br />
+              </div>
+            ))}
+          </article>
         </Synopsis>
         <Review
           data={data}
@@ -277,11 +285,15 @@ const Synopsis = styled.div`
   background-color: ${theme.colors.container};
   border-radius: 1rem;
   padding: 2rem; /* overflow-x: hidden; */ /* overflow-y: auto; */
-  pre {
-    font-family: Pretendard;
-    width: 95%;
-    font-size: 1.4rem;
+  /* pre { */
+  font-family: Pretendard;
+  width: 95%;
+  font-size: 1.4rem;
+  .word-break {
+    word-break: keep-all;
   }
+  /* } */
+  /* white-space: pre-wrap; */
   ::-webkit-scrollbar {
     width: 4px;
   }
