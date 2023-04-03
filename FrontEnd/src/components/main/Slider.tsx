@@ -172,7 +172,6 @@ const Container = styled.div`
   width: 90%;
   margin: auto auto;
   margin-top: 0;
-
   .slick-prev:before {
     display: none;
   }
@@ -209,6 +208,9 @@ const Title = styled.div`
 
 const SliderItem = styled.div`
   position: relative;
+  border: solid 1px red;
+  display: flex;
+  justify-content: center;
   :hover {
     & > .card-hover {
       opacity: 0.8;
@@ -223,7 +225,8 @@ const Hover = styled.div`
   opacity: 0;
   background-color: black;
   top: 0;
-  letft: 0;
+  left: 50%;
+  transform: translateX(-50%);
   transition: all 0.5s;
   border-radius: 1rem;
   display: flex;

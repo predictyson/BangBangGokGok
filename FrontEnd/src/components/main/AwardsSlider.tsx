@@ -188,7 +188,7 @@ const Container = styled.div`
   width: 90%;
   margin: auto auto;
   margin-top: 0;
-
+  border: solid 2px white;
   .slick-prev:before {
     display: none;
   }
@@ -220,6 +220,7 @@ const SliderItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border: solid 1px red;
 `;
 
 const Hover = styled.div`
