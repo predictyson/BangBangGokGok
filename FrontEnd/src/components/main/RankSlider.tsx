@@ -88,12 +88,6 @@ export default function RankSlider({ data }: IProps) {
                   style={{ width: "18rem", height: "23rem" }}
                   onClick={() => handleOpen(item.themeId)}
                 />
-                {/* <Hover
-                  className="card-hover"
-                  onClick={() => handleOpen(item.themeId)}
-                >
-                  {item.title}
-                </Hover> */}
                 <h2>{item.title}</h2>
               </PosterWrapper>
             </SliderItem>

@@ -15,7 +15,9 @@ export default function ReviewItem({ data }: IProps) {
     const myNickname = localStorage.getItem("nickname");
     data.nickname === myNickname ? setIsMine(true) : setIsMine(false);
   }, []);
-
+  const handleIsMine = () => {
+    setIsMine(true);
+  };
   return (
     <>
       <img
