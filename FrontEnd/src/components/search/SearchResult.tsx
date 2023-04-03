@@ -83,7 +83,7 @@ export default function SearchResult({
           <Container>
             {results.map((result) => (
               <SliderItem key={result.themeId}>
-                {/* <PosterItem src={result.imgUrl} /> */}
+                <PosterItem src={result.imgUrl} />
                 <Hover
                   className="card-hover"
                   onClick={() => handleOpen(result.themeId)}

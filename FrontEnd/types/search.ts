@@ -32,7 +32,8 @@ export type ReducerAction = {
     | "difficultyS"
     | "difficultyE"
     | "people"
-    | "time";
+    | "time"
+    | "reset";
   newValue: FilterValue;
 };
 

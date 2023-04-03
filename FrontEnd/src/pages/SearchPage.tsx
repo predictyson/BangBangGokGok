@@ -46,6 +46,8 @@ const filterReducer = (
       return { ...oldFilterValue, people: action.newValue.people };
     case "time":
       return { ...oldFilterValue, time: action.newValue.time };
+    case "reset":
+      return { ...INITIAL_FILTER_SET_VALUE };
   }
 };
 
@@ -63,9 +65,6 @@ export default function SearchPage() {
   // 검색 요청 관련 변수, 함수
   const [isLastPage, setIsLastPage] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
-  const handleResetPage = () => {
-    setPage(() => 1);
-  };
 
   // 검색을 트리거하는 함수 => result에 저장
   const handleSubmit = async (isInitSearch: boolean) => {
@@ -108,6 +107,7 @@ export default function SearchPage() {
     filterReducer,
     INITIAL_FILTER_SET_VALUE
   );
+  console.log(filterValue);
   const handleFilterValueChange = (action: ReducerAction) => {
     filterValueDispatch(action);
   };
@@ -135,6 +135,8 @@ export default function SearchPage() {
     }
   };
 
+  // sortOption, sortOrder가 변경될 때마다 검색 요청
+  // 단, 초기 렌더링 시 sideEffectFunction이 실행되지 않도록 함.
   const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
   useEffect(() => {
     if (isFirstRender) {
