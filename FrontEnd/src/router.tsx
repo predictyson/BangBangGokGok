@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter, createHashRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import SignUpPage from "./pages/Auth/SingUpPage";
 import LoginPage from "./pages/Auth/LoginPage";
 import MainPage from "@/pages/MainPage";
