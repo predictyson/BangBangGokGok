@@ -68,8 +68,8 @@ public class UserController {
         resultMap.put("user", loginResponse);
         logger.info("[login] response : user={}", loginResponse);
 
-//        CookieUtil.addCookie(response, "acToken", tokenResponse.getAccessToken());
-//        CookieUtil.addCookie(response, "rfToken", tokenResponse.getRefreshToken());
+        CookieUtil.addCookie(response, "testAccessToken", tokenResponse.getAccessToken());
+        CookieUtil.addCookie(response, "testRefreshToken", tokenResponse.getRefreshToken());
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
