@@ -414,7 +414,7 @@ public class ThemeServiceImpl implements ThemeService {
                 .where(builder);
 
         List<PreviewThemeResponse> content = contentQuery
-                .orderBy(new OrderSpecifier<>(order, sort))
+                .orderBy(new OrderSpecifier<>(order, sort), qTheme.userRating.desc(), qTheme.id.asc())
                 .offset((long) size * page)
                 .limit(size).fetch()
                 .stream().map(PreviewThemeResponse::new)
@@ -427,10 +427,6 @@ public class ThemeServiceImpl implements ThemeService {
 //        System.out.println("필터와 일치한 총 테마 : " + result.getTotalElements() );
 //        System.out.println("첫 번째 페이지입니까? " + result.isFirst());
 //        System.out.println("마지막 페이지입니까? " + result.isLast());
-
-//        List<PreviewThemeResponse> result = content.stream()
-//                .map(x -> new PreviewThemeResponse(x))
-//                .collect(Collectors.toList());
 
         return result;
     }
