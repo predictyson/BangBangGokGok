@@ -54,7 +54,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String targetUrl = "/#/oauth";
 
         if(user.getEmail() == null) {
-            targetUrl = "/#/login";
+            targetUrl = "/#/oauth/fail";
 //            targetUrl = "https://bbkk.store/login";
             return UriComponentsBuilder.fromUriString(targetUrl)
                     .queryParam("error", "이메일 동의를 하지 않아 회원가입이 불가능합니다.")
@@ -90,7 +90,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
 
         // 추가 정보가 입력되어 있지 않다면 추가 정보 입력창으로 보냄
-        return UriComponentsBuilder.fromUriString(targetUrl+"/"+user.getId())
+        return UriComponentsBuilder.fromUriString(targetUrl)
+                .queryParam("userId", user.getId())
                 .build().toUriString();
     }
 }
