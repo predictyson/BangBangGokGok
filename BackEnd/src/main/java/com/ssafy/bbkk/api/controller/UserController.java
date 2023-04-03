@@ -68,8 +68,8 @@ public class UserController {
         resultMap.put("user", loginResponse);
         logger.info("[login] response : user={}", loginResponse);
 
-        CookieUtil.addCookie(response, "accessToken", tokenResponse.getAccessToken());
-        CookieUtil.addCookie(response, "refreshToken", tokenResponse.getRefreshToken());
+        CookieUtil.addCookie(response, "acToken", tokenResponse.getAccessToken());
+        CookieUtil.addCookie(response, "rfToken", tokenResponse.getRefreshToken());
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -161,11 +161,11 @@ public class UserController {
 
         logger.info("[reissue] request : tokenRequest={}", tokenRequest);
 
-        Optional<Cookie> refreshTokenCookie = CookieUtil.getCookie(request,"refreshToken");
+        Optional<Cookie> refreshTokenCookie = CookieUtil.getCookie(request,"rfToken");
         if(refreshTokenCookie.isPresent())
             logger.info("[reissue] request : refreshTokenCookie={}",refreshTokenCookie);
 
-        Optional<Cookie> accessTokenCookie = CookieUtil.getCookie(request,"accessToken");
+        Optional<Cookie> accessTokenCookie = CookieUtil.getCookie(request,"acToken");
         if(accessTokenCookie.isPresent())
             logger.info("[reissue] request : accessTokenCookie={}",accessTokenCookie);
 
