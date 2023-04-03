@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Modal from "./Modal";
 import { ISliderData, IThemeData } from "types/slider";
 import { IReviewData, IDetailData, IDetailLogin } from "types/detail";
 import { getDetail, getDetailLogin } from "@/api/theme";
@@ -33,6 +34,12 @@ export default function RankSlider({ data }: IProps) {
     isInterest: false,
     isMyReview: false,
   });
+
+  const handleReviews = async (review: IReviewData) => {
+    await setReviews((prev) => {
+      return [review, ...prev];
+    });
+  };
   const handleOpen = async (themeId: number) => {
     await setThemeId(themeId);
     await requestDetailData(themeId);
@@ -90,6 +97,16 @@ export default function RankSlider({ data }: IProps) {
           </>
         ))}
       </Slider>
+      {themeId !== undefined && (
+        <Modal
+          reviews={reviews}
+          open={open}
+          onClose={handleClose}
+          themeId={themeId}
+          data={detaildata}
+          handleReviews={handleReviews}
+        />
+      )}
     </Container>
   );
 }
