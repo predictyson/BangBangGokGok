@@ -157,49 +157,49 @@ const TopThemesData: ISliderData[] = [
     themes: [
       {
         themeId: 1,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 2,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 3,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 4,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 5,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 6,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 7,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 8,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
@@ -210,49 +210,49 @@ const TopThemesData: ISliderData[] = [
     themes: [
       {
         themeId: 1,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 2,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 3,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 4,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 5,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 6,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 7,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 8,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
@@ -328,49 +328,49 @@ const RecommendThemesData: ISliderData[] = [
     themes: [
       {
         themeId: 1,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 2,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 3,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 4,
-        title: "virus",
+        title: "",
         imgUrl:
           "vhttps://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 5,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 6,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 7,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 8,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.pngg",
       },
@@ -381,49 +381,49 @@ const RecommendThemesData: ISliderData[] = [
     themes: [
       {
         themeId: 1,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 2,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 3,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 4,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 5,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 6,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 7,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
       {
         themeId: 8,
-        title: "virus",
+        title: "",
         imgUrl:
           "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
       },
