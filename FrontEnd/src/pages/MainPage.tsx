@@ -6,6 +6,9 @@ import BasicSlider from "@components/main/Slider";
 import AwardsSlider from "@components/main/AwardsSlider";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
+import hotDummy from "@/assets/dummy/hotTheme.png";
+import basicDummy from "@/assets/dummy/basic.png";
+import awardDummy from "@/assets/dummy/award.png";
 import {
   IAwardSlider,
   ISliderData,
@@ -104,50 +107,42 @@ const HotThemesData: IThemeData[] = [
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
+    imgUrl: hotDummy,
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
+    imgUrl: hotDummy,
   },
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
+    imgUrl: hotDummy,
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
+    imgUrl: hotDummy,
   },
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
+    imgUrl: hotDummy,
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
+    imgUrl: hotDummy,
   },
   {
     themeId: 560,
     title: "온칼로: 10만년의 밤",
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
+    imgUrl: hotDummy,
   },
   {
     themeId: 264,
     title: "X테마",
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417007-96003fff-005e-4ba6-bd25-a1f678043c60.png",
+    imgUrl: hotDummy,
   },
 ];
 
@@ -157,51 +152,43 @@ const TopThemesData: ISliderData[] = [
     themes: [
       {
         themeId: 1,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 2,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 3,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 4,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 5,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 6,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 7,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 8,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
     ],
   },
@@ -210,51 +197,43 @@ const TopThemesData: ISliderData[] = [
     themes: [
       {
         themeId: 1,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 2,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 3,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 4,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 5,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 6,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 7,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 8,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
     ],
   },
@@ -265,57 +244,49 @@ const AwardThemeDummy: IAwardTheme[] = [
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
+    imgUrl: awardDummy, // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
+    imgUrl: awardDummy, // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
+    imgUrl: awardDummy, // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
+    imgUrl: awardDummy, // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
+    imgUrl: awardDummy, // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
+    imgUrl: awardDummy, // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
+    imgUrl: awardDummy, // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
     title: "미스테리 거울의 방", // 테마명
-    imgUrl:
-      "https://user-images.githubusercontent.com/55784772/229417014-643eefdb-d556-46b6-ba99-819d941f56a4.png", // 테마 포스터 링크
+    imgUrl: awardDummy, // 테마 포스터 링크
   },
 ];
 const AwardThemesData: IAwardSlider = {
@@ -328,51 +299,43 @@ const RecommendThemesData: ISliderData[] = [
     themes: [
       {
         themeId: 1,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 2,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 3,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 4,
-        title: "virus",
-        imgUrl:
-          "vhttps://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: "vbasicDummy",
       },
       {
         themeId: 5,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 6,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 7,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 8,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.pngg",
+        title: "",
+        imgUrl: basicDummy,
       },
     ],
   },
@@ -381,51 +344,43 @@ const RecommendThemesData: ISliderData[] = [
     themes: [
       {
         themeId: 1,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 2,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 3,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 4,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 5,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 6,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 7,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
       {
         themeId: 8,
-        title: "virus",
-        imgUrl:
-          "https://user-images.githubusercontent.com/55784772/229417011-c8fb9e76-ceb8-4ec7-9a31-11d06facc406.png",
+        title: "",
+        imgUrl: basicDummy,
       },
     ],
   },
