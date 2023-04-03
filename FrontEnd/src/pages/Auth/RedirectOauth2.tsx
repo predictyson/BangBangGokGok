@@ -7,6 +7,7 @@ import { requestUserInfo } from "@/api/auth";
 export default function RedirectOauth2() {
   const navigate = useNavigate();
   const params = new URLSearchParams(window.location.search);
+  console.log("params", params);
   const accessToken = params.get("accessToken");
   const [cookies, setCookie] = useCookies(["refresh", "access"]);
 
