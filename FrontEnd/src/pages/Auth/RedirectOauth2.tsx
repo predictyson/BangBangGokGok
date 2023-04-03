@@ -9,6 +9,12 @@ export default function RedirectOauth2() {
   const params = new URLSearchParams(window.location.search);
   console.log("params", params);
   const accessToken = params.get("accessToken");
+// const fragment = window.location.hash.substring(1);
+
+// const accessToken = fragment.split('&')[0].split('=')[1];
+
+// accessToken 값을 출력
+console.log(accessToken);
   const [cookies, setCookie] = useCookies(["refresh", "access"]);
 
   /**
