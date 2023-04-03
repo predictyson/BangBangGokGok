@@ -12,73 +12,105 @@ interface RatingCategory {
   value: number;
 }
 
+interface ReviewCardProps extends UserReview {
+  handleOpenUpdateModal: (currentSelectedReviewData: UserReview) => void;
+  handleOpenDeleteModal: (reviewId: number) => void;
+}
+
 export default function ReviewCard({
-  // reviewId,
+  reviewId,
   content,
   userRating,
   userActivity,
   userFear,
   userDifficulty,
-  // createTime,
+  createTime,
   isSuccess,
   previewThemeResponse,
-}: UserReview) {
+  handleOpenUpdateModal,
+  handleOpenDeleteModal,
+}: ReviewCardProps) {
   const RatingItems: RatingCategory[] = [
     { name: "평점", value: userRating },
     { name: "활동성", value: userActivity },
     { name: "공포도", value: userFear },
     { name: "난이도", value: userDifficulty },
   ];
+
   return (
-    <ContentWrapper>
-      <FirstColumn>
-        <ThemeImage src={previewThemeResponse.imgUrl} alt="theme image" />
-      </FirstColumn>
+    <>
+      <ContentWrapper>
+        <FirstColumn>
+          <ThemeImageWrapper>
+            <ThemeImage src={previewThemeResponse.imgUrl} alt="theme image" />
+          </ThemeImageWrapper>
+        </FirstColumn>
 
-      <SecondColumn>
-        <TopWrapper>
-          <Title>{previewThemeResponse.title}</Title>
-          {isSuccess === 1 && <Badge className="success">성공</Badge>}
-          {isSuccess === 0 && <Badge className="failure">실패</Badge>}
-        </TopWrapper>
+        <SecondColumn>
+          <TopWrapper>
+            <Title>{previewThemeResponse.title}</Title>
+            {isSuccess === 1 && <Badge className="success">성공</Badge>}
+            {isSuccess === 0 && <Badge className="failure">실패</Badge>}
+          </TopWrapper>
 
-        <RatingWrapper>
-          {RatingItems.map((item, idx) => (
-            <RatingSection key={idx}>
-              <CustomTypography>{item.name}</CustomTypography>
-              <CustomRating
-                name="read-only"
-                value={item.value}
-                size="large"
-                precision={0.5}
-                readOnly
-                emptyIcon={
-                  <StarIcon
-                    style={{ opacity: 0.55, color: "gray" }}
-                    fontSize="inherit"
-                  />
-                }
-              />
-            </RatingSection>
-          ))}
-        </RatingWrapper>
+          <RatingWrapper>
+            {RatingItems.map((item, idx) => (
+              <RatingSection key={idx}>
+                <CustomTypography>{item.name}</CustomTypography>
+                <CustomRating
+                  name="read-only"
+                  value={item.value}
+                  size="large"
+                  precision={0.5}
+                  readOnly
+                  emptyIcon={
+                    <StarIcon
+                      style={{ opacity: 0.55, color: "gray" }}
+                      fontSize="inherit"
+                    />
+                  }
+                />
+              </RatingSection>
+            ))}
+          </RatingWrapper>
 
-        <Content>{content}</Content>
+          <Content>{content}</Content>
 
-        <ButtonWrapper>
-          <UpdateButton>수정</UpdateButton>
-          <DeleteButton>삭제</DeleteButton>
-        </ButtonWrapper>
-      </SecondColumn>
-    </ContentWrapper>
+          <ButtonWrapper>
+            <UpdateButton
+              onClick={() =>
+                handleOpenUpdateModal({
+                  reviewId,
+                  content,
+                  userRating,
+                  userActivity,
+                  userFear,
+                  userDifficulty,
+                  createTime,
+                  isSuccess,
+                  previewThemeResponse,
+                })
+              }
+            >
+              수정
+            </UpdateButton>
+            <DeleteButton onClick={() => handleOpenDeleteModal(reviewId)}>
+              삭제
+            </DeleteButton>
+          </ButtonWrapper>
+        </SecondColumn>
+      </ContentWrapper>
+    </>
   );
 }
 
 const ContentWrapper = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
-  gap: 1rem;
-  padding: 2.5rem;
+  width: 100%;
+  gap: 2rem;
+  padding: 2rem;
   width: 100%;
   aspect-ratio: 100 / 40;
   border-radius: 1.5rem;
@@ -91,21 +123,31 @@ const ContentWrapper = styled.div`
 const FirstColumn = styled.div`
   display: flex;
   flex-direction: column;
+  /* justify-content: center; */
   gap: 1rem;
-  flex-basis: 30%;
+  flex-basis: 25%;
+`;
+
+const ThemeImageWrapper = styled.div`
+  box-sizing: content-box;
+  display: flex;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 1.5rem;
 `;
 
 const ThemeImage = styled.img`
-  height: 100%;
-  aspect-ratio: 3 / 4;
+  display: block;
+  width: 100%;
+  object-fit: cover;
 `;
 
 const SecondColumn = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 0.5rem;
-  flex-basis: 70%;
+  gap: 1.5rem;
+  flex-basis: 75%;
 `;
 
 const TopWrapper = styled.div`
@@ -114,7 +156,7 @@ const TopWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* gap: 1rem; */
+  gap: 1rem;
 `;
 
 const Title = styled.h1`
@@ -134,9 +176,9 @@ const RatingWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   @media (max-height: 800px) {
-    gap: 1rem;
+    gap: 0.7rem;
   }
-  gap: 1.5rem;
+  gap: 0.5rem;
 `;
 
 const RatingSection = styled.div`
@@ -154,7 +196,7 @@ const CustomTypography = mstyled(Typography)({
 });
 
 const CustomRating = mstyled(Rating)({
-  fontSize: "2.7rem",
+  fontSize: "2.5rem",
   flexBasis: "75%",
 });
 
@@ -164,13 +206,14 @@ const Content = styled.div`
   @media (max-height: 800px) {
     font-size: 1.8rem;
   }
+  color: rgba(255, 255, 255, 0.7);
   word-break: break-all;
   text-overflow: ellipsis;
   overflow: auto;
 `;
 
 const ButtonWrapper = styled.div`
-  flex-basis: 10%;
+  /* flex-basis: 10%; */
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -192,7 +235,7 @@ const Badge = styled.div`
       ? theme.colors.success
       : theme.colors.failure};
   border-radius: 2rem;
-  padding: 1.5rem 2.5rem;
+  padding: 1rem 2rem;
 `;
 
 const UpdateButton = styled.div`
@@ -205,7 +248,7 @@ const UpdateButton = styled.div`
   margin: 0;
   border: 2px solid ${theme.colors.update};
   border-radius: 2rem;
-  padding: 1.5rem 2.5rem;
+  padding: 1rem 2rem;
   :hover {
     background-color: ${theme.colors.update};
     color: ${theme.colors.white};
@@ -223,7 +266,7 @@ const DeleteButton = styled.div`
   margin: 0;
   border: 2px solid ${theme.colors.pink};
   border-radius: 2rem;
-  padding: 1.5rem 2.5rem;
+  padding: 1rem 2rem;
   :hover {
     background-color: ${theme.colors.pink};
     color: ${theme.colors.white};

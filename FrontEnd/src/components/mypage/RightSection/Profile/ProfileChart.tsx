@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import BarChart from "@/components/main/Chart";
+import DoughnutChart from "@/components/main/Chart";
 import { UserPreference } from "types/mypage";
 
 interface IBarData {
