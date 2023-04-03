@@ -315,7 +315,7 @@ const RecommendThemesData: ISliderData[] = [
       {
         themeId: 4,
         title: "",
-        imgUrl: "vbasicDummy",
+        imgUrl: basicDummy,
       },
       {
         themeId: 5,
