@@ -4,10 +4,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 export default function RedirectSignUp() {
   const navigate = useNavigate();
-  const params = new URLSearchParams(window.location.search);
-  console.log("params", params);
-  const userId = params.get("userId");
-  console.log("userId", userId);
+  // 현재 페이지의 URL에서 fragment identifier 값을 가져옴
+  const fragment = window.location.hash.substring(1);
+
+  // fragment identifier 값에서 accessToken 부분만 추출
+  const userId = fragment.split("&")[0].split("=")[1];
+
+  // accessToken 값을 출력
+  console.log(userId);
 
   useEffect(() => {
     navigate("/additional", { state: { userId: userId } });
