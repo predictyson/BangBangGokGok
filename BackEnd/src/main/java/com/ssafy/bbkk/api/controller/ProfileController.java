@@ -54,7 +54,7 @@ public class ProfileController {
         resultMap.put("isMe", isMe);
         logger.info("[getUserInfo] response : isMe={}", isMe);
 
-        UserInfoResponse userInfoResponse = profileService.getUserInfoByEmail(user.getUsername());
+        UserInfoResponse userInfoResponse = profileService.getUserInfoByUserId(userId);
         resultMap.put("userInfo", userInfoResponse);
         logger.info("[getUserInfo] response : userInfo={}", userInfoResponse);
 

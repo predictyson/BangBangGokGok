@@ -45,17 +45,6 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public UserInfoResponse getUserInfoByEmail(String email) throws Exception {
-        UserInfoResponse result = null;
-        // 이메일로 유저 찾아오기
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
-        // 유저를 Dto에 감싸기
-        result = new UserInfoResponse(user);
-        return result;
-    }
-
-    @Override
     public UserInfoResponse getUserInfoByUserId(int userId) throws Exception {
         UserInfoResponse result = null;
         // 유저 id로 유저 찾아오기

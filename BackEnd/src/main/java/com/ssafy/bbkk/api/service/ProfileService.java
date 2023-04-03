@@ -11,7 +11,6 @@ import java.util.List;
 public interface ProfileService {
 
     boolean isSameUser(String email, int userId) throws Exception;
-    UserInfoResponse getUserInfoByEmail(String email) throws Exception;
     UserInfoResponse getUserInfoByUserId(int userId) throws Exception;
     List<ReviewOfUserResponse> getUserReviews(int userId) throws Exception;
     List<PreferenceResponse> getUserPreference(int userId) throws Exception;
