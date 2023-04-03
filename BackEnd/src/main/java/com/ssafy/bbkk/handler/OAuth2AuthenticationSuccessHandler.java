@@ -49,15 +49,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
         User user = principalDetails.getUser();
 
-        // localhost 테스트 용 URL 주소
-        String localUrl = "http://localhost:5173";
-
         // 소셜 로그인 성공 후 이동할 페이지 -> 추후 변경해야함
         String targetUrl = "/oauth";
 
         if(user.getEmail() == null) {
             targetUrl = "/login";
-            return UriComponentsBuilder.fromUriString(localUrl+targetUrl)
+            return UriComponentsBuilder.fromUriString(targetUrl)
                     .queryParam("error", "이메일 동의를 하지 않아 회원가입이 불가능합니다.")
                     .build().toUriString();
         }
@@ -75,28 +72,22 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             String accessToken = tokenProvider.generateAccessToken(authentication);
             String refreshToken = tokenProvider.generateRefreshToken();
 
-            TokenResponse tokenDto = TokenResponse.builder()
-                    .accessToken(accessToken)
-                    .refreshToken(refreshToken)
-                    .build();
-
             // 4. RefreshToken 저장
             RefreshToken rfToken = RefreshToken.builder()
                     .key(authentication.getName())
-                    .value(tokenDto.getRefreshToken())
+                    .value(refreshToken)
                     .build();
 
             refreshTokenRepository.save(rfToken);
 
             // 타겟 URL로 토큰 정보를 함께 보내줌
-            return UriComponentsBuilder.fromUriString(localUrl+targetUrl)
-                    .queryParam("accessToken", tokenDto.getAccessToken())
-//                    .queryParam("refreshToken", tokenDto.getRefreshToken())
+            return UriComponentsBuilder.fromUriString(targetUrl)
+                    .queryParam("accessToken", accessToken)
                     .build().toUriString();
         }
 
         // 추가 정보가 입력되어 있지 않다면 추가 정보 입력창으로 보냄
-        return UriComponentsBuilder.fromUriString(localUrl+targetUrl+"/"+user.getId())
+        return UriComponentsBuilder.fromUriString(targetUrl+"/"+user.getId())
                 .build().toUriString();
     }
 }
