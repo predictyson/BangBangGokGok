@@ -16,7 +16,7 @@ import OAuthPage from "./pages/Auth/RedirectSignUp";
 import OAuth2Page from "./pages/Auth/RedirectOauth2";
 import { myPageLoader } from "@/api/routerLoader";
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
   { path: "/signup", element: <SignUpPage /> },
   { path: "/login", element: <LoginPage /> },
