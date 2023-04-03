@@ -8,7 +8,7 @@ export default function RedirectSignUp() {
   console.log(userId);
 
   useEffect(() => {
-    navigate("/additional", { state: { userId: userId } });
+    // navigate("/additional", { state: { userId: userId } });
   }, []);
 
   return <CircularProgress />;
