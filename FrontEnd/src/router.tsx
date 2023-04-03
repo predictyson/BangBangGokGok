@@ -35,7 +35,7 @@ const router = createHashRouter([
       { path: "likes", element: <LikeThemesSection /> },
     ],
   },
-  { path: "/oauth/:id", element: <OAuthPage /> },
+  { path: "/oauth", element: <OAuthPage /> },
   { path: "/oauth2", element: <OAuth2Page /> },
 ]);
 

@@ -4,11 +4,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 export default function RedirectSignUp() {
   const navigate = useNavigate();
-  const userId = window.location.pathname.substring(7);
-  console.log(userId);
+  const params = new URLSearchParams(window.location.search);
+  const userId = params.get("userId");
 
   useEffect(() => {
-    // navigate("/additional", { state: { userId: userId } });
+    navigate("/additional", { state: { userId: userId } });
   }, []);
 
   return <CircularProgress />;
