@@ -27,7 +27,7 @@ public class CookieUtil {
 
     public static void addCookie(HttpServletResponse response, String name, String value) {
         Cookie cookie = new Cookie(name, value);
-        cookie.setDomain("bbkk.store");
+//        cookie.setDomain("bbkk.store");
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
