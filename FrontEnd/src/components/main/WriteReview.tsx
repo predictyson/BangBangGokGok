@@ -11,9 +11,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
 import { IDetailData, IPostData, IReviewData } from "types/detail";
 import { postReview } from "@/api/review";
-interface Props {
-  value: number;
-}
+
 interface IProps {
   childOpen: boolean;
   handleClose: () => void;
@@ -186,8 +184,12 @@ export default function WriteReview({
                 exclusive
                 onChange={handleValueChange}
               >
-                <CustomToggleButton value={1}>성공</CustomToggleButton>
-                <CustomToggleButton value={0}>실패</CustomToggleButton>
+                <CustomToggleButton className="success" value={1}>
+                  성공
+                </CustomToggleButton>
+                <CustomToggleButton className="fail" value={0}>
+                  실패
+                </CustomToggleButton>
               </ToggleButtonGroup>
             </div>
           </InfoBox>
@@ -239,7 +241,7 @@ export default function WriteReview({
   );
 }
 
-const CustomToggleButton = mstyled(ToggleButton)({
+const CustomToggleButton = mstyled(ToggleButton)(({ className }) => ({
   padding: "0.5rem 1.5rem",
   fontSize: "1.5rem",
   borderRadius: "0.8rem",
@@ -247,11 +249,12 @@ const CustomToggleButton = mstyled(ToggleButton)({
   fontFamily: "Pretendard",
   color: "white",
   "&.Mui-selected, &.Mui-selected:hover": {
-    color: "white",
+    color: `${theme.colors.container}`,
+    backgroundColor: "#21E1FB",
     // backgroundColor: value === 1 ? "red" : "green",
     fontWeight: "bold",
   },
-});
+}));
 
 const CustomText = styled.textarea`
   font-size: 1.4rem;
