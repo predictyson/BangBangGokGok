@@ -107,7 +107,7 @@ export default function SearchPage() {
     filterReducer,
     INITIAL_FILTER_SET_VALUE
   );
-  console.log(filterValue);
+
   const handleFilterValueChange = (action: ReducerAction) => {
     filterValueDispatch(action);
   };
