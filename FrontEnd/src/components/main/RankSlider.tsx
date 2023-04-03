@@ -8,6 +8,7 @@ import { ISliderData, IThemeData } from "types/slider";
 import { IReviewData, IDetailData, IDetailLogin } from "types/detail";
 import { getDetail, getDetailLogin } from "@/api/theme";
 import { getReviews } from "@/api/review";
+import { theme } from "@/styles/theme";
 interface IProps {
   data: IThemeData[];
 }
@@ -85,13 +86,15 @@ export default function RankSlider({ data }: IProps) {
                   src={item.imgUrl}
                   alt="img"
                   style={{ width: "18rem", height: "23rem" }}
+                  onClick={() => handleOpen(item.themeId)}
                 />
-                <Hover
+                {/* <Hover
                   className="card-hover"
                   onClick={() => handleOpen(item.themeId)}
                 >
                   {item.title}
-                </Hover>
+                </Hover> */}
+                <h2>{item.title}</h2>
               </PosterWrapper>
             </SliderItem>
           </>
@@ -111,10 +114,8 @@ export default function RankSlider({ data }: IProps) {
   );
 }
 const PosterWrapper = styled.div`
-  :hover {
-    & > .card-hover {
-      opacity: 0.8;
-    }
+  h2 {
+    text-align: center;
   }
 `;
 const Hover = styled.div`
@@ -158,16 +159,25 @@ const SliderItem = styled.div`
     width: 10rem;
   }
   img {
+    transition: transform 0.3s ease-in-out;
     margin-left: 1.2rem;
     cursor: pointer;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 `;
 
 const Rank = styled.div`
   width: 7.5rem;
+  color: ${theme.colors.container};
   font-family: Pretendard;
-  font-size: 15rem;
+  font-size: 20rem;
   font-weight: bold;
+  margin-right: 1rem;
+  margin-top: auto;
+  -webkit-text-stroke: 2px white;
+  padding: 0.5rem;
   @media (max-width: 1300px) {
     font-size: 12rem;
   }
