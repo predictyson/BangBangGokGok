@@ -1,8 +1,8 @@
 import React, { FC, MouseEventHandler, useState, useEffect } from "react";
 import styled from "styled-components";
 import Slider, { CustomArrowProps } from "react-slick";
-import PrevArrow from "@/assets/main/PrevArrow.png";
-import NextArrow from "@/assets/main/NextArrow.png";
+import PrevArrow from "@/assets/common/PrevArrow.png";
+import NextArrow from "@/assets/common/NextArrow.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Modal from "./Modal";

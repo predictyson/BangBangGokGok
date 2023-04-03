@@ -7,13 +7,8 @@ import { useNavigate } from "react-router-dom";
 interface IProps {
   childOpen: boolean;
   handleClose: () => void;
-  handleClick: () => void;
 }
-export default function LikesModal({
-  childOpen,
-  handleClose,
-  handleClick,
-}: IProps) {
+export default function LikesModal({ childOpen, handleClose }: IProps) {
   const navigate = useNavigate();
   return (
     <React.Fragment>
@@ -28,7 +23,7 @@ export default function LikesModal({
             <iframe src="https://embed.lottiefiles.com/animation/4837"></iframe>
             <h1>관심 목록에 추가하였습니다.</h1>
             <ButtonWrapper>
-              <CustomButton className="post" onClick={() => handleClick()}>
+              <CustomButton className="post" onClick={() => handleClose()}>
                 확인
               </CustomButton>
               <CustomButton

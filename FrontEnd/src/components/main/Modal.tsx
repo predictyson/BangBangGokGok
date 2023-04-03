@@ -8,12 +8,14 @@ import Rating from "@mui/material/Rating";
 import Toast, { showToast } from "@/components/common/Toast";
 import "react-toastify/dist/ReactToastify.css";
 import Review from "./Review";
+import { styled as mstyled } from "@mui/material/styles";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LikesModal from "./LikesModal";
 import { IReviewData, IDetailData } from "types/detail";
 import { postInterest, deleteInterest } from "@/api/likes";
 import { getDetailLogin } from "@/api/theme";
+import StarIcon from "@mui/icons-material/Star";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -31,7 +33,7 @@ export default function DetailModal({
   reviews,
   handleReviews,
 }: IProps) {
-  const [childOpen, setchildOpen] = React.useState(false);
+  const [childOpen, setChildOpen] = React.useState(false);
   const [isInterest, setIsInterest] = useState<boolean>(false);
   const [isMyReview, setIsMyReview] = useState<boolean>(false);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
@@ -40,7 +42,9 @@ export default function DetailModal({
     if (themeId !== 0) {
       try {
         await postInterest(themeId);
-        requestLogindata(themeId);
+        console.log("POST LIKES SUCCESS");
+        // requestLogindata(themeId);
+        setIsInterest(true);
       } catch (err) {
         console.log(err);
         console.log("POST FAILED");
@@ -69,17 +73,19 @@ export default function DetailModal({
 
   const handlePostLikes = async () => {
     try {
-      await postLikes(themeId);
       handleClick("success", "좋아요 등록 성공!");
     } catch (err) {
       console.log(err);
     }
   };
   const handleOpen = () => {
-    setchildOpen(true);
+    postLikes(themeId);
+    setChildOpen(true);
+    console.log("HANDLE OPEN " + childOpen);
   };
   const handleClose = () => {
-    setchildOpen(false);
+    setChildOpen(false);
+    console.log("HANDLE CLOSE " + childOpen);
   };
   const handleMyReview = async () => {
     try {
@@ -158,10 +164,12 @@ export default function DetailModal({
             <DetailInfo>
               인원수
               <span className="info">
-                {data.minPeople}-{data.maxPeople}명
+                {data.minPeople === data.maxPeople
+                  ? `${data.minPeople}명`
+                  : `${data.minPeople}-${data.maxPeople}명`}
               </span>{" "}
               &nbsp; | &nbsp; 시간
-              <span className="info">{data.runningTime}min</span>
+              <span className="info">{data.runningTime}분</span>
             </DetailInfo>
             <DetailInfo>
               오픈일<span className="info">{data.openDate}</span>
@@ -178,27 +186,28 @@ export default function DetailModal({
                   style={{ marginLeft: "1rem" }}
                   size="large"
                   precision={0.5}
+                  emptyIcon={
+                    <StarIcon
+                      style={{ opacity: 0.55, color: "gray" }}
+                      fontSize="inherit"
+                    />
+                  }
                   readOnly
                 />
               )}
               {isLogin && isInterest && (
                 <LikeButton onClick={() => deleteLikes(themeId)}>
-                  <FavoriteIcon />
-                  <span> 관심 해제하기</span>
+                  <CustomFavorite /> <span> 관심 해제하기</span>
                 </LikeButton>
               )}
               {isLogin && !isInterest && (
                 <>
                   <LikeButton onClick={handleOpen}>
-                    <FavoriteBorderIcon /> <span> 관심 등록하기</span>
+                    <CustomFavoriteBorder /> <span>관심 등록하기</span>
                   </LikeButton>
-                  <LikesModal
-                    childOpen={childOpen}
-                    handleClose={handleClose}
-                    handleClick={handlePostLikes}
-                  />
                 </>
               )}
+              <LikesModal childOpen={childOpen} handleClose={handleClose} />
               <Toast />
             </DetailInfo>
           </div>
@@ -218,10 +227,20 @@ export default function DetailModal({
     </Modal>
   );
 }
+const CustomFavorite = mstyled(FavoriteIcon)`
+  .css-v6ftt0-MuiSvgIcon-root {
+    fill:  ${theme.colors.pink},
+  },
+`;
 
+const CustomFavoriteBorder = mstyled(FavoriteBorderIcon)`
+  .css-v6ftt0-MuiSvgIcon-root {
+    fill:  ${theme.colors.pink},
+  },
+`;
 const LikeButton = styled.div`
-  border: solid 2px lightgray;
-  color: lightgray;
+  border: solid 2px ${theme.colors.pink};
+  color: white;
   font-size: 1.6rem;
   margin-left: auto;
   border-radius: 1rem;
@@ -234,26 +253,34 @@ const LikeButton = styled.div`
   span {
     margin-left: 1rem;
   }
+  svg {
+    color: ${theme.colors.pink};
+    transform: scale(1.5);
+  }
   &:hover {
     color: ${theme.colors.container};
     background-color: lightgray;
     border: solid 2px ${theme.colors.container};
+    svg {
+      /* color: ${theme.colors.failure}; */
+    }
   }
 `;
 const Synopsis = styled.div`
-  margin-top: 2rem;
+  border: solid 1px grey;
+  margin: 2rem 0;
   font-size: 1.6rem;
   text-align: center;
-  padding: 0 5%;
-  height: 12rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
-  overflow-y: auto;
+  background-color: ${theme.colors.container};
+  border-radius: 1rem;
+  padding: 2rem; /* overflow-x: hidden; */ /* overflow-y: auto; */
   pre {
     font-family: Pretendard;
-    margin-top: 4rem;
+    width: 95%;
+    font-size: 1.4rem;
   }
   ::-webkit-scrollbar {
     width: 4px;

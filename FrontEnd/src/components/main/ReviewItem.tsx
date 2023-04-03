@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Rating from "@mui/material/Rating";
 import { theme } from "@/styles/theme";
 import Line from "@/assets/common/Line.png";
 import { IReviewData } from "types/detail";
-
+import StarIcon from "@mui/icons-material/Star";
 interface IProps {
   data: IReviewData;
 }
 
 export default function ReviewItem({ data }: IProps) {
+  const [isMine, setIsMine] = useState(false);
+  useEffect(() => {
+    const myNickname = localStorage.getItem("nickname");
+    data.nickname === myNickname ? setIsMine(true) : setIsMine(false);
+  }, []);
+
   return (
     <>
       <img
@@ -17,16 +23,28 @@ export default function ReviewItem({ data }: IProps) {
         alt="line"
         style={{ width: "100%", margin: "1rem auto" }}
       />
-      <ReviewBox>
+      <ReviewBox isMine={isMine}>
         <Header>
           <div className="left-wrapper">
             {data.nickname}
+
             {data.isSuccess ? (
               <>
-                <Badge className="green">성공</Badge>
+                <Badge className="blue">성공</Badge>
               </>
             ) : (
               <Badge className="red">실패</Badge>
+            )}
+            {isMine && (
+              <div
+                style={{
+                  marginLeft: "1rem",
+                  color: `${theme.colors.pink}`,
+                  fontWeight: "bold",
+                }}
+              >
+                나의 리뷰
+              </div>
             )}
           </div>
           <div className="right-wrapper">
@@ -43,6 +61,12 @@ export default function ReviewItem({ data }: IProps) {
               size="large"
               precision={0.5}
               readOnly
+              emptyIcon={
+                <StarIcon
+                  style={{ opacity: 0.55, color: "gray" }}
+                  fontSize="inherit"
+                />
+              }
             />
           </div>
           <div className="ratingItem">
@@ -54,6 +78,12 @@ export default function ReviewItem({ data }: IProps) {
               size="large"
               precision={0.5}
               readOnly
+              emptyIcon={
+                <StarIcon
+                  style={{ opacity: 0.55, color: "gray" }}
+                  fontSize="inherit"
+                />
+              }
             />
           </div>
           <div className="ratingItem">
@@ -65,6 +95,12 @@ export default function ReviewItem({ data }: IProps) {
               size="large"
               precision={0.5}
               readOnly
+              emptyIcon={
+                <StarIcon
+                  style={{ opacity: 0.55, color: "gray" }}
+                  fontSize="inherit"
+                />
+              }
             />
           </div>
           <div className="ratingItem">
@@ -76,6 +112,12 @@ export default function ReviewItem({ data }: IProps) {
               size="large"
               precision={0.5}
               readOnly
+              emptyIcon={
+                <StarIcon
+                  style={{ opacity: 0.55, color: "gray" }}
+                  fontSize="inherit"
+                />
+              }
             />
           </div>
         </RatingWrapper>
@@ -104,10 +146,25 @@ const RatingWrapper = styled.div`
     align-items: center;
   }
 `;
-const ReviewBox = styled.div`
+const ReviewBox = styled.div<{ isMine: boolean }>`
   margin-top: 1rem;
-  padding: 0 1rem;
+  padding: 1rem;
   padding-bottom: 1rem;
+  /* background-color: ${theme.colors.container}; */
+  /* border-radius: 1rem;
+  border: solid 2px grey;
+  padding: 2rem; */
+  ${(props) =>
+    props.isMine &&
+    `background-color: ${theme.colors.container};   border-radius: 1rem;  border: solid 2px ${theme.colors.pink}; padding: 2rem;`}
+`;
+`
+  margin-top: 1rem;
+  padding: 1rem;
+  padding-bottom: 1rem;
+  border: solid 2px grey;
+  background-color: ${theme.colors.container};
+  border-radius: 1rem;
 `;
 
 const Header = styled.div`
@@ -134,5 +191,5 @@ const Badge = styled.div`
   color: white;
   border: solid 2px white;
   background-color: ${(props) =>
-    props.className === "red" ? "#FF6161" : "#76FF7B"};
+    props.className === "red" ? "#FF6161" : "#0075FF"};
 `;

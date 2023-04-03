@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import Chart from "chart.js/auto";
+import { Chart, ChartType } from "chart.js/auto";
 interface IBarData {
   labels: string[];
   datasets: {
@@ -28,7 +28,7 @@ const BarChart: React.FC<Props> = ({ data }) => {
         }
 
         chartInstance = new Chart(ctx, {
-          type: "bar",
+          type: "bar" as ChartType,
           data: data,
           options: {
             plugins: {

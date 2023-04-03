@@ -11,6 +11,9 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
 import { IDetailData, IPostData, IReviewData } from "types/detail";
 import { postReview } from "@/api/review";
+interface Props {
+  value: number;
+}
 interface IProps {
   childOpen: boolean;
   handleClose: () => void;
@@ -61,13 +64,22 @@ export default function WriteReview({
 
   const sendReviewData = async () => {
     try {
-      // await setPostdata({ ...postdata, themeId: themeId });
       const dataToSend = { ...postdata, themeId: themeId };
       console.log(dataToSend.themeId);
-      const res = await postReview(dataToSend);
-      console.log(res.data);
-      setPostdata(initData);
-      handleMyReview();
+      if (
+        dataToSend.userActivity === 0 ||
+        dataToSend.userDifficulty === 0 ||
+        dataToSend.userFear === 0 ||
+        dataToSend.userRating === 0
+      ) {
+        alert("0.5이상의 별점을 매겨주세요!");
+        return;
+      } else {
+        const res = await postReview(dataToSend);
+        console.log(res.data);
+        setPostdata(initData);
+        handleMyReview();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -76,7 +88,17 @@ export default function WriteReview({
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log(postdata);
-    handleClose();
+    if (
+      postdata.userActivity === 0 ||
+      postdata.userDifficulty === 0 ||
+      postdata.userFear === 0 ||
+      postdata.userRating === 0
+    ) {
+      alert("0.5이상의 별점을 매겨주세요!");
+      return; // 등록을 불가하게 함
+    } else {
+      handleClose();
+    }
     await sendReviewData();
     const today = new Date();
     const year = today.getFullYear();
@@ -154,7 +176,8 @@ export default function WriteReview({
           </Header>
           <InfoBox>
             <div className="info">
-              테마명 :&nbsp; <div className="title">{data.title}</div>
+              <span style={{ width: "10.5rem" }}>테마명</span>{" "}
+              <div className="title">{data.title}</div>
             </div>
             <div className="info">
               성공 여부 &nbsp;&nbsp;
@@ -176,9 +199,6 @@ export default function WriteReview({
                   <div className="rating-title">{emptyLabelText}</div>
                   <Rating
                     sx={{
-                      "& .MuiRating-iconEmpty": {
-                        stroke: "white",
-                      },
                       "&.MuiRating-root:focus": {
                         outline: "none",
                       },
@@ -190,7 +210,10 @@ export default function WriteReview({
                     name={name}
                     value={value}
                     emptyIcon={
-                      <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+                      <StarIcon
+                        style={{ opacity: 0.55, color: "gray" }}
+                        fontSize="inherit"
+                      />
                     }
                     onChange={handleRatingChange}
                   />
@@ -225,7 +248,7 @@ const CustomToggleButton = mstyled(ToggleButton)({
   color: "white",
   "&.Mui-selected, &.Mui-selected:hover": {
     color: "white",
-    backgroundColor: `${theme.colors.pink}`,
+    // backgroundColor: value === 1 ? "red" : "green",
     fontWeight: "bold",
   },
 });
@@ -258,6 +281,10 @@ const InfoBox = styled.div`
     width: 50%;
     display: flex;
   }
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
 `;
 const RatingWrapper = styled.div`
   display: flex;
@@ -271,7 +298,7 @@ const ReviewBox = styled.div`
   display: flex;
   flex-direction: column;
   .title {
-    font-size: 1.6rem;
+    font-size: 2rem;
     margin-right: 1.5rem;
   }
   .rating-title {
