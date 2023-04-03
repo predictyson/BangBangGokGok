@@ -31,7 +31,7 @@ export default function SearchFilter(props: SearchFilterProps) {
   const closeFilter = () => {
     setFilterOpenState(false);
   };
-  console.log("SearchFilter();", props.filterValue);
+
   // 필터 초기화 버튼을 눌렀을 때 실행
   const handleResetFilter = () => {
     props.handleFilterValueChange({
