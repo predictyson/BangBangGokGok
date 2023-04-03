@@ -63,7 +63,7 @@ const MiddleR = styled.div`
 
 const Container = styled.div`
   width: 100%;
-  /* background-color: red; */
+  background-color: rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;

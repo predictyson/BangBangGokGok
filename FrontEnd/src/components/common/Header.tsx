@@ -106,7 +106,7 @@ const Container = styled.div`
   height: 9.5vh;
   display: flex;
   justify-content: space-between;
-  background-color: ${theme.colors.background};
+  background-color: rgba(0, 0, 0, 0.3);
   padding: 0 10rem;
   align-items: center;
   position: sticky;
