@@ -5,7 +5,7 @@ import styled from "styled-components";
 interface SearchInputProps {
   searchWord: string;
   handleInputChange: (input: string) => void;
-  handleSubmit: () => void;
+  handleSubmit: (isInitSearch: boolean) => void;
 }
 
 export default function SearchInput(props: SearchInputProps) {
@@ -15,7 +15,7 @@ export default function SearchInput(props: SearchInputProps) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    props.handleSubmit();
+    props.handleSubmit(true);
   };
 
   return (

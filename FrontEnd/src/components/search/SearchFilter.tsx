@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useMediaQuery } from "@mui/material";
@@ -20,6 +20,7 @@ interface SearchFilterProps {
   handleDumpFilterGenreCategoryInputValueChange: (
     genreCategoryInputValue: string
   ) => void;
+  handleSubmit: (isInitSearch: boolean) => void;
 }
 
 export default function SearchFilter(props: SearchFilterProps) {
@@ -31,9 +32,19 @@ export default function SearchFilter(props: SearchFilterProps) {
     setFilterOpenState(false);
   };
 
-  // 이 함수는 필터 적용 버튼을 눌렀을 때 실행되어야 함
+  // 필터 초기화 버튼을 눌렀을 때 실행
+  const handleResetFilter = () => {
+    props.handleFilterValueChange({
+      type: "reset",
+      newValue: {} as FilterValue,
+    });
+    props.handleDumpFilterGenreCategoryInputValueChange("전체");
+  };
+
+  // 이 함수는 필터 적용 버튼을 눌렀을 때 실행
   // 필터 결과를 적용시켜서 검색 API를 보내는 역할을 한다.
   const requestSearchWithFilter = () => {
+    props.handleSubmit(true);
     closeFilter();
   };
 
@@ -52,6 +63,7 @@ export default function SearchFilter(props: SearchFilterProps) {
         hideBackdrop={true}
       >
         <FilterContainer>
+          <button onClick={handleResetFilter}>초기화</button>
           <LocationForm
             filterValue={props.filterValue}
             handleFilterValueChange={props.handleFilterValueChange}

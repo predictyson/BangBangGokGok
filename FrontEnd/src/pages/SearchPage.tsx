@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import SearchInput from "@components/search/SearchInput";
 import SearchSortOptions from "@components/search/SearchSortOptions";
 import SearchFilter from "@components/search/SearchFilter";
@@ -46,6 +46,8 @@ const filterReducer = (
       return { ...oldFilterValue, people: action.newValue.people };
     case "time":
       return { ...oldFilterValue, time: action.newValue.time };
+    case "reset":
+      return { ...INITIAL_FILTER_SET_VALUE };
   }
 };
 
@@ -60,27 +62,52 @@ export default function SearchPage() {
     setInputValue(newInput);
   };
 
+  // 검색 요청 관련 변수, 함수
+  const [isLastPage, setIsLastPage] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
 
   // 검색을 트리거하는 함수 => result에 저장
-  const handleSubmit = async () => {
-    const response = await getSearchThemes({
-      word: searchWord,
-      ...filterValue,
-      page: page,
-      sortby: sortOption,
-      orderby: sortOrder,
-    });
-    setResults(response.data.themes);
-    // setPage((prev) => prev + 1);
+  const handleSubmit = async (isInitSearch: boolean) => {
+    if (isInitSearch) {
+      // 1페이지를 요청하는 경우
+      const INIT_PAGE = 1;
+      const response = await getSearchThemes({
+        word: searchWord,
+        ...filterValue,
+        page: INIT_PAGE,
+        sortby: sortOption,
+        orderby: sortOrder,
+      });
+      setResults(response.data.themes);
+      setIsLastPage(response.data.isLast);
+      setPage(INIT_PAGE + 1);
+    } else {
+      // 다음 페이지를 요청하는 경우
+      const response = await getSearchThemes({
+        word: searchWord,
+        ...filterValue,
+        page: page,
+        sortby: sortOption,
+        orderby: sortOrder,
+      });
+      setResults((prev) => [...prev, ...response.data.themes]);
+      setIsLastPage(response.data.isLast);
+      setPage((prev) => prev + 1);
+    }
     setSearchHappened(true);
   };
+
+  // 초기 검색 요청
+  useEffect(() => {
+    handleSubmit(true);
+  }, []);
 
   // SearchFilter 관련 변수, 함수
   const [filterValue, filterValueDispatch] = useReducer(
     filterReducer,
     INITIAL_FILTER_SET_VALUE
   );
+  console.log(filterValue);
   const handleFilterValueChange = (action: ReducerAction) => {
     filterValueDispatch(action);
   };
@@ -103,10 +130,21 @@ export default function SearchPage() {
     if (sortOption === option) {
       setSortOrder((prev: SortOrder) => (prev === "desc" ? "asc" : "desc"));
     } else {
-      setSortOption(option);
-      setSortOrder("desc");
+      setSortOption(() => option);
+      setSortOrder(() => "desc");
     }
   };
+
+  // sortOption, sortOrder가 변경될 때마다 검색 요청
+  // 단, 초기 렌더링 시 sideEffectFunction이 실행되지 않도록 함.
+  const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
+  useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+      return;
+    }
+    handleSubmit(true);
+  }, [sortOption, sortOrder]);
 
   return (
     <>
@@ -128,6 +166,7 @@ export default function SearchPage() {
               handleDumpFilterGenreCategoryInputValueChange={
                 handleDumpFilterGenreCategoryInputValueChange
               }
+              handleSubmit={handleSubmit}
             />
           </FormContainer>
           <SearchSortOptions
@@ -135,7 +174,12 @@ export default function SearchPage() {
             sortOrder={sortOrder}
             handleSortOptionOrderChange={handleSortOptionOrderChange}
           />
-          <SearchResult results={results} searchHappened={searchHappened} />
+          <SearchResult
+            results={results}
+            searchHappened={searchHappened}
+            isLastPage={isLastPage}
+            handleSubmit={handleSubmit}
+          />
         </ContentWrapper>
       </BackGround>
     </>

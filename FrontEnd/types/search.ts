@@ -32,7 +32,8 @@ export type ReducerAction = {
     | "difficultyS"
     | "difficultyE"
     | "people"
-    | "time";
+    | "time"
+    | "reset";
   newValue: FilterValue;
 };
 
@@ -62,6 +63,7 @@ export interface GenreResponse {
 }
 
 export interface SearchResponse {
+  isLast: boolean;
   themes: PreviewThemeResponse[];
 }
 

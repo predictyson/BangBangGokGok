@@ -111,13 +111,9 @@ export default function Review({
           </ChartWrapper>
         </InfoBox>
       </InfoWrapper>
-      {reviews.map((item) => {
-        return (
-          <>
-            <ReviewItem data={item} />
-          </>
-        );
-      })}
+      {reviews.map((item) => (
+        <ReviewItem key={item.reviewId} data={item} />
+      ))}
     </>
   );
 }
