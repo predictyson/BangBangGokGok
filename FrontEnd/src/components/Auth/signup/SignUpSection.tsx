@@ -7,7 +7,9 @@ import { useNavigate } from "react-router";
 import {
   emailValidCheck,
   passwordValidCheck,
+  requestCheckCode,
   requestEmailCheck,
+  requestJoinCheck,
   requestSignUp,
 } from "@/api/auth";
 import Toast, { showToast } from "@/components/common/Toast";
@@ -19,6 +21,7 @@ export default function SignUpSection() {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [passwordValid, setPasswordValid] = useState<string>("");
+  const [validCode, setValidCode] = useState<string>("");
   const [showValidHelperText, setShowValidHelperText] = useState(false);
   const [showPasswordHelperText, setShowPasswordHelperText] = useState(false);
 
@@ -27,15 +30,11 @@ export default function SignUpSection() {
     const name = target.name;
     const value = target.value;
 
-    console.log(value);
-    console.log(passwordValidCheck(value));
-
     if (name === "email") setEmail(value);
     else if (name === "password") {
       if (passwordValidCheck(value)) setShowPasswordHelperText(false);
       else setShowPasswordHelperText(true);
       setPassword(value);
-      console.log(passwordValidCheck(value));
     } else if (name === "passwordValid") {
       if (password !== value) {
         setShowValidHelperText(true);
@@ -43,6 +42,23 @@ export default function SignUpSection() {
         setShowValidHelperText(false);
       }
       setPasswordValid(value);
+    } else if (name === "code") {
+      setValidCode(value);
+    }
+  };
+
+  const checkCode = async () => {
+    // TODO : API 다녀와서 200 res오면
+    try {
+      const { data: isCheck } = await requestCheckCode(email, validCode);
+      if (isCheck) {
+        setIsEmail(true);
+        handleToastClick("success", "이메일 인증 성공!");
+      } else {
+        handleToastClick("error", "인증코드를 확인해주세요.");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -53,21 +69,33 @@ export default function SignUpSection() {
     showToast({ type, message });
   };
 
-  const emailCheck = () => {
-    if (emailValidCheck(email)) {
-      requestEmailCheck(email)
-        .then((res) => {
-          const data = res.data;
-          if (!data.isDuplicated) {
-            setIsEmail(true);
-            handleToastClick("success", "사용가능한 이메일입니다.");
-          } else handleToastClick("error", "이미 존재하는 이메일입니다.");
-        })
-        .catch((message) => {
-          console.log(message);
-        });
-    } else {
-      handleToastClick("error", "올바른 형식의 이메일을 입력해주세요.");
+  const emailCheck = async () => {
+    // if (emailValidCheck(email)) {
+    //   requestEmailCheck(email)
+    //     .then((res) => {
+    //       const data = res.data;
+    //       if (!data.isDuplicated) {
+    //         setIsEmail(true);
+    //         handleToastClick("success", "사용가능한 이메일입니다.");
+    //       } else handleToastClick("error", "이미 존재하는 이메일입니다.");
+    //     })
+    //     .catch((message) => {
+    //       console.log(message);
+    //     });
+    // } else {
+    //   handleToastClick("error", "올바른 형식의 이메일을 입력해주세요.");
+    // }
+
+    try {
+      const {
+        data: { isExisted },
+      } = await requestJoinCheck(email);
+      console.log("this" + isExisted);
+      if (!isExisted) {
+        handleToastClick("success", "해당 주소로 인증번호가 전송되었습니다.");
+      } else handleToastClick("error", "이미 존재하는 이메일입니다.");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -91,7 +119,7 @@ export default function SignUpSection() {
         handleToastClick("error", "비밀번호가 일치하지 않습니다.");
       }
     } else {
-      handleToastClick("error", "이메일 중복확인을 해주세요.");
+      handleToastClick("error", "이메일 인증을 해주세요.");
     }
   };
 
@@ -109,7 +137,21 @@ export default function SignUpSection() {
           placeholder="example123@naver.com"
           onChange={handleSignUpData}
         />
-        <ValidCheckButton onClick={emailCheck}>중복확인</ValidCheckButton>
+        <ValidCheckButton onClick={emailCheck}>코드 전송</ValidCheckButton>
+      </EmailCheckBox>
+      <EmailCheckBox>
+        <CustomTextField
+          label="인증코드"
+          autoComplete="current-password"
+          sx={{ width: 300 }}
+          name="code"
+          color="warning"
+          focused
+          value={validCode}
+          placeholder="이메일로 발송된 코드를 입력하세요."
+          onChange={handleSignUpData}
+        />
+        <ValidCheckButton onClick={checkCode}>코드 확인</ValidCheckButton>
       </EmailCheckBox>
       <CustomTextField
         label="비밀번호"

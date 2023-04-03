@@ -132,3 +132,8 @@ export const requestCheckLoginUser = async (
 ): Promise<AxiosResponse<CheckLoginUserResponse>> => {
   return await instance.get(`/user/check/login/${userId}`);
 };
+
+// 이메일 중복 검사 및 인증 코드 전송
+export const requestJoinCheck = async (email: string) => {
+  return await instance.get(`/user/join/check/${email}`);
+};
