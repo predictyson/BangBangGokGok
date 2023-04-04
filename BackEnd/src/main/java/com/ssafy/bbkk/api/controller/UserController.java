@@ -69,8 +69,7 @@ public class UserController {
         resultMap.put("user", loginResponse);
         logger.info("[login] response : user={}", loginResponse);
 
-        CookieUtil.addCookie(request, response, "refreshToken", tokenResponse.getRefreshToken());
-        logger.info("[login] response cookie : refreshToken={}", tokenResponse.getRefreshToken());
+        CookieUtil.addCookie(response, "refreshToken", tokenResponse.getRefreshToken());
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -146,8 +145,7 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
 
         String refreshToken = userService.oauthLogin(user.getUsername());
-        CookieUtil.addCookie(request, response, "refreshToken", refreshToken);
-        logger.info("[oauthLogin] response cookie : refreshToken={}", refreshToken);
+        CookieUtil.addCookie(response, "refreshToken", refreshToken);
 
         LoginResponse loginResponse = userService.getLoginUser(user.getUsername());
         resultMap.put("user", loginResponse);
