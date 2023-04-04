@@ -33,9 +33,29 @@ public class CookieUtil {
         return Optional.empty();
     }
 
-    public static void addCookie(HttpServletResponse response, String name, String value) {
+    public static void addCookie(HttpServletRequest request, HttpServletResponse response, String name, String value) {
         logger.info("[addCookie] request : name={}",name);
         logger.info("[addCookie] request : value={}",value);
+
+        Cookie[] cookies = request.getCookies();
+
+        boolean isModify = false;
+        if (cookies != null && cookies.length > 0) {
+            for (Cookie cookie : cookies) {
+                if (name.equals(cookie.getName())) {
+                    cookie.setValue(value);
+                    cookie.setPath("/");
+                    cookie.setMaxAge(60 * 60 * 24 * 1); // 1일
+                    response.addCookie(cookie);
+                    logger.info("[addCookie] modify : name={}",cookie.getName());
+                    logger.info("[addCookie] modify : value={}",cookie.getValue());
+                    logger.info("[addCookie] modify : maxAge={}",cookie.getMaxAge());
+                    isModify = true;
+                }
+            }
+        }
+
+        if (isModify) return;
 
         Cookie cookie = new Cookie(name, value);
 //        cookie.setDomain("bbkk.store");
@@ -46,7 +66,9 @@ public class CookieUtil {
 
         response.addCookie(cookie);
 
-        logger.info("[addCookie] response : cookie={}",cookie);
+        logger.info("[addCookie] add : name={}",cookie.getName());
+        logger.info("[addCookie] add : value={}",cookie.getValue());
+        logger.info("[addCookie] add : maxAge={}",cookie.getMaxAge());
     }
 
     public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {

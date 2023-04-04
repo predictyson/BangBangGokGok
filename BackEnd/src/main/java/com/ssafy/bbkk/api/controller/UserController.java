@@ -71,7 +71,7 @@ public class UserController {
         resultMap.put("user", loginResponse);
         logger.info("<< response : user={}", loginResponse);
 
-        CookieUtil.addCookie(response, "refreshToken", tokenResponse.getRefreshToken());
+        CookieUtil.addCookie(request, response, "refreshToken", tokenResponse.getRefreshToken());
         logger.info("<<---------------------------------------||login||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -151,7 +151,7 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
 
         String refreshToken = userService.oauthLogin(user.getUsername());
-        CookieUtil.addCookie(response, "refreshToken", refreshToken);
+        CookieUtil.addCookie(request, response, "refreshToken", refreshToken);
 
         LoginResponse loginResponse = userService.getLoginUser(user.getUsername());
         resultMap.put("user", loginResponse);
@@ -290,13 +290,11 @@ public class UserController {
     @Operation(summary = "로그아웃", description = "refresh token을 제거한다")
     @GetMapping("logout")
     public ResponseEntity<Void> logout(
-            @AuthenticationPrincipal User user,
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         logger.info("<<---------------(start)----------------||logout||------------------------------------>>\n");
-        logger.info(">> request : myEmail={}",user.getUsername());
+        logger.info(">> request : none");
 
-        userService.logout(user.getUsername());
         CookieUtil.deleteCookie(request,response,"refreshToken");
         logger.info("<< response : none");
         logger.info("<<---------------------------------------||logout||---------------(end)--------------->>\n");
