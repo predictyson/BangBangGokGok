@@ -5,8 +5,6 @@ import ReviewCard from "@/components/mypage/RightSection/Review/ReviewCard";
 import { UserReview } from "types/mypage";
 import { getUserReviews } from "@/api/profile";
 import { deleteReview, putReview } from "@/api/review";
-import { Rating, RatingProps } from "@mui/material";
-import { IPostData } from "types/detail";
 import { PutUserProfileParams } from "types/mypage";
 import UpdateModal from "@components/mypage/RightSection/Review/UpdateModal";
 import DeleteModal from "@components/mypage/RightSection/Review/DeleteModal";
@@ -118,7 +116,6 @@ export default function MyReviewsSection() {
       isSuccess: currentSelectedReviewData.isSuccess,
     };
     const response = await putReview(putReviewRequestBody);
-    // console.log(response.data);
     // currentSelectedReviewData를 이용해서 reviews를 수정하기
     setReviews((prev) =>
       prev.map((review) => {
@@ -136,8 +133,6 @@ export default function MyReviewsSection() {
         return review;
       })
     );
-
-    console.log("리뷰 수정 더 작성하세용", response);
     handleCloseUpdateModal();
   };
 
@@ -153,7 +148,6 @@ export default function MyReviewsSection() {
   return (
     <SectionWrapper>
       <SectionTitle>내 리뷰</SectionTitle>
-
       <SectionContentWrapper>
         {reviews.length === 0 && <div>작성한 리뷰가 없습니다.</div>}
         {reviews.length !== 0 &&

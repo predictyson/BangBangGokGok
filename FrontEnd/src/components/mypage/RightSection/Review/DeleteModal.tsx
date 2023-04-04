@@ -56,7 +56,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "25%",
-  height: "25%",
+  height: "15%",
   bgcolor: "#3E2133",
   borderRadius: 10,
   boxShadow: 24,
@@ -83,8 +83,6 @@ const CustomButton = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: 3rem;
-  display: flex;
-  justify-content: space-between;
+  margin-top: 2rem;
   width: 70%;
 `;
