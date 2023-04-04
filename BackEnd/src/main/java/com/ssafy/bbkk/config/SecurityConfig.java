@@ -70,6 +70,7 @@ public class SecurityConfig{
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
             .antMatchers("/user/oauth/login",
                     "/user/check/login/**",
+                    "/user/logout",
                     "/profile/**",
                     "/theme/user",
                     "/theme/**/user",

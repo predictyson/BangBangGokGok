@@ -290,11 +290,13 @@ public class UserController {
     @Operation(summary = "로그아웃", description = "refresh token을 제거한다")
     @GetMapping("logout")
     public ResponseEntity<Void> logout(
+            @AuthenticationPrincipal User user,
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         logger.info("<<---------------(start)----------------||logout||------------------------------------>>\n");
-        logger.info(">> request : none");
+        logger.info(">> request : myEmail={}",user.getUsername());
 
+        userService.logout(user.getUsername());
         CookieUtil.deleteCookie(request,response,"refreshToken");
         logger.info("<< response : none");
         logger.info("<<---------------------------------------||logout||---------------(end)--------------->>\n");

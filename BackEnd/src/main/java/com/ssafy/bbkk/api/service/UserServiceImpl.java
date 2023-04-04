@@ -18,6 +18,7 @@ import com.ssafy.bbkk.db.repository.PreferredGenreOfUserRepository;
 import com.ssafy.bbkk.db.repository.RefreshTokenRepository;
 import com.ssafy.bbkk.db.repository.RegionRepository;
 import com.ssafy.bbkk.db.repository.UserRepository;
+import com.ssafy.bbkk.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -231,5 +232,20 @@ public class UserServiceImpl implements UserService {
             result = true;
         }
         return result;
+    }
+
+    @Override
+    public void logout(String email) throws Exception {
+        // 유저 존재 확인
+        if(!userRepository.existsByEmail(email)){
+            throw new Exception("해당 사용자를 찾을 수 없습니다.");
+        }
+        // 해당 이메일로 토큰 가져오기
+        RefreshToken refreshToken = refreshTokenRepository.findByKey(email)
+                .orElseThrow(() -> new Exception("해당 토큰을 찾을 수 없습니다."));
+        // Refresh Token 검증
+        if (!tokenProvider.validateToken(refreshToken.getValue())) {
+            throw new RuntimeException("해당 Refresh Token이 유효하지 않습니다.");
+        }
     }
 }
