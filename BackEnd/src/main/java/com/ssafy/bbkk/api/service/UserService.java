@@ -14,7 +14,7 @@ public interface UserService {
     String oauthLogin(String email) throws Exception;
     int join(JoinRequest joinRequest) throws Exception;
     void setUserAdditionalInfo(JoinAdditionalRequest joinAdditionalRequest) throws Exception;
-    String reissue(TokenRequest tokenRequest) throws Exception;
+    String reissue(String accessToken, String refreshToken) throws Exception;
     LoginResponse getLoginUser(String email) throws Exception;
     boolean existsByEmailNotSocial(String email) throws Exception;
     boolean existsByEmail(String email) throws Exception;

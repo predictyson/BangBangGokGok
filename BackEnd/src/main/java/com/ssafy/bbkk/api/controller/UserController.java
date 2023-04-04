@@ -61,15 +61,15 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
 
         TokenResponse tokenResponse = userService.login(loginRequest);
-        resultMap.put("token", tokenResponse);
-        logger.info("[login] response : token={}", tokenResponse);
+        resultMap.put("accessToken", tokenResponse.getAccessToken());
+        logger.info("[login] response : accessToken={}", tokenResponse.getAccessToken());
 
         LoginResponse loginResponse = userService.getLoginUser(loginRequest.getEmail());
         resultMap.put("user", loginResponse);
         logger.info("[login] response : user={}", loginResponse);
 
-        CookieUtil.addCookie(response, "testAccessToken", tokenResponse.getAccessToken());
-        CookieUtil.addCookie(response, "testRefreshToken", tokenResponse.getRefreshToken());
+        CookieUtil.addCookie(response, "refreshToken", tokenResponse.getRefreshToken());
+        logger.info("[login] response cookie : refreshToken={}", tokenResponse.getRefreshToken());
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -137,14 +137,15 @@ public class UserController {
     @Operation(summary = "소셜 로그인", description = "소셜 로그인을 진행한다")
     @GetMapping("oauth/login")
     public ResponseEntity<Map<String, Object>> oauthLogin(
-            @AuthenticationPrincipal User user) throws Exception {
+            @AuthenticationPrincipal User user,
+            HttpServletResponse response) throws Exception {
         logger.info("[oauthLogin] request : myEmail={}", user.getUsername());
 
         Map<String, Object> resultMap = new HashMap<>();
 
         String refreshToken = userService.oauthLogin(user.getUsername());
-        resultMap.put("refreshToken", refreshToken);
-        logger.info("[oauthLogin] response : refreshToken={}", refreshToken);
+        CookieUtil.addCookie(response, "refreshToken", refreshToken);
+        logger.info("[oauthLogin] response cookie : refreshToken={}", refreshToken);
 
         LoginResponse loginResponse = userService.getLoginUser(user.getUsername());
         resultMap.put("user", loginResponse);
@@ -156,22 +157,18 @@ public class UserController {
     @Operation(summary = "토큰 재발급", description = "access token을 재발급한다")
     @PostMapping("/reissue")
     private ResponseEntity<Map<String, Object>> reissue(
-            @RequestBody TokenRequest tokenRequest,
+            @RequestBody String accessToken,
             HttpServletRequest request) throws Exception {
 
-        logger.info("[reissue] request : tokenRequest={}", tokenRequest);
+        logger.info("[reissue] request : accessToken={}", accessToken);
 
-        Optional<Cookie> refreshTokenCookie = CookieUtil.getCookie(request,"rfToken");
-        if(refreshTokenCookie.isPresent())
-            logger.info("[reissue] request : refreshTokenCookie={}",refreshTokenCookie);
-
-        Optional<Cookie> accessTokenCookie = CookieUtil.getCookie(request,"acToken");
-        if(accessTokenCookie.isPresent())
-            logger.info("[reissue] request : accessTokenCookie={}",accessTokenCookie);
+        Cookie refreshTokenCookie = CookieUtil.getCookie(request,"refreshToken")
+                .orElseThrow(()-> new RuntimeException("해당 쿠키가 존재하지 않습니다."));
+        logger.info("[reissue] request cookie : refreshToken={}", refreshTokenCookie.getValue());
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        String accessToken = userService.reissue(tokenRequest);
+        accessToken = userService.reissue(accessToken, refreshTokenCookie.getValue());
         resultMap.put("accessToken", accessToken);
         logger.info("[reissue] response : accessToken={}", accessToken);
 

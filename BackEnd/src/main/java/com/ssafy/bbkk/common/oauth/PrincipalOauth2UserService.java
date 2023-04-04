@@ -48,7 +48,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             logger.info("카카오톡 로그인 요청");
             oAuth2UserInfo = new KakaoUserInfo((Map)oAuth2User.getAttributes());
         }else {
-            logger.info("지원하지 않는 로그인 요청입니다");
+            logger.warn("지원하지 않는 로그인 요청입니다");
             throw new NullPointerException();
         }
 
