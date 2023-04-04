@@ -145,15 +145,15 @@ const HegihtHalfBox = styled.div`
 `;
 
 const Container = styled.div`
-  width: 40%;
-  height: 55%;
-  border-radius: 0.5rem;
+  width: 60rem;
+  height: 40rem;
+  border-radius: 1.5rem;
   background-color: ${theme.colors.container};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  padding: 2 1.5rem;
+  padding: 2rem 0;
   p {
     color: ${theme.colors.pink};
     font-size: 2rem;

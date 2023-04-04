@@ -1,12 +1,16 @@
 import React from "react";
 import EmailSection from "@components/Auth/forgotpassword/EmailSection";
 import styled from "styled-components";
+import Header from "@components/common/Header";
 
 export default function ForgotPasswordPage() {
   return (
-    <Container>
-      <EmailSection />
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <EmailSection />
+      </Container>
+    </>
   );
 }
 

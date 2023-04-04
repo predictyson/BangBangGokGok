@@ -193,16 +193,17 @@ const CustomTextField = mstyled(TextField)({
 });
 
 const Container = styled.div`
-  width: 40%;
-  height: 60%;
+  width: 50rem;
+  height: 55rem;
   border-radius: 0.5rem;
   margin: 12rem auto;
   background-color: ${theme.colors.container};
+  padding: 2.5rem 0;
   /* background-color: white; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const SubjectText = styled.div`

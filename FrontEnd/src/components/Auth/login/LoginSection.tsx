@@ -154,9 +154,10 @@ const TextBox = styled.div`
 `;
 
 const Container = styled.div`
-  width: 30%;
-  height: 70%;
-  border-radius: 0.5rem;
+  width: 50rem;
+  height: 55rem;
+  padding: 2rem 0;
+  border-radius: 1.5rem;
   background-color: ${theme.colors.container};
   display: flex;
   flex-direction: column;
