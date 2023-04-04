@@ -137,7 +137,7 @@ const ContentWrapper = styled.div`
 `;
 
 const ContentTitle = styled.h2`
-  flex-basis: 20%;
+  /* flex-basis: 20%; */
   font-size: 2rem;
   font-weight: ${theme.fontWeight.bold};
   color: ${theme.colors.white};
@@ -145,7 +145,7 @@ const ContentTitle = styled.h2`
 `;
 
 const Content = styled.div`
-  flex-basis: 80%;
+  /* flex-basis: 75%; */
   font-size: 1.7rem;
   font-weight: ${theme.fontWeight.normal};
   color: ${theme.colors.white};
