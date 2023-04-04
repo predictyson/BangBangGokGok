@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { PreviewThemeResponse } from "types/search";
 import { getDetail } from "@/api/theme";
@@ -28,10 +28,6 @@ export default function SearchResult({
   const [data, setData] = useState<IDetailData>(initData);
   const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
 
-  const handleButtonClick = () => {
-    handleSubmit(false);
-  };
-
   const handleOpen = async (themeId: number) => {
     setThemeId(themeId);
     await requestDetailData(themeId);
@@ -54,7 +50,6 @@ export default function SearchResult({
       try {
         const res = await getDetail(themeId);
         setData(res.data.theme);
-        console.log(res.data.theme);
       } catch (err) {
         throw new Error("Internal Server Error!");
       }
@@ -72,15 +67,42 @@ export default function SearchResult({
     }
   };
 
+  // 무한스크롤 구현
+  useEffect(() => {
+    const observerTarget = document.querySelector("#observer_target");
+    if (!observerTarget) {
+      return;
+    }
+    const callback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (!isLastPage) {
+            // 마지막 페이지가 아닐 때만 보냄.
+            handleSubmit(false);
+          }
+        }
+      });
+      2;
+    };
+    const observer = new IntersectionObserver(callback, {
+      root: null,
+      threshold: [0],
+    });
+    observer.observe(observerTarget);
+    return () => {
+      observer.unobserve(observerTarget);
+    };
+  }, [results]);
+
   return (
     <>
-      <Wrapper>
+      <Wrapper id="wrapper">
         {!searchHappened && <div>원하는 테마 검색할 수 있습니다.</div>}
         {searchHappened && results.length === 0 && (
           <div>검색 결과가 없습니다.</div>
         )}
         {searchHappened && results.length !== 0 && (
-          <Container>
+          <Container id="container">
             {results.map((result) => (
               <SliderItem key={result.themeId}>
                 <PosterItem src={result.imgUrl} />
@@ -92,6 +114,7 @@ export default function SearchResult({
                 </Hover>
               </SliderItem>
             ))}
+            <ObserverTarget id="observer_target"></ObserverTarget>
             {themeId !== undefined && (
               <Modal
                 open={open}
@@ -105,11 +128,6 @@ export default function SearchResult({
           </Container>
         )}
       </Wrapper>
-      <div>
-        {!isLastPage && (
-          <button onClick={handleButtonClick}>더 불러오기</button>
-        )}
-      </div>
     </>
   );
 }
@@ -129,19 +147,8 @@ const Container = styled.div`
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 2.5rem;
+  position: relative;
 `;
-
-// const ThemeItem = styled.div`
-//   border-radius: 1rem;
-//   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-//   width: 20rem;
-//   height: 25rem;
-//   @media (max-height: 800px) {
-//     width: 15rem;
-//     height: 20rem;
-//   }
-//   background-color: #3e2133;
-// `;
 
 const SliderItem = styled.div`
   border-radius: 1rem;
@@ -195,4 +202,13 @@ const PosterItem = styled.img`
   cursor: pointer;
   border-bottom: 1rem;
   border-radius: 1rem;
+`;
+
+const ObserverTarget = styled.div`
+  width: 100%;
+  height: 10rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
 `;

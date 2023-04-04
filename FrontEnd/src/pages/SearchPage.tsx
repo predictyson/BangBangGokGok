@@ -70,6 +70,12 @@ export default function SearchPage() {
   const handleSubmit = async (isInitSearch: boolean) => {
     if (isInitSearch) {
       // 1페이지를 요청하는 경우
+      // 스크롤바를 맨 위로 올린다.
+      const wrapper = document.querySelector("#wrapper");
+      if (!wrapper) {
+        return;
+      }
+      wrapper.scrollTo({ top: 0, left: 0, behavior: "auto" });
       const INIT_PAGE = 1;
       const response = await getSearchThemes({
         word: searchWord,
