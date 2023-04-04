@@ -54,7 +54,7 @@ public class ThemeServiceImpl implements ThemeService {
     private final AwardThemeRepository awardThemeRepository;
     private final RecommendedThemeOfUserRepository recommendedThemeOfUserRepository;
 
-    private final int THEME_RETURN_COUNT = 5;
+    private final int THEME_RETURN_COUNT = 8;
     private final int THEME_COUNT = 10;
 
     @PersistenceContext
@@ -102,7 +102,7 @@ public class ThemeServiceImpl implements ThemeService {
 
         int cnt = 0;
         List<PreviewThemeResponse> temp = null;
-        while (true) {
+        while (list.size() >= THEME_RETURN_COUNT) {
             cnt = 0;
             temp = new ArrayList<>();
 
@@ -122,7 +122,7 @@ public class ThemeServiceImpl implements ThemeService {
                 themes = temp;
                 break;
             }
-        }// 근데 이 방식은 지역 대분류에서 가져온 테마 목록의 개수마저도 적으면 에러가 날 수 있다
+        }
 
         result = new ThemeBundleResponse(label, themes);
 
@@ -173,7 +173,7 @@ public class ThemeServiceImpl implements ThemeService {
 
         int cnt = 0;
         List<PreviewThemeResponse> temp = null;
-        while (true) {
+        while (list.size() >= THEME_RETURN_COUNT) {
             cnt = 0;
             temp = new ArrayList<>();
 
