@@ -64,7 +64,7 @@ export default function UpdateModal({
     <Modal open={updateModalOpen} onClose={handleCloseUpdateModal}>
       <Box sx={{ ...updateModalStyle }}>
         <Header>
-          후기 작성하기
+          후기 수정하기
           <img
             src={Line}
             alt="line"
@@ -251,7 +251,7 @@ const ButtonWrapper = styled.div`
   margin-top: 3rem;
   display: flex;
   justify-content: space-between;
-  width: 70%;
+  width: 100%;
 `;
 
 const updateModalStyle = {
