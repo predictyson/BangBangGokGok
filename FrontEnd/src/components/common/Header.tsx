@@ -11,7 +11,11 @@ import { requestLogout } from "@/api/auth";
 export default function Header() {
   const navigate = useNavigate();
   const uselocation = useLocation();
-  const isLogin = localStorage.getItem("userId") !== null ? true : false;
+  const isLogin =
+    localStorage.getItem("userId") &&
+    localStorage.getItem("accessToken") !== null
+      ? true
+      : false;
   // const username = localStorage.getItem("username");
 
   const handleToastClick = (
@@ -36,18 +40,23 @@ export default function Header() {
   };
 
   const routeGroupSet = async () => {
-    try {
-      if (await myPageLoader()) {
-        navigate("/groupset");
-      } else {
-        handleToastClick("error", "올바르지 않은 접근입니다.");
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
-      }
-    } catch (error) {
+    // try {
+    //   if (await myPageLoader()) {
+    //     navigate("/groupset");
+    //   } else {
+    //     handleToastClick("error", "올바르지 않은 접근입니다.");
+    //     setTimeout(() => {
+    //       navigate("/login");
+    //     }, 2000);
+    //   }
+    // } catch (error) {
+    //   handleToastClick("error", "로그인 후 이용해주세요.");
+    //   console.log(error);
+    // }
+    if (isLogin) {
+      navigate("/groupset");
+    } else {
       handleToastClick("error", "로그인 후 이용해주세요.");
-      console.log(error);
     }
   };
 
