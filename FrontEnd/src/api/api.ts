@@ -3,7 +3,6 @@ import { requestToken } from "./auth";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_DOMAIN;
 const LOCAL_URL = import.meta.env.VITE_LOCAL_DOMAIN;
-const accessToken = localStorage.getItem("accessToken");
 
 const instance = axios.create({
   withCredentials: true,
@@ -18,6 +17,7 @@ const instance = axios.create({
 // interceptors를 통해
 instance.interceptors.request.use(
   function (config) {
+    const accessToken = localStorage.getItem("accessToken");
     // 요청 바로 직전
     config.headers["Authorization"] = `Bearer ${accessToken}`;
     return config;
@@ -32,6 +32,7 @@ instance.interceptors.response.use(
     return config;
   },
   async function (error) {
+    const accessToken = localStorage.getItem("accessToken");
     // HTTP 응답 에러발생 => accessToekn 만료
     if (error.response.status === 401 || error.response.status === 403) {
       try {
