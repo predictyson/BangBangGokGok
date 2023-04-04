@@ -88,15 +88,14 @@ public class ReviewServiceImpl implements ReviewService {
         // 해당 유저가 작성한 리뷰인지 확인하기
         if (user.getId() != review.getUser().getId())
             throw new Exception("해당 리뷰를 삭제할 권한이 없습니다.");
-        // 리뷰 삭제하기
-        reviewRepository.deleteById(reviewId);
         // 테마의 평점 반영하기
         theme.deleteReview(review);
         themeRepository.save(theme);
+        // 리뷰 삭제하기
+        reviewRepository.deleteById(reviewId);
     }
 
     @Override
-    @Transactional
     public ReviewOfUserResponse setReview(String email, UpdateReviewRequest updateReviewRequest) throws Exception {
         // email을 통해 유저 찾아오기
         User user = userRepository.findByEmail(email)
