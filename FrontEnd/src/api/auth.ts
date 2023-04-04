@@ -139,5 +139,6 @@ export const requestJoinCheck = async (email: string) => {
 
 // 로그아웃
 export const requestLogout = async () => {
+  localStorage.clear();
   return await instance.get(`/user/logout`);
 };

@@ -1,8 +1,9 @@
 import axios from "axios";
-import { requestToken } from "./auth";
+import { requestLogout, requestToken } from "./auth";
+import { useNavigate } from "react-router-dom";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_DOMAIN;
-const LOCAL_URL = import.meta.env.VITE_LOCAL_DOMAIN;
+const navigate = useNavigate();
 
 const instance = axios.create({
   withCredentials: true,
@@ -48,6 +49,8 @@ instance.interceptors.response.use(
       } catch (e) {
         // TODO: requestToken API 호출도 실패하면 로그인 페이지로 이동하거나, 다시 로그인 요청을 하도록 처리
         console.error(e);
+        requestLogout();
+        navigate("/login");
         return Promise.reject(error);
       }
     }
@@ -62,30 +65,17 @@ export default instance;
  * @param name cookie의 key
  * @returns 해당 key의 value
  */
-export function getCookie(name: string): string | null {
-  const nameLenPlus = name.length + 1;
-  return (
-    document.cookie
-      .split(";")
-      .map((c) => c.trim())
-      .filter((cookie) => {
-        return cookie.substring(0, nameLenPlus) === `${name}=`;
-      })
-      .map((cookie) => {
-        return decodeURIComponent(cookie.substring(nameLenPlus));
-      })[0] || null
-  );
-}
-/**
- * 로그아웃시, 유저 Info 모두 삭제
- */
-export function clearUserInfo() {
-  // 쿠키 삭제
-  // document.cookie.split(";").forEach(function (c) {
-  //   document.cookie = c
-  //     .replace(/^ +/, "")
-  //     .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-  // });
-  // 로컬 스토리지 삭제
-  localStorage.clear();
-}
+// export function getCookie(name: string): string | null {
+//   const nameLenPlus = name.length + 1;
+//   return (
+//     document.cookie
+//       .split(";")
+//       .map((c) => c.trim())
+//       .filter((cookie) => {
+//         return cookie.substring(0, nameLenPlus) === `${name}=`;
+//       })
+//       .map((cookie) => {
+//         return decodeURIComponent(cookie.substring(nameLenPlus));
+//       })[0] || null
+//   );
+// }

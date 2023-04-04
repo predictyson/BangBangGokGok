@@ -4,7 +4,6 @@ import Ghost from "@/assets/common/Ghost.png";
 import Logo from "@/assets/common/Logo.png";
 import { theme } from "@/styles/theme";
 import { useNavigate, useLocation } from "react-router-dom";
-import { clearUserInfo } from "@/api/api";
 import Toast, { showToast } from "@/components/common/Toast";
 import { myPageLoader } from "@/api/routerLoader";
 import { requestLogout } from "@/api/auth";
@@ -25,7 +24,6 @@ export default function Header() {
   const logout = async () => {
     try {
       await requestLogout();
-      clearUserInfo();
       if (uselocation.pathname === "/") {
         location.reload();
       } else {
