@@ -67,16 +67,18 @@ public class SecurityConfig{
             // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
         .and()
             .authorizeRequests()
-            .antMatchers(PERMIT_URL_ARRAY).permitAll()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-//            .antMatchers("/user/oauth/login",
-//                    "/profile/**",
-//                    "/theme/user",
-//                    "/interest/**",
-//                    "/review/**"
-//                    "/groupset/**"
-//                    ).authenticated()
-             .antMatchers("/jwt/**").authenticated()
+            .antMatchers("/user/oauth/login",
+                    "/user/check/login/**",
+                    "/profile/**",
+                    "/theme/user",
+                    "/theme/**/user",
+                    "/interest/**",
+                    "/review/**",
+                    "/groupset/**"
+                    ).authenticated()
+//             .antMatchers("/jwt/**").authenticated()
+            .antMatchers(PERMIT_URL_ARRAY).permitAll()
             .anyRequest().permitAll()
 
             // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
