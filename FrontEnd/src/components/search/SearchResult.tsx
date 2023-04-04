@@ -153,11 +153,13 @@ const Container = styled.div`
 const SliderItem = styled.div`
   border-radius: 1rem;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  width: 20rem;
-  height: 25rem;
-  @media (max-height: 800px) {
-    width: 15rem;
-    height: 20rem;
+  width: 12.8%;
+  aspect-ratio: 3 / 4;
+  @media (max-width: 1440px) {
+    width: 12.4%;
+  }
+  @media (max-width: 1366px) {
+    width: 12.2%;
   }
   position: relative;
   :hover {
@@ -167,13 +169,23 @@ const SliderItem = styled.div`
   }
 `;
 
+const PosterItem = styled.img`
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  border-bottom: 1rem;
+  border-radius: 1rem;
+`;
+
 const Hover = styled.div`
-  width: 20rem;
+  width: 100%;
+  height: 100%;
+  /* width: 20rem;
   height: 25rem;
   @media (max-height: 800px) {
     width: 15rem;
     height: 20rem;
-  }
+  } */
 
   position: absolute;
   opacity: 0;
@@ -189,19 +201,6 @@ const Hover = styled.div`
   font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
-`;
-
-const PosterItem = styled.img`
-  width: 20rem;
-  height: 25rem;
-  @media (max-height: 800px) {
-    width: 15rem;
-    height: 20rem;
-  }
-
-  cursor: pointer;
-  border-bottom: 1rem;
-  border-radius: 1rem;
 `;
 
 const ObserverTarget = styled.div`
