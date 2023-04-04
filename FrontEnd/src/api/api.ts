@@ -84,11 +84,11 @@ export function getCookie(name: string): string | null {
  */
 export function clearUserInfo() {
   // 쿠키 삭제
-  document.cookie.split(";").forEach(function (c) {
-    document.cookie = c
-      .replace(/^ +/, "")
-      .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-  });
+  // document.cookie.split(";").forEach(function (c) {
+  //   document.cookie = c
+  //     .replace(/^ +/, "")
+  //     .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+  // });
   // 로컬 스토리지 삭제
   localStorage.clear();
 }

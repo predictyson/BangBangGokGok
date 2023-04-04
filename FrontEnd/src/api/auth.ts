@@ -136,3 +136,8 @@ export const requestCheckLoginUser = async (
 export const requestJoinCheck = async (email: string) => {
   return await instance.get(`/user/join/check/${email}`);
 };
+
+// 로그아웃
+export const requestLogout = async () => {
+  return await instance.get(`/logout`);
+};

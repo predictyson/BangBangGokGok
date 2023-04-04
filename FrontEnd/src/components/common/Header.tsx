@@ -3,12 +3,11 @@ import styled from "styled-components";
 import Ghost from "@/assets/common/Ghost.png";
 import Logo from "@/assets/common/Logo.png";
 import { theme } from "@/styles/theme";
-import { styled as mstyled } from "@mui/material/styles";
 import { useNavigate, useLocation } from "react-router-dom";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { clearUserInfo } from "@/api/api";
 import Toast, { showToast } from "@/components/common/Toast";
 import { myPageLoader } from "@/api/routerLoader";
+import { requestLogout } from "@/api/auth";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -25,6 +24,7 @@ export default function Header() {
 
   const logout = () => {
     clearUserInfo();
+    requestLogout();
     if (uselocation.pathname === "/") {
       location.reload();
     } else {
