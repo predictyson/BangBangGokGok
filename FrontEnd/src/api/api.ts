@@ -1,9 +1,7 @@
 import axios from "axios";
 import { requestLogout, requestToken } from "./auth";
-import { useNavigate } from "react-router-dom";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_DOMAIN;
-const navigate = useNavigate();
 
 const instance = axios.create({
   withCredentials: true,
@@ -50,7 +48,7 @@ instance.interceptors.response.use(
         // TODO: requestToken API 호출도 실패하면 로그인 페이지로 이동하거나, 다시 로그인 요청을 하도록 처리
         console.error(e);
         requestLogout();
-        navigate("/login");
+        location.reload();
         return Promise.reject(error);
       }
     }
