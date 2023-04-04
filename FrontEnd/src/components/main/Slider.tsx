@@ -88,7 +88,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
           style={{
             width: "2rem",
             height: "5rem",
-            marginLeft: "1rem",
+            marginLeft: "2rem",
           }}
           alt="next-arrow"
         />
@@ -176,6 +176,7 @@ const Container = styled.div`
   width: 90%;
   margin: auto auto;
   margin-top: 0;
+
   .slick-prev:before {
     display: none;
   }
@@ -258,6 +259,14 @@ const BREAKPOINT = [
   },
   {
     breakpoint: 1920,
+    settings: {
+      slidesToShow: 5,
+      slidesToScroll: 5,
+      infinite: true,
+    },
+  },
+  {
+    breakpoint: 1600,
     settings: {
       slidesToShow: 4.5,
       slidesToScroll: 4.5,

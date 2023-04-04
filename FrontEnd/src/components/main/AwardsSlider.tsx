@@ -55,7 +55,7 @@ export default function AwardsSlider(awardData: IProps) {
       <div className={className} onClick={onClick}>
         <img
           src={PrevArrow}
-          style={{ width: "2rem", height: "5rem" }}
+          style={{ width: "2rem", height: "5rem", marginLeft: "-3rem" }}
           alt="prev-arrow"
         />
       </div>
@@ -67,7 +67,7 @@ export default function AwardsSlider(awardData: IProps) {
       <div className={className} onClick={onClick}>
         <img
           src={NextArrow}
-          style={{ width: "2rem", height: "5rem", marginLeft: "1rem" }}
+          style={{ width: "2rem", height: "5rem", marginLeft: "3rem" }}
           alt="next-arrow"
         />
       </div>
@@ -253,6 +253,14 @@ const BREAKPOINT = [
   },
   {
     breakpoint: 1920,
+    settings: {
+      slidesToShow: 5,
+      slidesToScroll: 5,
+      infinite: true,
+    },
+  },
+  {
+    breakpoint: 1600,
     settings: {
       slidesToShow: 4,
       slidesToScroll: 4,
