@@ -112,16 +112,15 @@ export const requestUserInfo = () => {
 /**
  * JWT 토큰 재발급
  * @param accessToken
- * @param refreshToken
  * @returns refreshToken을 바탕으로 NEW accessToken 반환
  */
 export const requestToken = (
-  accessToken: string | null,
-  refreshToken: string | null
+  accessToken: string | null
+  // refreshToken: string | null
 ) => {
   const tokens = {
     accessToken: accessToken,
-    refreshToken: refreshToken,
+    // refreshToken: refreshToken,
   };
   return instance.post(`/user/reissue`, tokens);
 };

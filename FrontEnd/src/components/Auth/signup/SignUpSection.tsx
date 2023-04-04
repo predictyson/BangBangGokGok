@@ -110,7 +110,10 @@ export default function SignUpSection() {
         try {
           const { data } = await requestSignUp(userData);
           const newUserId = data.userId;
-          navigate("/additional", { state: { userId: newUserId } });
+          navigate("/additional", {
+            state: { userId: newUserId },
+            replace: true,
+          });
         } catch (error) {
           console.log(error);
           handleToastClick("error", "회원가입에 실패하였습니다.");

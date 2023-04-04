@@ -52,7 +52,6 @@ export default function AdditionalPage() {
         }
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          console.log(error.response?.data.message);
           handleToastClick("error", error.response?.data.error);
         } else {
           console.log(error);
