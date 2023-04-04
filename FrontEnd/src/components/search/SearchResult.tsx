@@ -73,6 +73,7 @@ export default function SearchResult({
     if (!observerTarget) {
       return;
     }
+    // IntersectionObserverCallback 함수
     const callback: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -82,14 +83,17 @@ export default function SearchResult({
           }
         }
       });
-      2;
     };
+
+    // IntersectionObserver 생성
     const observer = new IntersectionObserver(callback, {
       root: null,
-      threshold: [0],
+      threshold: [0, 0.5, 1],
     });
+    // 관찰 대상 등록
     observer.observe(observerTarget);
     return () => {
+      console.log("cleanup Function");
       observer.unobserve(observerTarget);
     };
   }, [results]);
