@@ -30,7 +30,7 @@ export default function ProfileChart({ preferences }: ProfileChartProps) {
     labels: preferencesKeyArray,
     datasets: [
       {
-        label: "유저 장르 선호도",
+        label: "방문 횟수",
         data: preferencesValueArray,
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderColor: "rgba(255, 99, 132, 1)",
