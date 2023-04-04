@@ -73,7 +73,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
       <div className={className} onClick={onClick}>
         <img
           src={PrevArrow}
-          style={{ width: "2rem", height: "5rem", marginLeft: "-1rem" }}
+          style={{ width: "2rem", height: "5rem", marginLeft: "-2rem" }}
           alt="prev-arrow"
         />
       </div>
@@ -260,8 +260,8 @@ const BREAKPOINT = [
   {
     breakpoint: 1920,
     settings: {
-      slidesToShow: 5,
-      slidesToScroll: 5,
+      slidesToShow: 6,
+      slidesToScroll: 6,
       infinite: true,
     },
   },
