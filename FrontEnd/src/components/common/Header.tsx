@@ -22,15 +22,19 @@ export default function Header() {
     showToast({ type, message });
   };
 
-  const logout = () => {
-    clearUserInfo();
-    requestLogout();
-    if (uselocation.pathname === "/") {
-      location.reload();
-    } else {
-      navigate("/");
+  const logout = async () => {
+    try {
+      await requestLogout();
+      clearUserInfo();
+      if (uselocation.pathname === "/") {
+        location.reload();
+      } else {
+        navigate("/");
+      }
+      handleToastClick("success", "성공적으로 로그아웃 되었습니다.");
+    } catch (error) {
+      console.log(error);
     }
-    handleToastClick("success", "성공적으로 로그아웃 되었습니다.");
   };
 
   const routeGroupSet = async () => {

@@ -118,11 +118,11 @@ export const requestToken = (
   accessToken: string | null
   // refreshToken: string | null
 ) => {
-  const tokens = {
-    accessToken: accessToken,
-    // refreshToken: refreshToken,
-  };
-  return instance.post(`/user/reissue`, tokens);
+  // const tokens = {
+  //   accessToken: accessToken,
+  //   refreshToken: refreshToken,
+  // };
+  return instance.post(`/user/reissue`, accessToken);
 };
 
 // 로그인 정보 검증
@@ -139,5 +139,5 @@ export const requestJoinCheck = async (email: string) => {
 
 // 로그아웃
 export const requestLogout = async () => {
-  return await instance.get(`/logout`);
+  return await instance.get(`/user/logout`);
 };

@@ -42,9 +42,6 @@ instance.interceptors.response.use(
         );
         // 새로운 access token 받아옴
         const newAccessToken = response.data.accessToken;
-        // 쿠키에 새로운 access token을 저장
-        document.cookie = `access=${newAccessToken}`;
-        // 기존 요청 재요청 (config의 headers.Authorization 업데이트)
         const config = error.config;
         config.headers.Authorization = `Bearer ${newAccessToken}`;
         return axios(config);
