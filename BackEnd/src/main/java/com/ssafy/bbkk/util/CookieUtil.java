@@ -1,5 +1,6 @@
 package com.ssafy.bbkk.util;
 
+import com.ssafy.bbkk.common.jwt.TokenProvider;
 import org.springframework.util.SerializationUtils;
 
 import javax.servlet.http.Cookie;
@@ -14,7 +15,7 @@ public class CookieUtil {
         Cookie[] cookies = request.getCookies();
 
         if (cookies != null && cookies.length > 0) {
-            System.out.println("쿠키 : "+cookies);
+            System.out.println("----------쿠키----------");
             for (Cookie cookie : cookies) {
                 System.out.println(cookie.getName());
                 if (name.equals(cookie.getName())) {
@@ -31,7 +32,7 @@ public class CookieUtil {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
-        cookie.setMaxAge(60 * 60 * 24 * 7); // 7일
+        cookie.setMaxAge(60 * 60 * 24 * 1); // 1일
 
         response.addCookie(cookie);
     }
