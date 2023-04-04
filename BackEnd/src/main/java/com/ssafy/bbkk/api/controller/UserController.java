@@ -50,6 +50,7 @@ public class UserController {
     @PostMapping("login")
     private ResponseEntity<Map<String, Object>> login(
             @RequestBody @Valid LoginRequest loginRequest, Errors errors,
+            HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
         logger.info("[login] request : loginRequest={}", loginRequest);
@@ -68,7 +69,7 @@ public class UserController {
         resultMap.put("user", loginResponse);
         logger.info("[login] response : user={}", loginResponse);
 
-        CookieUtil.addCookie(response, "refreshToken", tokenResponse.getRefreshToken());
+        CookieUtil.addCookie(request, response, "refreshToken", tokenResponse.getRefreshToken());
         logger.info("[login] response cookie : refreshToken={}", tokenResponse.getRefreshToken());
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -138,13 +139,14 @@ public class UserController {
     @GetMapping("oauth/login")
     public ResponseEntity<Map<String, Object>> oauthLogin(
             @AuthenticationPrincipal User user,
+            HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         logger.info("[oauthLogin] request : myEmail={}", user.getUsername());
 
         Map<String, Object> resultMap = new HashMap<>();
 
         String refreshToken = userService.oauthLogin(user.getUsername());
-        CookieUtil.addCookie(response, "refreshToken", refreshToken);
+        CookieUtil.addCookie(request, response, "refreshToken", refreshToken);
         logger.info("[oauthLogin] response cookie : refreshToken={}", refreshToken);
 
         LoginResponse loginResponse = userService.getLoginUser(user.getUsername());
