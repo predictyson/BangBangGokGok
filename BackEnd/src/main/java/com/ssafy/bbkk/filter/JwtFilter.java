@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -55,13 +56,16 @@ public class JwtFilter extends OncePerRequestFilter {
 
     // Request Header 에서 토큰 정보를 꺼내오기
     private String resolveToken(HttpServletRequest request) {
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||JwtFilter||------------------------------------>>",now);
 
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
         Optional<Cookie> refreshToken = CookieUtil.getCookie(request,"refreshToken");
 
-        logger.info("[JwtFilter] accessToken={}", bearerToken);
+        logger.info(">> accessToken={}", bearerToken);
         if(refreshToken.isPresent())
-            logger.info("[JwtFilter] refreshToken={}", refreshToken.get().getValue());
+            logger.info(">> refreshToken={}", refreshToken.get().getValue());
+        logger.info("\n[{}]<<---------------------------------------||JwtFilter||---------------(end)--------------->>",now);
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
             return bearerToken.substring(7);

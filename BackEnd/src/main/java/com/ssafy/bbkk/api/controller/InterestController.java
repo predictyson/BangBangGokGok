@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,16 +34,17 @@ public class InterestController {
     private ResponseEntity<Void> addInterestTheme(
             @AuthenticationPrincipal User user,
             @Parameter(description = "관심 버튼을 누른 테마의 Id", required = true) @PathVariable int themeId) throws Exception{
-
-        logger.info("[addInterestTheme] request : myEmail={}", user.getUsername());
-        logger.info("[addInterestTheme] request : themeId={}", themeId);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||addInterestTheme||------------------------------------>>",now);
+        logger.info(">> request : myEmail={}", user.getUsername());
+        logger.info(">> request : themeId={}", themeId);
 
         interestThemeService.addInterestTheme(user.getUsername(), themeId);
-        logger.info("[addInterestTheme] response : none");
+        logger.info("<< response : none");
 
         otherService.recCBF(user.getUsername());
-        logger.info("[addInterestTheme] response : recCBF({})", user.getUsername());
-
+        logger.info("<< response api : recCBF({})", user.getUsername());
+        logger.info("\n[{}]<<---------------------------------------||addInterestTheme||---------------(end)--------------->>",now);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -51,16 +53,17 @@ public class InterestController {
     private ResponseEntity<Void> deleteInterestTheme(
             @AuthenticationPrincipal User user,
             @Parameter(description = "관심 버튼을 누른 테마의 Id", required = true) @PathVariable int themeId) throws Exception{
-
-        logger.info("[deleteInterestTheme] request : myEmail={}", user.getUsername());
-        logger.info("[deleteInterestTheme] request : themeId={}", themeId);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||deleteInterestTheme||------------------------------------>>",now);
+        logger.info(">> request : myEmail={}", user.getUsername());
+        logger.info(">> request : themeId={}", themeId);
 
         interestThemeService.deleteInterestTheme(user.getUsername(), themeId);
-        logger.info("[deleteInterestTheme] response : none");
+        logger.info("<< response : none");
 
         otherService.recCBF(user.getUsername());
-        logger.info("[deleteInterestTheme] response : recCBF({})",user.getUsername());
-
+        logger.info("<< response api : recCBF({})",user.getUsername());
+        logger.info("\n[{}]<<---------------------------------------||deleteInterestTheme||---------------(end)--------------->>",now);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

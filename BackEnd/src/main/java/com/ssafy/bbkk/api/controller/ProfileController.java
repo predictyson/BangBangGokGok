@@ -9,6 +9,8 @@ import com.ssafy.bbkk.api.service.OtherService;
 import com.ssafy.bbkk.api.service.ProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,19 +47,20 @@ public class ProfileController {
     private ResponseEntity<Map<String, Object>> getUserInfo(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
-
-        logger.info("[getUserInfo] request : myEmail={}, userId={}", user.getUsername(), userId);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getUserInfo||------------------------------------>>",now);
+        logger.info(">> request : myEmail={}, userId={}", user.getUsername(), userId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
         resultMap.put("isMe", isMe);
-        logger.info("[getUserInfo] response : isMe={}", isMe);
+        logger.info("<< response : isMe={}", isMe);
 
         UserInfoResponse userInfoResponse = profileService.getUserInfoByUserId(userId);
         resultMap.put("userInfo", userInfoResponse);
-        logger.info("[getUserInfo] response : userInfo={}", userInfoResponse);
-
+        logger.info("<< response : userInfo={}", userInfoResponse);
+        logger.info("\n[{}]<<---------------------------------------||getUserInfo||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -66,19 +69,20 @@ public class ProfileController {
     private ResponseEntity<Map<String, Object>> getUserReviews(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
-
-        logger.info("[getUserReviews] request : userId={}", userId);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getUserReviews||------------------------------------>>",now);
+        logger.info(">> request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
         resultMap.put("isMe", isMe);
-        logger.info("[getUserReviews] response : isMe={}", isMe);
+        logger.info("<< response : isMe={}", isMe);
 
         List<ReviewOfUserResponse> reviewOfThemeResponses = profileService.getUserReviews(userId);
         resultMap.put("reviews", reviewOfThemeResponses);
-        logger.info("[getUserReviews] response : reviews={}", reviewOfThemeResponses);
-
+        logger.info("<< response : reviews={}", reviewOfThemeResponses);
+        logger.info("\n[{}]<<---------------------------------------||getUserReviews||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -88,18 +92,20 @@ public class ProfileController {
     private ResponseEntity<Map<String, Object>> getUserPreference(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
-        logger.info("[getUserPreference] request : userId={}", userId);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getUserPreference||------------------------------------>>",now);
+        logger.info(">> request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
         resultMap.put("isMe", isMe);
-        logger.info("[getUserPreference] response : isMe={}", isMe);
+        logger.info("<< response : isMe={}", isMe);
 
         List<PreferenceResponse> preference = profileService.getUserPreference(userId);
         resultMap.put("preference", preference);
-        logger.info("[getUserPreference] response : preference={}", preference);
-
+        logger.info("<< response : preference={}", preference);
+        logger.info("\n[{}]<<---------------------------------------||getUserPreference||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -108,19 +114,20 @@ public class ProfileController {
     private ResponseEntity<Map<String, Object>> getUserInterestThemes(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
-
-        logger.info("[getUserInterest] request : userId={}", userId);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getUserInterestThemes||------------------------------------>>",now);
+        logger.info(">> request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isMe = profileService.isSameUser(user.getUsername(), userId) ? true : false;
         resultMap.put("isMe", isMe);
-        logger.info("[getUserInterest] response : isMe={}", isMe);
+        logger.info("<< response : isMe={}", isMe);
 
         List<InterestThemeResponse> interestThemeResponses = profileService.getUserInterestThemes(userId);
         resultMap.put("interestThemes", interestThemeResponses);
-        logger.info("[getUserInterest] response : interestThemes={}", interestThemeResponses);
-
+        logger.info("<< response : interestThemes={}", interestThemeResponses);
+        logger.info("\n[{}]<<---------------------------------------||getUserInterestThemes||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -128,7 +135,9 @@ public class ProfileController {
     @PutMapping
     private ResponseEntity<Map<String, Object>> setUserInfo(@AuthenticationPrincipal User user,
             @RequestBody @Valid UpdateUserInfoRequest updateUserInfoRequest, Errors errors) throws Exception {
-        logger.info("[setUserInfo] request : updateUserInfoRequest={}", updateUserInfoRequest);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||setUserInfo||------------------------------------>>",now);
+        logger.info(">> request : updateUserInfoRequest={}", updateUserInfoRequest);
 
         // UpdateUserInfoRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
@@ -140,11 +149,11 @@ public class ProfileController {
         profileService.setUserInfo(updateUserInfoRequest);
         UserInfoResponse userInfoResponse = profileService.getUserInfoByUserId(updateUserInfoRequest.getUserId());
         resultMap.put("userInfo", userInfoResponse);
-        logger.info("[setUserInfo] response : userInfo={}", userInfoResponse);
+        logger.info("<< response : userInfo={}", userInfoResponse);
 
         otherService.recCBF(user.getUsername());
-        logger.info("[setUserInfo] response : recCBF({})", user.getUsername());
-
+        logger.info("<< response : recCBF({})", user.getUsername());
+        logger.info("\n[{}]<<---------------------------------------||setUserInfo||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -156,12 +165,13 @@ public class ProfileController {
     @DeleteMapping
     private ResponseEntity<Void> deleteUser(
             @AuthenticationPrincipal User user) throws Exception {
-
-        logger.info("[deleteUser] request : myEmail={}", user.getUsername());
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getSelectList||------------------------------------>>",now);
+        logger.info(">> request : myEmail={}", user.getUsername());
 
         profileService.deleteUser(user.getUsername());
-        logger.info("[deleteUser] response : none");
-
+        logger.info("<< response : none");
+        logger.info("\n[{}]<<---------------------------------------||getSelectList||---------------(end)--------------->>",now);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

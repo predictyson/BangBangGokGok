@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,15 +31,16 @@ public class GroupSetController {
     @GetMapping("user/{emailOrNickname}")
     private ResponseEntity<Map<String, Object>> getUser(
             @Parameter(description = "입력값", required = true) @PathVariable String emailOrNickname) throws Exception{
-
-        logger.info("[getUser] request : emailOrNickname={}", emailOrNickname);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getUser||------------------------------------>>",now);
+        logger.info(">> request : emailOrNickname={}", emailOrNickname);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         List<PreviewUserResponse> previewUserResponses = groupSetService.getUserListByEmailOrNickname(emailOrNickname);
         resultMap.put("users",previewUserResponses);
-        logger.info("[getUser] response : users={}", previewUserResponses);
-
+        logger.info("<< response : users={}", previewUserResponses);
+        logger.info("\n[{}]<<---------------------------------------||getUser||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }

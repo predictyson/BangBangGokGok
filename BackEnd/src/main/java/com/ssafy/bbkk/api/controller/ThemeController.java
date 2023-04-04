@@ -11,6 +11,8 @@ import com.ssafy.bbkk.api.service.ReviewService;
 import com.ssafy.bbkk.api.service.ThemeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,48 +48,52 @@ public class ThemeController {
     @GetMapping("user")
     private ResponseEntity<Map<String, Object>> getThemeOfLoginUser(
             @AuthenticationPrincipal User user) throws Exception {
-        logger.info("[getThemeOfLoginUser] request : myEmail={}", user.getUsername());
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getThemeOfLoginUser||------------------------------------>>",now);
+        logger.info(">> request : myEmail={}", user.getUsername());
 
         Map<String, Object> resultMap = new HashMap<>();
 
         List<ThemeBundleResponse> recommendThemes = themeService.getRecommendedThemes(user.getUsername());
         resultMap.put("recommendThemes", recommendThemes);
-        logger.info("[getThemeOfLoginUser] response : recommendThemes={}", recommendThemes);
+        logger.info("<< response : recommendThemes={}", recommendThemes);
 
         List<PreviewThemeResponse> hotThemes = themeService.getHotThemes();
         resultMap.put("hotThemes", hotThemes);
-        logger.info("[getThemeOfLoginUser] response : hotThemes={}", hotThemes);
+        logger.info("<< response : hotThemes={}", hotThemes);
 
         List<ThemeBundleResponse> topThemes = themeService.getTopThemesOfUser(user.getUsername());
         resultMap.put("topThemes", topThemes);
-        logger.info("[getThemeOfLoginUser] response : topThemes={}", topThemes);
+        logger.info("<< response : topThemes={}", topThemes);
 
         AwardThemeBundleResponse awardThemes = themeService.getAwardThemes();
         resultMap.put("awardThemes", awardThemes);
-        logger.info("[getThemeOfLoginUser] response : awardThemes={}", topThemes);
-
+        logger.info("<< response : awardThemes={}", topThemes);
+        logger.info("\n[{}]<<---------------------------------------||getThemeOfLoginUser||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @Operation(summary = "게스트 테마 목록 조회", description = "메인 화면의 기본 테마 목록을 불러온다")
     @GetMapping("guest")
     private ResponseEntity<Map<String, Object>> getThemeOfGuest() throws Exception {
-        logger.info("[getThemeOfGuest] request : ");
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getThemeOfGuest||------------------------------------>>",now);
+        logger.info(">> request : ");
 
         Map<String, Object> resultMap = new HashMap<>();
 
         List<PreviewThemeResponse> hotThemes = themeService.getHotThemes();
         resultMap.put("hotThemes", hotThemes);
-        logger.info("[getThemeOfGuest] response : hotThemes={}", hotThemes);
+        logger.info("<< response : hotThemes={}", hotThemes);
 
         List<ThemeBundleResponse> topThemes = themeService.getTopThemes();
         resultMap.put("topThemes", topThemes);
-        logger.info("[getThemeOfGuest] response : topThemes={}", topThemes);
+        logger.info("<< response : topThemes={}", topThemes);
 
         AwardThemeBundleResponse awardThemes = themeService.getAwardThemes();
         resultMap.put("awardThemes", awardThemes);
-        logger.info("[getThemeOfGuest] response : awardThemes={}", awardThemes);
-
+        logger.info("<< response : awardThemes={}", awardThemes);
+        logger.info("\n[{}]<<---------------------------------------||getThemeOfGuest||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -95,8 +101,9 @@ public class ThemeController {
     @GetMapping("search")
     private ResponseEntity<Map<String, Object>> searchedTheme(
             @ModelAttribute @Valid SearchThemeRequest searchThemeRequest, Errors errors) throws Exception {
-
-        logger.info("[searchedTheme] request : SearchThemeRequest={}", searchThemeRequest);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||searchedTheme||------------------------------------>>",now);
+        logger.info(">> request : SearchThemeRequest={}", searchThemeRequest);
 
         // searchThemeRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
@@ -107,11 +114,11 @@ public class ThemeController {
 
         Page<PreviewThemeResponse> resultPage = themeService.getSearchThemes(searchThemeRequest);
         resultMap.put("isLast", resultPage.isLast());
-        logger.info("[searchedTheme] response : isLast={}", resultPage.isLast());
+        logger.info("<< response : isLast={}", resultPage.isLast());
 
         resultMap.put("themes", resultPage.getContent());
-        logger.info("[searchedTheme] response : themes={}", resultPage.getContent());
-
+        logger.info("<< response : themes={}", resultPage.getContent());
+        logger.info("\n[{}]<<---------------------------------------||searchedTheme||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -119,14 +126,16 @@ public class ThemeController {
     @GetMapping("{themeId}")
     private ResponseEntity<Map<String, Object>> getThemeInfo(
             @Parameter(description = "해당 테마의 Id", required = true) @PathVariable("themeId") int themeId) throws Exception {
-        logger.info("[getThemeInfo] request : themeId={}", themeId);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getThemeInfo||------------------------------------>>",now);
+        logger.info(">> request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         ThemeResponse themeResponse = themeService.getThemeInfo(themeId);
         resultMap.put("theme", themeResponse);
-        logger.info("[getThemeInfo] response : theme={}", themeResponse);
-
+        logger.info("<< response : theme={}", themeResponse);
+        logger.info("\n[{}]<<---------------------------------------||getThemeInfo||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -134,14 +143,16 @@ public class ThemeController {
     @GetMapping("{themeId}/reviews")
     private ResponseEntity<Map<String, Object>> getReviewsOfTheme(
             @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int themeId) throws Exception {
-        logger.info("[getReviewsOfTheme] request : themeId={}", themeId);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getReviewsOfTheme||------------------------------------>>",now);
+        logger.info(">> request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         List<ReviewOfThemeResponse> reviewOfThemeResponses = reviewService.getReviewsOfTheme(themeId);
         resultMap.put("reviews", reviewOfThemeResponses);
-        logger.info("[getReviewsOfTheme] response : reviews={}", reviewOfThemeResponses);
-
+        logger.info("<< response : reviews={}", reviewOfThemeResponses);
+        logger.info("\n[{}]<<---------------------------------------||getReviewsOfTheme||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -150,18 +161,20 @@ public class ThemeController {
     private ResponseEntity<Map<String, Object>> getUserOfTheme(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int themeId) throws Exception {
-        logger.info("[getUserOfTheme] request : themeId={}", themeId);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getUserOfTheme||------------------------------------>>",now);
+        logger.info(">> request : themeId={}", themeId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isInterest = interestThemeService.isInterestTheme(user.getUsername(), themeId);
         resultMap.put("isInterest",isInterest);
-        logger.info("[getUserOfTheme] response : isInterest={}",isInterest);
+        logger.info("<< response : isInterest={}",isInterest);
 
         boolean isMyReview = reviewService.isMyReview(user.getUsername(), themeId);
         resultMap.put("isMyReview",isMyReview);
-        logger.info("[getUserOfTheme] response : isMyReview={}",isMyReview);
-
+        logger.info("<< response : isMyReview={}",isMyReview);
+        logger.info("\n[{}]<<---------------------------------------||getUserOfTheme||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }

@@ -3,6 +3,8 @@ package com.ssafy.bbkk.api.controller;
 import com.ssafy.bbkk.api.dto.GenreResponse;
 import com.ssafy.bbkk.api.service.OtherService;
 import io.swagger.v3.oas.annotations.Operation;
+
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +31,9 @@ public class OtherController {
     @Operation(summary = "모든 장르 가져오기", description = "모든 장르 종류를 가져온다")
     @GetMapping("genre")
     private ResponseEntity<Map<String, Object>> getSelectList() throws Exception {
-
-        logger.info("[getSelectList] request : ");
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getSelectList||------------------------------------>>",now);
+        logger.info(">> request : ");
 
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -38,8 +41,8 @@ public class OtherController {
         // ?, 기타 제외
         genres.remove(0); genres.remove(3);
         resultMap.put("genres", genres);
-        logger.info("[getSelectList] response : genres={}", genres);
-
+        logger.info("<< response : genres={}", genres);
+        logger.info("\n[{}]<<---------------------------------------||getSelectList||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -47,15 +50,16 @@ public class OtherController {
     @Operation(summary = "지역 소분류 가져오기", description = "지역 대분류 이름을 받아 속하는 지역 소분류 종류를 가져온다")
     @GetMapping("region/{regionBig}")
     private ResponseEntity<Map<String, Object>> getRegionSmallList(@PathVariable("regionBig") String regionBig) throws Exception {
-
-        logger.info("[getRegionSmallList] request : regionBig={}", regionBig);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||getRegionSmallList||------------------------------------>>",now);
+        logger.info(">> request : regionBig={}", regionBig);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         List<String> regionSmalls = otherService.getRegionSmallList(regionBig);
         resultMap.put("regionSmalls", regionSmalls);
-        logger.info("[getSelectList] response : regionSmalls={}", regionSmalls);
-
+        logger.info("<< response : regionSmalls={}", regionSmalls);
+        logger.info("\n[{}]<<---------------------------------------||getRegionSmallList||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }

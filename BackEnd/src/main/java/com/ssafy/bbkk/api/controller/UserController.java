@@ -12,6 +12,8 @@ import com.ssafy.bbkk.api.service.OtherService;
 import com.ssafy.bbkk.api.service.UserService;
 import com.ssafy.bbkk.util.CookieUtil;
 import io.swagger.v3.oas.annotations.Operation;
+
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -52,8 +54,9 @@ public class UserController {
             @RequestBody @Valid LoginRequest loginRequest, Errors errors,
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        logger.info("[login] request : loginRequest={}", loginRequest);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||login||------------------------------------>>",now);
+        logger.info(">> request : loginRequest={}", loginRequest);
 
         // LoginRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
@@ -63,14 +66,15 @@ public class UserController {
 
         TokenResponse tokenResponse = userService.login(loginRequest);
         resultMap.put("accessToken", tokenResponse.getAccessToken());
-        logger.info("[login] response : accessToken={}", tokenResponse.getAccessToken());
+        logger.info("<< response : accessToken={}", tokenResponse.getAccessToken());
 
         LoginResponse loginResponse = userService.getLoginUser(loginRequest.getEmail());
         resultMap.put("user", loginResponse);
-        logger.info("[login] response : user={}", loginResponse);
+        logger.info("<< response : user={}", loginResponse);
 
         CookieUtil.addCookie(response, "refreshToken", tokenResponse.getRefreshToken());
-
+        logger.info("<< response cookie : refreshToken={}", tokenResponse.getRefreshToken());
+        logger.info("\n[{}]<<---------------------------------------||login||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -78,18 +82,21 @@ public class UserController {
     @GetMapping("join/check/{email}")
     public ResponseEntity<Map<String, Object>> isExitedAndSendEmailCode(
             @PathVariable String email) throws Exception {
-        logger.info("[isExitedAndSendEmailCode] request : email={}", email);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||isExitedAndSendEmailCode||------------------------------------>>",now);
+        logger.info(">> request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isExisted = userService.existsByEmail(email);
         resultMap.put("isExisted",isExisted);
-        logger.info("[isExitedAndSendEmailCode] response : isExisted={}", isExisted);
+        logger.info("<< response : isExisted={}", isExisted);
 
         if(!isExisted){
             emailService.sendMessage(email, 1);
+            logger.info("<< response : email send");
         }
-
+        logger.info("\n[{}]<<---------------------------------------||isExitedAndSendEmailCode||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -97,8 +104,9 @@ public class UserController {
     @PostMapping("join")
     public ResponseEntity<Map<String, Object>> join(
             @RequestBody @Valid JoinRequest joinRequest, Errors errors) throws Exception {
-
-        logger.info("[join] request : joinRequest={}", joinRequest);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||join||------------------------------------>>",now);
+        logger.info(">> request : joinRequest={}", joinRequest);
 
         // JoinRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
@@ -108,8 +116,8 @@ public class UserController {
 
         int userId = userService.join(joinRequest);
         resultMap.put("userId", userId);
-        logger.info("[join] response : userId={}", userId);
-
+        logger.info("<< response : userId={}", userId);
+        logger.info("\n[{}]<<---------------------------------------||join||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -117,7 +125,9 @@ public class UserController {
     @PostMapping("join/additional")
     public ResponseEntity<Void> addInfo(
             @RequestBody @Valid JoinAdditionalRequest joinAdditionalRequest, Errors errors) throws Exception {
-        logger.info("[addInfo] request : joinAdditionalRequest={}", joinAdditionalRequest);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||addInfo||------------------------------------>>",now);
+        logger.info(">> request : joinAdditionalRequest={}", joinAdditionalRequest);
 
         // JoinAdditionalRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
@@ -126,11 +136,11 @@ public class UserController {
 
         userService.setUserAdditionalInfo(joinAdditionalRequest);
         String email = userService.findUserEmailByUserId(joinAdditionalRequest.getUserId());
-        logger.info("[addInfo] response : none");
+        logger.info("<< response : none");
 
         otherService.recCBF(email);
-        logger.info("[addInfo] response : recCBF({})",email);
-
+        logger.info("<< response api : recCBF({})",email);
+        logger.info("\n[{}]<<---------------------------------------||addInfo||---------------(end)--------------->>",now);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -140,17 +150,20 @@ public class UserController {
             @AuthenticationPrincipal User user,
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        logger.info("[oauthLogin] request : myEmail={}", user.getUsername());
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||oauthLogin||------------------------------------>>",now);
+        logger.info(">> request : myEmail={}", user.getUsername());
 
         Map<String, Object> resultMap = new HashMap<>();
 
         String refreshToken = userService.oauthLogin(user.getUsername());
         CookieUtil.addCookie(response, "refreshToken", refreshToken);
+        logger.info("<< response cookie : refreshToken={}", refreshToken);
 
         LoginResponse loginResponse = userService.getLoginUser(user.getUsername());
         resultMap.put("user", loginResponse);
-        logger.info("[oauthLogin] response : user={}", loginResponse);
-
+        logger.info("<< response : user={}", loginResponse);
+        logger.info("\n[{}]<<---------------------------------------||oauthLogin||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -159,19 +172,20 @@ public class UserController {
     private ResponseEntity<Map<String, Object>> reissue(
             @RequestBody String accessToken,
             HttpServletRequest request) throws Exception {
-
-        logger.info("[reissue] request : accessToken={}", accessToken);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||reissue||------------------------------------>>",now);
+        logger.info(">> request : accessToken={}", accessToken);
 
         Cookie refreshTokenCookie = CookieUtil.getCookie(request,"refreshToken")
                 .orElseThrow(()-> new RuntimeException("해당 쿠키가 존재하지 않습니다."));
-        logger.info("[reissue] request cookie : refreshToken={}", refreshTokenCookie.getValue());
+        logger.info("<< request cookie : refreshToken={}", refreshTokenCookie.getValue());
 
         Map<String, Object> resultMap = new HashMap<>();
 
         accessToken = userService.reissue(accessToken, refreshTokenCookie.getValue());
         resultMap.put("accessToken", accessToken);
-        logger.info("[reissue] response : accessToken={}", accessToken);
-
+        logger.info("<< response : accessToken={}", accessToken);
+        logger.info("\n[{}]<<---------------------------------------||reissue||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -179,14 +193,16 @@ public class UserController {
     @GetMapping("check/email/{email}")
     public ResponseEntity<Map<String, Object>> checkEmail(
             @PathVariable String email) throws Exception {
-        logger.info("[checkEmail] request : email={}", email);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||checkEmail||------------------------------------>>",now);
+        logger.info(">> request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isDuplicated = userService.existsByEmail(email);
         resultMap.put("isDuplicated", isDuplicated);
-        logger.info("[checkEmail] response : isDuplicated={}", isDuplicated);
-
+        logger.info("<< response : isDuplicated={}", isDuplicated);
+        logger.info("\n[{}]<<---------------------------------------||checkEmail||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -194,14 +210,16 @@ public class UserController {
     @GetMapping("check/nickname/{nickname}")
     public ResponseEntity<Map<String, Object>> checkNickname(
             @PathVariable String nickname) throws Exception {
-        logger.info("[checkNickname] request : nickname={}", nickname);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||checkNickname||------------------------------------>>",now);
+        logger.info(">> request : nickname={}", nickname);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isDuplicated = userService.existsByNickname(nickname);
         resultMap.put("isDuplicated", isDuplicated);
-        logger.info("[checkNickname] response : isDuplicated={}", isDuplicated);
-
+        logger.info("<< response : isDuplicated={}", isDuplicated);
+        logger.info("\n[{}]<<---------------------------------------||checkNickname||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -209,18 +227,22 @@ public class UserController {
     @GetMapping("send/email/{email}")
     public ResponseEntity<Map<String, Object>> sendEmailCode(
             @PathVariable String email) throws Exception {
-        logger.info("[sendEmailCode] request : email={}", email);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||sendEmailCode||------------------------------------>>",now);
+        logger.info(">> request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isExisted = userService.existsByEmailNotSocial(email);
         resultMap.put("isExisted", isExisted);
-        logger.info("[sendEmailCode] response : isExisted={}", isExisted);
+        logger.info("<< response : isExisted={}", isExisted);
 
         if (isExisted) {
             emailService.sendMessage(email, 2);
+            logger.info("<< response : email send");
         }
 
+        logger.info("\n[{}]<<---------------------------------------||sendEmailCode||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -229,15 +251,17 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> checkEmailCode(
             @PathVariable String email,
             @PathVariable String code) throws Exception {
-        logger.info("[checkEmailCode] request : email={}", email);
-        logger.info("[checkEmailCode] request : code={}", code);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||checkEmailCode||------------------------------------>>",now);
+        logger.info(">> request : email={}", email);
+        logger.info(">> request : code={}", code);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isCheck = emailService.checkEmailCode(email, code);
         resultMap.put("isCheck", isCheck);
-        logger.info("[checkEmailCode] response : isCheck={}", isCheck);
-
+        logger.info("<< response : isCheck={}", isCheck);
+        logger.info("\n[{}]<<---------------------------------------||checkEmailCode||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -245,15 +269,17 @@ public class UserController {
     @PostMapping("password")
     public ResponseEntity<Void> changePassword(
             @RequestBody @Valid ChangePasswordRequest changePasswordRequest, Errors errors) throws Exception {
-        logger.info("[changePassword] request : changePasswordRequest={}", changePasswordRequest);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||changePassword||------------------------------------>>",now);
+        logger.info(">> request : changePasswordRequest={}", changePasswordRequest);
 
         // ChangePasswordRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
             throw new Exception(error.getDefaultMessage());
 
         userService.setPassword(changePasswordRequest);
-        logger.info("[changePassword] response : none");
-
+        logger.info("<< response : none");
+        logger.info("\n[{}]<<---------------------------------------||changePassword||---------------(end)--------------->>",now);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -262,15 +288,17 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> isLoginUser(
             @AuthenticationPrincipal User user,
             @PathVariable int userId) throws Exception {
-        logger.info("[isLoginUser] request : myEmail={}", user.getUsername());
-        logger.info("[isLoginUser] request : userId={}", userId);
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("\n[{}]<<---------------(start)----------------||isLoginUser||------------------------------------>>",now);
+        logger.info(">> request : myEmail={}", user.getUsername());
+        logger.info(">> request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isLoginUser = userService.existsByEmailAndUserId(user.getUsername(), userId);
         resultMap.put("isLoginUser",isLoginUser);
-        logger.info("[isLoginUser] response : isLoginUser={}",isLoginUser);
-
+        logger.info("<< response : isLoginUser={}",isLoginUser);
+        logger.info("\n[{}]<<---------------------------------------||isLoginUser||---------------(end)--------------->>",now);
         return new ResponseEntity<>(resultMap,HttpStatus.OK);
     }
 
