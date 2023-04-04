@@ -61,10 +61,9 @@ export default function SearchFilter(props: SearchFilterProps) {
         open={filterOpenState}
         onClose={closeFilter}
         sx={isLabtop ? ModalStyleOnLabtop768p : ModalStyleOnDesktop1080p}
-        hideBackdrop={true}
+        // hideBackdrop={true}
       >
         <FilterContainer>
-          <button onClick={handleResetFilter}>초기화</button>
           <LocationForm
             filterValue={props.filterValue}
             handleFilterValueChange={props.handleFilterValueChange}
@@ -93,7 +92,7 @@ export default function SearchFilter(props: SearchFilterProps) {
           />
           <ButtonContainer>
             <OkButton onClick={requestSearchWithFilter}>필터 적용</OkButton>
-            <CancelButton onClick={closeFilter}>취소</CancelButton>
+            <CancelButton onClick={handleResetFilter}>초기화</CancelButton>
           </ButtonContainer>
         </FilterContainer>
       </Modal>

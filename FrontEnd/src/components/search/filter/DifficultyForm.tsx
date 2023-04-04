@@ -11,11 +11,21 @@ interface DifficultyFormProps {
   handleFilterValueChange: (action: ReducerAction) => void;
 }
 
+const minDistance = 0.5;
+
 export default function DifficultyForm(props: DifficultyFormProps) {
   const [sliderValue, setValue] = useState([
     props.filterValue.difficultyS,
     props.filterValue.difficultyE,
   ]);
+
+  console.log(
+    "sliderValue: ",
+    sliderValue,
+    "filterValue: ",
+    props.filterValue.difficultyS,
+    props.filterValue.difficultyE
+  );
 
   // 슬라이더 이동 시 실행되는 콜백함수
   const handleChange = (
@@ -27,6 +37,7 @@ export default function DifficultyForm(props: DifficultyFormProps) {
       return;
     }
 
+    // 슬라이더의 최소 간격을 유지하기 위한 조건문
     if (activeThumb === 0) {
       setValue([
         Math.min(newValue[0], sliderValue[1] - minDistance) as DifficultyOption,
@@ -44,14 +55,14 @@ export default function DifficultyForm(props: DifficultyFormProps) {
       type: "difficultyS",
       newValue: {
         ...props.filterValue,
-        difficultyS: newValue[0] as DifficultyOption,
+        difficultyS: sliderValue[0] as DifficultyOption,
       },
     });
     props.handleFilterValueChange({
       type: "difficultyE",
       newValue: {
         ...props.filterValue,
-        difficultyE: newValue[1] as DifficultyOption,
+        difficultyE: sliderValue[1] as DifficultyOption,
       },
     });
   };
@@ -82,8 +93,6 @@ export default function DifficultyForm(props: DifficultyFormProps) {
     </Wrapper>
   );
 }
-
-const minDistance = 0.5;
 
 const Wrapper = styled.div`
   display: flex;
