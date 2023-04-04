@@ -72,7 +72,6 @@ public class UserController {
         logger.info("<< response : user={}", loginResponse);
 
         CookieUtil.addCookie(response, "refreshToken", tokenResponse.getRefreshToken());
-        logger.info("<< response cookie : refreshToken={}", tokenResponse.getRefreshToken());
         logger.info("<<---------------------------------------||login||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -153,7 +152,6 @@ public class UserController {
 
         String refreshToken = userService.oauthLogin(user.getUsername());
         CookieUtil.addCookie(response, "refreshToken", refreshToken);
-        logger.info("<< response cookie : refreshToken={}", refreshToken);
 
         LoginResponse loginResponse = userService.getLoginUser(user.getUsername());
         resultMap.put("user", loginResponse);
@@ -172,7 +170,6 @@ public class UserController {
 
         Cookie refreshTokenCookie = CookieUtil.getCookie(request,"refreshToken")
                 .orElseThrow(()-> new RuntimeException("해당 쿠키가 존재하지 않습니다."));
-        logger.info("<< request cookie : refreshToken={}", refreshTokenCookie.getValue());
 
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -290,4 +287,17 @@ public class UserController {
         return new ResponseEntity<>(resultMap,HttpStatus.OK);
     }
 
+    @Operation(summary = "로그아웃", description = "refresh token을 제거한다")
+    @GetMapping("logout")
+    public ResponseEntity<Void> logout(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        logger.info("<<---------------(start)----------------||logout||------------------------------------>>\n");
+        logger.info(">> request : none");
+
+        CookieUtil.deleteCookie(request,response,"refreshToken");
+        logger.info("<< response : none");
+        logger.info("<<---------------------------------------||logout||---------------(end)--------------->>\n");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
