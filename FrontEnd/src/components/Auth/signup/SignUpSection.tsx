@@ -50,7 +50,10 @@ export default function SignUpSection() {
   const checkCode = async () => {
     // TODO : API 다녀와서 200 res오면
     try {
-      const { data: isCheck } = await requestCheckCode(email, validCode);
+      const {
+        data: { isCheck },
+      } = await requestCheckCode(email, validCode);
+      console.log(isCheck);
       if (isCheck) {
         setIsEmail(true);
         handleToastClick("success", "이메일 인증 성공!");
@@ -70,22 +73,6 @@ export default function SignUpSection() {
   };
 
   const emailCheck = async () => {
-    // if (emailValidCheck(email)) {
-    //   requestEmailCheck(email)
-    //     .then((res) => {
-    //       const data = res.data;
-    //       if (!data.isDuplicated) {
-    //         setIsEmail(true);
-    //         handleToastClick("success", "사용가능한 이메일입니다.");
-    //       } else handleToastClick("error", "이미 존재하는 이메일입니다.");
-    //     })
-    //     .catch((message) => {
-    //       console.log(message);
-    //     });
-    // } else {
-    //   handleToastClick("error", "올바른 형식의 이메일을 입력해주세요.");
-    // }
-
     try {
       const {
         data: { isExisted },

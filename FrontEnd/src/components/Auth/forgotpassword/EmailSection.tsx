@@ -17,10 +17,6 @@ export default function EmailSection() {
   const [email, setEmail] = useState<string>("");
   const [validCode, setValidCode] = useState<string>("");
 
-  const handleValid = () => {
-    setIsValid(true);
-  };
-
   const handleToastClick = (
     type: IToastProps["type"],
     message: IToastProps["message"]
@@ -42,8 +38,9 @@ export default function EmailSection() {
       handleToastClick("error", "올바른 형식의 이메일을 입력하세요.");
     } else {
       try {
-        const { data: isExisted } = await requestSendEmail(email);
-        // console.log(isExisted + " " + typeof isExisted);
+        const {
+          data: { isExisted },
+        } = await requestSendEmail(email);
         if (isExisted) {
           handleToastClick("success", "5분간 유효한 코드가 전송되었습니다.");
         } else {
@@ -58,7 +55,9 @@ export default function EmailSection() {
   const checkCode = async () => {
     // TODO : API 다녀와서 200 res오면
     try {
-      const { data: isCheck } = await requestCheckCode(email, validCode);
+      const {
+        data: { isCheck },
+      } = await requestCheckCode(email, validCode);
       if (isCheck) {
         setIsValid(true);
         handleToastClick("success", "이메일 인증 성공!");
