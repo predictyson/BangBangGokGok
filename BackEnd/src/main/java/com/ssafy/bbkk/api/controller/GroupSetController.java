@@ -31,8 +31,7 @@ public class GroupSetController {
     @GetMapping("user/{emailOrNickname}")
     private ResponseEntity<Map<String, Object>> getUser(
             @Parameter(description = "입력값", required = true) @PathVariable String emailOrNickname) throws Exception{
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||getUser||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||getUser||------------------------------------>>\n");
         logger.info(">> request : emailOrNickname={}", emailOrNickname);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -40,7 +39,7 @@ public class GroupSetController {
         List<PreviewUserResponse> previewUserResponses = groupSetService.getUserListByEmailOrNickname(emailOrNickname);
         resultMap.put("users",previewUserResponses);
         logger.info("<< response : users={}", previewUserResponses);
-        logger.info("\n[{}]<<---------------------------------------||getUser||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||getUser||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }

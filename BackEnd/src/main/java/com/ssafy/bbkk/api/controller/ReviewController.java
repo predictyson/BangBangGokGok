@@ -43,8 +43,7 @@ public class ReviewController {
     @PostMapping
     private ResponseEntity<Void> addReview(@AuthenticationPrincipal User user,
             @RequestBody @Valid CreateReviewRequest createReviewRequest, Errors errors) throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||addReview||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||addReview||------------------------------------>>\n");
         logger.info(">> request : myEmail={}", user.getUsername());
         logger.info(">> request : createReviewRequest={}", createReviewRequest);
 
@@ -58,7 +57,7 @@ public class ReviewController {
 
         otherService.recCF(user.getUsername());
         logger.info("<< response api : recCF({})",user.getUsername());
-        logger.info("\n[{}]<<---------------------------------------||getSelectList||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||getSelectList||---------------(end)--------------->>\n");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -66,8 +65,7 @@ public class ReviewController {
     @PutMapping
     private ResponseEntity<Map<String, Object>> setReview(@AuthenticationPrincipal User user,
             @RequestBody @Valid UpdateReviewRequest updateReviewRequest, Errors errors) throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||getSelectList||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||getSelectList||------------------------------------>>\n");
         logger.info(">> request : myEmail={}", user.getUsername());
         logger.info(">> request : updateReviewRequest={}", updateReviewRequest);
 
@@ -84,7 +82,7 @@ public class ReviewController {
 
         otherService.recCF(user.getUsername());
         logger.info("<< response api : recCF({})", user.getUsername());
-        logger.info("\n[{}]<<---------------------------------------||getSelectList||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||getSelectList||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -93,8 +91,7 @@ public class ReviewController {
     private ResponseEntity<Void> deleteReview(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int reviewId) throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||getSelectList||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||getSelectList||------------------------------------>>\n");
         logger.info(">> request : myEmail={}", user.getUsername());
         logger.info(">> request : reviewId={}", reviewId);
 
@@ -103,7 +100,7 @@ public class ReviewController {
 
         otherService.recCF(user.getUsername());
         logger.info("<< response api : recCF({})",user.getUsername());
-        logger.info("\n[{}]<<---------------------------------------||getSelectList||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||getSelectList||---------------(end)--------------->>\n");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -47,8 +47,7 @@ public class ProfileController {
     private ResponseEntity<Map<String, Object>> getUserInfo(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||getUserInfo||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||getUserInfo||------------------------------------>>\n");
         logger.info(">> request : myEmail={}, userId={}", user.getUsername(), userId);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -60,7 +59,7 @@ public class ProfileController {
         UserInfoResponse userInfoResponse = profileService.getUserInfoByUserId(userId);
         resultMap.put("userInfo", userInfoResponse);
         logger.info("<< response : userInfo={}", userInfoResponse);
-        logger.info("\n[{}]<<---------------------------------------||getUserInfo||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||getUserInfo||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -69,8 +68,7 @@ public class ProfileController {
     private ResponseEntity<Map<String, Object>> getUserReviews(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||getUserReviews||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||getUserReviews||------------------------------------>>\n");
         logger.info(">> request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -82,7 +80,7 @@ public class ProfileController {
         List<ReviewOfUserResponse> reviewOfThemeResponses = profileService.getUserReviews(userId);
         resultMap.put("reviews", reviewOfThemeResponses);
         logger.info("<< response : reviews={}", reviewOfThemeResponses);
-        logger.info("\n[{}]<<---------------------------------------||getUserReviews||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||getUserReviews||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -92,8 +90,7 @@ public class ProfileController {
     private ResponseEntity<Map<String, Object>> getUserPreference(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||getUserPreference||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||getUserPreference||------------------------------------>>\n");
         logger.info(">> request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -105,7 +102,7 @@ public class ProfileController {
         List<PreferenceResponse> preference = profileService.getUserPreference(userId);
         resultMap.put("preference", preference);
         logger.info("<< response : preference={}", preference);
-        logger.info("\n[{}]<<---------------------------------------||getUserPreference||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||getUserPreference||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -114,8 +111,7 @@ public class ProfileController {
     private ResponseEntity<Map<String, Object>> getUserInterestThemes(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 유저의 id", required = true) @PathVariable int userId) throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||getUserInterestThemes||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||getUserInterestThemes||------------------------------------>>\n");
         logger.info(">> request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -127,7 +123,7 @@ public class ProfileController {
         List<InterestThemeResponse> interestThemeResponses = profileService.getUserInterestThemes(userId);
         resultMap.put("interestThemes", interestThemeResponses);
         logger.info("<< response : interestThemes={}", interestThemeResponses);
-        logger.info("\n[{}]<<---------------------------------------||getUserInterestThemes||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||getUserInterestThemes||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -135,8 +131,7 @@ public class ProfileController {
     @PutMapping
     private ResponseEntity<Map<String, Object>> setUserInfo(@AuthenticationPrincipal User user,
             @RequestBody @Valid UpdateUserInfoRequest updateUserInfoRequest, Errors errors) throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||setUserInfo||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||setUserInfo||------------------------------------>>\n");
         logger.info(">> request : updateUserInfoRequest={}", updateUserInfoRequest);
 
         // UpdateUserInfoRequest 입력값 유효성 검사
@@ -153,7 +148,7 @@ public class ProfileController {
 
         otherService.recCBF(user.getUsername());
         logger.info("<< response : recCBF({})", user.getUsername());
-        logger.info("\n[{}]<<---------------------------------------||setUserInfo||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||setUserInfo||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -165,13 +160,12 @@ public class ProfileController {
     @DeleteMapping
     private ResponseEntity<Void> deleteUser(
             @AuthenticationPrincipal User user) throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||getSelectList||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||getSelectList||------------------------------------>>\n");
         logger.info(">> request : myEmail={}", user.getUsername());
 
         profileService.deleteUser(user.getUsername());
         logger.info("<< response : none");
-        logger.info("\n[{}]<<---------------------------------------||getSelectList||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||getSelectList||---------------(end)--------------->>\n");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

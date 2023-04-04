@@ -31,8 +31,7 @@ public class OtherController {
     @Operation(summary = "모든 장르 가져오기", description = "모든 장르 종류를 가져온다")
     @GetMapping("genre")
     private ResponseEntity<Map<String, Object>> getSelectList() throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||getSelectList||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||getSelectList||------------------------------------>>\n");
         logger.info(">> request : ");
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -42,7 +41,7 @@ public class OtherController {
         genres.remove(0); genres.remove(3);
         resultMap.put("genres", genres);
         logger.info("<< response : genres={}", genres);
-        logger.info("\n[{}]<<---------------------------------------||getSelectList||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||getSelectList||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -50,8 +49,7 @@ public class OtherController {
     @Operation(summary = "지역 소분류 가져오기", description = "지역 대분류 이름을 받아 속하는 지역 소분류 종류를 가져온다")
     @GetMapping("region/{regionBig}")
     private ResponseEntity<Map<String, Object>> getRegionSmallList(@PathVariable("regionBig") String regionBig) throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        logger.info("\n[{}]<<---------------(start)----------------||getRegionSmallList||------------------------------------>>",now);
+        logger.info("<<---------------(start)----------------||getRegionSmallList||------------------------------------>>\n");
         logger.info(">> request : regionBig={}", regionBig);
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -59,7 +57,7 @@ public class OtherController {
         List<String> regionSmalls = otherService.getRegionSmallList(regionBig);
         resultMap.put("regionSmalls", regionSmalls);
         logger.info("<< response : regionSmalls={}", regionSmalls);
-        logger.info("\n[{}]<<---------------------------------------||getRegionSmallList||---------------(end)--------------->>",now);
+        logger.info("<<---------------------------------------||getRegionSmallList||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }
