@@ -130,21 +130,19 @@ export default function LikeThemesSection() {
       <SectionContentWrapper>
         <OverflowWrapper>
           {interests.map((interest) => (
-            <>
-              <SliderItem key={interest.previewThemeResponse.themeId}>
-                <PosterItem src={interest.previewThemeResponse.imgUrl} />
-                <Hover
-                  className="card-hover"
-                  onClick={() =>
-                    handleOpen(interest.previewThemeResponse.themeId)
-                  }
-                >
-                  <span style={{ padding: "0 2rem" }}>
-                    {interest.previewThemeResponse.title}
-                  </span>
-                </Hover>
-              </SliderItem>
-            </>
+            <SliderItem key={interest.previewThemeResponse.themeId}>
+              <PosterItem src={interest.previewThemeResponse.imgUrl} />
+              <Hover
+                className="card-hover"
+                onClick={() =>
+                  handleOpen(interest.previewThemeResponse.themeId)
+                }
+              >
+                <span style={{ padding: "0 2rem" }}>
+                  {interest.previewThemeResponse.title}
+                </span>
+              </Hover>
+            </SliderItem>
           ))}
           {themeId !== undefined && (
             <Modal
