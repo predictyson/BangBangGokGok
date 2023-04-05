@@ -1724,7 +1724,7 @@ M107는 사라지기 직전 <임무 완료>라는 메시지를 남겨 놓는다.
 충청,대전,도어이스케이프 NC대전유성점,서커스: THE CLEANING MAN,공포,3,60,""" [청소부 모집]
 자격 요건 : 행복한 인간 """,2,6,http://dj.doorescape.co.kr/upload/theme/theme66082_1.jpg,http://dj.doorescape.co.kr/reserve/?theme=C1WS9971,2022.8.31,1,5,2,1.67,1
 충청,대전,도어이스케이프 NC대전유성점,산타의 민족,감성,3.5,60,""" 허허허. 올해도 어김없이 크리스마스가 찾아왔구나! """,2,6,http://dj.doorescape.co.kr/upload/theme/theme66112_1.jpg,http://dj.doorescape.co.kr/reserve/?theme=I1G091G8,2022.9.23,3.35,3,0,0,0
-충청,대전,도어이스케이프 NC대전유성점,도어항공 41C,탈출,3,40,""" 탑승 좌석은 비상구 좌석 41C입니다. """,2,4,http://dj.doorescape.co.kr/upload/theme/theme66057_1.jpg,http://dj.doorescape.co.kr/reserve/?theme=341J0KCG,2022.10.9,0,2,0,0,0
+충청,대전,도어이스케이프 NC대전유성점,도어항공 41C,잠입/탈출,3,40,""" 탑승 좌석은 비상구 좌석 41C입니다. """,2,4,http://dj.doorescape.co.kr/upload/theme/theme66057_1.jpg,http://dj.doorescape.co.kr/reserve/?theme=341J0KCG,2022.10.9,0,2,0,0,0
 충청,대전,도어이스케이프 NC대전유성점,GOOD NIGHT (굿 나잇),감성 추리,4,60,""" 오늘 밤도 원하시는 행복을 선물할게요. """,2,6,http://dj.doorescape.co.kr/upload/theme/theme66203_1.jpg,http://dj.doorescape.co.kr/reserve/?theme=EG4688HG,2022.9.23,3.35,3,0,0,0
 충청,대전,도어이스케이프 NC대전유성점,WOULD YOU FIND ME?,코미디,4.5,60,""" 잠깐, 그럼 우리가 여기로 오게 된 이유는...? """,2,6,http://dj.doorescape.co.kr/upload/theme/theme74087_1.jpg,http://dj.doorescape.co.kr/reserve/?theme=5H8Q2LFV,2022.12.30,3.35,3,3,0,0
 경기,구리,두잇이스케이프 1호점,좀비 어택,공포 추리,2,60,"2023년, 정체불명의 좀비 바이러스가 전 세계적으로 확산되면서
@@ -2460,7 +2460,7 @@ GRACE HOTEL에서 오래도록 일하실 직원을 구합니다.
 경기,안양,룸즈에이 안양범계점,띵가띵가,코미디,3,60,나는 맨날 빵점이다. 공부는 정말 싫다.,2,6,http://www.roomsa.co.kr/upload_file/thema/maintheme(24).jpg,http://www.roomsa.co.kr/sub/sub04.asp?R_JIJEM=S2&R_THEMA=Roomsa_R39,2021.7.10,3.35,3,2,0,0
 경기,안양,룸즈에이 안양범계점,뽀득뽀득,코미디,4,60,우리 아빠는 술만 마시면 맨날 목욕탕에 가자고 한다. 목욕은 정말 싫다.,2,6,http://www.roomsa.co.kr/upload_file/thema/maintheme(7).jpg,http://www.roomsa.co.kr/sub/sub04.asp?R_JIJEM=S2&R_THEMA=Roomsa_R22,2021.7.10,1.65,3,2.5,0,1
 경기,안양,룸즈에이 안양범계점,커밍순,드라마,4,60,당신에게도 이루고 싶은 꿈이 있나요?,2,6,http://www.roomsa.co.kr/upload_file/thema/%EC%9B%B9%EC%9A%A9-%ED%8F%AC%EC%8A%A4%ED%84%B0_%EC%BB%A4%EB%B0%8D%EC%88%9C_0228(1).jpg,http://www.roomsa.co.kr/sub/sub04.asp?R_JIJEM=S2&R_THEMA=Roomsa_R45,2021.7.10,0,0,0,0,0
-경기,의정부,룸즈에이 의정부점,시크릿 에이전트 (Secret Agent),잠입/수사,5,60,"카디프에 위치해 있는 비밀안가.
+경기,의정부,룸즈에이 의정부점,시크릿 에이전트 (Secret Agent),잠입/탈출,5,60,"카디프에 위치해 있는 비밀안가.
 양복점으로 운영 중이던 이곳이 적대 세력에 의해 공격 당하고 이곳을 관리하던 관리인 Merlin은 혼수 상태에 빠져버린다.
 이 곳 어딘가에 일급 기밀 CD를 보관하는 장소가 있지만,
 유일하게 비밀장소를 알고 있던 Merlin이 의식이 없기 때문에 요원들을 파견 하게 되는데...
@@ -2746,7 +2746,7 @@ Rest In Peace.",2,5,http://www.master-key.co.kr/upload/room/173_img1.png,http://
 그리고 그 오늘은 또 같은 내일로.
 
 내 꿈은 어디로 가는가 또 무엇을 위해 버티고 있는가",2,4,http://www.master-key.co.kr/upload/room/88_img1.png,http://www.master-key.co.kr/booking/bk_detail?bid=14,2018.6.12,0,0,0,0,0
-경상,대구,마스터키 대구동성로로데오점,오버타임,탈출,5,60,"글로벌 패션브랜드 MAKI
+경상,대구,마스터키 대구동성로로데오점,오버타임,잠입/탈출,5,60,"글로벌 패션브랜드 MAKI
 동성로점 매니저 WEN의 좌충우돌 칼퇴 도전기
 
 열정페이는 너나하시고 난 페이열정.
@@ -2784,7 +2784,7 @@ Rest In Peace.",2,5,http://www.master-key.co.kr/upload/room/173_img1.png,http://
 경상,대구,마스터키 대구동성로점,인디아나 존스,모험 액션,3,60,"마지막 모험후 자신이 재직중인 바네트 대학으로 돌아온 박사는 몇달간 비워두었던 개학 연구실에서 오래전에 도착한 소포를 발견하였다.
 소포중에는 아버지의 일기장 등이 있었다. 아버지의 흔적을 쫓는 도중 존슨박사는 우연히 만난 월터도노반에게서 아버지에 관련된 단서를 얻는다.
 도노반은 자신이 앙카라 북쪽에서 발견한 반쪽자리 신의 석판 탁폰을 보여주며 헨리박사의 일기장을 참고로 나머지 반쪽 석판과 예수가 최후의 만찬때 사용했다는 술장'성배'를 찾아달라고 부탁하는데...",2,4,http://www.master-key.co.kr/upload/room/55_img1.jpg,http://www.master-key.co.kr/booking/bk_detail?bid=9,2017.9.20,0,0,0,0,0
-경상,대구,마스터키 대구동성로점,해리포터와 마법사의 돌,판타지 퍼즐,3,60,"혜리는 호그와트 지하실에 `영원한 생을 가져다주는 마법사의 돌'이 비밀리에 보관되어 있다는 것을 알게되고, 해리의 부모님을 죽인 볼드모트가 그 돌을 노린다는 사실도 알게 된다.
+경상,대구,마스터키 대구동성로점,해리포터와 마법사의 돌,판타지,3,60,"혜리는 호그와트 지하실에 `영원한 생을 가져다주는 마법사의 돌'이 비밀리에 보관되어 있다는 것을 알게되고, 해리의 부모님을 죽인 볼드모트가 그 돌을 노린다는 사실도 알게 된다.
 볼드모트는 바로 해리를 죽이려다 실패하고 이마에 번개모양의 흉터를 남긴 장본인이다. 해리는 볼드모트로부터 마법의 돌과 호그와트 마법학교를 지키기 위해 필사의 노력을 하는데... ??",2,4,http://www.master-key.co.kr/upload/room/60_img1.jpg,http://www.master-key.co.kr/booking/bk_detail?bid=9,2017.10.21,0,0,0,0,0
 경상,부산,마스터키 부산서면점,칼퇴,로맨스 코미디,3,60,"매일매일 야근의 연속. 
 여자친구에게 온 카톡 “오빠 오늘 우리 부모님 여행가셨어”
@@ -3998,7 +3998,7 @@ IMF 소속의 짐 펠프스가 이끄닌 '미션 임파서블' 팀은 리더인 이단 헌트, 경보 해제 �
 전라,광주,브레인 방탈출,필라멘트,드라마,3,60,"10년의 세월을 날려버린 이 개떡 같은 꿈을 다 태워버리려 기름을 부을 수록 눈치없이 빛을 내던 
 그 열정의 순간들. 작은 방안을 홀로 밝히는 저 끊어질 듯한 필라멘트를 바라보던 오늘. 
 그리고 그 오늘은 또 같은 내일로. 내 꿈은 어디로 가는가 또 무엇을 위해 버티고 있는가",2,6,https://naverbooking-phinf.pstatic.net/20201022_43/1603344442920noItk_JPEG/%C7%CA%B6%F3%B8%E0%C6%AE-1000.jpg?type=w1500_60_sharpen,https://booking.naver.com/booking/12/bizes/427883/items/3639099,2019.3.18,0,0,0,0,0
-전라,광주,브레인 방탈출,썸,연애,2,60,"친구라기엔 너무 가깝고... 
+전라,광주,브레인 방탈출,썸,로맨스,2,60,"친구라기엔 너무 가깝고... 
 연인이라기엔 조금은 먼 우리. 
 우리는...어떤 사이일까?",2,6,https://naverbooking-phinf.pstatic.net/20201022_223/1603344084833frlX9_JPEG/%BD%E6-1000.jpg?type=w1500_60_sharpen,https://booking.naver.com/booking/12/bizes/427883/items/3639082?area=bmp&service-target=map-pc,2019.3.18,0,0,0,0,0
 전라,광주,브레인 방탈출,SHIT,추리 코미디,3,60,"정체모를 소리와 함께 시작된 고통스러운 상황, 범인은 이 방 안에 나와 함께 있다...!",2,6,https://naverbooking-phinf.pstatic.net/20201022_236/1603344239031k2o5t_JPEG/shit-1000.jpg?type=w1500_60_sharpen,https://booking.naver.com/booking/12/bizes/427883/items/3639087,2019.3.18,0,0,0,0,0
@@ -4916,7 +4916,7 @@ SHINY POST가 편지 배송을 완료했다는 소리예요.
 그리고 오늘 꿈에 새로운 메세지가 나타나는데...",2,6,https://sherlock-holmes.co.kr/attach/theme/16293560471.jpg,https://sherlock-holmes.co.kr/reservation/,2021.8.25,2.5,2,0,0,0
 충청,대전,셜록홈즈 대전신세계백화점,언더월드,판타지,4,60,"스팀펑크시대의 개구쟁이천재소녀발명가 조이! 
 갖가지 발명품들을 만들며 지내고있다 오늘도의뢰받은물건을 배달해보실까!",2,4,https://sherlock-holmes.co.kr/attach/theme/16297797541.jpg,https://sherlock-holmes.co.kr/reservation/,2021.8.25,1.65,3,3.5,0,0
-충청,대전,셜록홈즈 대전신세계백화점,무한의 던전,잡임/탈출,2,20,주어진 시간은 20분. 탈출구를 찾아 탈출하는것이 목표입니다.,2,3,https://sherlock-holmes.co.kr/attach/theme/16312475121.jpg,https://sherlock-holmes.co.kr/reservation/,2021.9.10,0,1,0,0,0
+충청,대전,셜록홈즈 대전신세계백화점,무한의 던전,잠입/탈출,2,20,주어진 시간은 20분. 탈출구를 찾아 탈출하는것이 목표입니다.,2,3,https://sherlock-holmes.co.kr/attach/theme/16312475121.jpg,https://sherlock-holmes.co.kr/reservation/,2021.9.10,0,1,0,0,0
 충청,대전,셜록홈즈 대전신세계백화점,피플 인사이드,기타,2,40,"주어진시간 40분 남녀노소 국적 상관없이 모두가 즐겁게 즐길 수 있는 아케이드형 방탈출 피플인사이드. 
 각자 방에갇혀 서로협동을 통해 탈출해야 합니다.",2,4,https://sherlock-holmes.co.kr/attach/theme/16318581131.jpg,https://sherlock-holmes.co.kr/reservation/,2021.10.1,0,1,0,0,0
 서울,대학로,셜록홈즈 대학로점,미녀와 야수,판타지,2,60,"벨의 아버지는 딸에게 줄 장미를 꺾은 죄로 야수의 성에 갖히게된다. 
@@ -7031,7 +7031,7 @@ LET 트레이닝 룸에선 2군 선수들이 훈련이 한창이다.
 과연 당신은 성공적으로 완료할 수 있을것인가?",2,5,https://naverbooking-phinf.pstatic.net/20211022_291/1634882370019uRQAu_JPEG/image.jpg?type=w1500_60_sharpen,https://booking.naver.com/booking/12/bizes/600816/items/4144126,2019.11.1,0,0,0,0,0
 경기,부천,코드네임,첫번째 임무,잠입/탈출,4,70,"* 70분 테마입니다.
 
-!!!!! 활동성 있음 - 2인 도전 시 난이도가 높을 수 있습니다. !!!!!",2,4,https://doc-00-c0-docs.googleusercontent.com/docs/securesc/nu2touqknm8js1ur09pf0vv9h923q6hi/skf8j6fg1trceqfp8543ngertlva6vh9/1678690500000/14835035888642599681/07897135498970053018/154xCyidUxcOdM9biSdxI9czM0b6PlQ9O?e=view&ax=AB85Z1DiuloklUJAvm3j9Iphr4oS_hMvERGApYvA6oXnizqpayk4uUtuVlI6_LzwaZHqWGJlbMbQRBZnx8YAq_fcbGy-aNAzg7BE-JLQAWCkuK9uR9mWlf0nbJazmbhcDrxR7lVkwNge5SXPFRTanmRXil23pG3L18R3B1CFpserhe499heuRNdkQjXuPpCr1vzNXEAgqR1HsUZuj1i0kLLt6yY8rAOHZXX5Yqm1e_drl5gZCwcjMIpZNnBRkzsev3a5LGeEKxnGSJJRhqNAEjLxr4ucbFRIioIp33BKwspcqAiDtLaTpUT6CyIPeydMJGPaIJOoCgQ9AFtVBQlDScI2GGgyvAeXqLHXGn7tR6eUQgJGyKWIpf9SGcamoEStx6GvhuPLBR9YFRrRoVB5DF6hdp5P09bdBsIzPle8fgWE940ImPPrd2zHMVgewrhk7sYMyTc0i8uOXMm6NXi-UsQ5YjX4weQ7J4JXZ-gI3x_oHtnv6xvXlGFDE_9480pbYsYrOCGx7FQad2X3E08mY57wtcociUsaeJNFSl9pBmxVMhuMXIRJilUtsEv7fsq_CuV7l4uh6SeqlLd8I7ulNJ6RjVhU6pzLgqphR37Kpxs6f3YkGNsCr4yrwNzDDkuSRV8Wa1smmIrAhy4HaU_Oodha6wwhCbrBnk3gapU9f1ZQ3DqWXWsUOwwAwNEN5luvYn2si9sT2vbIydZonxF0wTh2j8Yba4VJptK0lkLQOPkwoQW4kl8fkl5NgdFP9SdcmM7zy6f15g9PVo7NA9WInhzFaNRqvyctLlNPqoaB92arBG8RifoTDRC-gZCyA9nMXOKnY0b7UC5PVpKV8kZh5b61oEhc8LSIfImbcV1QHFuJWFWtTgA5MtjY7S7FNO6TfUuNnZjiEfD29ouZqVVyk9YCKI6CuT_oYemEyDg&uuid=243c6007-5390-4412-a10c-bdbae2f1c8a8&authuser=0,http://www.xn--950bn4eo5vrlh.com/reservation,2021.10.17,0,0,0,0,0
+!!!!! 활동성 있음 - 2인 도전 시 난이도가 높을 수 있습니다. !!!!!",2,4,https://doc-0o-a8-docs.googleusercontent.com/docs/securesc/rt5igfq0ucgmepmjl592m39fh2tu72qg/rlh6nt0s4ajnp7b0se0n6f7u4lqt3gja/1680489150000/14835035888642599681/07700169793458572988/154xCyidUxcOdM9biSdxI9czM0b6PlQ9O?e=view&ax=ALy03A5c3p_on14_EMP3WMWBZU_LJvSNO-QSuUcvLucnX3n_Sqa085RBvykDb6sJy8vSYqMZFNNweCO4LxIhVSvFGmYVGSLZ8BPEaVw72i1kD8ez78jZJFHW8zFdj99VRq3Zmvix56fDXhvpac4nh1DPbvo0hcfbtp1aB4gCtWwb6GdqfwmjPmtYa7HvJuPZvbzmkaGHvfJo1vtS48s4D4ItdL0kgFrGojA-VhdYGn2xi3GXzKnsX8zo7a-YBF9IKSU9Gj7DSsONH8sziz3TeVM-FUzoS1TYpe8qauEDCP9J5piaQqY8FpE4TkHC05NHetfjTqsxi9eR-yN-AL4a24KGse79RReaUb4VIIAKgNRKG3jlay1kRU57tvpLkxEVz-U49Xp634IxSjBnEPbyep8LkHgoCd6HFECQaGKZVz5p7S4Ejtog7tUS1Lr_ge6ycUrgRcK3sAY1MTR-129N6IHy1kbP4ITZf9sTBu4pjH2lKjtGwQX0FNyNJ9klazMJ7O7RvgEri64BX_Uj0lIp6KJIimWaaRy-hcJpfth6km5Dg7Ft6VHmCH67EnSHwBw0WKqRu0pz61SjS-PvaPF-FhUPLu9ifYiGOv5l279Pn00LWx25okNCvJYlSvsoQpCBIYgdZzv1e45UcV7BIqdox35wR0sALos_hog9JhJft5QQu6K8yFZFSpG8uVpXr6zUUjT993Ei6sngoDfyk2rg_nI5X12urZdk8020yiGIVxo0rpfYFnZTDdcVFolN0p0KpyZF5cu5vVOEYymBLMEOFXQvQQq9KBUBuFEn8if1eVGd0tMvJUx_WZyKofvdo3QXnJ4yS15k3nctvoG9l-nTVe-E2YwZfmX6bDso8U_t-ANhC8iomWCAEplBrloT4w&uuid=eb0b3e90-7e93-4805-863f-3c6902aacee8&authuser=0,http://www.xn--950bn4eo5vrlh.com/reservation,2021.10.17,0,0,0,0,0
 경상,대구,코드네임블랙 대구점,어바웃 타임,에로,2,60,"우리... 다시 사랑할 수 있을까?
 그녀(그)가 헤어진 연인을 그리워 한다. 과거로 돌아간 우리... 다시 사랑할 수 있을까?",2,6,http://www.codenameblack-dg.co.kr/pimages/Product/Pr_1522733182.jpg,http://www.codenameblack-dg.co.kr/reservation.html,2018.4.14,0,0,0,0,0
 경상,대구,코드네임블랙 대구점,냥이강쥐의 대모험,코미디,2,60,"언제나 우리를 사랑해주는 친절한 주인님.
@@ -8259,20 +8259,20 @@ SARAH는 실종이 된 것이 아니라 살해된 것을 알게 되었습니다.
 이를 본 팰콘신은 파라오에게 번개를 내리쳐서 얼굴을 영원히 흉측하게 만드는 형벌을 내립니다.
 그 후로 이 시험에 도전하는 사람은 피라미드를 정복하지 못하면
 파라오의 신뢰에 대한 대가로 목숨을 내놓아야 합니다
-당신은 파라오의 시험에 도전할 용기가 있습니까?",2,5,https://booking.naver.com/booking/12/bizes/165274/items/2810567,https://booking.naver.com/booking/12/bizes/165274/items/2810567,2016.5.5,0,0,0,0,0
+당신은 파라오의 시험에 도전할 용기가 있습니까?",2,5,https://naverbooking-phinf.pstatic.net/20180627_281/1530086831084YysYv_JPEG/20160702_204343.jpg?type=ff1242_816,https://booking.naver.com/booking/12/bizes/165274/items/2810567,2016.5.5,0,0,0,0,0
 경상,대구,트랩코리아 대구월성점,중세시대,판타지,3,60,"어느 날 동쪽에서 온 신이 보낸 마법사가 아더왕의 성에 도착하여 신의 메세지를 전햇습니다.
 ""모든 기사는 국왕의 기사가 되기 위한 자격이 있는지 증명하기 위한 시험을 거쳐야 한다"".
 마법사는 메시지를 전한 후, 눈이 먼 장인의 도움을 받아 성 지하에 위치한 던젼에 시험장을 건설했습니다.
 그리고 이 시험을 통과하지 못하는 기사는 모든 기사로서의 특권과 직위를 반납하고
 성을 떠나야 한다고 선언했습니다.
-당신은 아더왕의 기사가 될 자격이 있습니까?",2,5,https://booking.naver.com/booking/12/bizes/165274/items/2810581,https://booking.naver.com/booking/12/bizes/165274/items/2810581,2016.5.5,0,0,0,0,0
+당신은 아더왕의 기사가 될 자격이 있습니까?",2,5,https://naverbooking-phinf.pstatic.net/20180627_205/1530086245639XObJ1_JPEG/20160702_195725.jpg?type=ff1242_816,https://booking.naver.com/booking/12/bizes/165274/items/2810581,2016.5.5,0,0,0,0,0
 경상,대구,트랩코리아 대구월성점,비밀의 무덤,모험,4,60,"브렌트 채드윅은 매우 힘든 어린 시절을 보냈습니다.
 불우한 어린 시절 탓에 정신이상이 된 브렌트는 어머니인 루실이 죽은 후에 비밀의 지하실로 도망가버렸고,
 그 곳이 바로 지금 당신이 들어갈 곳 입니다.
 피해 망상증에 시달리던 브렌트는 이 이상하고 으스스 한 곳에 온갖 함정을 설치했습니다.
 여기서 빠져나가는 유일한 방법은 루실의 유골단지를 찾아서 탈출구의 비밀 번호를 알아내는 것 뿐입니다.
 60분 후에도 당신이 여기 남아있다면 브렌트가 돌아오게 될 것이고 그 때는 당신을 더 이상 도울 수 없습니다.
-부디 행운을 빕니다.",2,5,https://booking.naver.com/booking/12/bizes/165274/items/2810605,https://booking.naver.com/booking/12/bizes/165274/items/2810605,2016.5.5,0,0,0,0,0
+부디 행운을 빕니다.",2,5,https://naverbooking-phinf.pstatic.net/20180627_175/1530086788541X18zr_JPEG/20160702_204430.jpg?type=ff1242_816,https://booking.naver.com/booking/12/bizes/165274/items/2810605,2016.5.5,0,0,0,0,0
 경상,대구,트랩코리아 대구월성점,아마겟돈,SF,5,60,"지구는 지금 엄청난 속도로 지구를 향해 돌진하는 거대 소행성으로 인해 위험에 쳐해있습니다.
 다행히 며칠 전 과학자들이 충돌 예상 궤도를 계산했고 대책을 만들어 냈습니다.
 로켓을 소행성으로 발사하여 소행성과 충돌하게 한 후 궤도를 바꾸어
@@ -8281,7 +8281,7 @@ SARAH는 실종이 된 것이 아니라 살해된 것을 알게 되었습니다.
 버려진 지하 군사 벙커에 설치된 복원장치를 발견할 수 있는 것은 오직 당신의 팀밖에 없습니다.
 당신 팀의 임무는 벙커를 발견하고 시스템이 어떻게 동작하는지 알아내어 늦기 전에 로켓을 발사하는 것입니다.
 남은 시간은 60분!
-인류의 운명은 당신 손에 달려있습니다.",2,5,https://booking.naver.com/booking/12/bizes/165274/items/2810616,https://booking.naver.com/booking/12/bizes/165274/items/2810616,2016.5.5,0,0,0,0,0
+인류의 운명은 당신 손에 달려있습니다.",2,5,https://naverbooking-phinf.pstatic.net/20180627_105/15300867550241a2b2_JPEG/20160702_204843.jpg?type=w1500_60_sharpen,https://booking.naver.com/booking/12/bizes/165274/items/2810616,2016.5.5,0,0,0,0,0
 경상,울산,트랩코리아 울산점,고대 이집트,판타지,3,60,"가장 용맹한 팰콘신(매의 신)의 이름을 딴 ""호르""라는 파라오가 살고 있었습니다.
 호르는 자신의 재치있고 영리한 두뇌를 항상 자랑스러워 했습니다.
 수천의 노예를 희생한 끝에 25년 만에 피라미드를 완성한 후,
