@@ -109,6 +109,7 @@ export default function RankSlider({ data }: IProps) {
 }
 const PosterWrapper = styled.div`
   h2 {
+    margin-top: 1.8rem;
     text-align: center;
   }
 `;
