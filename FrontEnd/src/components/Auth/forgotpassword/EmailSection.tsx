@@ -148,12 +148,12 @@ const Container = styled.div`
   width: 60rem;
   height: 40rem;
   border-radius: 1.5rem;
+  padding: 2rem 0;
   background-color: ${theme.colors.container};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  padding: 2rem 0;
   p {
     color: ${theme.colors.pink};
     font-size: 2rem;

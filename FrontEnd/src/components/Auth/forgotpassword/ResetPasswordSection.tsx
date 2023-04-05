@@ -121,6 +121,7 @@ const Container = styled.div`
   height: 40rem;
   border-radius: 0.5rem;
   padding: 2rem 0;
+  border-radius: 1.5rem;
   background-color: ${theme.colors.container};
   display: flex;
   flex-direction: column;
