@@ -102,7 +102,9 @@ public class ThemeServiceImpl implements ThemeService {
 
         int cnt = 0;
         List<PreviewThemeResponse> temp = null;
-        while (list.size() >= THEME_RETURN_COUNT) {
+        if(list.size() < THEME_RETURN_COUNT) return null;
+
+        while (true) {
             cnt = 0;
             temp = new ArrayList<>();
 
@@ -173,7 +175,9 @@ public class ThemeServiceImpl implements ThemeService {
 
         int cnt = 0;
         List<PreviewThemeResponse> temp = null;
-        while (list.size() >= THEME_RETURN_COUNT) {
+        if(list.size() < THEME_RETURN_COUNT) return null;
+
+        while (true) {
             cnt = 0;
             temp = new ArrayList<>();
 
@@ -297,14 +301,22 @@ public class ThemeServiceImpl implements ThemeService {
     public List<ThemeBundleResponse> getTopThemes() throws Exception {
         List<ThemeBundleResponse> result = new ArrayList<>();
         Random rnd = new Random();
-        // 체감 테마
-        result.add(getFeelBundle());
 
-        // 지역 인기 테마
+        // 체감 테마
+        ThemeBundleResponse feelBundle = getFeelBundle();
+        while(feelBundle == null){
+            feelBundle = getFeelBundle();
+        }
+        result.add(feelBundle);
+
         List<Region> regionList = regionRepository.findAll();
-        // 랜덤 지역 id
-        int idx = regionList.get(rnd.nextInt(regionList.size())).getId();
-        result.add(getRegionBundle(idx));
+        int idx = regionList.get(rnd.nextInt(regionList.size())).getId(); // 랜덤 지역 id
+        // 지역 인기 테마
+        ThemeBundleResponse regionBundle = getRegionBundle(idx);
+        while(regionBundle == null){
+            regionBundle = getRegionBundle(idx);
+        }
+        result.add(regionBundle);
 
         return result;
     }
@@ -315,12 +327,21 @@ public class ThemeServiceImpl implements ThemeService {
         Random rnd = new Random();
         if (rnd.nextBoolean()) {
             // 체감 테마
-            result.add(getFeelBundle());
+             ThemeBundleResponse feelBundle = getFeelBundle();
+             while (feelBundle == null){
+                 feelBundle = getFeelBundle();
+             }
+            result.add(feelBundle);
         } else {
             User user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
             // 선호 지역 인기 테마
-            result.add(getRegionBundle(user.getRegion().getId()));
+            int regionId = user.getRegion().getId();
+            ThemeBundleResponse regionBundle = getRegionBundle(regionId);
+            while (regionBundle == null){
+                regionBundle = getRegionBundle(regionId);
+            }
+            result.add(regionBundle);
         }
 
         return result;
