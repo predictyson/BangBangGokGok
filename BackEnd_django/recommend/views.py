@@ -67,7 +67,7 @@ def cbfAPI(request):
     print(genre_list)
 
 
-    df = pd.read_csv('./(MERGE) 방탈출 테마 정보_정리완료.csv', encoding='cp949')
+    df = pd.read_csv('./(4.3)bbkk_theme_info.csv', encoding='cp949')
     data = df[['지역(대)', '지역(소)', '매장명', '테마명', '장르', '난이도', '시간', '오픈일', '최소인원', '최대인원', '메인사진', '예약URL', '내용', '인원', '추천율', '유저_난이도', '유저_활동성', '유저_공포도']]
 
     select_theme_genre = ' '.join(genre_list)
@@ -101,14 +101,23 @@ def cbfAPI(request):
         sim_index = sim_index[sim_index != target_theme_index]
 
         # 추천결과 새로운 df생성, 평균평점(score)으로 정렬
+
         result = df.iloc[sim_index]
 
         return result
 
     # 이걸 DB에 저장하면 끄읏
-    recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[:10]
+    #recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[:10]
+    recommend_theme = recommend_theme_list(data, theme_title='standard')['테마명'][:15]
 
-    print(recommend_theme)
+
+    temp = []
+    for index, title in enumerate(recommend_theme):
+        if title not in temp:
+            temp.append(recommend_theme.index.values[index])
+    print(temp)
+
+
 
     # recommended_theme_of_user에 넣기전 이전 데이터를 삭제해야됨
     delete_sql = "delete from recommended_theme_of_user where user_id = %s and type = 1"
@@ -118,14 +127,16 @@ def cbfAPI(request):
     # recommended_theme_of_user에 새로운 데이터 넣기
     sql = "insert into recommended_theme_of_user(created_date, modified_date, type, theme_id, user_id) values (now(), now(), 1, %s, %s)"
 
-    for theme_id in recommend_theme:
+    for theme_id in temp:
         curs.execute(sql, (theme_id+1, user_id))
     conn.commit()
 
-    response = HttpResponse('CBF 추천 완료', status=200)
 
 
     conn.close()
+
+    response = HttpResponse('CBF 추천 완료', status=200)
+
     return response
 
 
@@ -148,7 +159,7 @@ def cfAPI(request):
     curs.execute(count_review_sql, user_id)
     review_count = curs.fetchone()[0]
 
-    if (review_count == 0):
+    if (review_count < 5):
         # 유저의 관심 테마가 몇개 있는지 확인
         sql = "select count(*) from interested_theme_of_user where user_id = %s"
         curs.execute(sql, user_id)
@@ -185,7 +196,7 @@ def cfAPI(request):
         print("genre_list : ", end=' ')
         print(genre_list)
 
-        df = pd.read_csv('./(MERGE) 방탈출 테마 정보_정리완료.csv', encoding='cp949')
+        df = pd.read_csv('./(4.3)bbkk_theme_info.csv', encoding='cp949')
         data = df[
             ['지역(대)', '지역(소)', '매장명', '테마명', '장르', '난이도', '시간', '오픈일', '최소인원', '최대인원', '메인사진', '예약URL', '내용', '인원',
              '추천율', '유저_난이도', '유저_활동성', '유저_공포도']]
@@ -227,9 +238,17 @@ def cfAPI(request):
             return result
 
         # 이걸 DB에 저장하면 끄읏
-        recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[11:20]
+        #recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[11:20]
 
-        print(recommend_theme)
+        recommend_theme = recommend_theme_list(data, theme_title='standard')['테마명'][15:30]
+
+        temp = []
+        for index, title in enumerate(recommend_theme):
+            if title not in temp:
+                temp.append(recommend_theme.index.values[index])
+        print(temp)
+
+
 
         # recommended_theme_of_user에 넣기전 이전 데이터를 삭제해야됨
         delete_sql = "delete from recommended_theme_of_user where user_id = %s and type = 2"
@@ -239,7 +258,7 @@ def cfAPI(request):
         # recommended_theme_of_user에 새로운 데이터 넣기
         sql = "insert into recommended_theme_of_user(created_date, modified_date, type, theme_id, user_id) values (now(), now(), 2, %s, %s)"
 
-        for theme_id in recommend_theme:
+        for theme_id in temp:
                 curs.execute(sql, (theme_id+1, user_id))
         conn.commit()
 
@@ -415,17 +434,24 @@ def cfAPI(request):
     curs.execute(delete_sql, user_id)
     conn.commit()
 
+
     # recommended_theme_of_user에 새로운 데이터 넣기
     sql = "insert into recommended_theme_of_user(created_date, modified_date, type, theme_id, user_id) values (now(), now(), 2, %s, %s)"
 
-    for title in recomm_theme.iterrows():
-            title, theme_id = title[0].split('_')
+    temp = []
+    for titles in recomm_theme.iterrows():
+        title, theme_id = titles[0].split('_')
+        if title not in temp:
+            temp.append(theme_id)
+    print(temp)
+
+    for theme_id in temp:
             curs.execute(sql, (theme_id, user_id))
     conn.commit()
 
-    response = HttpResponse('CF 추천 완료', status=200)
 
     conn.close()
+    response = HttpResponse('CF 추천 완료', status=200)
 
     return response
 
@@ -458,7 +484,7 @@ def groupsetAPI(request):
         for user in user_id:
             curs.execute(sql, user)
             res = curs.fetchall()
-            if (res[0][0] < 100):
+            if (res[0][0] < 10):
                 hybrid_flag = False
                 break
 
@@ -627,14 +653,21 @@ def groupsetAPI(request):
             recomm_theme = pd.DataFrame(data=recomm_theme.values, index=recomm_theme.index,
                                         columns=['예측평점'])
 
+            print("+++++++++++++++++++++")
             print(recomm_theme)
+
+            temp = []
+            for titles in recomm_theme.iterrows():
+                title, theme_id = titles[0].split('_')
+                if title not in temp:
+                    temp.append(theme_id)
+            print(temp)
 
             theme_info = []
 
             from .models import Theme_info
 
-            for title in recomm_theme.iterrows():
-                title, theme_id = title[0].split('_')
+            for theme_id in temp:
                 imgUrl_sql = 'select img_url from theme where theme_id = %s'
                 curs.execute(imgUrl_sql, theme_id)
                 imgUrl = curs.fetchall()[0][0]
@@ -646,6 +679,10 @@ def groupsetAPI(request):
                 genres = []
                 for genre in res:
                     genres.append(genre[0])
+
+                title_sql = "select title from theme where theme_id= %s"
+                curs.execute(title_sql, theme_id)
+                title = curs.fetchall()[0][0]
                 theme_info.append(Theme_info(theme_id, title, imgUrl, genres))
 
 
@@ -706,7 +743,7 @@ def groupsetAPI(request):
             print(total_genre_list)
             print(total_theme_list)
 
-            df = pd.read_csv('./(MERGE) 방탈출 테마 정보_정리완료.csv', encoding='cp949')
+            df = pd.read_csv('./(4.3)bbkk_theme_info.csv', encoding='cp949')
             data = df[
                 ['지역(대)', '지역(소)', '매장명', '테마명', '장르', '난이도', '시간', '오픈일', '최소인원', '최대인원', '메인사진', '예약URL', '내용', '인원',
                  '추천율', '유저_난이도', '유저_활동성', '유저_공포도']]
@@ -748,15 +785,20 @@ def groupsetAPI(request):
                 return result
 
             # 이걸 DB에 저장하면 끄읏
-            recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[:10]
+            #recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[:10]
+            recommend_theme = recommend_theme_list(data, theme_title='standard')['테마명'][:15]
 
-            print(recommend_theme)
+            temp = []
+            for index, title in enumerate(recommend_theme):
+                if title not in temp:
+                    temp.append(recommend_theme.index.values[index])
+            print(temp)
 
             theme_info = []
 
             from .models import Theme_info
 
-            for theme_id in recommend_theme:
+            for theme_id in temp:
                 title_sql = 'select title from theme where theme_id = %s'
                 curs.execute(title_sql, theme_id)
                 title = curs.fetchall()[0][0]
