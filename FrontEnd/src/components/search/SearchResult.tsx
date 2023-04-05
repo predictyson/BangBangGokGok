@@ -4,7 +4,7 @@ import { PreviewThemeResponse } from "types/search";
 import { getDetail } from "@/api/theme";
 import { IReviewData, IDetailData } from "types/detail";
 import { getReviews } from "@/api/review";
-import Modal from "@/components/main/Modal";
+import Modal from "@components/main/Modal/Modal";
 
 interface SearchResultProps {
   results: PreviewThemeResponse[];

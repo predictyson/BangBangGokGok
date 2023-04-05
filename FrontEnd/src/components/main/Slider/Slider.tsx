@@ -5,31 +5,48 @@ import PrevArrow from "@/assets/common/PrevArrow.png";
 import NextArrow from "@/assets/common/NextArrow.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Modal from "./Modal";
-import { IAwardSlider, IAwardTheme } from "types/slider";
-import { IDetailData, IReviewData, IDetailLogin } from "types/detail";
+import { ISliderData, IThemeData } from "types/slider";
+import Modal from "../Modal/Modal";
+import { IReviewData, IDetailData, IDetailLogin } from "types/detail";
 import { getDetail, getDetailLogin } from "@/api/theme";
 import { getReviews } from "@/api/review";
 interface IProps {
-  awardData: IAwardSlider;
+  topData: ISliderData[];
+  isRecommendSlider: boolean;
 }
-interface ArrowProps extends CustomArrowProps {
-  onClick?: MouseEventHandler<HTMLDivElement>;
-}
-
-export default function AwardsSlider(awardData: IProps) {
+export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
+  interface ArrowProps extends CustomArrowProps {
+    onClick?: MouseEventHandler<HTMLDivElement>;
+  }
+  const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
-  const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
   const [data, setData] = useState<IDetailData>(initData);
-
+  const [logindata, setLoginData] = useState<IDetailLogin>({
+    isInterest: false,
+    isMyReview: false,
+  });
+  /* 로그인 시 추가 상세 정보 받아오기 */
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
+  const requestDetailLoginData = async (themeId: number) => {
+    if (themeId !== 0) {
+      try {
+        const res = await getDetailLogin(themeId);
+        setLoginData(res.data);
+        console.log(res.data);
+        console.log(logindata);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  // requestDetailLoginData(themeId);
   const handleOpen = async (themeId: number) => {
     await setThemeId(themeId);
-    await requestReviews(themeId);
     await requestDetailData(themeId);
-    await setOpen(true);
-    console.log("handleOpen Award : " + themeId);
+    await requestReviews(themeId);
+    setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
@@ -50,12 +67,13 @@ export default function AwardsSlider(awardData: IProps) {
       }
     }
   };
+
   const CustomPrevArrow: FC<ArrowProps> = ({ className, onClick }) => {
     return (
       <div className={className} onClick={onClick}>
         <img
           src={PrevArrow}
-          style={{ width: "2rem", height: "5rem", marginLeft: "-3rem" }}
+          style={{ width: "2rem", height: "5rem", marginLeft: "-2rem" }}
           alt="prev-arrow"
         />
       </div>
@@ -67,12 +85,17 @@ export default function AwardsSlider(awardData: IProps) {
       <div className={className} onClick={onClick}>
         <img
           src={NextArrow}
-          style={{ width: "2rem", height: "5rem", marginLeft: "3rem" }}
+          style={{
+            width: "2rem",
+            height: "5rem",
+            marginLeft: "2rem",
+          }}
           alt="next-arrow"
         />
       </div>
     );
   };
+
   const settings = {
     centerMode: true,
     dots: false,
@@ -96,98 +119,64 @@ export default function AwardsSlider(awardData: IProps) {
     }
   };
 
-  const awarddata = awardData.awardData;
   return (
     <Container>
-      <TitleWrapper>
-        <Icon
-          src="https://icon-library.com/images/prize-icon/prize-icon-5.jpg"
-          alt="icon"
-        />
-        <Title>{awarddata.year}년도 어워즈 수상작</Title>
-      </TitleWrapper>
-      <Slider {...settings}>
-        {awarddata.theme.map((theme: IAwardTheme) => (
-          <SliderItem key={theme.themeId}>
-            <SliderTitleWrapper>
-              <img
-                src="https://user-images.githubusercontent.com/55784772/227142184-4680b14f-4d30-4699-a62e-8b258803b9db.png"
-                alt="left"
-              />
-              <span className="title">{theme.awardName}</span>
-              <img
-                src="https://user-images.githubusercontent.com/55784772/227142176-55d00e0c-d111-4fa0-880a-29a75030bb8d.png"
-                alt="right"
-              />
-            </SliderTitleWrapper>
-            <SliderMaterialWrapper>
-              <PosterItem src={theme.imgUrl} />
-              <Hover
-                className="card-hover"
-                onClick={() => handleOpen(theme.themeId)}
-              >
-                {theme.title}
-              </Hover>
-            </SliderMaterialWrapper>
-          </SliderItem>
-        ))}
-      </Slider>
-      {themeId !== undefined && (
-        <Modal
-          reviews={reviews}
-          open={open}
-          onClose={handleClose}
-          themeId={themeId}
-          data={data}
-          handleReviews={handleReviews}
-        />
-      )}
+      {topData.map((item, idx) => (
+        <>
+          {isRecommendSlider ? (
+            <RecommendTitle className="recommend">
+              {localStorage.getItem("nickname") + item.label}
+            </RecommendTitle>
+          ) : (
+            <TitleWrapper>
+              <Icon src={ICONLIST[idx]} alt="icon" />
+              <Title>{item.label}</Title>
+            </TitleWrapper>
+          )}
+          <Slider {...settings}>
+            {item.themes.map((theme: IThemeData) => (
+              <>
+                <SliderItem key={theme.themeId}>
+                  <PosterItem src={theme.imgUrl} />
+                  <Hover
+                    className="card-hover"
+                    onClick={() => handleOpen(theme.themeId)}
+                  >
+                    <span style={{ padding: "0 2rem" }}>{theme.title}</span>
+                  </Hover>
+                </SliderItem>
+              </>
+            ))}
+          </Slider>
+          {themeId !== undefined && (
+            <Modal
+              open={open}
+              onClose={handleClose}
+              themeId={themeId}
+              data={data}
+              reviews={reviews}
+              handleReviews={handleReviews}
+            />
+          )}
+        </>
+      ))}
     </Container>
   );
 }
-const SliderMaterialWrapper = styled.div`
-  width: 22rem;
-  margin: 0 auto;
-  :hover {
-    & > .card-hover {
-      opacity: 0.8;
-    }
-  }
-`;
 
 const PosterItem = styled.img`
-  width: 22rem;
-  height: 28rem;
+  width: 20rem;
+  height: 25rem;
   cursor: pointer;
-  margin: 0 auto;
+  border-bottom: 1rem;
   border-radius: 1rem;
 `;
-const SliderTitleWrapper = styled.div`
-  width: 25rem;
-  height: 5rem;
-  font-size: 2rem;
-  margin: 1rem auto;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  span {
-    margin-bottom: 0.2rem;
-    font-size: 1.8rem;
-    font-weight: 400;
-    align-items: center;
-    display: flex;
-  }
-  .title {
-    margin: auto 0;
-    display: flex;
-    flex-direction: column;
-    font-weight: bold;
-  }
-`;
+
 const Container = styled.div`
   width: 90%;
   margin: auto auto;
   margin-top: 0;
+
   .slick-prev:before {
     display: none;
   }
@@ -196,6 +185,14 @@ const Container = styled.div`
   }
 `;
 
+const RecommendTitle = styled.div`
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  font-family: Pretendard;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+`;
 const TitleWrapper = styled.div`
   display: flex;
   margin-top: 10rem;
@@ -217,13 +214,17 @@ const Title = styled.div`
 const SliderItem = styled.div`
   position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  :hover {
+    & > .card-hover {
+      opacity: 0.8;
+    }
+  }
 `;
 
 const Hover = styled.div`
-  width: 22rem;
-  height: 28rem;
+  width: 20rem;
+  height: 25rem;
   position: absolute;
   opacity: 0;
   background-color: black;
@@ -238,32 +239,37 @@ const Hover = styled.div`
   align-items: center;
   font-size: 2rem;
   font-weight: bold;
-  margin: 7rem auto;
   cursor: pointer;
 `;
+
+const ICONLIST = [
+  "https://user-images.githubusercontent.com/55784772/224244356-4b23a520-1b98-4a5f-a0ab-08b2c2fa3685.png",
+  "https://user-images.githubusercontent.com/55784772/224244351-f487bf83-9e70-4a82-873b-57c5076abff6.png",
+  "https://user-images.githubusercontent.com/55784772/224244359-d37e4b92-49fc-4584-97b9-06147d5a3bb2.png",
+];
 
 const BREAKPOINT = [
   {
     breakpoint: 2000,
     settings: {
-      slidesToShow: 5,
-      slidesToScroll: 5,
+      slidesToShow: 5.5,
+      slidesToScroll: 5.5,
       infinite: true,
     },
   },
   {
     breakpoint: 1920,
     settings: {
-      slidesToShow: 5,
-      slidesToScroll: 5,
+      slidesToShow: 6,
+      slidesToScroll: 6,
       infinite: true,
     },
   },
   {
     breakpoint: 1600,
     settings: {
-      slidesToShow: 4,
-      slidesToScroll: 4,
+      slidesToShow: 4.5,
+      slidesToScroll: 4.5,
       infinite: true,
     },
   },

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { theme } from "@/styles/theme";
 import { getUserInterests } from "@/api/profile";
 import { UserInterestTheme } from "types/mypage";
-import Modal from "@/components/main/Modal";
+import Modal from "@components/main/Modal/Modal";
 import { IDetailData, IReviewData } from "types/detail";
 import { getDetail } from "@/api/theme";
 import { getReviews } from "@/api/review";

@@ -5,8 +5,8 @@ import { theme } from "@/styles/theme";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import Chart from "@/components/main/Chart";
-import ReviewItem from "@/components/main/ReviewItem";
-import WriteReview from "./WriteReview";
+import ReviewItem from "@components/main/Review/ReviewItem";
+import WriteReview from "@/components/main/Modal/WriteReview";
 import { styled as mstyled } from "@mui/material/styles";
 import { IDetailData, IReviewData } from "types/detail";
 interface IProps {

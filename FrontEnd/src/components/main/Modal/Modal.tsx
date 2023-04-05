@@ -7,7 +7,7 @@ import { theme } from "@/styles/theme";
 import Rating from "@mui/material/Rating";
 import Toast, { showToast } from "@/components/common/Toast";
 import "react-toastify/dist/ReactToastify.css";
-import Review from "./Review";
+import Review from "@/components/main/Review/Review";
 import { styled as mstyled } from "@mui/material/styles";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
