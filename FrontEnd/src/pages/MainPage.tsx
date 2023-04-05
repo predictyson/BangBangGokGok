@@ -102,50 +102,50 @@ const RecommendWrapper = styled.div`
 // api에서 가져올 데이터 (DUMMY)
 const HotThemesData: IThemeData[] = [
   {
-    themeId: 560,
-    title: "온칼로: 10만년의 밤",
+    themeId: 0,
+    title: "",
     imgUrl:
       "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
-    themeId: 264,
-    title: "X테마",
+    themeId: 0,
+    title: "",
     imgUrl:
       "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
-    themeId: 560,
-    title: "온칼로: 10만년의 밤",
+    themeId: 0,
+    title: "",
     imgUrl:
       "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
-    themeId: 264,
-    title: "X테마",
+    themeId: 0,
+    title: "",
     imgUrl:
       "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
-    themeId: 560,
-    title: "온칼로: 10만년의 밤",
+    themeId: 0,
+    title: "",
     imgUrl:
       "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
-    themeId: 264,
-    title: "X테마",
+    themeId: 0,
+    title: "",
     imgUrl:
       "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
-    themeId: 560,
-    title: "온칼로: 10만년의 밤",
+    themeId: 0,
+    title: "",
     imgUrl:
       "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
   {
-    themeId: 264,
-    title: "X테마",
+    themeId: 0,
+    title: "",
     imgUrl:
       "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/hotTheme.png",
   },
@@ -264,49 +264,49 @@ const AwardThemeDummy: IAwardTheme[] = [
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
-    title: "미스테리 거울의 방", // 테마명
+    title: "", // 테마명
     imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
-    title: "미스테리 거울의 방", // 테마명
+    title: "", // 테마명
     imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
-    title: "미스테리 거울의 방", // 테마명
+    title: "", // 테마명
     imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
-    title: "미스테리 거울의 방", // 테마명
+    title: "", // 테마명
     imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
-    title: "미스테리 거울의 방", // 테마명
+    title: "", // 테마명
     imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
-    title: "미스테리 거울의 방", // 테마명
+    title: "", // 테마명
     imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
-    title: "미스테리 거울의 방", // 테마명
+    title: "", // 테마명
     imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
     awardName: "코믹/문제/기타", // 수상 부문
     themeId: 1, // 테마 id
-    title: "미스테리 거울의 방", // 테마명
+    title: "", // 테마명
     imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
 ];

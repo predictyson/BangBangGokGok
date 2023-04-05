@@ -211,7 +211,7 @@ const initData: IDetailData = {
   regionBig: "서울", // 지역(대분류)
   regionSmall: "강남", // 지역(소분류)
   storeName: "코드케이 홍대점", // 매장명
-  title: "미스테리 거울의 방", // 테마명
+  title: "", // 테마명
   genre: ["공포", "추리"], // 장르 목록
   difficulty: 3.2, // 난이도
   runningTime: 60, // 시간 (분단위)
