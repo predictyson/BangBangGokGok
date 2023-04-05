@@ -53,12 +53,16 @@ export default function LoginSection() {
           user: { nickname, userId, profileImageType, email },
         },
       } = await requestLogin(user);
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("nickname", nickname);
-      localStorage.setItem("userId", userId);
-      localStorage.setItem("profileImageType", profileImageType);
-      localStorage.setItem("email", email);
-      navigate("/", { replace: true });
+      if (nickname === null) {
+        navigate("/additional", { state: { userId: userId } });
+      } else {
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("nickname", nickname);
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("profileImageType", profileImageType);
+        localStorage.setItem("email", email);
+        navigate("/", { replace: true });
+      }
     } catch (err) {
       console.log(err);
       // TODO: 로그인 실패 TOAST 추가하자
