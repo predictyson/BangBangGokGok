@@ -301,19 +301,22 @@ public class ThemeServiceImpl implements ThemeService {
     public List<ThemeBundleResponse> getTopThemes() throws Exception {
         List<ThemeBundleResponse> result = new ArrayList<>();
         Random rnd = new Random();
-
+        System.out.println("*** 체감 테마");
         // 체감 테마
         ThemeBundleResponse feelBundle = getFeelBundle();
         while(feelBundle == null){
+            System.out.println("*** *** 체감 테마 null");
             feelBundle = getFeelBundle();
         }
         result.add(feelBundle);
-
+        System.out.println("*** 지역 인기 테마");
         List<Region> regionList = regionRepository.findAll();
         int idx = regionList.get(rnd.nextInt(regionList.size())).getId(); // 랜덤 지역 id
         // 지역 인기 테마
         ThemeBundleResponse regionBundle = getRegionBundle(idx);
         while(regionBundle == null){
+            System.out.println("*** *** 지역 인기 테마 null");
+            idx = regionList.get(rnd.nextInt(regionList.size())).getId(); // 랜덤 지역 id
             regionBundle = getRegionBundle(idx);
         }
         result.add(regionBundle);
