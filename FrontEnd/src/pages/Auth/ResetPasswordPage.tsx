@@ -1,12 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import ResetPassword from "@components/Auth/forgotpassword/ResetPasswordSection";
+import Header from "@components/common/Header";
 
 export default function ResetPasswordPage() {
   return (
-    <Container>
-      <ResetPassword />
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <ResetPassword />
+      </Container>
+    </>
   );
 }
 

@@ -117,10 +117,9 @@ const CustomTextField = mstyled(TextField)({
 });
 
 const Container = styled.div`
-  width: 40%;
-  height: 55%;
+  width: 50rem;
+  height: 55rem;
   border-radius: 0.5rem;
-  margin: 4rem auto;
   padding: 2rem 0;
   background-color: ${theme.colors.container};
   display: flex;
