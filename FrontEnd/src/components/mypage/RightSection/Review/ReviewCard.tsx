@@ -130,7 +130,8 @@ const FirstColumn = styled.div`
 const ThemeImageWrapper = styled.div`
   box-sizing: content-box;
   display: flex;
-  width: 100%;
+  /* width: 100%; */
+  height: 100%;
   aspect-ratio: 3 / 4;
   border-radius: 1.5rem;
 `;

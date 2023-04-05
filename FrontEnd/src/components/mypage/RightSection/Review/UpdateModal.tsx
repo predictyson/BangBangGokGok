@@ -260,7 +260,6 @@ const updateModalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "48%",
-  height: "55%",
   bgcolor: "#33202F",
   borderRadius: 10,
   boxShadow: 24,
