@@ -4,9 +4,9 @@ import LeftNavBar from "@components/mypage/LeftSection/LeftNavBar";
 import RightContent from "@components/mypage/RightSection/RightContent";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
-import Toast, { showToast } from "@/components/common/Toast";
+import { showToast } from "@/components/common/Toast";
 import { useNavigate } from "react-router-dom";
-import { myPageLoader } from "@/api/routerLoader";
+import { requestCheckLoginUser } from "@/api/auth";
 
 export default function MyPage() {
   const navigate = useNavigate();
@@ -19,17 +19,29 @@ export default function MyPage() {
   };
 
   useEffect(() => {
-    try {
-      const res = myPageLoader();
-      if (!res) {
+    const userId = Number(localStorage.getItem("userId"));
+
+    const request = async () => {
+      try {
+        const {
+          data: { isLoginUser },
+        } = await requestCheckLoginUser(userId);
+        if (!isLoginUser) {
+          handleToastClick("error", "정상적인 접근이 아닙니다.");
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+        }
+      } catch (error) {
         handleToastClick("error", "정상적인 접근이 아닙니다.");
         setTimeout(() => {
           navigate("/login");
         }, 2000);
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    };
+
+    request();
   }, []);
   return (
     <>

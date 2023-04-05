@@ -6,7 +6,6 @@ import UserSection from "@components/group/UserListSection";
 import ThemeRecSection from "@components/group/ThemeRecSection";
 import Toast, { showToast } from "@/components/common/Toast";
 import { IThemeData } from "types/slider";
-import { myPageLoader } from "@/api/routerLoader";
 import { useNavigate } from "react-router-dom";
 import { requestCheckLoginUser } from "@/api/auth";
 
@@ -165,21 +164,5 @@ const MiddleSection = styled.div`
   h1 {
     font-size: 3.2rem;
     font-weight: ${theme.fontWeight.extraBold};
-  }
-`;
-
-const NavButton = styled.div`
-  color: ${theme.colors.pink};
-  font-size: 1.3rem;
-  cursor: pointer;
-  border: solid 1px ${theme.colors.pink};
-  border-radius: 1rem;
-  padding: 0.7rem 1rem;
-  transition: transform 0.3s ease-in-out;
-  &:hover {
-    border: solid 1px white;
-    color: white;
-    background-color: ${theme.colors.pink};
-    /* transform: scale(1.1); */
   }
 `;
