@@ -132,9 +132,9 @@ export default function ReviewItem({ data }: IProps) {
 const Content = styled.div`
   margin-top: 1.2rem;
   font-size: 1.6rem;
-  /* border: solid 1px darkgray;
-  padding: 2rem;
-  border-radius: 1rem; */
+  /* border: solid 1px darkgray; */
+  padding: 1rem 0;
+  /* border-radius: 1rem; */
 `;
 const RatingWrapper = styled.div`
   margin-top: 1rem;

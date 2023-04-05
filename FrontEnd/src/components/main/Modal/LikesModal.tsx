@@ -23,14 +23,14 @@ export default function LikesModal({ childOpen, handleClose }: IProps) {
             <iframe src="https://embed.lottiefiles.com/animation/4837"></iframe>
             <h1>관심 목록에 추가하였습니다.</h1>
             <ButtonWrapper>
+              <CustomButton className="post" onClick={() => handleClose()}>
+                확인
+              </CustomButton>
               <CustomButton
                 className="mylist"
                 onClick={() => navigate("/mypage/likes")}
               >
                 내 관심목록 보기
-              </CustomButton>
-              <CustomButton className="post" onClick={() => handleClose()}>
-                확인
               </CustomButton>
             </ButtonWrapper>
           </Container>
@@ -66,8 +66,7 @@ const ButtonWrapper = styled.div`
   margin-top: 3rem;
   display: flex;
   justify-content: space-between;
-  width: 58%;
-  border: solid 1px red;
+  width: 65%;
 `;
 const Container = styled.div`
   display: flex;
