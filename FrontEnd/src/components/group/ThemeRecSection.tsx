@@ -60,7 +60,7 @@ export default function ThemeRecSection({
     const data = userList.map((user) => {
       return user.userId;
     });
-    if (data.length === 0) {
+    if (data.length === 0 || data.length === 1) {
       handleToastClick("error", "최소 2명이상 유저를 추가해주세요.");
     } else {
       handleThemeView("isWaiting", true);
