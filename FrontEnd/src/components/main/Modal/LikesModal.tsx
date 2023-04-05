@@ -66,7 +66,7 @@ const ButtonWrapper = styled.div`
   margin-top: 3rem;
   display: flex;
   justify-content: space-between;
-  width: 70%;
+  width: 55%;
 `;
 const Container = styled.div`
   display: flex;
@@ -89,11 +89,10 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "25%",
-  height: "40%",
   bgcolor: "#3E2133",
   borderRadius: 10,
   boxShadow: 24,
-  padding: "2rem 3rem",
+  padding: "3rem 3rem",
   color: "white",
   zIndex: -1,
 };

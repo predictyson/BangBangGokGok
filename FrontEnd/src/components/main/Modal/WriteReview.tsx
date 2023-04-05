@@ -250,7 +250,7 @@ const CustomToggleButton = mstyled(ToggleButton)(({ className }) => ({
   color: "white",
   "&.Mui-selected, &.Mui-selected:hover": {
     color: `${theme.colors.container}`,
-    backgroundColor: "#21E1FB",
+    backgroundColor: `${theme.colors.pink}`,
     // backgroundColor: value === 1 ? "red" : "green",
     fontWeight: "bold",
   },
@@ -324,7 +324,6 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "48%",
-  height: "55%",
   bgcolor: "#33202F",
   borderRadius: 10,
   boxShadow: 24,
