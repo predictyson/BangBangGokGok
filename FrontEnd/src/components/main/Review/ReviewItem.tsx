@@ -29,14 +29,6 @@ export default function ReviewItem({ data }: IProps) {
         <Header>
           <div className="left-wrapper">
             {data.nickname}
-
-            {data.isSuccess ? (
-              <>
-                <Badge className="blue">성공</Badge>
-              </>
-            ) : (
-              <Badge className="red">실패</Badge>
-            )}
             {isMine && (
               <div
                 style={{
@@ -51,6 +43,13 @@ export default function ReviewItem({ data }: IProps) {
           </div>
           <div className="right-wrapper">
             {data.createTime.substring(0, 10)}
+            {data.isSuccess ? (
+              <>
+                <Badge className="blue">성공</Badge>
+              </>
+            ) : (
+              <Badge className="red">실패</Badge>
+            )}
           </div>
         </Header>
         <RatingWrapper>
@@ -143,7 +142,7 @@ const RatingWrapper = styled.div`
   .ratingItem {
     font-size: 1.4rem;
     font-weight: ${theme.fontWeight.medium};
-    color: white;
+    color: #cbcbcb;
     display: flex;
     align-items: center;
   }
@@ -179,6 +178,12 @@ const Header = styled.div`
     margin-left: 1.5rem;
   }
   .left-wrapper {
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+  .right-wrapper {
     display: flex;
     align-items: center;
   }
