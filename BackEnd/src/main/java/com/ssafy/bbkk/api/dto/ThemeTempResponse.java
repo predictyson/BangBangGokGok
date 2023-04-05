@@ -1,21 +1,23 @@
 package com.ssafy.bbkk.api.dto;
 
 import com.ssafy.bbkk.db.entity.Theme;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.ToString;
 
-@Getter
+import java.util.List;
+import java.util.stream.Collectors;
+
 @ToString
-public class PreviewThemeResponse {
+@Getter
+public class ThemeTempResponse {
 
     private int themeId; // 테마 id
     private String title; // 테마명
     private String imgUrl; // 테마 포스터 링크
     private List<String> genres; // 테마 장르 목록
+    private double userRating; // 평점
 
-    public PreviewThemeResponse(Theme theme) {
+    public ThemeTempResponse(Theme theme) {
         this.themeId = theme.getId();
         this.title = theme.getTitle();
         this.imgUrl = theme.getImgUrl();
@@ -23,12 +25,6 @@ public class PreviewThemeResponse {
                 .stream()
                 .map(x -> x.getGenre().getCategory())
                 .collect(Collectors.toList());
-    }
-
-    public PreviewThemeResponse(ThemeTempResponse theme) {
-        this.themeId = theme.getThemeId();
-        this.title = theme.getTitle();
-        this.imgUrl = theme.getImgUrl();
-        this.genres = theme.getGenres();
+         this.userRating = theme.getUserRating();
     }
 }

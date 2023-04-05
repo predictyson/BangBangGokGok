@@ -6,12 +6,7 @@ import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.bbkk.api.dto.AwardThemeBundleResponse;
-import com.ssafy.bbkk.api.dto.PreviewThemeResponse;
-import com.ssafy.bbkk.api.dto.SearchThemeRequest;
-import com.ssafy.bbkk.api.dto.ThemeBundleResponse;
-import com.ssafy.bbkk.api.dto.ThemeCountResponse;
-import com.ssafy.bbkk.api.dto.ThemeResponse;
+import com.ssafy.bbkk.api.dto.*;
 import com.ssafy.bbkk.db.entity.QGenreOfTheme;
 import com.ssafy.bbkk.db.entity.QTheme;
 import com.ssafy.bbkk.db.entity.Region;
@@ -25,11 +20,7 @@ import com.ssafy.bbkk.db.repository.ReviewRepository;
 import com.ssafy.bbkk.db.repository.ThemeRepository;
 import com.ssafy.bbkk.db.repository.UserRepository;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -65,6 +56,7 @@ public class ThemeServiceImpl implements ThemeService {
         ThemeBundleResponse result = null;
         Random rnd = new Random();
         String label;
+
         // 테마의 지역
         Region region = regionRepository.findById(regionId)
                 .orElseThrow(() -> new Exception("해당 지역을 찾을 수 없습니다."));
@@ -79,15 +71,27 @@ public class ThemeServiceImpl implements ThemeService {
                     .map(x -> x.getId())
                     .collect(Collectors.toList());
             // 지역 대분류에서 테마 가져오기
-            list = new ArrayList<>();
+            List<ThemeTempResponse> bigThemeList = new ArrayList<>();
             for (int regId : regionIds) {
-                if (themeRepository.countByRegionId(regId) >= 1) {
-                    list.addAll(themeRepository.findByRegionIdOrderByUserRatingDesc(regId)
+                List<Theme> temp = themeRepository.findAllByRegionId(regId);
+                if(temp != null){
+                    bigThemeList.addAll(temp
                             .stream()
-                            .map(x -> new PreviewThemeResponse(x))
+                            .map(x->new ThemeTempResponse(x))
                             .collect(Collectors.toList()));
                 }
+//                if (themeRepository.countByRegionId(regId) >= 1) {
+//                    list.addAll(themeRepository.findByRegionIdOrderByUserRatingDesc(regId)
+//                        .stream()
+//                        .map(x -> new PreviewThemeResponse(x))
+//                        .collect(Collectors.toList()));
+//                }
             }
+            Collections.sort(bigThemeList, Comparator.comparingDouble(ThemeTempResponse::getUserRating).reversed());
+            list = bigThemeList
+                    .stream()
+                    .map(x->new PreviewThemeResponse(x))
+                    .collect(Collectors.toList());
             label = region.getRegionBig() + "에서 인기있는 테마";
         }
         // 테마 개수가 많을 경우
@@ -100,10 +104,10 @@ public class ThemeServiceImpl implements ThemeService {
             label = region.getRegionBig() + " " + region.getRegionSmall() + "에서 인기있는 테마";
         }
 
+        if(list == null || list.size() < THEME_RETURN_COUNT) return null;
+
         int cnt = 0;
         List<PreviewThemeResponse> temp = null;
-        if(list.size() < THEME_RETURN_COUNT) return null;
-
         while (true) {
             cnt = 0;
             temp = new ArrayList<>();
@@ -173,10 +177,10 @@ public class ThemeServiceImpl implements ThemeService {
                 throw new Exception("해당 type의 형식이 맞지 않습니다.");
         }
 
+        if(list == null || list.size() < THEME_RETURN_COUNT) return null;
+
         int cnt = 0;
         List<PreviewThemeResponse> temp = null;
-        if(list.size() < THEME_RETURN_COUNT) return null;
-
         while (true) {
             cnt = 0;
             temp = new ArrayList<>();
@@ -281,9 +285,7 @@ public class ThemeServiceImpl implements ThemeService {
         // 핫 한 테마의 개수가 많을 경우
         else {
             // 개수 순으로 내림차순 정렬
-            Collections.sort(list, (o1, o2) -> {
-                return o2.getCount() - o1.getCount();
-            });
+            Collections.sort(list, (o1, o2) -> o2.getCount() - o1.getCount());
 
             result = new ArrayList<>();
             for (int i = 0; i < 9; i++) {
@@ -301,21 +303,18 @@ public class ThemeServiceImpl implements ThemeService {
     public List<ThemeBundleResponse> getTopThemes() throws Exception {
         List<ThemeBundleResponse> result = new ArrayList<>();
         Random rnd = new Random();
-        System.out.println("*** 체감 테마");
         // 체감 테마
         ThemeBundleResponse feelBundle = getFeelBundle();
         while(feelBundle == null){
-            System.out.println("*** *** 체감 테마 null");
             feelBundle = getFeelBundle();
         }
         result.add(feelBundle);
-        System.out.println("*** 지역 인기 테마");
+
         List<Region> regionList = regionRepository.findAll();
         int idx = regionList.get(rnd.nextInt(regionList.size())).getId(); // 랜덤 지역 id
         // 지역 인기 테마
         ThemeBundleResponse regionBundle = getRegionBundle(idx);
         while(regionBundle == null){
-            System.out.println("*** *** 지역 인기 테마 null");
             idx = regionList.get(rnd.nextInt(regionList.size())).getId(); // 랜덤 지역 id
             regionBundle = getRegionBundle(idx);
         }
