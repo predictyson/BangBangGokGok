@@ -72,6 +72,9 @@ export default function WriteReview({
       ) {
         alert("0.5이상의 별점을 매겨주세요!");
         return;
+      } else if (dataToSend.content.length === 0) {
+        alert("내용을 입력해주세요!");
+        return;
       } else {
         const res = await postReview(dataToSend);
         console.log(res.data);
@@ -94,6 +97,9 @@ export default function WriteReview({
     ) {
       alert("0.5이상의 별점을 매겨주세요!");
       return; // 등록을 불가하게 함
+    } else if (postdata.content.length === 0) {
+      alert("내용을 입력해주세요!");
+      return;
     } else {
       handleClose();
     }
