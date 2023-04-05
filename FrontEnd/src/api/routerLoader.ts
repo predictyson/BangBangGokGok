@@ -10,6 +10,7 @@ export const myPageLoader = async () => {
     if (!isLoginUser) return false;
   } catch (error) {
     console.log(error);
+    return false;
   }
   return true;
 };
