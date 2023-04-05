@@ -13,9 +13,8 @@ interface SearchResultProps {
   handleSubmit: (isInitSearch: boolean) => void;
 }
 
-const initData: IDetailData = {} as IDetailData;
-
-const REVIEWDUMMY: IReviewData[] = [] as IReviewData[];
+// const initData: IDetailData = {} as IDetailData;
+// const REVIEWDUMMY: IReviewData[] = [] as IReviewData[];
 
 export default function SearchResult({
   results,
@@ -25,8 +24,8 @@ export default function SearchResult({
 }: SearchResultProps) {
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
-  const [data, setData] = useState<IDetailData>(initData);
-  const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
+  const [data, setData] = useState<IDetailData>({} as IDetailData);
+  const [reviews, setReviews] = useState<IReviewData[]>([] as IReviewData[]);
 
   const handleOpen = async (themeId: number) => {
     setThemeId(themeId);
