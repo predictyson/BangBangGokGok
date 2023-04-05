@@ -8,6 +8,7 @@ import Toast, { showToast } from "@/components/common/Toast";
 import { IThemeData } from "types/slider";
 import { myPageLoader } from "@/api/routerLoader";
 import { useNavigate } from "react-router-dom";
+import { requestCheckLoginUser } from "@/api/auth";
 
 export default function GroupSetPage() {
   const navigate = useNavigate();
@@ -62,17 +63,29 @@ export default function GroupSetPage() {
   };
 
   useEffect(() => {
-    try {
-      const res = myPageLoader();
-      if (!res) {
+    const userId = Number(localStorage.getItem("userId"));
+
+    const request = async () => {
+      try {
+        const {
+          data: { isLoginUser },
+        } = await requestCheckLoginUser(userId);
+        if (!isLoginUser) {
+          handleToastClick("error", "정상적인 접근이 아닙니다.");
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+        }
+      } catch (error) {
         handleToastClick("error", "정상적인 접근이 아닙니다.");
         setTimeout(() => {
           navigate("/login");
         }, 2000);
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    };
+
+    request();
 
     if (localStorage.getItem("userId")) {
       const myUserData = [
