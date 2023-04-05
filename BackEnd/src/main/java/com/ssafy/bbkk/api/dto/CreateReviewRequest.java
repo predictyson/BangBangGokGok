@@ -6,11 +6,13 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@ToString
+@Builder
 @Schema(description = "작성한 리뷰 정보")
 public class CreateReviewRequest {
 
@@ -60,4 +62,15 @@ public class CreateReviewRequest {
             throw new Exception("입력한 성공 여부 값이 올바르지 않습니다.");
     }
 
+    @Override
+    public String toString() {
+        return "[themeId=" + themeId +
+                ", content=" + content +
+                ", userRating=" + userRating +
+                ", userActivity=" + userActivity +
+                ", userFear=" + userFear +
+                ", userDifficulty=" + userDifficulty +
+                ", isSuccess=" + isSuccess +
+                "]";
+    }
 }

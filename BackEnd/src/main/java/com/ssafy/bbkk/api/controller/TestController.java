@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("test")
 @RequiredArgsConstructor
 public class TestController {
-
     private static final Logger logger = LoggerFactory.getLogger(TestController.class);
     private final UserRepository userRepository;
     private final ThemeRepository themeRepository;
