@@ -34,15 +34,21 @@ export default function ProfileInfoSection() {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const userId = Number(localStorage.getItem("userId"));
-      const [response1, response2] = await Promise.all([
-        getUserProfile(userId),
-        getUserPreferences(userId),
-      ]);
-
-      setProfileInfo(response1.data.userInfo as UserProfile);
-      setPreferences(response2.data.preference as UserPreference[]);
-      setIsFetched(true);
+      const userId = localStorage.getItem("userId");
+      try {
+        if (userId === null) {
+          throw new Error("userId is null");
+        }
+        const [response1, response2] = await Promise.all([
+          getUserProfile(Number(userId)),
+          getUserPreferences(Number(userId)),
+        ]);
+        setProfileInfo(response1.data.userInfo as UserProfile);
+        setPreferences(response2.data.preference as UserPreference[]);
+        setIsFetched(true);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     fetchUserProfile();
