@@ -161,32 +161,35 @@ const OverflowWrapper = styled.div`
 
 const SliderItem = styled.div`
   position: relative;
+  width: 18.7%;
+  aspect-ratio: 3 / 4;
+  @media (max-width: 1536px) {
+    width: 18.4%;
+  }
+  @media (max-width: 1440px) {
+    width: 18.2%;
+  }
+  @media (max-width: 1366px) {
+    width: 18%;
+  }
   :hover {
     & > .card-hover {
       opacity: 0.8;
     }
   }
-  @media (max-height: 766px) {
-    width: 15rem;
-    height: 20rem;
-  }
 `;
 
 const PosterItem = styled.img`
-  width: 20rem;
-  height: 25rem;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   border-bottom: 1rem;
   border-radius: 1rem;
-  @media (max-height: 766px) {
-    width: 15rem;
-    height: 20rem;
-  }
 `;
 
 const Hover = styled.div`
-  width: 20rem;
-  height: 25rem;
+  width: 100%;
+  height: 100%;
   position: absolute;
   opacity: 0;
   background-color: black;
@@ -201,8 +204,4 @@ const Hover = styled.div`
   font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
-  @media (max-height: 766px) {
-    width: 15rem;
-    height: 20rem;
-  }
 `;
