@@ -37,7 +37,7 @@ export default function DetailModal({
   const [isInterest, setIsInterest] = useState<boolean>(false);
   const [isMyReview, setIsMyReview] = useState<boolean>(false);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
-  // console.log(data.synopsis);
+  console.log(data.synopsis);
   // console.log(data.synopsis.replace("<br>", "\n"));
   const postLikes = async (themeId: number) => {
     if (themeId !== 0) {
@@ -215,7 +215,7 @@ export default function DetailModal({
         </Container>
         <Synopsis>
           <article>
-            {data.synopsis?.split("\\n").map((sentence) => (
+            {data.synopsis?.split("<br>").map((sentence) => (
               <div key={sentence} className="word-break">
                 {sentence}
                 <br />
