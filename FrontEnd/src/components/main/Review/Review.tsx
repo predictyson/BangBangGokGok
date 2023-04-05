@@ -101,7 +101,7 @@ export default function Review({
         <InfoBox>
           <div className="title">전체 리뷰 수 </div>
           <div className="content-wrapper" style={{ marginTop: "1.2rem" }}>
-            <TextsmsOutlinedIcon sx={{ fontSize: "5rem", color: "skyblue" }} />
+            <TextsmsOutlinedIcon sx={{ fontSize: "5rem", color: "#D1F7FF" }} />
             <span className="rating">{reviews.length}</span>
           </div>
         </InfoBox>
