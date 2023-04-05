@@ -42,47 +42,45 @@
 
 <br />
 
-<div id="2"></div>
-
 # 🛠 기술 스택
 
 ## FrontEnd
 
 | <div align="center"><img src="./assets/readme/HTML.png" alt="HTML" width="50px" height="50px" /> | <div align="center"><img src="./assets/readme/CSS.png" alt="CSS" width="50px" height="50px" /> | <div align="center"><img src="./assets/readme/TypeScript.png" alt="TypeScript" width="40px" height="40px" /> |
-| :---------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
-|                         &nbsp;&nbsp;&nbsp;HTML5&nbsp;&nbsp;&nbsp;                         |                  &nbsp;&nbsp;&nbsp;&nbsp;CSS3&nbsp;&nbsp;&nbsp;&nbsp;                   |                                  &nbsp;&nbsp;TypeScript&nbsp;&nbsp;                                   |
+| :----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
+|                            &nbsp;&nbsp;&nbsp;HTML5&nbsp;&nbsp;&nbsp;                             |                      &nbsp;&nbsp;&nbsp;&nbsp;CSS3&nbsp;&nbsp;&nbsp;&nbsp;                      |                                      &nbsp;&nbsp;TypeScript&nbsp;&nbsp;                                      |
 
-| <div align="center"><img src="./assets/readme/React.png" alt="React" width="50px" height="45px" /> | <div align="center"><img src="./assets/readme/Recoil.png" alt="Recoil" width="110px" height="50px" /> | <div align="center"><img src="./assets/readme/StyledComponents.png" alt="StyledComponents" width="50px" height="50px" /> |
-| :-----------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: |
-|                          &nbsp;&nbsp;&nbsp;React&nbsp;&nbsp;&nbsp;                          |                                             Recoil                                             |                                           &nbsp;Styled-Components&nbsp;                                           |
+| <div align="center"><img src="./assets/readme/React.png" alt="React" width="50px" height="45px" /> | <div align="center"><img src="./assets/readme/recoil.png" alt="Recoil" width="110px" height="50px" /> | <div align="center"><img src="./assets/readme/styledComponents.png" alt="StyledComponents" width="50px" height="50px" /> |
+| :------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
+|                             &nbsp;&nbsp;&nbsp;React&nbsp;&nbsp;&nbsp;                              |                                                Recoil                                                 |                                              &nbsp;Styled-Components&nbsp;                                               |
 
-| <div align="center"><img src="./assets/readme/MaterialUI.png" alt="MaterialUI" width="50px" height="50px" /> | <div align="center"><img src="./assets/readme/Axios.png" alt="Axios" width="110px" height="50px" /> |
-| :---------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
-|                                        &nbsp;Material-UI&nbsp;                                         |                                            AXIOS                                             |
+| <div align="center"><img src="./assets/readme/MaterialUI.png" alt="MaterialUI" width="50px" height="50px" /> | <div align="center"><img src="./assets/readme/axios.png" alt="Axios" width="110px" height="50px" /> |
+| :----------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+|                                           &nbsp;Material-UI&nbsp;                                            |                                                AXIOS                                                |
 
 <br />
 
 ## BackEnd
 
-| <div align="center"><img src="./assets/readme/Java.png" alt="Java" width="50px" height="50px" /> </div> | <div align="center"><img src="./assets/readme/Gradle.png" alt="Gradle" width="50px" height="50px" /></div> | <div align="center"><img src="./assets/readme/SpringBoot.png" alt="SpringBoot" width="95px" height="50px" /> </div> | <div align="center"><img src="./assets/readme/SpringSecurity.png" alt="SpringSecurity" width="115px" height="50px" /></div> | <div align="center"><img src="./assets/readme/SpringDataJPA.png" alt="SpringDataJPA" width="75px" height="50px" /></div> |
-| :----------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: |
-|                                               Java                                               |                             &nbsp;&nbsp;&nbsp;Gradle&nbsp;&nbsp;&nbsp;                              |                                                 Spring-Boot                                                  |                                                   Spring-Security                                                    |                                             &nbsp;SpringDataJPA&nbsp;                                             |
+| <div align="center"><img src="./assets/readme/Java.png" alt="Java" width="50px" height="50px" /> </div> | <div align="center"><img src="./assets/readme/gradle.png" alt="Gradle" width="50px" height="50px" /></div> | <div align="center"><img src="./assets/readme/springboot.png" alt="SpringBoot" width="95px" height="50px" /> </div> | <div align="center"><img src="./assets/readme/springsecurity.png" alt="SpringSecurity" width="115px" height="50px" /></div> | <div align="center"><img src="./assets/readme/SpringDataJPA.png" alt="SpringDataJPA" width="75px" height="50px" /></div> |
+| :-----------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
+|                                                  Java                                                   |                                 &nbsp;&nbsp;&nbsp;Gradle&nbsp;&nbsp;&nbsp;                                 |                                                     Spring-Boot                                                     |                                                       Spring-Security                                                       |                                                &nbsp;SpringDataJPA&nbsp;                                                 |
 
 | <div align="center"><img src="./assets/readme/Python.png" alt="Python" width="50px" height="50px" /> </div> | <div align="center"><img src="./assets/readme/Django.png" alt="Djangon" width="120px" height="40px" /></div> |
-| :--------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
-|                                    &nbsp;&nbsp;Python&nbsp;&nbsp;                                    |                                                Django                                                 |
+| :---------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
+|                                       &nbsp;&nbsp;Python&nbsp;&nbsp;                                        |                                                    Django                                                    |
 
-| <div align="center"><img src="./assets/readme/Mysql.png" alt="Mysql" width="75px" height="50px" /> </div> | <div align="center"><img src="./assets/readme/Swagger.png" alt="Swagger" width="125px" height="40px" /></div> |
-| :------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
-|                                               MySQL                                                |                                                Swagger                                                 |
+| <div align="center"><img src="./assets/readme/mysql.png" alt="Mysql" width="75px" height="50px" /> </div> | <div align="center"><img src="./assets/readme/Swagger.png" alt="Swagger" width="125px" height="40px" /></div> |
+| :-------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+|                                                   MySQL                                                   |                                                    Swagger                                                    |
 
 <br />
 
 ## DevOps
 
-| <div align="center"><img src="./assets/readme/Docker.png" alt="Docker" width="60px" height="50px" /> </div> | <div align="center"><img src="./assets/readme/Jenkins.png" alt="Jenkins" width="50px" height="50px" /></div> | <div align="center"><img src="./assets/readme/Nginx.png" alt="Nginx" width="50px" height="50px" /></div> | <div align="center"><img src="./assets/readme/EC2.png" alt="EC2" width="50px" height="50px" /></div> | <div align="center"><img src="./assets/readme/S3.png" alt="S3" width="70px" height="50px" /></div> |
-| :--------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
-|                                                Docker                                                |                                          &nbsp;Jenkins&nbsp;                                          |                                   &nbsp;&nbsp;NginX&nbsp;&nbsp;                                   |                                      &nbsp;AWS EC2&nbsp;                                      |                                     &nbsp;AWS S3&nbsp;                                      |
+| <div align="center"><img src="./assets/readme/docker.png" alt="Docker" width="60px" height="50px" /> </div> | <div align="center"><img src="./assets/readme/jenkins.png" alt="Jenkins" width="50px" height="50px" /></div> | <div align="center"><img src="./assets/readme/nginx.png" alt="Nginx" width="50px" height="50px" /></div> | <div align="center"><img src="./assets/readme/ec2.png" alt="EC2" width="50px" height="50px" /></div> | <div align="center"><img src="./assets/readme/s3.png" alt="S3" width="70px" height="50px" /></div> |
+| :---------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+|                                                   Docker                                                    |                                             &nbsp;Jenkins&nbsp;                                              |                                      &nbsp;&nbsp;NginX&nbsp;&nbsp;                                       |                                         &nbsp;AWS EC2&nbsp;                                          |                                         &nbsp;AWS S3&nbsp;                                         |
 
 <br />
 
@@ -130,14 +128,13 @@
 
 - **시스템 아키텍처**
 
-  <img src="assets/Architecture.png"  alt="Architecture" width="600px" >
-
+  <img src="./assets/readme/Architecture.png"  alt="Architecture" width="600px" >
 
 <br />
 
 - **ERD**
 
-  <img src="assets/ERD.png" alt="ERD" width="600px" >
+  <img src="./assets/readme/ERD.png" alt="ERD" width="600px" >
 
 <br />
 
@@ -145,7 +142,7 @@
 
 # 🎥UCC 영상
 
-[<img src="assets/bbkklogo.png" width="300" alt="UCC 영상 바로가기" />](https://youtu.be/youtube)
+[<img src="./assets/readme/bbkklogo.png" width="300" alt="UCC 영상 바로가기" />](https://youtu.be/youtube)
 
 > 새 창 열기 방법 : Ctrl + click (on Windows and Linux) | CMD + click (on MacOS)
 
@@ -162,7 +159,8 @@
 <div id="7"></div>
 
 # 👪팀원 소개
-<!-- 
+
+<!--
 <img src="assets/memebers" alt="members" width="800" /> -->
 
 > - 정상기(팀장 / FE) : 소셜 로그인 + 그룹셋 페이지
