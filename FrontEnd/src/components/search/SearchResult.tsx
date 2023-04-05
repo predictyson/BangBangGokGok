@@ -73,6 +73,7 @@ export default function SearchResult({
     if (!observerTarget) {
       return;
     }
+    // IntersectionObserverCallback 함수
     const callback: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -82,14 +83,17 @@ export default function SearchResult({
           }
         }
       });
-      2;
     };
+
+    // IntersectionObserver 생성
     const observer = new IntersectionObserver(callback, {
       root: null,
-      threshold: [0],
+      threshold: [0, 0.5, 1],
     });
+    // 관찰 대상 등록
     observer.observe(observerTarget);
     return () => {
+      console.log("cleanup Function");
       observer.unobserve(observerTarget);
     };
   }, [results]);
@@ -155,6 +159,9 @@ const SliderItem = styled.div`
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   width: 12.8%;
   aspect-ratio: 3 / 4;
+  @media (max-width: 1536px) {
+    width: 12.6%;
+  }
   @media (max-width: 1440px) {
     width: 12.4%;
   }
