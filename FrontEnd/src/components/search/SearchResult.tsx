@@ -159,6 +159,9 @@ const SliderItem = styled.div`
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   width: 12.8%;
   aspect-ratio: 3 / 4;
+  @media (max-width: 1536px) {
+    width: 12.6%;
+  }
   @media (max-width: 1440px) {
     width: 12.4%;
   }
