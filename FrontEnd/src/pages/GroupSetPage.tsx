@@ -6,8 +6,11 @@ import UserSection from "@components/group/UserListSection";
 import ThemeRecSection from "@components/group/ThemeRecSection";
 import Toast, { showToast } from "@/components/common/Toast";
 import { IThemeData } from "types/slider";
+import { myPageLoader } from "@/api/routerLoader";
+import { useNavigate } from "react-router-dom";
 
 export default function GroupSetPage() {
+  const navigate = useNavigate();
   const [userList, setUserList] = useState<GroupSetUer[]>([]);
   const [recTheme, setRectTheme] = useState<IThemeData[]>([]);
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -59,6 +62,18 @@ export default function GroupSetPage() {
   };
 
   useEffect(() => {
+    try {
+      const res = myPageLoader();
+      if (!res) {
+        handleToastClick("error", "정상적인 접근이 아닙니다.");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
     if (localStorage.getItem("userId")) {
       const myUserData = [
         {

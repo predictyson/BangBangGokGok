@@ -1,11 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "@components/common/Header";
 import LeftNavBar from "@components/mypage/LeftSection/LeftNavBar";
 import RightContent from "@components/mypage/RightSection/RightContent";
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
+import Toast, { showToast } from "@/components/common/Toast";
+import { useNavigate } from "react-router-dom";
+import { myPageLoader } from "@/api/routerLoader";
 
 export default function MyPage() {
+  const navigate = useNavigate();
+
+  const handleToastClick = (
+    type: IToastProps["type"],
+    message: IToastProps["message"]
+  ) => {
+    showToast({ type, message });
+  };
+
+  useEffect(() => {
+    try {
+      const res = myPageLoader();
+      if (!res) {
+        handleToastClick("error", "정상적인 접근이 아닙니다.");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <>
       <Header />

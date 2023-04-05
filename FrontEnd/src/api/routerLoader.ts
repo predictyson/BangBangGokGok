@@ -2,7 +2,9 @@ import { requestCheckLoginUser } from "@/api/auth";
 
 export const myPageLoader = async () => {
   const userId = Number(localStorage.getItem("userId"));
-  const response = await requestCheckLoginUser(userId);
-  console.log(response.data);
-  return response.data.isLoginUser;
+  const {
+    data: { isLoginUser },
+  } = await requestCheckLoginUser(userId);
+  console.log(isLoginUser);
+  return isLoginUser;
 };
