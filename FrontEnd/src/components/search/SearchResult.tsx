@@ -13,9 +13,6 @@ interface SearchResultProps {
   handleSubmit: (isInitSearch: boolean) => void;
 }
 
-// const initData: IDetailData = {} as IDetailData;
-// const REVIEWDUMMY: IReviewData[] = [] as IReviewData[];
-
 export default function SearchResult({
   results,
   searchHappened,
@@ -87,7 +84,7 @@ export default function SearchResult({
     // IntersectionObserver 생성
     const observer = new IntersectionObserver(callback, {
       root: null,
-      threshold: [0, 0.5, 1],
+      threshold: [0],
     });
     // 관찰 대상 등록
     observer.observe(observerTarget);
