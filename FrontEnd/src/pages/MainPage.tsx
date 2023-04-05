@@ -262,7 +262,37 @@ const TopThemesData: ISliderData[] = [
 
 const AwardThemeDummy: IAwardTheme[] = [
   {
-    awardName: "코믹/문제/기타", // 수상 부문
+    awardName: "올해의 테마", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "", // 테마명
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "공포/스릴러", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "", // 테마명
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "감성/드라마", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "", // 테마명
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "추리/미스터리", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "", // 테마명
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "액션/어드벤처", // 수상 부문
+    themeId: 1, // 테마 id
+    title: "", // 테마명
+    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
+  },
+  {
+    awardName: "SF/판타지", // 수상 부문
     themeId: 1, // 테마 id
     title: "", // 테마명
     imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
@@ -274,37 +304,7 @@ const AwardThemeDummy: IAwardTheme[] = [
     imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
   },
   {
-    awardName: "코믹/문제/기타", // 수상 부문
-    themeId: 1, // 테마 id
-    title: "", // 테마명
-    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
-  },
-  {
-    awardName: "코믹/문제/기타", // 수상 부문
-    themeId: 1, // 테마 id
-    title: "", // 테마명
-    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
-  },
-  {
-    awardName: "코믹/문제/기타", // 수상 부문
-    themeId: 1, // 테마 id
-    title: "", // 테마명
-    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
-  },
-  {
-    awardName: "코믹/문제/기타", // 수상 부문
-    themeId: 1, // 테마 id
-    title: "", // 테마명
-    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
-  },
-  {
-    awardName: "코믹/문제/기타", // 수상 부문
-    themeId: 1, // 테마 id
-    title: "", // 테마명
-    imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
-  },
-  {
-    awardName: "코믹/문제/기타", // 수상 부문
+    awardName: "최고의 문제방", // 수상 부문
     themeId: 1, // 테마 id
     title: "", // 테마명
     imgUrl: "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/award.png", // 테마 포스터 링크
