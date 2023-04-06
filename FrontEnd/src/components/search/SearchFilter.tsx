@@ -55,7 +55,7 @@ export default function SearchFilter(props: SearchFilterProps) {
     <>
       <FilterButton onClick={filterOpenState ? closeFilter : openFilter}>
         <TuneIcon fontSize="inherit" />
-        <p>필터</p>
+        필터
       </FilterButton>
       <Modal
         open={filterOpenState}
@@ -105,15 +105,20 @@ const FilterButton = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  height: 4rem;
-  width: 8rem;
-  font-size: 1.8rem;
+  @media (max-width: 1536px) {
+    font-size: 2.5rem;
+  }
+  padding: 1rem 2rem;
+  font-size: 3rem;
   font-weight: 600;
   border-radius: 10px;
   color: white;
-  border: 1px solid white;
+  border: 0.3rem solid white;
   background: none;
   cursor: pointer;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 `;
 
 const FilterContainer = mstyled(Box)`
