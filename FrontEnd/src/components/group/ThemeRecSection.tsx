@@ -98,12 +98,12 @@ export default function ThemeRecSection({
     <Container>
       {!isShow && (
         <>
-          {/* {isWaiting && (
+          {isWaiting && (
             <WaitAnimation>
               <b>{userList[0].nickname}</b> 님의 그룹의 맞춤 추천 테마를
               찾는중입니다......
             </WaitAnimation>
-          )} */}
+          )}
           {!isWaiting && (
             <ResultButton onClick={handleResult}>결과 보기</ResultButton>
           )}
