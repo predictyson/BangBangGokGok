@@ -72,6 +72,46 @@ public class ThemeController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
+    @GetMapping("user/recommend")
+    private ResponseEntity<Map<String, Object>> getRecommendThemeOfLoginUser(
+            @AuthenticationPrincipal User user) throws Exception {
+        logger.info("<<---------------(start)----------------||getRecommendThemeOfLoginUser||------------------------------------>>\n");
+        logger.info(">> request : myEmail={}", user.getUsername());
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        List<ThemeBundleResponse> recommendThemes = themeService.getRecommendedThemes(user.getUsername());
+        resultMap.put("recommendThemes", recommendThemes);
+        logger.info("<< response : recommendThemes={}", recommendThemes);
+
+        logger.info("<<---------------------------------------||getRecommendThemeOfLoginUser||---------------(end)--------------->>\n");
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @GetMapping("user/default")
+    private ResponseEntity<Map<String, Object>> getDefaultThemeOfLoginUser(
+            @AuthenticationPrincipal User user) throws Exception {
+        logger.info("<<---------------(start)----------------||getDefaultThemeOfLoginUser||------------------------------------>>\n");
+        logger.info(">> request : myEmail={}", user.getUsername());
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        List<PreviewThemeResponse> hotThemes = themeService.getHotThemes();
+        resultMap.put("hotThemes", hotThemes);
+        logger.info("<< response : hotThemes={}", hotThemes);
+
+        List<ThemeBundleResponse> topThemes = themeService.getTopThemesOfUser(user.getUsername());
+        resultMap.put("topThemes", topThemes);
+        logger.info("<< response : topThemes={}", topThemes);
+
+        AwardThemeBundleResponse awardThemes = themeService.getAwardThemes();
+        resultMap.put("awardThemes", awardThemes);
+        logger.info("<< response : awardThemes={}", topThemes);
+
+        logger.info("<<---------------------------------------||getDefaultThemeOfLoginUser||---------------(end)--------------->>\n");
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
     @Operation(summary = "게스트 테마 목록 조회", description = "메인 화면의 기본 테마 목록을 불러온다")
     @GetMapping("guest")
     private ResponseEntity<Map<String, Object>> getThemeOfGuest() throws Exception {
