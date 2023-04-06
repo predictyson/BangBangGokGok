@@ -62,7 +62,7 @@ public class ThemeServiceImpl implements ThemeService {
                 .orElseThrow(() -> new Exception("해당 지역을 찾을 수 없습니다."));
 
         List<PreviewThemeResponse> themes = null;
-        List<PreviewThemeResponse> list = null;
+        List<Theme> list = null;
         int themeCnt = themeRepository.countByRegionId(region.getId());
         // 테마 개수가 적을 경우
         if (themeCnt < THEME_COUNT) {
@@ -71,68 +71,44 @@ public class ThemeServiceImpl implements ThemeService {
                     .map(x -> x.getId())
                     .collect(Collectors.toList());
             // 지역 대분류에서 테마 가져오기
-            List<ThemeTempResponse> bigThemeList = new ArrayList<>();
+            list = new ArrayList<>();
             for (int regId : regionIds) {
                 List<Theme> temp = themeRepository.findAllByRegionId(regId);
                 if(temp != null){
-                    bigThemeList.addAll(temp
-                            .stream()
-                            .map(x->new ThemeTempResponse(x))
-                            .collect(Collectors.toList()));
+                    list.addAll(temp);
                 }
-//                if (themeRepository.countByRegionId(regId) >= 1) {
-//                    list.addAll(themeRepository.findByRegionIdOrderByUserRatingDesc(regId)
-//                        .stream()
-//                        .map(x -> new PreviewThemeResponse(x))
-//                        .collect(Collectors.toList()));
-//                }
             }
-            Collections.sort(bigThemeList, Comparator.comparingDouble(ThemeTempResponse::getUserRating).reversed());
-            list = bigThemeList
-                    .stream()
-                    .map(x->new PreviewThemeResponse(x))
-                    .collect(Collectors.toList());
+            Collections.sort(list, Comparator.comparingDouble(Theme::getUserRating).reversed());
             label = region.getRegionBig() + "에서 인기있는 테마";
         }
         // 테마 개수가 많을 경우
         else {
             // 지역 소분류에서 테마 가져오기
-            list = themeRepository.findByRegionIdOrderByUserRatingDesc(region.getId())
-                    .stream()
-                    .map(x -> new PreviewThemeResponse(x))
-                    .collect(Collectors.toList());
+            list = themeRepository.findByRegionIdOrderByUserRatingDesc(region.getId());
             label = region.getRegionBig() + " " + region.getRegionSmall() + "에서 인기있는 테마";
         }
 
         if(list == null || list.size() < THEME_RETURN_COUNT) return null;
 
         int cnt = 0;
-        List<PreviewThemeResponse> temp = null;
         while (true) {
             cnt = 0;
-            temp = new ArrayList<>();
+            themes = new ArrayList<>();
 
             // 테마를 위에서부터 for문으로
-            for (PreviewThemeResponse theme : list) {
+            for (Theme theme : list) {
                 // 확률에 의해 담긴다
                 if (rnd.nextInt(10) < 8) { // 80%
                     cnt++;
-                    temp.add(theme);
+                    themes.add(new PreviewThemeResponse(theme));
                 }
                 // 모두 담겼으면 끝
-                if (cnt == THEME_RETURN_COUNT)
-                    break;
-            }
-            // 모두 담겼으면 끝
-            if (cnt == THEME_RETURN_COUNT) {
-                themes = temp;
-                break;
+                if (cnt == THEME_RETURN_COUNT){
+                    result = new ThemeBundleResponse(label, themes);
+                    return result;
+                }
             }
         }
-
-        result = new ThemeBundleResponse(label, themes);
-
-        return result;
     }
 
     // 사람들이 ~~다고 느낀 테마를 반환
@@ -142,35 +118,23 @@ public class ThemeServiceImpl implements ThemeService {
 
         ThemeBundleResponse result = null;
         List<PreviewThemeResponse> themes = null;
-        List<PreviewThemeResponse> list = null;
+        List<Theme> list = null;
         String label = "";
         switch (type) {
             case 0: // 난이도 최고
-                list = themeRepository.findByUserCntGreaterThanOrderByUserDifficultyDesc(4)
-                        .stream()
-                        .map(x -> new PreviewThemeResponse(x))
-                        .collect(Collectors.toList());
+                list = themeRepository.findByUserCntGreaterThanOrderByUserDifficultyDesc(4);
                 label = "유저들이 어렵다고 느낀 테마";
                 break;
             case 1: // 난이도 최하
-                list = themeRepository.findByUserCntGreaterThanOrderByUserDifficultyAsc(4)
-                        .stream()
-                        .map(x -> new PreviewThemeResponse(x))
-                        .collect(Collectors.toList());
+                list = themeRepository.findByUserCntGreaterThanOrderByUserDifficultyAsc(4);
                 label = "유저들이 쉽다고 느낀 테마";
                 break;
             case 2: // 공포도 최고
-                list = themeRepository.findByUserCntGreaterThanOrderByUserFearDesc(4)
-                        .stream()
-                        .map(x -> new PreviewThemeResponse(x))
-                        .collect(Collectors.toList());
+                list = themeRepository.findByUserCntGreaterThanOrderByUserFearDesc(4);
                 label = "유저들이 무섭다고 느낀 테마";
                 break;
             case 3: // 공포도 최하
-                list = themeRepository.findByUserCntGreaterThanOrderByUserFearAsc(4)
-                        .stream()
-                        .map(x -> new PreviewThemeResponse(x))
-                        .collect(Collectors.toList());
+                list = themeRepository.findByUserCntGreaterThanOrderByUserFearAsc(4);
                 label = "유저들이 무섭지 않다고 느낀 테마";
                 break;
             default:
@@ -180,32 +144,24 @@ public class ThemeServiceImpl implements ThemeService {
         if(list == null || list.size() < THEME_RETURN_COUNT) return null;
 
         int cnt = 0;
-        List<PreviewThemeResponse> temp = null;
         while (true) {
             cnt = 0;
-            temp = new ArrayList<>();
+            themes = new ArrayList<>();
 
             // 테마를 위에서부터 for문으로
-            for (PreviewThemeResponse theme : list) {
+            for (Theme theme : list) {
                 // 확률에 의해 담긴다
                 if (rnd.nextInt(10) < 8) { // 80%
                     cnt++;
-                    temp.add(theme);
+                    themes.add(new PreviewThemeResponse(theme));
                 }
                 // 모두 담겼으면 끝
-                if (cnt == THEME_RETURN_COUNT)
-                    break;
-            }
-            // 모두 담겼으면 끝
-            if (cnt == THEME_RETURN_COUNT) {
-                themes = temp;
-                break;
+                if (cnt == THEME_RETURN_COUNT){
+                    result = new ThemeBundleResponse(label, themes);
+                    return result;
+                }
             }
         }
-
-        result = new ThemeBundleResponse(label, themes);
-
-        return result;
     }
 
     @Override
@@ -519,4 +475,171 @@ public class ThemeServiceImpl implements ThemeService {
         result = new ThemeResponse(theme);
         return result;
     }
+
 }
+
+/*
+    // 지역 id에 해당되는 지역의 인기 테마를 반환
+    public ThemeBundleResponse getRegionBundle1(int regionId) throws Exception {
+        ThemeBundleResponse result = null;
+        Random rnd = new Random();
+        String label;
+
+        // 테마의 지역
+        Region region = regionRepository.findById(regionId)
+                .orElseThrow(() -> new Exception("해당 지역을 찾을 수 없습니다."));
+
+        List<PreviewThemeResponse> themes = null;
+        List<PreviewThemeResponse> list = null;
+        int themeCnt = themeRepository.countByRegionId(region.getId());
+        // 테마 개수가 적을 경우
+        if (themeCnt < THEME_COUNT) {
+            List<Integer> regionIds = regionRepository.findAllByRegionBig(region.getRegionBig())
+                    .stream()
+                    .map(x -> x.getId())
+                    .collect(Collectors.toList());
+            // 지역 대분류에서 테마 가져오기
+            List<ThemeTempResponse> bigThemeList = new ArrayList<>();
+            for (int regId : regionIds) {
+                List<Theme> temp = themeRepository.findAllByRegionId(regId);
+                if(temp != null){
+                    bigThemeList.addAll(temp
+                            .stream()
+                            .map(x->new ThemeTempResponse(x))
+                            .collect(Collectors.toList()));
+                }
+//                if (themeRepository.countByRegionId(regId) >= 1) {
+//                    list.addAll(themeRepository.findByRegionIdOrderByUserRatingDesc(regId)
+//                        .stream()
+//                        .map(x -> new PreviewThemeResponse(x))
+//                        .collect(Collectors.toList()));
+//                }
+            }
+            Collections.sort(bigThemeList, Comparator.comparingDouble(ThemeTempResponse::getUserRating).reversed());
+            list = bigThemeList
+                    .stream()
+                    .map(x->new PreviewThemeResponse(x))
+                    .collect(Collectors.toList());
+            label = region.getRegionBig() + "에서 인기있는 테마";
+        }
+        // 테마 개수가 많을 경우
+        else {
+            // 지역 소분류에서 테마 가져오기
+            list = themeRepository.findByRegionIdOrderByUserRatingDesc(region.getId())
+                    .stream()
+                    .map(x -> new PreviewThemeResponse(x))
+                    .collect(Collectors.toList());
+            label = region.getRegionBig() + " " + region.getRegionSmall() + "에서 인기있는 테마";
+        }
+
+        System.out.println("*** 테마 불러오기 완료 ***");
+        if(list == null || list.size() < THEME_RETURN_COUNT) return null;
+
+        int cnt = 0;
+        List<PreviewThemeResponse> temp = null;
+        while (true) {
+            System.out.println("*** region 테마 담기 반복중...");
+            cnt = 0;
+            temp = new ArrayList<>();
+
+            // 테마를 위에서부터 for문으로
+            for (PreviewThemeResponse theme : list) {
+                // 확률에 의해 담긴다
+                if (rnd.nextInt(10) < 8) { // 80%
+                    cnt++;
+                    temp.add(theme);
+                }
+                // 모두 담겼으면 끝
+                if (cnt == THEME_RETURN_COUNT)
+                    break;
+            }
+            // 모두 담겼으면 끝
+            if (cnt == THEME_RETURN_COUNT) {
+                themes = temp;
+                break;
+            }
+        }
+        System.out.println("*** 테마 담기 완료 ***");
+        result = new ThemeBundleResponse(label, themes);
+
+        return result;
+    }
+
+
+     // 사람들이 ~~다고 느낀 테마를 반환
+    public ThemeBundleResponse getFeelBundle() throws Exception {
+        Random rnd = new Random();
+        int type = rnd.nextInt(4);
+
+        ThemeBundleResponse result = null;
+        List<PreviewThemeResponse> themes = null;
+        List<PreviewThemeResponse> list = null;
+        String label = "";
+        switch (type) {
+            case 0: // 난이도 최고
+                list = themeRepository.findByUserCntGreaterThanOrderByUserDifficultyDesc(4)
+                        .stream()
+                        .map(x -> new PreviewThemeResponse(x))
+                        .collect(Collectors.toList());
+                label = "유저들이 어렵다고 느낀 테마";
+                break;
+            case 1: // 난이도 최하
+                list = themeRepository.findByUserCntGreaterThanOrderByUserDifficultyAsc(4)
+                        .stream()
+                        .map(x -> new PreviewThemeResponse(x))
+                        .collect(Collectors.toList());
+                label = "유저들이 쉽다고 느낀 테마";
+                break;
+            case 2: // 공포도 최고
+                list = themeRepository.findByUserCntGreaterThanOrderByUserFearDesc(4)
+                        .stream()
+                        .map(x -> new PreviewThemeResponse(x))
+                        .collect(Collectors.toList());
+                label = "유저들이 무섭다고 느낀 테마";
+                break;
+            case 3: // 공포도 최하
+                list = themeRepository.findByUserCntGreaterThanOrderByUserFearAsc(4)
+                        .stream()
+                        .map(x -> new PreviewThemeResponse(x))
+                        .collect(Collectors.toList());
+                label = "유저들이 무섭지 않다고 느낀 테마";
+                break;
+            default:
+                throw new Exception("해당 type의 형식이 맞지 않습니다.");
+        }
+
+        System.out.println("*** 테마 불러오기 완료 ***");
+        if(list == null || list.size() < THEME_RETURN_COUNT) return null;
+
+        int cnt = 0;
+        List<PreviewThemeResponse> temp = null;
+        while (true) {
+            System.out.println("*** Feel 테마 담기 반복중...");
+            cnt = 0;
+            temp = new ArrayList<>();
+
+            // 테마를 위에서부터 for문으로
+            for (PreviewThemeResponse theme : list) {
+                // 확률에 의해 담긴다
+                if (rnd.nextInt(10) < 8) { // 80%
+                    cnt++;
+                    temp.add(theme);
+                }
+                // 모두 담겼으면 끝
+                if (cnt == THEME_RETURN_COUNT)
+                    break;
+            }
+            // 모두 담겼으면 끝
+            if (cnt == THEME_RETURN_COUNT) {
+                themes = temp;
+                break;
+            }
+        }
+        System.out.println("*** 테마 담기 완료 ***");
+        result = new ThemeBundleResponse(label, themes);
+
+        return result;
+    }
+
+
+ */

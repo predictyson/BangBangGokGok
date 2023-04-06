@@ -52,7 +52,7 @@ public class ThemeResponse {
         this.userActivity = Math.round(theme.getUserActivity()*100)/100.0;
         this.userFear = Math.round(theme.getUserFear()*100)/100.0;
         this.userDifficulty = Math.round(theme.getUserDifficulty()*100)/100.0;
-        this.userCnt = theme.getUserCnt() + theme.getReviews().size();
+        this.userCnt = theme.getUserCnt();
 
         this.genre = theme.getGenreOfThemes()
                 .stream()
