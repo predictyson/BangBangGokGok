@@ -36,13 +36,13 @@ export default function PeopleForm(props: PeopleFormProps) {
           color="warning"
           onChange={handlePeopleChange}
         >
-          <MenuItem value={0}>전체</MenuItem>
-          <MenuItem value={1}>1명</MenuItem>
-          <MenuItem value={2}>2명</MenuItem>
-          <MenuItem value={3}>3명</MenuItem>
-          <MenuItem value={4}>4명</MenuItem>
-          <MenuItem value={5}>5명</MenuItem>
-          <MenuItem value={6}>6명</MenuItem>
+          <CustomMenuItem value={0}>전체</CustomMenuItem>
+          <CustomMenuItem value={1}>1명</CustomMenuItem>
+          <CustomMenuItem value={2}>2명</CustomMenuItem>
+          <CustomMenuItem value={3}>3명</CustomMenuItem>
+          <CustomMenuItem value={4}>4명</CustomMenuItem>
+          <CustomMenuItem value={5}>5명</CustomMenuItem>
+          <CustomMenuItem value={6}>6명</CustomMenuItem>
         </CustomSelect>
       </div>
     </Wrapper>
@@ -70,13 +70,23 @@ const CustomInputLabel = mstyled(InputLabel)`
   margin-right: 1.5rem;
 `;
 
-const CustomSelect = mstyled(Select)({
-  width: "11.5rem",
-  height: "4rem",
-  fontSize: "1.2rem",
-  border: "1px solid white",
-  color: "white",
-  svg: {
-    color: "white",
-  },
-});
+const CustomSelect = mstyled(Select)`
+  width: 11.5rem;
+  height: 4rem;
+  font-size: 2rem;
+  @media (max-width: 1536px) {
+    font-size: 1.7rem;
+  }
+  border: 1px solid white;
+  color: white;
+  svg {
+    color: white;
+  }
+`;
+
+const CustomMenuItem = mstyled(MenuItem)`
+  font-size: 2rem;
+  @media (max-width: 1536px) {
+    font-size: 1.7rem;
+  }
+`;

@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
 import { getRegionSmall } from "@/api/others";
 import { ReducerAction, FilterValue } from "types/search";
-import { fontSize } from "@mui/system";
 
 interface LocationFormProps {
   filterValue: FilterValue;
@@ -107,9 +106,9 @@ const LocationForm = (props: LocationFormProps) => {
           onChange={handleBigInputValueChange}
         >
           {REGION_BIG_OPTIONS.map((option) => (
-            <MenuItem value={option} key={option}>
+            <CustomMenuItem value={option} key={option}>
               {option}
-            </MenuItem>
+            </CustomMenuItem>
           ))}
         </CustomSelect>
         <CustomInputLabel id="location-select"></CustomInputLabel>
@@ -120,7 +119,7 @@ const LocationForm = (props: LocationFormProps) => {
           onChange={handleSmallInputValueChange}
           disabled={!regionBigInputValue}
         >
-          <MenuItem value="전체">전체</MenuItem>
+          <CustomMenuItem value="전체">전체</CustomMenuItem>
           {renderLocationOptions()}
         </CustomSelect>
       </div>
@@ -151,13 +150,23 @@ const CustomInputLabel = mstyled(InputLabel)`
   margin-right: 1.5rem;
 `;
 
-const CustomSelect = mstyled(Select)({
-  width: "11.5rem",
-  height: "4rem",
-  fontSize: "1.2rem",
-  border: "1px solid white",
-  color: "white",
-  svg: {
-    color: "white",
-  },
-});
+const CustomSelect = mstyled(Select)`
+  width: 11.5rem;
+  height: 4rem;
+  font-size: 2rem;
+  @media (max-width: 1536px) {
+    font-size: 1.7rem;
+  }
+  border: 1px solid white;
+  color: white;
+  svg {
+    color: white;
+  }
+`;
+
+const CustomMenuItem = mstyled(MenuItem)`
+  font-size: 2rem;
+  @media (max-width: 1536px) {
+    font-size: 1.7rem;
+  }
+`;

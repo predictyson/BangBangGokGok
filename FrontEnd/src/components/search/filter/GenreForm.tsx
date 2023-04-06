@@ -84,9 +84,9 @@ export default function GenreForm(props: GenreFormProps) {
           onChange={handleGenreChange}
         >
           {genresOptions.map((genre) => (
-            <MenuItem value={genre.category} key={genre.genreId}>
+            <CustomMenuItem value={genre.category} key={genre.genreId}>
               {genre.category}
-            </MenuItem>
+            </CustomMenuItem>
           ))}
         </CustomSelect>
       </div>
@@ -116,13 +116,23 @@ const CustomInputLabel = mstyled(InputLabel)`
   margin-right: 1.5rem;
 `;
 
-const CustomSelect = mstyled(Select)({
-  width: "11.5rem",
-  height: "4rem",
-  fontSize: "1.2rem",
-  border: "1px solid white",
-  color: "white",
-  svg: {
-    color: "white",
-  },
-});
+const CustomSelect = mstyled(Select)`
+  width: 11.5rem;
+  height: 4rem;
+  font-size: 2rem;
+  @media (max-width: 1536px) {
+    font-size: 1.7rem;
+  }
+  border: 1px solid white;
+  color: white;
+  svg {
+    color: white;
+  }
+`;
+
+const CustomMenuItem = mstyled(MenuItem)`
+  font-size: 2rem;
+  @media (max-width: 1536px) {
+    font-size: 1.7rem;
+  }
+`;
