@@ -16,8 +16,8 @@ export default function LeftPorfile(props: ProfileProps) {
 
   const handleInputChange = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
-    console.log(target.name + " : " + target.value);
-    console.log(typeof target.value);
+    // console.log(target.name + " : " + target.value);
+    // console.log(typeof target.value);
     if (target.name === "nickname" && String(target.value).length > 10) {
       props.handleToastClick("error", "닉네임은 2~10자 사이입니다.");
     } else {

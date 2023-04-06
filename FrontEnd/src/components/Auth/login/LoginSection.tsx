@@ -20,7 +20,6 @@ const InitUser = {
 export default function LoginSection() {
   const navigate = useNavigate();
   const [user, setUser] = useState<IUserInfo>(InitUser);
-  const [cookies, setCookie] = useCookies(["refresh", "access"]);
 
   const handleToastClick = (
     type: IToastProps["type"],
@@ -39,10 +38,11 @@ export default function LoginSection() {
       [name]: value,
     }));
   };
+
   /** 로그인 API
    * 로컬 로그인의 경우,
-   * refresh, access토큰은 cookie로
-   * userId, nicname은 localStorage로
+   * refreshToken은 cookie로
+   * userId, nicname, accessToken은 localStorage로
    */
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 기본 동작 방지
@@ -77,25 +77,23 @@ export default function LoginSection() {
       {/* <SubjectText>GokGok</SubjectText> */}
       <CustomForm onSubmit={handleLogin}>
         <CustomTextField
-          label="E-mail"
           autoComplete="current-password"
-          sx={{ width: 300 }}
           color="warning"
           focused
+          hiddenLabel
           name="email"
           onChange={handleInputValue}
+          placeholder="example@google.com"
         />
         <CustomTextField
-          label="Password"
+          placeholder="비밀번호를 입력하세요."
           type="password"
           autoComplete="current-password"
-          sx={{
-            width: 300,
-          }}
           color="warning"
           onChange={handleInputValue}
           name="password"
           focused
+          hiddenLabel
         />
         <LoginButton type="submit" value="Login" />
       </CustomForm>
@@ -127,66 +125,102 @@ const CustomForm = styled.form`
 `;
 
 const SNSbtn = styled.img`
-  width: 14.5rem;
+  width: 17.5rem;
   cursor: pointer;
+  @media screen and (max-width: 1600px) {
+    width: 14.5rem;
+  }
 `;
 
 const CustomTextField = mstyled(TextField)({
-  width: "70%",
+  width: "400px",
   color: "white",
   input: {
     color: "white",
-    fontSize: "1.2rem",
+    fontSize: "1.6rem",
+  },
+
+  "@media screen and (max-width: 1600px)": {
+    width: "300px",
+    color: "white",
+    input: {
+      color: "white",
+      fontSize: "1.2rem",
+    },
   },
 });
 
 const NavText = styled.div`
   cursor: pointer;
   display: block;
-  font-size: 1.17em;
+  font-size: 1.6rem;
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: bold;
+
+  @media screen and (max-width: 1600px) {
+    font-size: 1.17rem;
+  }
 `;
 
 const TextBox = styled.div`
-  width: 30rem;
+  width: 40rem;
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 1600px) {
+    width: 30rem;
+  }
 `;
 
 const Container = styled.div`
-  width: 50rem;
-  height: 55rem;
-  padding: 2rem 0;
+  width: 60rem;
+  height: 65rem;
+  padding: 4rem 0;
   border-radius: 1.5rem;
   background-color: ${theme.colors.container};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+
+  @media screen and (max-width: 1600px) {
+    width: 50rem;
+    height: 55rem;
+    padding: 2rem 0;
+  }
 `;
 
 const LoginImg = styled.img`
-  height: 15rem;
+  height: 20rem;
   margin: 0 auto;
+  @media screen and (max-width: 1600px) {
+    height: 15rem;
+  }
 `;
 
 const SubjectText = styled.div`
   text-align: center;
-  font-size: 4rem;
+  font-size: 5rem;
   font-weight: ${theme.fontWeight.extraBold};
+  @media screen and (max-width: 1600px) {
+    font-size: 4rem;
+  }
 `;
 
 const LoginButton = styled.input`
-  width: 30rem;
+  width: 40rem;
+  font-size: 2rem;
   border-radius: 0.5rem;
   text-align: center;
-  font-size: 1.6rem;
-  padding: 0.5rem 0;
+  padding: 1rem 0;
   color: white;
   background-color: ${theme.colors.pink};
   cursor: pointer;
+  @media screen and (max-width: 1600px) {
+    width: 30rem;
+    font-size: 1.6rem;
+  }
 `;
