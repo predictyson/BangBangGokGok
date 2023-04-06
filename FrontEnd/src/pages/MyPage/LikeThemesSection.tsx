@@ -161,16 +161,15 @@ const OverflowWrapper = styled.div`
 
 const SliderItem = styled.div`
   position: relative;
-  width: 18.7%;
-  aspect-ratio: 3 / 4;
+  width: 22rem;
+  height: 29.3rem;
   @media (max-width: 1536px) {
-    width: 18.4%;
-  }
-  @media (max-width: 1440px) {
-    width: 18.2%;
+    width: 17rem;
+    height: 23rem;
   }
   @media (max-width: 1366px) {
-    width: 18%;
+    width: 15rem;
+    height: 20rem;
   }
   :hover {
     & > .card-hover {
