@@ -150,7 +150,10 @@ const NavItem = styled.div<NavItemProps>`
   gap: 1rem;
 
   color: ${theme.colors.white};
-  font-size: 3rem;
+  font-size: 3.5rem;
+  @media (max-width: 1536px) {
+    font-size: 3rem;
+  }
   font-weight: ${theme.fontWeight.semibold};
   padding: 2rem;
   @media (max-height: 800px) {
