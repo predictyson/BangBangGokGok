@@ -52,20 +52,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         // 소셜 로그인 성공 후 이동할 페이지 -> 추후 변경해야함
         String targetUrl = "/oauth";
 
-        if(user == null){
-            targetUrl = "/oauth/fail";
-            return UriComponentsBuilder.fromUriString(targetUrl
-                            +"?error="+"이미 가입한 회원입니다.")
-                    .build().toUriString();
-        }
-        else if(user.getEmail() == null) {
-            targetUrl = "/oauth/fail";
-            return UriComponentsBuilder.fromUriString(targetUrl
-                    +"?error="+"이메일 동의를 하지 않아 회원가입이 불가능합니다.")
-                    .build().toUriString();
-        }
+//        if(user.getEmail() == null) {
+//            targetUrl = "/oauth/fail";
+//            return UriComponentsBuilder.fromUriString(targetUrl
+//                    +"?error="+"이메일 동의를 하지 않아 회원가입이 불가능합니다.")
+//                    .build().toUriString();
+//        }
         // 추가 정보가 입력되어 있다면 로그인 처리
-        else if(user.getAge()>0 &&
+        if(user.getAge()>0 &&
                 ("W".equals(user.getGender()) || "M".equals(user.getGender())) &&
                 user.getNickname()!=null &&
                 user.getProfileImageType()!=null &&

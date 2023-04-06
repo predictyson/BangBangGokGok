@@ -5,6 +5,7 @@ import com.ssafy.bbkk.common.jwt.JwtAuthenticationEntryPoint;
 import com.ssafy.bbkk.common.jwt.TokenProvider;
 import com.ssafy.bbkk.common.oauth.PrincipalOauth2UserService;
 import com.ssafy.bbkk.handler.JwtAccessDeniedHandler;
+import com.ssafy.bbkk.handler.OAuth2AuthenticationFailureHandler;
 import com.ssafy.bbkk.handler.OAuth2AuthenticationSuccessHandler;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class SecurityConfig{
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final PrincipalOauth2UserService principalOauth2UserService;
 
     @Bean
@@ -92,6 +94,7 @@ public class SecurityConfig{
 
         .and()
             .successHandler(oAuth2AuthenticationSuccessHandler)
+            .failureHandler(oAuth2AuthenticationFailureHandler)
         ;
 
         return http.build();
