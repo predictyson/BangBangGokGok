@@ -37,7 +37,7 @@ export default function SearchResult({
 
   const handleReviews = async (review: IReviewData) => {
     setReviews((prev) => {
-      return [...prev, review];
+      return [review, ...prev];
     });
   };
 

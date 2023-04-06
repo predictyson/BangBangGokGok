@@ -19,11 +19,11 @@ export default function RankSlider({ data }: IProps) {
     dots: false,
     infinite: true,
     slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToScroll: 3,
     arrows: false,
     autoplay: true,
     speed: 2000,
-    autoplaySpeed: 2000,
+    autoplaSpeed: 300,
     pauseOnHover: true,
     responsive: BREAKPOINT,
   };

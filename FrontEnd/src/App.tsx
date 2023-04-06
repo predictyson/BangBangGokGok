@@ -5,6 +5,8 @@ import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  console.log = function () {};
 
   return (
     <div className="App" id="App">
