@@ -94,14 +94,14 @@ export default function Review({
         <InfoBox>
           <div className="title">사용자 총 평점 ( {data.userCnt} )</div>
           <div className="content-wrapper">
-            <CustomFavorite width={"3rem"} fill={`${theme.colors.pink}`} />
+            <CustomFavorite />
             <span className="rating">{data.userRating}/5</span>
           </div>
         </InfoBox>
         <InfoBox>
           <div className="title">전체 리뷰 수 </div>
           <div className="content-wrapper" style={{ marginTop: "1.2rem" }}>
-            <TextsmsOutlinedIcon sx={{ fontSize: "5rem" }} />
+            <TextsmsOutlinedIcon sx={{ fontSize: "5rem", color: "#D1F7FF" }} />
             <span className="rating">{reviews.length}</span>
           </div>
         </InfoBox>
@@ -138,7 +138,9 @@ const InfoWrapper = styled.div`
   }
   .rating {
     margin-left: 1.2rem;
-    font-size: 2.4rem;
+    font-size: 3rem;
+    /* color: orang-\[] */
+    color: white;
     font-weight: ${theme.fontWeight.extraBold};
   }
   .content-wrapper {

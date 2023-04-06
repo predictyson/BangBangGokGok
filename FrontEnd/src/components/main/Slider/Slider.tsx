@@ -118,48 +118,50 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
       }
     }
   };
-
+  console.log("RECOMMEND DATA");
+  isRecommendSlider && console.log(topData);
   return (
     <Container>
-      {topData.map((item, idx) => (
-        <>
-          {isRecommendSlider ? (
-            <RecommendTitle className="recommend">
-              {localStorage.getItem("nickname") + item.label}
-            </RecommendTitle>
-          ) : (
-            <TitleWrapper>
-              <Icon src={ICONLIST[idx]} alt="icon" />
-              <Title>{item.label}</Title>
-            </TitleWrapper>
-          )}
-          <Slider {...settings}>
-            {item.themes.map((theme: IThemeData) => (
-              <>
-                <SliderItem key={theme.themeId}>
-                  <PosterItem src={theme.imgUrl} />
-                  <Hover
-                    className="card-hover"
-                    onClick={() => handleOpen(theme.themeId)}
-                  >
-                    <span style={{ padding: "0 2rem" }}>{theme.title}</span>
-                  </Hover>
-                </SliderItem>
-              </>
-            ))}
-          </Slider>
-          {themeId !== undefined && (
-            <Modal
-              open={open}
-              onClose={handleClose}
-              themeId={themeId}
-              data={data}
-              reviews={reviews}
-              handleReviews={handleReviews}
-            />
-          )}
-        </>
-      ))}
+      {topData &&
+        topData.map((item, idx) => (
+          <>
+            {isRecommendSlider ? (
+              <RecommendTitle className="recommend">
+                {localStorage.getItem("nickname") + item.label}
+              </RecommendTitle>
+            ) : (
+              <TitleWrapper>
+                <Icon src={ICONLIST[idx]} alt="icon" />
+                <Title>{item.label}</Title>
+              </TitleWrapper>
+            )}
+            <Slider {...settings}>
+              {item.themes.map((theme: IThemeData) => (
+                <>
+                  <SliderItem key={theme.themeId}>
+                    <PosterItem src={theme.imgUrl} />
+                    <Hover
+                      className="card-hover"
+                      onClick={() => handleOpen(theme.themeId)}
+                    >
+                      <span style={{ padding: "0 2rem" }}>{theme.title}</span>
+                    </Hover>
+                  </SliderItem>
+                </>
+              ))}
+            </Slider>
+            {themeId !== undefined && (
+              <Modal
+                open={open}
+                onClose={handleClose}
+                themeId={themeId}
+                data={data}
+                reviews={reviews}
+                handleReviews={handleReviews}
+              />
+            )}
+          </>
+        ))}
     </Container>
   );
 }

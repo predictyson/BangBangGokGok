@@ -37,7 +37,6 @@ export default function DetailModal({
   const [isInterest, setIsInterest] = useState<boolean>(false);
   const [isMyReview, setIsMyReview] = useState<boolean>(false);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
-  console.log(data.synopsis);
   // console.log(data.synopsis.replace("<br>", "\n"));
   const postLikes = async (themeId: number) => {
     if (themeId !== 0) {

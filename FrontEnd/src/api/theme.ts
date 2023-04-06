@@ -24,3 +24,11 @@ export async function getDetail(themeId: number) {
 export async function getDetailLogin(themeId: number) {
   return await instance.get(`/theme/${themeId}/user`);
 }
+
+export async function getRecommendTheme() {
+  return await instance.get(`/theme/user/recommend`);
+}
+
+export async function getDefaultUserTheme() {
+  return await instance.get(`/theme/user/default`);
+}
