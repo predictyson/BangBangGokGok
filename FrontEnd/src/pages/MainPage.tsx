@@ -16,7 +16,11 @@ import {
   getThemeUser,
   getThemeGuest,
   getRecommendTheme,
-  getDefaultUserTheme,
+  getHotTheme,
+  getTopUserTheme,
+  getAwardTheme,
+  getTopGuestFeelTheme,
+  getTopGuestRegionTheme,
 } from "@/api/theme";
 import Footer from "@components/common/Footer";
 
@@ -27,45 +31,90 @@ export default function MainPage() {
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
+
   const requestRecommendTheme = async () => {
     try {
       const res = await getRecommendTheme();
-      console.log(res.data.recommendThemes);
       setRecommendData(res.data.recommendThemes);
-      console.log(recommendData);
     } catch (err) {
-      throw new Error("Internal Server Error");
+      console.log("REQUEST RECOMMEND THEME ERROR");
     }
   };
 
-  const requestThemeUser = async () => {
+  const requestHotTheme = async () => {
     try {
-      const res = await getDefaultUserTheme();
-      const { hotThemes, topThemes, awardThemes } = res.data;
-      console.log(res.data);
-      setHotData(hotThemes);
-      setTopData(topThemes);
-      setAwardData(awardThemes);
+      const res = await getHotTheme();
+      setHotData(res.data.hotThemes);
     } catch (err) {
-      throw new Error("Internal Server Error ");
+      console.log("REQUEST HOT THEME ERROR");
     }
   };
-  const requestThemeGuest = async () => {
+
+  const requestTopUserTheme = async () => {
     try {
-      const res = await getThemeGuest();
-      setHotData(res.data.hotThemes);
-      setTopData(res.data.topThemes);
-      setAwardData(res.data.awardThemes);
-      console.log(res.data.hotThemes);
+      const res = await getTopUserTheme();
+      setTopData([res.data.feelOrRegionThemes]);
     } catch (err) {
-      throw new Error("Internal Server Error");
+      console.log("REQUEST TOP USER THEME ERROR");
     }
+  };
+
+  const requestAwardTheme = async () => {
+    try {
+      const res = await getAwardTheme();
+      setAwardData(res.data.awardThemes);
+    } catch (err) {
+      console.log("REQUEST AWARD THEME ERROR");
+    }
+  };
+
+  const requestTopGuestTheme = async () => {
+    try {
+      const resFeel = await getTopGuestFeelTheme();
+      const resRegion = await getTopGuestRegionTheme();
+      const feelData = resFeel.data.feelThemes;
+      const regionData = resRegion.data.regionThemes;
+      const res = [feelData, regionData];
+      setTopData(res);
+    } catch (err) {
+      throw new Error("Internal Server Error!");
+    }
+  };
+  // const requestThemeUser = async () => {
+  //   try {
+  //     const res = await getDefaultUserTheme();
+  //     const { hotThemes, topThemes, awardThemes } = res.data;
+  //     console.log(res.data);
+  //     setHotData(hotThemes);
+  //     setTopData(topThemes);
+  //     setAwardData(awardThemes);
+  //   } catch (err) {
+  //     throw new Error("Internal Server Error ");
+  //   }
+  // };
+  // const requestThemeGuest = async () => {
+  //   try {
+  //     const res = await getThemeGuest();
+  //     setHotData(res.data.hotThemes);
+  //     setTopData(res.data.topThemes);
+  //     setAwardData(res.data.awardThemes);
+  //     console.log(res.data.hotThemes);
+  //   } catch (err) {
+  //     throw new Error("Internal Server Error");
+  //   }
+  // };
+  const requestThemeUser = async () => {
+    requestRecommendTheme();
+    requestTopUserTheme();
+  };
+  const requestThemeGuest = async () => {
+    requestTopGuestTheme();
   };
 
   useEffect(() => {
-    isLogin && requestRecommendTheme();
-    isLogin && requestThemeUser();
-    !isLogin && requestThemeGuest();
+    isLogin ? requestThemeUser() : requestThemeGuest();
+    requestHotTheme();
+    requestAwardTheme();
   }, []);
 
   return (
@@ -172,52 +221,52 @@ const HotThemesData: IThemeData[] = [
 
 const TopThemesData: ISliderData[] = [
   {
-    label: "지역 별 인기 테마",
+    label: "",
     themes: [
       {
-        themeId: 1,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 2,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 3,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 4,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 5,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 6,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 7,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 8,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
@@ -225,52 +274,52 @@ const TopThemesData: ISliderData[] = [
     ],
   },
   {
-    label: "유저들이 느낀 난이도 최고 테마 ",
+    label: "",
     themes: [
       {
-        themeId: 1,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 2,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 3,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 4,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 5,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 6,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 7,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
       },
       {
-        themeId: 8,
+        themeId: 0,
         title: "",
         imgUrl:
           "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",

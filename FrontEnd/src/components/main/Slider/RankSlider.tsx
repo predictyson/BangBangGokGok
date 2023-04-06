@@ -15,7 +15,7 @@ interface IProps {
 
 export default function RankSlider({ data }: IProps) {
   const settings = {
-    centerMode: true,
+    // centerMode: true,
     dots: false,
     infinite: true,
     slidesToShow: 4,

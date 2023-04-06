@@ -24,11 +24,31 @@ export async function getDetail(themeId: number) {
 export async function getDetailLogin(themeId: number) {
   return await instance.get(`/theme/${themeId}/user`);
 }
-
+// 테마 분리 API
 export async function getRecommendTheme() {
   return await instance.get(`/theme/user/recommend`);
 }
 
-export async function getDefaultUserTheme() {
-  return await instance.get(`/theme/user/default`);
+// export async function getDefaultUserTheme() {
+//   return await instance.get(`/theme/user/default`);
+// }
+
+export async function getHotTheme() {
+  return await instance.get(`/theme/common/hot`);
+}
+
+export async function getTopUserTheme() {
+  return await instance.get(`/theme/user/feel-or-region`);
+}
+
+export async function getTopGuestFeelTheme() {
+  return await instance.get(`/theme/guest/feel`);
+}
+
+export async function getTopGuestRegionTheme() {
+  return await instance.get(`/theme/guest/region`);
+}
+
+export async function getAwardTheme() {
+  return await instance.get(`/theme/common/award`);
 }
