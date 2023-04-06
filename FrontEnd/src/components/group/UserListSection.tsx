@@ -8,12 +8,6 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { requestUser } from "@/api/group";
 
-function sleep(delay = 0) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
-}
-
 export default function UserListSection({
   userList,
   handleDeleteUser,
@@ -25,7 +19,6 @@ export default function UserListSection({
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
-    console.log("I'm open");
     setOpen(true);
     setSearchTerm("");
     setSearchResults([]);

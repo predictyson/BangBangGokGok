@@ -213,7 +213,7 @@ const SliderItem = styled.div`
 `;
 
 const Hover = styled.div`
-  width: 18rem;
+  width: 24rem;
   height: 100%;
   position: absolute;
   opacity: 0;
@@ -229,14 +229,21 @@ const Hover = styled.div`
   font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
+  @media screen and (max-width: 1600px) {
+    width: 18rem;
+  }
 `;
 
 const PosterItem = styled.img`
-  width: 18rem;
+  width: 24rem;
   height: 100%;
   cursor: pointer;
   border-bottom: 1rem;
   border-radius: 1rem;
+
+  @media screen and (max-width: 1600px) {
+    width: 18rem;
+  }
 `;
 
 const initData: IDetailData = {

@@ -12,6 +12,10 @@ export default function UserSection({
   user: GroupSetUer;
   handleDeleteUser: (nickname: string) => void;
 }) {
+  const email = user.email;
+  const atIndex = email.indexOf("@");
+  const modifiedEmail = email.slice(0, 4) + "****" + email.slice(atIndex);
+
   return (
     <Container>
       <CloseIcon
@@ -22,14 +26,14 @@ export default function UserSection({
         <ProfileImg src={handleAvatar(user.profileImageType)} />
       </ProfileBox>
       <p>{user.nickname}</p>
-      {user.email}
+      <h4>{modifiedEmail}</h4>
     </Container>
   );
 }
 
 const ProfileBox = styled.div`
-  width: 11rem;
-  height: 11rem;
+  width: 50%;
+  height: 50%;
   border-radius: 50rem;
   display: flex;
   align-items: center;
@@ -50,7 +54,7 @@ const Container = styled.div`
   align-items: center;
 
   .close {
-    font-size: 2rem;
+    font-size: 3rem;
     float: right;
     margin-left: auto;
 
@@ -65,8 +69,13 @@ const Container = styled.div`
     font-size: 2rem;
     color: ${theme.colors.pink};
   }
+
+  h4 {
+    font-size: 1.5rem;
+    font-weight: ${theme.fontWeight.medium};
+  }
 `;
 
 const ProfileImg = styled.img`
-  width: 5.5rem;
+  width: 60%;
 `;

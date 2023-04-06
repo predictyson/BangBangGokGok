@@ -45,6 +45,8 @@ export default function GroupSetPage() {
     // if (userList.includes(newUser)) {
     if (userList.filter((user) => user.userId === newUser.userId).length > 0) {
       handleToastClick("error", "이미 추가된 유저입니다.");
+    } else if (userList.length >= 6) {
+      handleToastClick("error", "유저는 최대 6명입니다.");
     } else {
       handleToastClick("success", "성공적으로 추가되었습니다.");
       setUserList((prev) => {
