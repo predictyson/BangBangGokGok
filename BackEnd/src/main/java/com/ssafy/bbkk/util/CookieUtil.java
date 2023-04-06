@@ -22,9 +22,8 @@ public class CookieUtil {
 
         if (cookies != null && cookies.length > 0) {
             for (Cookie cookie : cookies) {
-                System.out.println(cookie.getName());
                 if (name.equals(cookie.getName())) {
-                    logger.info("[getCookie] response : value={}",cookie.getValue());
+                    logger.debug("[getCookie] response : value={}",cookie.getValue());
                     return Optional.of(cookie);
                 }
             }
