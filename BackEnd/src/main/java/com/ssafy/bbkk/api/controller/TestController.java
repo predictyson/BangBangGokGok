@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.ssafy.bbkk.api.dto.CreateReviewRequest;
 import com.ssafy.bbkk.api.dto.ThemeResponse;
 import com.ssafy.bbkk.api.dto.UserTestResponse;
+import com.ssafy.bbkk.api.service.OtherService;
 import com.ssafy.bbkk.api.service.ReviewService;
 import com.ssafy.bbkk.db.entity.User;
 import com.ssafy.bbkk.db.repository.ThemeRepository;
@@ -15,7 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("test")
@@ -25,6 +31,7 @@ public class TestController {
     private final UserRepository userRepository;
     private final ThemeRepository themeRepository;
     private final ReviewService reviewService;
+    private final OtherService otherService;
 
     @GetMapping("review/insert/{startIndex}/{endIndex}")
     private ResponseEntity<Void> insertRandomReview(
@@ -165,6 +172,22 @@ public class TestController {
         result /= 2;
 
         return result;
+    }
+
+    @GetMapping("cf/{startIndex}/{endIndex}")
+    private ResponseEntity<Void> goCF(
+            @PathVariable int startIndex,
+            @PathVariable int endIndex) throws Exception {
+        logger.info(">> request : startIndex={}", startIndex);
+        logger.info(">> request : endIndex={}", endIndex);
+
+        for(int i=startIndex;i<=endIndex;i++){
+            Optional<User> user = userRepository.findById(i);
+            if(user.isPresent()) otherService.recCF(user.get().getEmail());
+        }
+
+        logger.info("<< response : none");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 
