@@ -11,6 +11,7 @@ import DeleteModal from "@components/mypage/RightSection/Review/DeleteModal";
 
 export default function MyReviewsSection() {
   const [reviews, setReviews] = useState<UserReview[]>([]);
+  const [loadComplete, setLoadComplete] = useState(false);
 
   // 리뷰 삭제
   const [currentSelectedReviewId, setCurrentSelectedReviewId] =
@@ -141,6 +142,7 @@ export default function MyReviewsSection() {
       const userId = Number(localStorage.getItem("userId"));
       const response = await getUserReviews(userId);
       setReviews(response.data.reviews as UserReview[]);
+      setLoadComplete(true);
     };
     fetchUserReviews();
   }, []);
@@ -149,8 +151,13 @@ export default function MyReviewsSection() {
     <SectionWrapper>
       <SectionTitle>내 리뷰</SectionTitle>
       <SectionContentWrapper>
-        {reviews.length === 0 && <div>작성한 리뷰가 없습니다.</div>}
-        {reviews.length !== 0 &&
+        {loadComplete && reviews.length === 0 && (
+          <NoContent>
+            <NoContentText>작성한 리뷰가 없습니다.</NoContentText>
+          </NoContent>
+        )}
+        {loadComplete &&
+          reviews.length !== 0 &&
           reviews.map((review) => (
             <ReviewCard
               key={review.reviewId}
@@ -205,4 +212,21 @@ const SectionContentWrapper = styled.div`
   gap: 1rem;
   height: 100%;
   border-radius: 1.5rem;
+`;
+
+const NoContent = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NoContentText = styled.div`
+  font-size: 3rem;
+  weight: 600;
+  padding: 3rem;
+  color: ${theme.colors.pink};
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 4rem;
 `;
