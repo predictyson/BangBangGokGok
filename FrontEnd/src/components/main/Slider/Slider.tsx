@@ -119,7 +119,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
     <Container>
       {topData &&
         topData.map((item, idx) => (
-          <>
+          <div key={idx}>
             {isRecommendSlider ? (
               <RecommendTitle className="recommend">
                 {localStorage.getItem("nickname") + item.label}
@@ -132,7 +132,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
             )}
             <Slider {...settings}>
               {item.themes.map((theme: IThemeData) => (
-                <>
+                <div key={theme.themeId}>
                   <SliderItem key={theme.themeId}>
                     <PosterItem src={theme.imgUrl} />
                     <Hover
@@ -142,7 +142,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
                       <span style={{ padding: "0 2rem" }}>{theme.title}</span>
                     </Hover>
                   </SliderItem>
-                </>
+                </div>
               ))}
             </Slider>
             {themeId !== undefined && (
@@ -155,7 +155,7 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
                 handleReviews={handleReviews}
               />
             )}
-          </>
+          </div>
         ))}
     </Container>
   );
