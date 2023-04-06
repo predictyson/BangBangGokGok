@@ -12,7 +12,12 @@ import {
   IAwardTheme,
   IThemeData,
 } from "types/slider";
-import { getThemeUser, getThemeGuest } from "@/api/theme";
+import {
+  getThemeUser,
+  getThemeGuest,
+  getRecommendTheme,
+  getDefaultUserTheme,
+} from "@/api/theme";
 import Footer from "@components/common/Footer";
 
 export default function MainPage() {
@@ -22,12 +27,22 @@ export default function MainPage() {
   const [recommendData, setRecommendData] =
     useState<ISliderData[]>(RecommendThemesData);
   const isLogin = localStorage.getItem("userId") !== null ? true : false;
+  const requestRecommendTheme = async () => {
+    try {
+      const res = await getRecommendTheme();
+      console.log(res.data.recommendThemes);
+      setRecommendData(res.data.recommendThemes);
+      console.log(recommendData);
+    } catch (err) {
+      throw new Error("Internal Server Error");
+    }
+  };
+
   const requestThemeUser = async () => {
     try {
-      const res = await getThemeUser();
-      const { recommendThemes, hotThemes, topThemes, awardThemes } = res.data;
+      const res = await getDefaultUserTheme();
+      const { hotThemes, topThemes, awardThemes } = res.data;
       console.log(res.data);
-      setRecommendData(recommendThemes);
       setHotData(hotThemes);
       setTopData(topThemes);
       setAwardData(awardThemes);
@@ -48,8 +63,11 @@ export default function MainPage() {
   };
 
   useEffect(() => {
-    isLogin ? requestThemeUser() : requestThemeGuest();
+    isLogin && requestRecommendTheme();
+    isLogin && requestThemeUser();
+    !isLogin && requestThemeGuest();
   }, []);
+
   return (
     <Container>
       <Header />
@@ -99,6 +117,7 @@ const RecommendWrapper = styled.div`
   border: solid 1px ${theme.colors.pink};
   padding-bottom: 3rem;
 `;
+
 // api에서 가져올 데이터 (DUMMY)
 const HotThemesData: IThemeData[] = [
   {
@@ -317,59 +336,6 @@ const AwardThemesData: IAwardSlider = {
 const RecommendThemesData: ISliderData[] = [
   {
     label: "님을 위한 방탈출 테마 추천",
-    themes: [
-      {
-        themeId: 1,
-        title: "",
-        imgUrl:
-          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
-      },
-      {
-        themeId: 2,
-        title: "",
-        imgUrl:
-          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
-      },
-      {
-        themeId: 3,
-        title: "",
-        imgUrl:
-          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
-      },
-      {
-        themeId: 4,
-        title: "",
-        imgUrl:
-          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
-      },
-      {
-        themeId: 5,
-        title: "",
-        imgUrl:
-          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
-      },
-      {
-        themeId: 6,
-        title: "",
-        imgUrl:
-          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
-      },
-      {
-        themeId: 7,
-        title: "",
-        imgUrl:
-          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
-      },
-      {
-        themeId: 8,
-        title: "",
-        imgUrl:
-          "https://bangbanggokgok.s3.ap-northeast-2.amazonaws.com/basic.png",
-      },
-    ],
-  },
-  {
-    label: "님과 비슷한 유저들이 방문한 테마 추천",
     themes: [
       {
         themeId: 1,
