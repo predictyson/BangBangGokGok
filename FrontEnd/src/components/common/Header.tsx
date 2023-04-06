@@ -40,19 +40,6 @@ export default function Header() {
   };
 
   const routeGroupSet = async () => {
-    // try {
-    //   if (await myPageLoader()) {
-    //     navigate("/groupset");
-    //   } else {
-    //     handleToastClick("error", "올바르지 않은 접근입니다.");
-    //     setTimeout(() => {
-    //       navigate("/login");
-    //     }, 2000);
-    //   }
-    // } catch (error) {
-    //   handleToastClick("error", "로그인 후 이용해주세요.");
-    //   console.log(error);
-    // }
     if (isLogin) {
       navigate("/groupset");
     } else {
@@ -160,17 +147,20 @@ const ProfileItem = styled.div`
 
 const NavItem = styled.div`
   color: ${theme.colors.pink};
-  font-size: 1.8rem;
+  font-size: 2.3rem;
   cursor: pointer;
   .button {
     border: solid 1px ${theme.colors.pink};
     border-radius: 10;
   }
+  @media screen and (max-width: 1600px) {
+    font-size: 1.8rem;
+  }
 `;
 
 const NavButton = styled.div`
   color: ${theme.colors.pink};
-  font-size: 1.8rem;
+  font-size: 2.3rem;
   cursor: pointer;
   border: solid 1px ${theme.colors.pink};
   border-radius: 1.5rem;
@@ -181,5 +171,8 @@ const NavButton = styled.div`
     color: white;
     background-color: ${theme.colors.pink};
     transform: scale(1.1);
+  }
+  @media screen and (max-width: 1600px) {
+    font-size: 1.8rem;
   }
 `;

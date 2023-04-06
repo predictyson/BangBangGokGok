@@ -98,12 +98,12 @@ export default function ThemeRecSection({
     <Container>
       {!isShow && (
         <>
-          {isWaiting && (
+          {/* {isWaiting && (
             <WaitAnimation>
               <b>{userList[0].nickname}</b> 님의 그룹의 맞춤 추천 테마를
               찾는중입니다......
             </WaitAnimation>
-          )}
+          )} */}
           {!isWaiting && (
             <ResultButton onClick={handleResult}>결과 보기</ResultButton>
           )}
@@ -124,9 +124,6 @@ export default function ThemeRecSection({
               </SliderItem>
             );
           })}
-          {/* reviews={reviews}
-          isLiked={isLiked}
-          handleReviews={handleReviews} */}
           <Modal
             open={open}
             onClose={handleClose}
@@ -213,7 +210,7 @@ const SliderItem = styled.div`
 `;
 
 const Hover = styled.div`
-  width: 24rem;
+  width: 26rem;
   height: 100%;
   position: absolute;
   opacity: 0;
@@ -235,7 +232,7 @@ const Hover = styled.div`
 `;
 
 const PosterItem = styled.img`
-  width: 24rem;
+  width: 26rem;
   height: 100%;
   cursor: pointer;
   border-bottom: 1rem;
