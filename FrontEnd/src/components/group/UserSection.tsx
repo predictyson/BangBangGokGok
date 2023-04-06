@@ -32,13 +32,17 @@ export default function UserSection({
 }
 
 const ProfileBox = styled.div`
-  width: 50%;
-  height: 50%;
-  border-radius: 50rem;
+  width: 15rem;
+  border-radius: 50%;
+  height: 15rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: ${theme.colors.background};
+  @media screen and (max-width: 1600px) {
+    width: 10rem;
+    height: 10rem;
+  }
 `;
 
 const Container = styled.div`
@@ -73,9 +77,10 @@ const Container = styled.div`
   h4 {
     font-size: 1.5rem;
     font-weight: ${theme.fontWeight.medium};
+    margin: 0;
   }
 `;
 
 const ProfileImg = styled.img`
-  width: 60%;
+  width: 50%;
 `;
