@@ -7,18 +7,9 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.bbkk.api.dto.*;
-import com.ssafy.bbkk.db.entity.QGenreOfTheme;
-import com.ssafy.bbkk.db.entity.QTheme;
-import com.ssafy.bbkk.db.entity.Region;
-import com.ssafy.bbkk.db.entity.Theme;
-import com.ssafy.bbkk.db.entity.User;
-import com.ssafy.bbkk.db.repository.AwardThemeRepository;
-import com.ssafy.bbkk.db.repository.InterestedThemeOfUserRepository;
-import com.ssafy.bbkk.db.repository.RecommendedThemeOfUserRepository;
-import com.ssafy.bbkk.db.repository.RegionRepository;
-import com.ssafy.bbkk.db.repository.ReviewRepository;
-import com.ssafy.bbkk.db.repository.ThemeRepository;
-import com.ssafy.bbkk.db.repository.UserRepository;
+import com.ssafy.bbkk.db.entity.*;
+import com.ssafy.bbkk.db.repository.*;
+
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,6 +35,7 @@ public class ThemeServiceImpl implements ThemeService {
     private final InterestedThemeOfUserRepository interestedRepository;
     private final AwardThemeRepository awardThemeRepository;
     private final RecommendedThemeOfUserRepository recommendedThemeOfUserRepository;
+    private final HotThemeRepository hotThemeRepository;
 
     private final int THEME_RETURN_COUNT = 8;
     private final int THEME_COUNT = 10;
@@ -66,14 +58,11 @@ public class ThemeServiceImpl implements ThemeService {
         int themeCnt = themeRepository.countByRegionId(region.getId());
         // 테마 개수가 적을 경우
         if (themeCnt < THEME_COUNT) {
-            List<Integer> regionIds = regionRepository.findAllByRegionBig(region.getRegionBig())
-                    .stream()
-                    .map(x -> x.getId())
-                    .collect(Collectors.toList());
+            List<Region> regions = regionRepository.findAllByRegionBig(region.getRegionBig());
             // 지역 대분류에서 테마 가져오기
             list = new ArrayList<>();
-            for (int regId : regionIds) {
-                List<Theme> temp = themeRepository.findAllByRegionId(regId);
+            for (Region r : regions) {
+                List<Theme> temp = themeRepository.findAllByRegionId(r.getId());
                 if(temp != null){
                     list.addAll(temp);
                 }
@@ -179,13 +168,13 @@ public class ThemeServiceImpl implements ThemeService {
             result = new ArrayList<>();
             // 유저의 추천 테마 목록 조회
             recommendedThemeOfUserRepository.findByUserId(user.getId())
-                    .forEach(x -> {
-                        if (x.getType() == 1) {
-                            CBFList.add(new PreviewThemeResponse(x.getTheme()));
-                        } else {
-                            CFList.add(new PreviewThemeResponse(x.getTheme()));
-                        }
-                    });
+                .forEach(x -> {
+                    if (x.getType() == 1) {
+                        CBFList.add(new PreviewThemeResponse(x.getTheme()));
+                    } else {
+                        CFList.add(new PreviewThemeResponse(x.getTheme()));
+                    }
+                });
             // CBF : 맞춤 테마
             result.add(new ThemeBundleResponse("님의 맞춤 추천 테마입니다", CBFList));
             // CF : 비슷한 유저와 비교시 맞춤 테마
@@ -198,60 +187,10 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public List<PreviewThemeResponse> getHotThemes() throws Exception {
-        List<PreviewThemeResponse> result = null;
-        Map<Integer, Integer> themeCnt; // 카운트된 테마의 개수
-        int[] themeIds; // 테마 id마다 개수 체크할 배열
-
-        Theme topTheme = themeRepository.findFirstByOrderByIdDesc()
-                .orElseThrow(() -> new Exception("해당 테마를 찾을 수 없습니다."));
-        int themeArraySize = topTheme.getId();
-        themeIds = new int[themeArraySize + 1];
-
-        ////////////////////////////////////////////////////////////////////////////////
-        // 리뷰 개수 체크
-        reviewRepository.findByModifiedDateAfter(LocalDateTime.now().minusDays(7))
-                .forEach(review -> {
-                    int themeId = review.getTheme().getId();
-                    themeIds[themeId]++;
-                });
-
-        // 관심 개수 체크
-        interestedRepository.findByModifiedDateAfter(LocalDateTime.now().minusDays(7))
-                .forEach(interest -> {
-                    int themeId = interest.getTheme().getId();
-                    themeIds[themeId]++;
-                });
-
-        // 개수 체크된 배열을 리스트로 변경
-        List<ThemeCountResponse> list = new ArrayList<>();
-        for (int i = 0; i <= themeArraySize; i++) {
-            if (themeIds[i] > 0) {
-                list.add(new ThemeCountResponse(i, themeIds[i]));
-            }
-        }
-
-        // 핫 한 테마의 개수가 적을 경우
-        if (list.size() < 9) {
-            // userCnt가 높은 순으로 반환
-            result = themeRepository.findTop9ByOrderByUserCntDesc()
-                    .stream()
-                    .map(x -> new PreviewThemeResponse(x))
-                    .collect(Collectors.toList());
-        }
-        // 핫 한 테마의 개수가 많을 경우
-        else {
-            // 개수 순으로 내림차순 정렬
-            Collections.sort(list, (o1, o2) -> o2.getCount() - o1.getCount());
-
-            result = new ArrayList<>();
-            for (int i = 0; i < 9; i++) {
-                result.add(
-                        new PreviewThemeResponse(themeRepository.findById(list.get(i).getThemeId())
-                                .orElseThrow())
-                );
-            }
-        }
-
+        List<PreviewThemeResponse> result = new ArrayList<>();
+        // 금주 핫테마를 불러온다
+        hotThemeRepository.findAll()
+            .forEach(hotTheme -> result.add(new PreviewThemeResponse(hotTheme.getTheme())));
         return result;
     }
 
@@ -474,6 +413,63 @@ public class ThemeServiceImpl implements ThemeService {
                 .orElseThrow(() -> new Exception("해당 테마를 찾을 수 없습니다."));
         result = new ThemeResponse(theme);
         return result;
+    }
+
+    @Override
+    public void setHotThemes() throws Exception {
+        Map<Integer, Integer> themeCnt; // 카운트된 테마의 개수
+        int[] themeIds; // 테마 id마다 개수 체크할 배열
+
+        Theme topTheme = themeRepository.findFirstByOrderByIdDesc()
+                .orElseThrow(() -> new Exception("해당 테마를 찾을 수 없습니다."));
+        int themeArraySize = topTheme.getId();
+        themeIds = new int[themeArraySize + 1];
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // 리뷰 개수 체크
+        reviewRepository.findByModifiedDateAfter(LocalDateTime.now().minusDays(7))
+                .forEach(review -> {
+                    int themeId = review.getTheme().getId();
+                    themeIds[themeId]++;
+                });
+
+        // 관심 개수 체크
+        interestedRepository.findByModifiedDateAfter(LocalDateTime.now().minusDays(7))
+                .forEach(interest -> {
+                    int themeId = interest.getTheme().getId();
+                    themeIds[themeId]++;
+                });
+
+        // 개수 체크된 배열을 리스트로 변경
+        List<ThemeCountResponse> list = new ArrayList<>();
+        for (int i = 0; i <= themeArraySize; i++) {
+            if (themeIds[i] > 0) {
+                list.add(new ThemeCountResponse(i, themeIds[i]));
+            }
+        }
+
+        hotThemeRepository.deleteAll();
+        // 핫 한 테마의 개수가 적을 경우
+        if (list.size() < 9) {
+            // userCnt가 높은 순으로 반환
+            themeRepository.findTop9ByOrderByUserCntDesc()
+                .forEach(theme -> {
+                    HotTheme hotTheme = new HotTheme(theme);
+                    hotThemeRepository.save(hotTheme);
+                });
+        }
+        // 핫 한 테마의 개수가 많을 경우
+        else {
+            // 개수 순으로 내림차순 정렬
+            Collections.sort(list, (o1, o2) -> o2.getCount() - o1.getCount());
+
+            for (int i = 0; i < 9; i++) {
+                Theme theme = themeRepository.findById(list.get(i).getThemeId())
+                        .orElseThrow(()->new RuntimeException("해당 테마를 찾을 수 없습니다."));
+                HotTheme hotTheme = new HotTheme(theme);
+                hotThemeRepository.save(hotTheme);
+            }
+        }
     }
 
 }
