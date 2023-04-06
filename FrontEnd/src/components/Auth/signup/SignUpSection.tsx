@@ -5,10 +5,8 @@ import { theme } from "@/styles/theme";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router";
 import {
-  emailValidCheck,
   passwordValidCheck,
   requestCheckCode,
-  requestEmailCheck,
   requestJoinCheck,
   requestSignUp,
 } from "@/api/auth";
