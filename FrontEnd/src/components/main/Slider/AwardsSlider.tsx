@@ -29,7 +29,6 @@ export default function AwardsSlider(awardData: IProps) {
     await requestReviews(themeId);
     await requestDetailData(themeId);
     await setOpen(true);
-    console.log("handleOpen Award : " + themeId);
   };
   const handleClose = () => {
     setOpen(false);
@@ -89,7 +88,6 @@ export default function AwardsSlider(awardData: IProps) {
       try {
         const res = await getDetail(themeId);
         setData(res.data.theme);
-        console.log(res.data.theme);
       } catch (err) {
         throw new Error("Internal Server Error!");
       }

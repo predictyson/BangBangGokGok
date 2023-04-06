@@ -33,8 +33,6 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
       try {
         const res = await getDetailLogin(themeId);
         setLoginData(res.data);
-        console.log(res.data);
-        console.log(logindata);
       } catch (err) {
         console.log(err);
       }
@@ -112,14 +110,11 @@ export default function BasicSlider({ topData, isRecommendSlider }: IProps) {
       try {
         const res = await getDetail(themeId);
         setData(res.data.theme);
-        console.log(res.data.theme);
       } catch (err) {
         throw new Error("Internal Server Error!");
       }
     }
   };
-  console.log("RECOMMEND DATA");
-  isRecommendSlider && console.log(topData);
   return (
     <Container>
       {topData &&
