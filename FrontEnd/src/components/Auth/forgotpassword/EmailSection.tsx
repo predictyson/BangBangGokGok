@@ -53,7 +53,10 @@ export default function EmailSection() {
   };
 
   const checkCode = async () => {
-    // TODO : API 다녀와서 200 res오면
+    if (isValid) {
+      handleToastClick("success", "이미 인증이 되었습니다.");
+      return;
+    }
     try {
       const {
         data: { isCheck },
@@ -76,27 +79,25 @@ export default function EmailSection() {
       <HegihtHalfBox>
         <InputBox>
           <CustomTextField
-            label="이메일"
             autoComplete="current-password"
-            sx={{ width: 300 }}
             color="warning"
             name="email"
             focused
             placeholder="example123@naver.com"
             onChange={handleValue}
+            hiddenLabel
           />
           <ValidCheckButton onClick={sendCode}>코드 전송</ValidCheckButton>
         </InputBox>
         <InputBox>
           <CustomTextField
-            label="인증코드"
             autoComplete="current-password"
-            sx={{ width: 300 }}
             name="code"
             color="warning"
             focused
             placeholder="이메일로 발송된 코드를 입력하세요."
             onChange={handleValue}
+            hiddenLabel
           />
           <ValidCheckButton onClick={checkCode}>코드 확인</ValidCheckButton>
         </InputBox>
@@ -126,12 +127,20 @@ export default function EmailSection() {
 }
 
 const CustomTextField = mstyled(TextField)({
-  width: "70%",
+  width: "380px",
   height: "10%",
   color: "white",
   input: {
     color: "white",
-    fontSize: "1.2rem",
+    fontSize: "1.6rem",
+  },
+  "@media screen and (max-width: 1600px)": {
+    width: "300px",
+    color: "white",
+    input: {
+      color: "white",
+      fontSize: "1.2rem",
+    },
   },
 });
 
@@ -145,52 +154,87 @@ const HegihtHalfBox = styled.div`
 `;
 
 const Container = styled.div`
-  width: 60rem;
-  height: 40rem;
+  width: 70rem;
+  height: 45rem;
   border-radius: 1.5rem;
-  padding: 2rem 0;
+  padding: 4rem 0;
   background-color: ${theme.colors.container};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+
   p {
     color: ${theme.colors.pink};
-    font-size: 2rem;
+    font-size: 2.5rem;
+  }
+
+  @media screen and (max-width: 1600px) {
+    width: 60rem;
+    height: 40rem;
+    padding: 2rem 0;
+
+    p {
+      color: ${theme.colors.pink};
+      font-size: 2rem;
+    }
   }
 `;
 
 const SubjectText = styled.div`
   margin: 0 auto;
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: ${theme.fontWeight.extraBold};
+  @media screen and (max-width: 1600px) {
+    font-size: 3rem;
+  }
 `;
 
 const InputBox = styled.div`
-  width: 42rem;
+  width: 50rem;
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 1600px) {
+    width: 42rem;
+  }
 `;
 
 const ValidCheckButton = styled.div`
-  width: 10rem;
-  height: 3.2rem;
   border-radius: 0.5rem;
-  padding-top: 1.3rem;
   text-align: center;
-  font-size: 1.7rem;
+  padding: 1.5rem 1.5rem;
+  font-size: 2rem;
   background-color: ${theme.colors.pink};
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 1600px) {
+    width: 7rem;
+    height: 3.2rem;
+    font-size: 1.7rem;
+    padding: 1rem 1rem;
+  }
 `;
 
 const NotValidCheckButton = styled.div`
-  width: 10rem;
-  height: 3.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 0.5rem;
-  padding-top: 1.3rem;
+  padding: 1.5rem;
   text-align: center;
-  font-size: 1.7rem;
+  font-size: 2rem;
   background-color: grey;
   color: darkgrey;
   cursor: pointer;
+
+  @media screen and (max-width: 1600px) {
+    /* width: 10rem; */
+    padding: 1rem 2rem;
+    height: 3.2rem;
+    font-size: 1.7rem;
+  }
 `;

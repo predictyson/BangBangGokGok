@@ -48,7 +48,10 @@ export default function SignUpSection() {
   };
 
   const checkCode = async () => {
-    // TODO : API 다녀와서 200 res오면
+    if (isEmail) {
+      handleToastClick("success", "이미 인증이 되었습니다.");
+      return;
+    }
     try {
       const {
         data: { isCheck },
@@ -183,25 +186,51 @@ const CustomTextField = mstyled(TextField)({
   color: "white",
   input: {
     color: "white",
-    fontSize: "1.2rem",
+    fontSize: "1.6rem",
   },
 
   "& p": {
     color: "red",
     marginLeft: "5px",
+    fontSize: "1.3rem",
+  },
+
+  "@media screen and (max-width: 1600px)": {
+    color: "white",
+    input: {
+      color: "white",
+      fontSize: "1.2rem",
+    },
+
+    "& p": {
+      color: "red",
+      marginLeft: "5px",
+      fontSize: "1rem",
+    },
   },
 });
 
 const Container = styled.div`
-  width: 50rem;
-  height: 45rem;
+  width: 60rem;
+  height: 55rem;
   border-radius: 0.5rem;
   background-color: ${theme.colors.container};
-  padding: 2rem 0;
+  padding: 4rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+
+  @media screen and (max-width: 1600px) {
+    width: 50rem;
+    height: 45rem;
+    padding: 2rem 0;
+
+    p {
+      color: ${theme.colors.pink};
+      font-size: 2rem;
+    }
+  }
 `;
 
 const SubjectText = styled.div`

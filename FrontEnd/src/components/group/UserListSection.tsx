@@ -8,12 +8,6 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { requestUser } from "@/api/group";
 
-function sleep(delay = 0) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
-}
-
 export default function UserListSection({
   userList,
   handleDeleteUser,
@@ -25,7 +19,6 @@ export default function UserListSection({
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
-    console.log("I'm open");
     setOpen(true);
     setSearchTerm("");
     setSearchResults([]);
@@ -50,6 +43,12 @@ export default function UserListSection({
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const blockEmail = (email: string) => {
+    const atIndex = email.indexOf("@");
+    const modifiedEmail = email.slice(0, 4) + "****" + email.slice(atIndex);
+    return modifiedEmail;
   };
 
   return (
@@ -87,13 +86,13 @@ export default function UserListSection({
                 }}
                 key={option.userId}
               >
-                {option.nickname} ({option.email})
+                {option.nickname} ({blockEmail(option.email)})
               </Box>
             )}
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder="닉네임 혹은 이메일을 입력해주세요."
+                placeholder="찾고자하는 닉네임을 입력해주세요."
                 onChange={handleChange}
                 color="warning"
                 focused

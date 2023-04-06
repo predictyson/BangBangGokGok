@@ -72,9 +72,8 @@ export default function ResetPasswordSection() {
     <Container>
       <SubjectText>새 비밀번호 설정</SubjectText>
       <CustomTextField
-        label="새 비밀번호"
+        hiddenLabel
         autoComplete="current-password"
-        sx={{ width: 420 }}
         color="warning"
         type="password"
         focused
@@ -84,9 +83,8 @@ export default function ResetPasswordSection() {
         name="password"
       />
       <CustomTextField
-        label="새 비밀번호 확인"
+        hiddenLabel
         autoComplete="current-password"
-        sx={{ width: 420 }}
         color="warning"
         type="password"
         focused
@@ -103,30 +101,45 @@ export default function ResetPasswordSection() {
 }
 
 const CustomTextField = mstyled(TextField)({
-  width: "70%",
+  width: "400px",
   height: "5rem",
   color: "white",
   input: {
     color: "white",
-    fontSize: "1.2rem",
+    fontSize: "1.8rem",
   },
   "& p": {
     color: "red",
     marginLeft: "5px",
+    fontSize: "13px",
+  },
+
+  "@media screen and (max-width: 1600px)": {
+    width: "300px",
+    color: "white",
+    input: {
+      color: "white",
+      fontSize: "1.2rem",
+    },
+
+    "& p": {
+      color: "red",
+      marginLeft: "5px",
+      fontSize: "10px",
+    },
   },
 });
 
 const Container = styled.div`
-  width: 60rem;
+  width: 50rem;
   height: 40rem;
-  border-radius: 0.5rem;
-  padding: 2rem 0;
+  padding: 4rem 0 0 0;
   border-radius: 1.5rem;
   background-color: ${theme.colors.container};
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const SubjectText = styled.div`
@@ -136,12 +149,20 @@ const SubjectText = styled.div`
 `;
 
 const ValidCheckButton = styled.div`
-  width: 10rem;
-  height: 3.2rem;
   border-radius: 0.5rem;
-  padding-top: 1.3rem;
   text-align: center;
-  font-size: 1.7rem;
+  padding: 1.5rem 1.5rem;
+  font-size: 2rem;
   background-color: ${theme.colors.pink};
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 1600px) {
+    width: 7rem;
+    height: 3.2rem;
+    font-size: 1.7rem;
+    padding: 1rem 1rem;
+  }
 `;

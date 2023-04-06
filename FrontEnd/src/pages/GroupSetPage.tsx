@@ -45,6 +45,8 @@ export default function GroupSetPage() {
     // if (userList.includes(newUser)) {
     if (userList.filter((user) => user.userId === newUser.userId).length > 0) {
       handleToastClick("error", "이미 추가된 유저입니다.");
+    } else if (userList.length >= 6) {
+      handleToastClick("error", "유저는 최대 6명입니다.");
     } else {
       handleToastClick("success", "성공적으로 추가되었습니다.");
       setUserList((prev) => {
@@ -98,6 +100,7 @@ export default function GroupSetPage() {
       setUserList(myUserData);
     }
   }, []);
+
   return (
     <>
       <Header />
@@ -113,7 +116,6 @@ export default function GroupSetPage() {
               그룹 유저들을 추가하면, 모두가 공통으로 방문하지 않은 맞춤 추천
               테마가 제공됩니다! (최대 6명)
             </p>
-            {/* <NavButton onClick={resetThemeView}>재설정</NavButton> */}
             <p>※ 유저를 변경하시면, 추천 결과가 초기화됩니다.</p>
           </MiddleSection>
           <ThemeRecSection
@@ -146,11 +148,12 @@ const Container = styled.div`
   height: 90%;
   margin: auto auto;
   padding: 2rem;
-  /* padding-top: 1rem; */
   border-radius: 1rem;
   background-color: ${theme.colors.container};
   display: flex;
   flex-direction: column;
+
+  
 `;
 
 const MiddleSection = styled.div`

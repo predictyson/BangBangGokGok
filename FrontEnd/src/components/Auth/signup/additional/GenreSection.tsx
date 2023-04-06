@@ -64,11 +64,11 @@ const Container = styled.div`
 `;
 
 const CustomToggleButton = mstyled(ToggleButton)({
-  width: "18rem",
-  height: "12rem",
+  width: "24rem",
+  height: "15rem",
+  fontSize: "3.5rem",
   backgroundColor: "#58424D",
   borderRadius: "1.5rem !important",
-  fontSize: "3rem",
   fontWeight: "medium",
   color: "#FFF1F8",
 
@@ -88,23 +88,10 @@ const CustomToggleButton = mstyled(ToggleButton)({
     fontWeight: "bold",
     color: "#58424D",
   },
+
+  "@media screen and (max-width: 1600px)": {
+    width: "18rem",
+    height: "12rem",
+    fontSize: "3rem",
+  },
 });
-
-// const CustomToggleButton = mstyled(ToggleButton)`
-//   height: 9rem;
-//   background-color: #FFF1F8;
-//   border-radius: 1.5rem !important;
-//   font-size: 3rem;
-//   color: #58424D;
-//   font-weight: bold;
-
-//   &.Mui-selcted {
-//     background-color: red ;
-//   }
-
-//   :hover {
-//     background-color: #58424D;
-//     color: #FFF1F8;
-
-//   }
-// `;

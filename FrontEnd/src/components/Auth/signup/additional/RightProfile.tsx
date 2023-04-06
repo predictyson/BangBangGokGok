@@ -16,8 +16,8 @@ export default function LeftPorfile(props: ProfileProps) {
 
   const handleInputChange = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
-    console.log(target.name + " : " + target.value);
-    console.log(typeof target.value);
+    // console.log(target.name + " : " + target.value);
+    // console.log(typeof target.value);
     if (target.name === "nickname" && String(target.value).length > 10) {
       props.handleToastClick("error", "닉네임은 2~10자 사이입니다.");
     } else {
@@ -91,8 +91,7 @@ export default function LeftPorfile(props: ProfileProps) {
           hiddenLabel
         />
         <ValidCheckButton onClick={nicknameValidCheck}>
-          {" "}
-          중복 체크{" "}
+          중복 체크
         </ValidCheckButton>
       </SelectBox>
       <SelectBox>
@@ -104,16 +103,30 @@ export default function LeftPorfile(props: ProfileProps) {
           displayEmpty
           value={props.userAdditionalInfo.regionBig}
         >
-          <MenuItem value="">
+          <MenuItem sx={{ fontSize: 15 }} value="">
             <em>선택하세요</em>
           </MenuItem>
-          <MenuItem value={"서울"}>서울</MenuItem>
-          <MenuItem value={"경기"}>경기</MenuItem>
-          <MenuItem value={"충청"}>충청</MenuItem>
-          <MenuItem value={"전라"}>전라</MenuItem>
-          <MenuItem value={"경상"}>경상</MenuItem>
-          <MenuItem value={"강원"}>강원</MenuItem>
-          <MenuItem value={"제주"}>제주</MenuItem>
+          <MenuItem sx={{ fontSize: 15 }} value={"서울"}>
+            서울
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 15 }} value={"경기"}>
+            경기
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 15 }} value={"충청"}>
+            충청
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 15 }} value={"전라"}>
+            전라
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 15 }} value={"경상"}>
+            경상
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 15 }} value={"강원"}>
+            강원
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 15 }} value={"제주"}>
+            제주
+          </MenuItem>
         </CustomSelect>
         <CustomSelect
           onChange={handleSelectChange}
@@ -121,12 +134,17 @@ export default function LeftPorfile(props: ProfileProps) {
           color="warning"
           value={props.userAdditionalInfo.regionSmall}
           displayEmpty
+          MenuProps={{
+            style: {
+              maxHeight: "350px",
+            },
+          }}
         >
-          <MenuItem value="">
+          <MenuItem sx={{ fontSize: 15 }} value="">
             <em>선택하세요</em>
           </MenuItem>
           {smallRegion.map((region: string, idx: number) => (
-            <MenuItem value={region} key={idx}>
+            <MenuItem sx={{ fontSize: 15 }} value={region} key={idx}>
               {region}
             </MenuItem>
           ))}
@@ -141,14 +159,24 @@ export default function LeftPorfile(props: ProfileProps) {
           color="warning"
           displayEmpty
         >
-          <MenuItem value={0}>
+          <MenuItem sx={{ fontSize: 14 }} value={0}>
             <em>선택하세요</em>
           </MenuItem>
-          <MenuItem value={10}>10대</MenuItem>
-          <MenuItem value={20}>20대</MenuItem>
-          <MenuItem value={30}>30대</MenuItem>
-          <MenuItem value={40}>40대</MenuItem>
-          <MenuItem value={50}>50대</MenuItem>
+          <MenuItem sx={{ fontSize: 14 }} value={10}>
+            10대
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 14 }} value={20}>
+            20대
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 14 }} value={30}>
+            30대
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 14 }} value={40}>
+            40대
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 14 }} value={50}>
+            50대 이상
+          </MenuItem>
         </CustomSelect>
       </SelectBox>
       <SelectBox>
@@ -196,7 +224,14 @@ const SelectBox = styled.div`
   align-items: center;
 
   p {
+    font-size: 2rem;
     font-weight: ${theme.fontWeight.bold};
+  }
+
+  @media screen and (max-width: 1600px) {
+    p {
+      font-size: 1.6rem;
+    }
   }
 `;
 
@@ -204,14 +239,21 @@ const CustomTextField = mstyled(TextField)({
   width: "80%",
   color: "white",
   input: {
-    fontSize: "1.2rem",
+    fontSize: "1.8rem",
+  },
+
+  "@media screen and (max-width: 1600px)": {
+    input: {
+      color: "white",
+      fontSize: "1.2rem",
+    },
   },
 });
 
 const CustomSelect = mstyled(Select)({
-  width: "11rem",
+  width: "15rem",
   height: "4rem",
-  fontSize: "1.2rem",
+  fontSize: "1.6rem",
   border: "1px solid white",
   color: "white",
 
@@ -219,10 +261,15 @@ const CustomSelect = mstyled(Select)({
     color: "white",
   },
 
-  "&.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list":
-    {
-      height: "5rem",
-    },
+  ul: {
+    fontSize: "1.6rem",
+  },
+
+  "@media screen and (max-width: 1600px)": {
+    width: "11rem",
+    height: "4rem",
+    fontSize: "1.2rem",
+  },
 });
 
 const CustomToggleButton = mstyled(ToggleButton)({

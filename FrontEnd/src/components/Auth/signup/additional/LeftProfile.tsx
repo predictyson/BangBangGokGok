@@ -24,7 +24,7 @@ export default function LeftPorfile(props: ProfileProps) {
 
   return (
     <LeftBox>
-      <ProfileBox>
+      <ProfileBox onClick={handleOpen}>
         <ProfileImg
           src={handleAvatar(props.userAdditionalInfo.profileImageType)}
         />
@@ -64,17 +64,26 @@ const AvatarBox = styled.div`
 `;
 
 const ProfileBox = styled.div`
-  width: 20rem;
-  height: 20rem;
+  width: 25rem;
+  height: 25rem;
   border-radius: 50rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: ${theme.colors.background};
+  cursor: pointer;
+
+  @media screen and (max-width: 1600px) {
+    width: 20rem;
+    height: 20rem;
+  }
 `;
 
 const AvatarImg = styled.img`
   width: 10rem;
+  @media screen and (max-width: 1600px) {
+    width: 10rem;
+  }
 `;
 
 const LeftBox = styled.div`
@@ -87,16 +96,25 @@ const LeftBox = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 10rem;
+  width: 13rem;
+
+  @media screen and (max-width: 1600px) {
+    width: 10rem;
+  }
 `;
 
 const SelectButton = styled.div`
-  height: 2rem;
   border-radius: 0.5rem;
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   font-weight: 800;
+  color: ${theme.colors.pink};
   cursor: pointer;
+
+  @media screen and (max-width: 1600px) {
+    font-size: 1.8rem;
+    width: 10rem;
+  }
 `;
 
 const ModalBox = styled.div`
@@ -118,36 +136,3 @@ const ModalBox = styled.div`
     margin-top: 0;
   }
 `;
-
-{
-  /* <AvatarBox>
-              <AvatarImg src={handleAvatar("Avatar1")} />
-            </AvatarBox>
-            <AvatarBox>
-              <AvatarImg src={handleAvatar("Avatar2")} />
-            </AvatarBox>
-            <AvatarBox>
-              <AvatarImg src={handleAvatar("Avatar3")} />
-            </AvatarBox>
-            <AvatarBox>
-              <AvatarImg src={handleAvatar("Avatar4")} />
-            </AvatarBox>
-            <AvatarBox>
-              <AvatarImg src={handleAvatar("Avatar5")} />
-            </AvatarBox>
-            <AvatarBox>
-              <AvatarImg src={handleAvatar("Avatar6")} />
-            </AvatarBox>
-            <AvatarBox>
-              <AvatarImg src={handleAvatar("Avatar7")} />
-            </AvatarBox>
-            <AvatarBox>
-              <AvatarImg src={handleAvatar("Avatar8")} />
-            </AvatarBox>
-            <AvatarBox>
-              <AvatarImg src={handleAvatar("Avatar9")} />
-            </AvatarBox>
-            <AvatarBox>
-              <AvatarImg src={handleAvatar("Avatar10")} />
-            </AvatarBox> */
-}

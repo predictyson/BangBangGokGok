@@ -24,7 +24,7 @@ export default function ProfileSection(props: ProfileProps) {
 }
 
 const ProfileBox = styled.div`
-  width: 80rem;
+  width: 70%;
   height: 100rem;
   padding: 1rem 2rem;
   display: flex;
