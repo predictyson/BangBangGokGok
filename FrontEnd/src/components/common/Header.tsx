@@ -149,6 +149,9 @@ const NavItem = styled.div`
   color: ${theme.colors.pink};
   font-size: 2.3rem;
   cursor: pointer;
+  :hover {
+    font-weight: 500;
+  }
   .button {
     border: solid 1px ${theme.colors.pink};
     border-radius: 10;
