@@ -53,7 +53,10 @@ export default function EmailSection() {
   };
 
   const checkCode = async () => {
-    // TODO : API 다녀와서 200 res오면
+    if (isValid) {
+      handleToastClick("success", "이미 인증이 되었습니다.");
+      return;
+    }
     try {
       const {
         data: { isCheck },

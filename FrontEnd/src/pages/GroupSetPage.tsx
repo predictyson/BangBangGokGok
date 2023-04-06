@@ -152,6 +152,8 @@ const Container = styled.div`
   background-color: ${theme.colors.container};
   display: flex;
   flex-direction: column;
+
+  
 `;
 
 const MiddleSection = styled.div`
