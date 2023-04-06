@@ -29,9 +29,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest); // google의 회원 프로필 조회
 
         // code를 통해 구성한 정보
-        logger.info("userRequest clientRegistration : " + userRequest.getClientRegistration());
+        logger.debug("userRequest clientRegistration : " + userRequest.getClientRegistration());
         // token을 통해 응답받은 회원정보
-        logger.info("oAuth2User : " + oAuth2User);
+        logger.debug("oAuth2User : " + oAuth2User);
 
         return processOAuth2User(userRequest, oAuth2User);
     }
@@ -45,9 +45,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         }
         else if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")){
-            logger.info("카카오톡 로그인 요청");
+            logger.debug("카카오톡 로그인 요청");
             oAuth2UserInfo = new KakaoUserInfo((Map)oAuth2User.getAttributes());
-            logger.info("카카오톡 로그인 요청 끝");
         }else {
             logger.warn("지원하지 않는 로그인 요청입니다");
             throw new NullPointerException();
@@ -57,11 +56,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         Optional<User> userOptional =
                 userRepository.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
 
-        logger.info("유저 조회");
-
         User user = null;
         if (userOptional.isPresent()) { // 유저가 존재하면 그대로 가져옴
-            logger.info("유저 존재");
             user = userOptional.get();
         }
         else { // 소셜 로그인 유저가 존재하지 않다면
@@ -74,7 +70,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                 throw new OAuth2AuthenticationException("이미 가입한 회원입니다.");
             }
             else{
-                logger.info("소셜 회원 가입");
+                logger.debug("소셜 로그인");
                 // user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
                 user = new User(oAuth2UserInfo);
                 userRepository.save(user);
