@@ -7,8 +7,8 @@ import ReviewIcon from "@/assets/mypage/ReviewIcon.svg";
 import LikesIcon from "@/assets/mypage/LikesIcon.svg";
 import { handleAvatar } from "@/api/user";
 import { useLocation } from "react-router-dom";
-
-export default function LeftNavBar() {
+import DeleteModal from "@components/main/Modal/DeleteAccountModal";
+export default function LeftNavBar(this: any) {
   const { pathname } = useLocation();
 
   const navigate = useNavigate();
@@ -37,7 +37,14 @@ export default function LeftNavBar() {
     }
     return nickname;
   };
-
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    console.log("HANDLE CLOSE");
+    setOpen(false);
+  };
   return (
     <Wrapper>
       <ProfileWrapper>
@@ -68,16 +75,20 @@ export default function LeftNavBar() {
           <NavItemImg src={LikesIcon} />
           <span> Likes</span>
         </NavItem>
-        <NavItem
-          select={pathname === "/mypage/signout"}
-          onClick={() => navigate("likes")}
-        >
+        <DeleteAccount onClick={() => handleOpen()}>
           <span>Delete Account</span>
-        </NavItem>
+        </DeleteAccount>
       </NavWrapper>
+      <DeleteModal deleteModalOpen={open} handleClose={handleClose} />
     </Wrapper>
   );
 }
+const DeleteAccount = styled.div`
+  margin-top: 3rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -98,6 +109,7 @@ const ProfileWrapper = styled.div`
   gap: 1.5rem;
   background-color: ${theme.colors.containerLight};
   padding: 2rem 1rem;
+  height: 60%;
   border-radius: 1.5rem;
 `;
 
@@ -105,7 +117,7 @@ const ProfileImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 80%;
   aspect-ratio: 1 / 1;
   border-radius: 25rem;
   background-color: ${theme.colors.container};
@@ -138,7 +150,6 @@ const ProfileName = styled.h1`
 
 const NavWrapper = styled.div`
   display: flex;
-  border: solid 1px red;
   flex-direction: column;
   gap: 0.5rem;
   height: 100%;
@@ -170,8 +181,7 @@ const NavItem = styled.div<NavItemProps>`
   border-radius: 1.5rem;
   background-color: ${theme.colors.container};
   background-color: ${(props) => props.select && theme.colors.pink};
-  border: solid 1px green;
-  height: 3rem;
+  height: 18%;
   &:hover {
     ${(props) =>
       !props.select &&
