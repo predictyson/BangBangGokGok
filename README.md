@@ -142,6 +142,11 @@
 - **ERD**
 
   <img src="./assets/readme/ERD.png" alt="ERD" width="600px" >
+  
+<br />
+
+- **추천 Sequence Diagram**
+
   <img src="./assets/readme/sequencediagram.png" alt="ERD" width="600px" >
 
 <br />
