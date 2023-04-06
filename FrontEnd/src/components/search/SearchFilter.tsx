@@ -163,6 +163,11 @@ const ButtonContainer = styled.div`
 `;
 
 const OkButton = styled.button`
+  font-size: 2.7rem;
+  @media (max-width: 1536px) {
+    font-size: 2.2rem;
+  }
+  font-weight: 600;
   color: ${theme.colors.white};
   background-color: ${theme.colors.pink};
   border-radius: 10px;
@@ -178,6 +183,11 @@ const OkButton = styled.button`
 `;
 
 const CancelButton = styled.button`
+  font-size: 2.7rem;
+  @media (max-width: 1536px) {
+    font-size: 2.2rem;
+  }
+  font-weight: 600;
   color: ${theme.colors.pink};
   background-color: ${theme.colors.white};
   border-radius: 10px;
