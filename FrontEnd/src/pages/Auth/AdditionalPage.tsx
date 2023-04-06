@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { requestAdditional } from "@/api/auth";
 import Toast, { showToast } from "@/components/common/Toast";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 const InitAdditionalInfo: IAdditionalInfo = {
   userId: -1,
@@ -140,7 +140,7 @@ const Container = styled.div`
   width: 90%;
   height: 90%;
   border-radius: 0.5rem;
-  padding: rem 0;
+  padding: 1rem 0;
   background-color: ${theme.colors.container};
   display: flex;
   flex-direction: column;
@@ -148,8 +148,15 @@ const Container = styled.div`
   justify-content: space-around;
 
   .desc {
-    font-size: 20px;
+    font-size: 25px;
     color: ${theme.colors.pink};
+  }
+
+  @media screen and (max-width: 1600px) {
+    .desc {
+      font-size: 20px;
+      color: ${theme.colors.pink};
+    }
   }
 `;
 
