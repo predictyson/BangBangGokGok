@@ -71,7 +71,6 @@ const CustomInputLabel = mstyled(InputLabel)`
 `;
 
 const CustomSelect = mstyled(Select)`
-  width: 11.5rem;
   height: 4rem;
   font-size: 2rem;
   @media (max-width: 1536px) {

@@ -69,9 +69,9 @@ const LocationForm = (props: LocationFormProps) => {
   // 소지역 옵션 렌더링
   const renderLocationOptions = () => {
     return regionSmallOptions.map((regionSmalloption) => (
-      <MenuItem value={regionSmalloption} key={regionSmalloption}>
+      <CustomMenuItem value={regionSmalloption} key={regionSmalloption}>
         {regionSmalloption}
-      </MenuItem>
+      </CustomMenuItem>
     ));
   };
 
@@ -151,7 +151,6 @@ const CustomInputLabel = mstyled(InputLabel)`
 `;
 
 const CustomSelect = mstyled(Select)`
-  width: 11.5rem;
   height: 4rem;
   font-size: 2rem;
   @media (max-width: 1536px) {
