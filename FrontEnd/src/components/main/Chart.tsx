@@ -15,7 +15,7 @@ interface Props {
 }
 
 const BarChart: React.FC<Props> = ({ data }) => {
-  Chart.defaults.font.size = 18;
+  Chart.defaults.font.size = 15;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     let chartInstance: Chart | undefined;
@@ -42,7 +42,7 @@ const BarChart: React.FC<Props> = ({ data }) => {
                 ticks: {
                   color: "white",
                   font: {
-                    size: 13,
+                    size: 11,
                   },
                 },
               },
