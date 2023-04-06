@@ -146,6 +146,7 @@ export default function AwardsSlider(awardData: IProps) {
 const SliderMaterialWrapper = styled.div`
   width: 22rem;
   margin: 0 auto;
+
   :hover {
     & > .card-hover {
       opacity: 0.8;

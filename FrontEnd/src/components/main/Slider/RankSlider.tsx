@@ -78,7 +78,7 @@ export default function RankSlider({ data }: IProps) {
       <Title>🔥 이번주 Hot한 테마</Title>
       <Slider {...settings}>
         {data.map((item, idx) => (
-          <>
+          <div key={idx}>
             <SliderItem key={idx}>
               <Rank>{idx + 1}</Rank>
               <PosterWrapper>
@@ -91,7 +91,7 @@ export default function RankSlider({ data }: IProps) {
                 <h2>{item.title}</h2>
               </PosterWrapper>
             </SliderItem>
-          </>
+          </div>
         ))}
       </Slider>
       {themeId !== undefined && (
