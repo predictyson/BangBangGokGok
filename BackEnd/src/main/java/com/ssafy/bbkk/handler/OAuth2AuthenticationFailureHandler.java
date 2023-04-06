@@ -22,8 +22,8 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
             throws IOException, ServletException, OAuth2AuthenticationException {
 
         if(exception instanceof OAuth2AuthenticationException){
-            log.error("### 소셜 로그인 에러입니다. => {}", exception.getMessage());
-            response.sendRedirect("/oauth/fail?error="+exception.getMessage());
+            log.error("### 소셜 로그인 에러입니다. => {}", ((OAuth2AuthenticationException) exception).getError().getDescription());
+            response.sendRedirect("/oauth/fail?error="+((OAuth2AuthenticationException) exception).getError().getDescription());
         }
         else{
             log.error("### 의도하지 않은 에러입니다 => {}", exception.getMessage());
