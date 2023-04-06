@@ -45,6 +45,12 @@ export default function UserListSection({
     }
   };
 
+  const blockEmail = (email: string) => {
+    const atIndex = email.indexOf("@");
+    const modifiedEmail = email.slice(0, 4) + "****" + email.slice(atIndex);
+    return modifiedEmail;
+  };
+
   return (
     <Container>
       {userList.map((user: GroupSetUer) => (
@@ -80,13 +86,13 @@ export default function UserListSection({
                 }}
                 key={option.userId}
               >
-                {option.nickname} ({option.email})
+                {option.nickname} ({blockEmail(option.email)})
               </Box>
             )}
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder="닉네임 혹은 이메일을 입력해주세요."
+                placeholder="찾고자하는 닉네임을 입력해주세요."
                 onChange={handleChange}
                 color="warning"
                 focused
