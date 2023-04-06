@@ -215,8 +215,8 @@ export default function DetailModal({
         </Container>
         <Synopsis>
           <article>
-            {data.synopsis?.split("<br>").map((sentence) => (
-              <div key={sentence} className="word-break">
+            {data.synopsis?.split("<br>").map((sentence, idx) => (
+              <div key={idx} className="word-break">
                 {sentence}
                 <br />
               </div>
