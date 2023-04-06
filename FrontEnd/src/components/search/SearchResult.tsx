@@ -5,6 +5,7 @@ import { getDetail } from "@/api/theme";
 import { IReviewData, IDetailData } from "types/detail";
 import { getReviews } from "@/api/review";
 import Modal from "@components/main/Modal/Modal";
+import { theme } from "@/styles/theme";
 
 interface SearchResultProps {
   results: PreviewThemeResponse[];
@@ -97,9 +98,10 @@ export default function SearchResult({
   return (
     <>
       <Wrapper id="wrapper">
-        {!searchHappened && <div>원하는 테마 검색할 수 있습니다.</div>}
         {searchHappened && results.length === 0 && (
-          <div>검색 결과가 없습니다.</div>
+          <NoContent>
+            <NoContentText>검색 결과가 없습니다.</NoContentText>
+          </NoContent>
         )}
         {searchHappened && results.length !== 0 && (
           <Container id="container">
@@ -139,6 +141,23 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 2rem;
   overflow: auto;
+`;
+
+const NoContent = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NoContentText = styled.div`
+  font-size: 3rem;
+  weight: 600;
+  padding: 3rem;
+  color: ${theme.colors.pink};
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 4rem;
 `;
 
 const Container = styled.div`
