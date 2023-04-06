@@ -62,7 +62,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         }
         else { // 소셜 로그인 유저가 존재하지 않다면
             if(userRepository.existsByEmail(oAuth2UserInfo.getEmail())){ // 이미 해당 이메일로 로컬 회원가입이 되어있는 유저라면
-                throw new OAuth2AuthenticationException("이미 존재하는 사용자입니다.");
+                logger.warn("이미 존재하는 사용자입니다.");
             }
             // user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
             user = new User(oAuth2UserInfo);

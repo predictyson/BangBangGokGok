@@ -50,15 +50,18 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         User user = principalDetails.getUser();
 
         // 소셜 로그인 성공 후 이동할 페이지 -> 추후 변경해야함
-//        String targetUrl = "https://bbkk.store/oauth";
         String targetUrl = "/oauth";
 
-        if(user.getEmail() == null) {
+        if(user == null){
             targetUrl = "/oauth/fail";
-//            targetUrl = "https://bbkk.store/login";
+            return UriComponentsBuilder.fromUriString(targetUrl
+                            +"?error="+"이미 가입한 회원입니다.")
+                    .build().toUriString();
+        }
+        else if(user.getEmail() == null) {
+            targetUrl = "/oauth/fail";
             return UriComponentsBuilder.fromUriString(targetUrl
                     +"?error="+"이메일 동의를 하지 않아 회원가입이 불가능합니다.")
-//                    .queryParam("error", "이메일 동의를 하지 않아 회원가입이 불가능합니다.")
                     .build().toUriString();
         }
         // 추가 정보가 입력되어 있다면 로그인 처리
@@ -70,7 +73,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
             // 토큰 정보 저장하는 페이지로 이동
             targetUrl = "/oauth2";
-//            targetUrl = "https://bbkk.store/oauth2";
 
             // 3. 인증 정보를 기반으로 JWT 토큰 생성
             String accessToken = tokenProvider.generateAccessToken(authentication);
@@ -87,14 +89,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             // 타겟 URL로 토큰 정보를 함께 보내줌
             return UriComponentsBuilder.fromUriString(targetUrl
                     +"?accessToken="+accessToken)
-//                    .queryParam("accessToken", accessToken)
                     .build().toUriString();
         }
 
         // 추가 정보가 입력되어 있지 않다면 추가 정보 입력창으로 보냄
         return UriComponentsBuilder.fromUriString(targetUrl
                 +"?userId="+user.getId())
-//                .queryParam("userId", user.getId())
                 .build().toUriString();
     }
 }
