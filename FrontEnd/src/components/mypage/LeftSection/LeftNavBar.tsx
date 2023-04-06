@@ -109,7 +109,7 @@ const ProfileImage = styled.img`
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 60%;
+  width: 45%;
   border-radius: 1.5rem;
   text-align: center;
 `;
