@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { requestUser } from "@/api/group";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function UserListSection({
   userList,
@@ -69,7 +70,10 @@ export default function UserListSection({
       )}
       <Modal open={open} onClose={handleClose}>
         <ModalBox>
-          <h1>유저 검색</h1>
+          <HeaderBox>
+            <h1>유저 검색</h1>
+            <CloseIcon className="close" onClick={handleClose} />
+          </HeaderBox>
           <Autocomplete
             sx={{ width: 500, input: { fontSize: 14 } }}
             color="warning"
@@ -116,6 +120,26 @@ export default function UserListSection({
     </Container>
   );
 }
+
+const HeaderBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: white;
+
+  .close {
+    font-size: 3rem;
+    float: right;
+    margin-left: auto;
+
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
+`;
 
 const ModalBox = styled.div`
   position: absolute;
