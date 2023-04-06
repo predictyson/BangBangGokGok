@@ -13,10 +13,6 @@ interface SearchResultProps {
   handleSubmit: (isInitSearch: boolean) => void;
 }
 
-const initData: IDetailData = {} as IDetailData;
-
-const REVIEWDUMMY: IReviewData[] = [] as IReviewData[];
-
 export default function SearchResult({
   results,
   searchHappened,
@@ -25,8 +21,8 @@ export default function SearchResult({
 }: SearchResultProps) {
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
-  const [data, setData] = useState<IDetailData>(initData);
-  const [reviews, setReviews] = useState<IReviewData[]>(REVIEWDUMMY);
+  const [data, setData] = useState<IDetailData>({} as IDetailData);
+  const [reviews, setReviews] = useState<IReviewData[]>([] as IReviewData[]);
 
   const handleOpen = async (themeId: number) => {
     setThemeId(themeId);
@@ -88,7 +84,7 @@ export default function SearchResult({
     // IntersectionObserver 생성
     const observer = new IntersectionObserver(callback, {
       root: null,
-      threshold: [0, 0.5, 1],
+      threshold: [0],
     });
     // 관찰 대상 등록
     observer.observe(observerTarget);

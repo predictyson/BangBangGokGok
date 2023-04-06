@@ -15,16 +15,25 @@ export default function LeftNavBar() {
 
   const getProfileImageTypeFromLocalStorage = () => {
     const profileImageType = localStorage.getItem("profileImageType");
-    if (profileImageType === null) {
-      throw new Error("profileImageType is null");
+    try {
+      if (profileImageType === null) {
+        throw new Error("profileImageType is null");
+      }
+    } catch (error) {
+      console.error(error);
+      return "null"; // default avatar
     }
     return profileImageType;
   };
 
   const getNicknameFromLocalStorage = () => {
     const nickname = localStorage.getItem("nickname");
-    if (nickname === null) {
-      throw new Error("nickname is null");
+    try {
+      if (nickname === null) {
+        throw new Error("nickname is null");
+      }
+    } catch (error) {
+      console.error(error);
     }
     return nickname;
   };
