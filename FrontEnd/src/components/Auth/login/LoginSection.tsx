@@ -9,8 +9,7 @@ import Google from "@/assets/Auth/GoogleLogin.png";
 import Kakao from "@/assets/Auth/KakaoLogin.png";
 import { requestLogin, tempRequest } from "@/api/auth";
 import { IUserInfo } from "types/auth";
-import { useCookies } from "react-cookie";
-import Toast, { showToast } from "@/components/common/Toast";
+import { showToast } from "@/components/common/Toast";
 
 const InitUser = {
   email: "",
