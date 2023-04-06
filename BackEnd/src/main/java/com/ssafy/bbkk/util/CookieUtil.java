@@ -17,7 +17,7 @@ public class CookieUtil {
     private static final Logger logger = LoggerFactory.getLogger(CookieUtil.class);
 
     public static Optional<Cookie> getCookie(HttpServletRequest request, String name) {
-        logger.info("[getCookie] request : name={}",name);
+        logger.debug("[getCookie] request : name={}",name);
         Cookie[] cookies = request.getCookies();
 
         if (cookies != null && cookies.length > 0) {
@@ -29,13 +29,13 @@ public class CookieUtil {
                 }
             }
         }
-        logger.info("[getCookie] response : none");
+        logger.debug("[getCookie] response : none");
         return Optional.empty();
     }
 
     public static void addCookie(HttpServletRequest request, HttpServletResponse response, String name, String value) {
-        logger.info("[addCookie] request : name={}",name);
-        logger.info("[addCookie] request : value={}",value);
+        logger.debug("[addCookie] request : name={}",name);
+        logger.debug("[addCookie] request : value={}",value);
 
         Cookie[] cookies = request.getCookies();
 
@@ -47,9 +47,9 @@ public class CookieUtil {
                     cookie.setPath("/");
                     cookie.setMaxAge(60 * 60 * 24 * 1); // 1일
                     response.addCookie(cookie);
-                    logger.info("[addCookie] modify : name={}",cookie.getName());
-                    logger.info("[addCookie] modify : value={}",cookie.getValue());
-                    logger.info("[addCookie] modify : maxAge={}",cookie.getMaxAge());
+                    logger.debug("[addCookie] modify : name={}",cookie.getName());
+                    logger.debug("[addCookie] modify : value={}",cookie.getValue());
+                    logger.debug("[addCookie] modify : maxAge={}",cookie.getMaxAge());
                     isModify = true;
                 }
             }
@@ -66,13 +66,13 @@ public class CookieUtil {
 
         response.addCookie(cookie);
 
-        logger.info("[addCookie] add : name={}",cookie.getName());
-        logger.info("[addCookie] add : value={}",cookie.getValue());
-        logger.info("[addCookie] add : maxAge={}",cookie.getMaxAge());
+        logger.debug("[addCookie] add : name={}",cookie.getName());
+        logger.debug("[addCookie] add : value={}",cookie.getValue());
+        logger.debug("[addCookie] add : maxAge={}",cookie.getMaxAge());
     }
 
     public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {
-        logger.info("[deleteCookie] request : name={}",name);
+        logger.debug("[deleteCookie] request : name={}",name);
 
         Cookie[] cookies = request.getCookies();
 
@@ -83,12 +83,12 @@ public class CookieUtil {
                     cookie.setPath("/");
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
-                    logger.info("[deleteCookie] delete : cookie={}",cookie);
+                    logger.debug("[deleteCookie] delete : cookie={}",cookie);
                 }
             }
         }
 
-        logger.info("[deleteCookie] response : none");
+        logger.debug("[deleteCookie] response : none");
     }
 
     public static String serialize(Object obj) {

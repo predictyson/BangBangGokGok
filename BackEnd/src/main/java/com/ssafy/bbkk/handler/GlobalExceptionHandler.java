@@ -15,10 +15,10 @@ public class GlobalExceptionHandler{
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleAllException(Exception e) {
-        log.warn("handler catch Exception = {}", e.getMessage());
+        log.warn("GlobalExceptionHandler : {}", e.getMessage());
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         resultMap.put("error", e.getMessage());
-        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        return new ResponseEntity<>(resultMap, status);
     }
 }

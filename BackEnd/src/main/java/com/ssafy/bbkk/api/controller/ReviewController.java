@@ -8,7 +8,6 @@ import com.ssafy.bbkk.api.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
@@ -43,9 +42,8 @@ public class ReviewController {
     @PostMapping
     private ResponseEntity<Void> addReview(@AuthenticationPrincipal User user,
             @RequestBody @Valid CreateReviewRequest createReviewRequest, Errors errors) throws Exception {
-        logger.info("<<---------------(start)----------------||addReview||------------------------------------>>\n");
-        logger.info(">> request : myEmail={}", user.getUsername());
-        logger.info(">> request : createReviewRequest={}", createReviewRequest);
+        logger.debug(">> request : myEmail={}", user.getUsername());
+        logger.debug(">> request : createReviewRequest={}", createReviewRequest);
 
         // createReviewRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
@@ -53,11 +51,10 @@ public class ReviewController {
         createReviewRequest.validation();
 
         reviewService.addReview(user.getUsername(), createReviewRequest);
-        logger.info("<< response : none");
+        logger.debug("<< response : none");
 
         otherService.recCF(user.getUsername());
-        logger.info("<< response api : recCF({})",user.getUsername());
-        logger.info("<<---------------------------------------||getSelectList||---------------(end)--------------->>\n");
+        logger.debug("<< response api : recCF({})",user.getUsername());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -65,9 +62,8 @@ public class ReviewController {
     @PutMapping
     private ResponseEntity<Map<String, Object>> setReview(@AuthenticationPrincipal User user,
             @RequestBody @Valid UpdateReviewRequest updateReviewRequest, Errors errors) throws Exception {
-        logger.info("<<---------------(start)----------------||getSelectList||------------------------------------>>\n");
-        logger.info(">> request : myEmail={}", user.getUsername());
-        logger.info(">> request : updateReviewRequest={}", updateReviewRequest);
+        logger.debug(">> request : myEmail={}", user.getUsername());
+        logger.debug(">> request : updateReviewRequest={}", updateReviewRequest);
 
         // UpdateReviewRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
@@ -78,11 +74,10 @@ public class ReviewController {
 
         ReviewOfUserResponse reviewOfUserResponse = reviewService.setReview(user.getUsername(), updateReviewRequest);
         resultMap.put("review", reviewOfUserResponse);
-        logger.info("<< response : review={}", reviewOfUserResponse);
+        logger.debug("<< response : review={}", reviewOfUserResponse);
 
         otherService.recCF(user.getUsername());
-        logger.info("<< response api : recCF({})", user.getUsername());
-        logger.info("<<---------------------------------------||getSelectList||---------------(end)--------------->>\n");
+        logger.debug("<< response api : recCF({})", user.getUsername());
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -91,16 +86,14 @@ public class ReviewController {
     private ResponseEntity<Void> deleteReview(
             @AuthenticationPrincipal User user,
             @Parameter(description = "해당 테마의 Id", required = true) @PathVariable int reviewId) throws Exception {
-        logger.info("<<---------------(start)----------------||getSelectList||------------------------------------>>\n");
-        logger.info(">> request : myEmail={}", user.getUsername());
-        logger.info(">> request : reviewId={}", reviewId);
+        logger.debug(">> request : myEmail={}", user.getUsername());
+        logger.debug(">> request : reviewId={}", reviewId);
 
         reviewService.deleteReview(user.getUsername(), reviewId);
-        logger.info("<< response : none");
+        logger.debug("<< response : none");
 
         otherService.recCF(user.getUsername());
-        logger.info("<< response api : recCF({})",user.getUsername());
-        logger.info("<<---------------------------------------||getSelectList||---------------(end)--------------->>\n");
+        logger.debug("<< response api : recCF({})",user.getUsername());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

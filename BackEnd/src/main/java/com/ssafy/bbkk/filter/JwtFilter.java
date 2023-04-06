@@ -56,15 +56,13 @@ public class JwtFilter extends OncePerRequestFilter {
 
     // Request Header 에서 토큰 정보를 꺼내오기
     private String resolveToken(HttpServletRequest request) {
-        logger.info("<<---------------(start)----------------||JwtFilter||------------------------------------>>\n");
 
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
         Optional<Cookie> refreshToken = CookieUtil.getCookie(request,"refreshToken");
 
-        logger.info(">> accessToken={}", bearerToken);
+        logger.debug(">> accessToken={}", bearerToken);
         if(refreshToken.isPresent())
-            logger.info(">> refreshToken={}", refreshToken.get().getValue());
-        logger.info("<<---------------------------------------||JwtFilter||---------------(end)--------------->>\n");
+            logger.debug(">> refreshToken={}", refreshToken.get().getValue());
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
             return bearerToken.substring(7);

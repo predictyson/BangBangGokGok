@@ -4,8 +4,6 @@ import com.ssafy.bbkk.api.dto.PreviewUserResponse;
 import com.ssafy.bbkk.api.service.GroupSetService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,15 +28,13 @@ public class GroupSetController {
     @GetMapping("user/{emailOrNickname}")
     private ResponseEntity<Map<String, Object>> getUser(
             @Parameter(description = "입력값", required = true) @PathVariable String emailOrNickname) throws Exception{
-        logger.info("<<---------------(start)----------------||getUser||------------------------------------>>\n");
-        logger.info(">> request : emailOrNickname={}", emailOrNickname);
+        logger.debug(">> request : emailOrNickname={}", emailOrNickname);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         List<PreviewUserResponse> previewUserResponses = groupSetService.getUserListByEmailOrNickname(emailOrNickname);
         resultMap.put("users",previewUserResponses);
-        logger.info("<< response : users={}", previewUserResponses);
-        logger.info("<<---------------------------------------||getUser||---------------(end)--------------->>\n");
+        logger.debug("<< response : users={}", previewUserResponses);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }

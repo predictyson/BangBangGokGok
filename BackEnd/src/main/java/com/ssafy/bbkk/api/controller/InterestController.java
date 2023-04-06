@@ -1,6 +1,5 @@
 package com.ssafy.bbkk.api.controller;
 
-import com.ssafy.bbkk.api.dto.UserInfoResponse;
 import com.ssafy.bbkk.api.service.InterestThemeService;
 import com.ssafy.bbkk.api.service.OtherService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,11 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
-
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("interest")
@@ -34,16 +28,14 @@ public class InterestController {
     private ResponseEntity<Void> addInterestTheme(
             @AuthenticationPrincipal User user,
             @Parameter(description = "관심 버튼을 누른 테마의 Id", required = true) @PathVariable int themeId) throws Exception{
-        logger.info("<<---------------(start)----------------||addInterestTheme||------------------------------------>>\n");
-        logger.info(">> request : myEmail={}", user.getUsername());
-        logger.info(">> request : themeId={}", themeId);
+        logger.debug(">> request : myEmail={}", user.getUsername());
+        logger.debug(">> request : themeId={}", themeId);
 
         interestThemeService.addInterestTheme(user.getUsername(), themeId);
-        logger.info("<< response : none");
+        logger.debug("<< response : none");
 
         otherService.recCBF(user.getUsername());
-        logger.info("<< response api : recCBF({})", user.getUsername());
-        logger.info("<<---------------------------------------||addInterestTheme||---------------(end)--------------->>\n");
+        logger.debug("<< response api : recCBF({})", user.getUsername());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -52,16 +44,14 @@ public class InterestController {
     private ResponseEntity<Void> deleteInterestTheme(
             @AuthenticationPrincipal User user,
             @Parameter(description = "관심 버튼을 누른 테마의 Id", required = true) @PathVariable int themeId) throws Exception{
-        logger.info("<<---------------(start)----------------||deleteInterestTheme||------------------------------------>>\n");
-        logger.info(">> request : myEmail={}", user.getUsername());
-        logger.info(">> request : themeId={}", themeId);
+        logger.debug(">> request : myEmail={}", user.getUsername());
+        logger.debug(">> request : themeId={}", themeId);
 
         interestThemeService.deleteInterestTheme(user.getUsername(), themeId);
-        logger.info("<< response : none");
+        logger.debug("<< response : none");
 
         otherService.recCBF(user.getUsername());
-        logger.info("<< response api : recCBF({})",user.getUsername());
-        logger.info("<<---------------------------------------||deleteInterestTheme||---------------(end)--------------->>\n");
+        logger.debug("<< response api : recCBF({})",user.getUsername());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

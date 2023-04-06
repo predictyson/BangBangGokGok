@@ -5,7 +5,6 @@ import com.ssafy.bbkk.api.dto.JoinAdditionalRequest;
 import com.ssafy.bbkk.api.dto.JoinRequest;
 import com.ssafy.bbkk.api.dto.LoginRequest;
 import com.ssafy.bbkk.api.dto.LoginResponse;
-import com.ssafy.bbkk.api.dto.TokenRequest;
 import com.ssafy.bbkk.api.dto.TokenResponse;
 import com.ssafy.bbkk.api.service.EmailService;
 import com.ssafy.bbkk.api.service.OtherService;
@@ -13,10 +12,8 @@ import com.ssafy.bbkk.api.service.UserService;
 import com.ssafy.bbkk.util.CookieUtil;
 import io.swagger.v3.oas.annotations.Operation;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,8 +51,7 @@ public class UserController {
             @RequestBody @Valid LoginRequest loginRequest, Errors errors,
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        logger.info("<<---------------(start)----------------||login||------------------------------------>>\n");
-        logger.info(">> request : loginRequest={}", loginRequest);
+        logger.debug(">> request : loginRequest={}", loginRequest);
 
         // LoginRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
@@ -65,14 +61,14 @@ public class UserController {
 
         TokenResponse tokenResponse = userService.login(loginRequest);
         resultMap.put("accessToken", tokenResponse.getAccessToken());
-        logger.info("<< response : accessToken={}", tokenResponse.getAccessToken());
+        logger.debug("<< response : accessToken={}", tokenResponse.getAccessToken());
 
         LoginResponse loginResponse = userService.getLoginUser(loginRequest.getEmail());
         resultMap.put("user", loginResponse);
-        logger.info("<< response : user={}", loginResponse);
+        logger.debug("<< response : user={}", loginResponse);
 
         CookieUtil.addCookie(request, response, "refreshToken", tokenResponse.getRefreshToken());
-        logger.info("<<---------------------------------------||login||---------------(end)--------------->>\n");
+
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -80,20 +76,19 @@ public class UserController {
     @GetMapping("join/check/{email}")
     public ResponseEntity<Map<String, Object>> isExitedAndSendEmailCode(
             @PathVariable String email) throws Exception {
-        logger.info("<<---------------(start)----------------||isExitedAndSendEmailCode||------------------------------------>>\n");
-        logger.info(">> request : email={}", email);
+        logger.debug(">> request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isExisted = userService.existsByEmail(email);
         resultMap.put("isExisted",isExisted);
-        logger.info("<< response : isExisted={}", isExisted);
+        logger.debug("<< response : isExisted={}", isExisted);
 
         if(!isExisted){
             emailService.sendMessage(email, 1);
-            logger.info("<< response : email send");
+            logger.debug("<< response : email send");
         }
-        logger.info("<<---------------------------------------||isExitedAndSendEmailCode||---------------(end)--------------->>\n");
+
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -101,8 +96,7 @@ public class UserController {
     @PostMapping("join")
     public ResponseEntity<Map<String, Object>> join(
             @RequestBody @Valid JoinRequest joinRequest, Errors errors) throws Exception {
-        logger.info("<<---------------(start)----------------||join||------------------------------------>>\n");
-        logger.info(">> request : joinRequest={}", joinRequest);
+        logger.debug(">> request : joinRequest={}", joinRequest);
 
         // JoinRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
@@ -112,8 +106,8 @@ public class UserController {
 
         int userId = userService.join(joinRequest);
         resultMap.put("userId", userId);
-        logger.info("<< response : userId={}", userId);
-        logger.info("<<---------------------------------------||join||---------------(end)--------------->>\n");
+        logger.debug("<< response : userId={}", userId);
+
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -121,8 +115,7 @@ public class UserController {
     @PostMapping("join/additional")
     public ResponseEntity<Void> addInfo(
             @RequestBody @Valid JoinAdditionalRequest joinAdditionalRequest, Errors errors) throws Exception {
-        logger.info("<<---------------(start)----------------||addInfo||------------------------------------>>\n");
-        logger.info(">> request : joinAdditionalRequest={}", joinAdditionalRequest);
+        logger.debug(">> request : joinAdditionalRequest={}", joinAdditionalRequest);
 
         // JoinAdditionalRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
@@ -131,11 +124,11 @@ public class UserController {
 
         userService.setUserAdditionalInfo(joinAdditionalRequest);
         String email = userService.findUserEmailByUserId(joinAdditionalRequest.getUserId());
-        logger.info("<< response : none");
+        logger.debug("<< response : none");
 
         otherService.recCBF(email);
-        logger.info("<< response api : recCBF({})",email);
-        logger.info("<<---------------------------------------||addInfo||---------------(end)--------------->>\n");
+        logger.debug("<< response api : recCBF({})",email);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -145,8 +138,7 @@ public class UserController {
             @AuthenticationPrincipal User user,
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        logger.info("<<---------------(start)----------------||oauthLogin||------------------------------------>>\n");
-        logger.info(">> request : myEmail={}", user.getUsername());
+        logger.debug(">> request : myEmail={}", user.getUsername());
 
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -155,8 +147,8 @@ public class UserController {
 
         LoginResponse loginResponse = userService.getLoginUser(user.getUsername());
         resultMap.put("user", loginResponse);
-        logger.info("<< response : user={}", loginResponse);
-        logger.info("<<---------------------------------------||oauthLogin||---------------(end)--------------->>\n");
+        logger.debug("<< response : user={}", loginResponse);
+
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -165,8 +157,7 @@ public class UserController {
     private ResponseEntity<Map<String, Object>> reissue(
             @RequestBody String accessToken,
             HttpServletRequest request) throws Exception {
-        logger.info("<<---------------(start)----------------||reissue||------------------------------------>>\n");
-        logger.info(">> request : accessToken={}", accessToken);
+        logger.debug(">> request : accessToken={}", accessToken);
 
         Cookie refreshTokenCookie = CookieUtil.getCookie(request,"refreshToken")
                 .orElseThrow(()-> new RuntimeException("해당 쿠키가 존재하지 않습니다."));
@@ -175,8 +166,8 @@ public class UserController {
 
         accessToken = userService.reissue(accessToken, refreshTokenCookie.getValue());
         resultMap.put("accessToken", accessToken);
-        logger.info("<< response : accessToken={}", accessToken);
-        logger.info("<<---------------------------------------||reissue||---------------(end)--------------->>\n");
+        logger.debug("<< response : accessToken={}", accessToken);
+
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -184,15 +175,14 @@ public class UserController {
     @GetMapping("check/email/{email}")
     public ResponseEntity<Map<String, Object>> checkEmail(
             @PathVariable String email) throws Exception {
-        logger.info("<<---------------(start)----------------||checkEmail||------------------------------------>>\n");
-        logger.info(">> request : email={}", email);
+        logger.debug(">> request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isDuplicated = userService.existsByEmail(email);
         resultMap.put("isDuplicated", isDuplicated);
-        logger.info("<< response : isDuplicated={}", isDuplicated);
-        logger.info("<<---------------------------------------||checkEmail||---------------(end)--------------->>\n");
+        logger.debug("<< response : isDuplicated={}", isDuplicated);
+
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -200,15 +190,14 @@ public class UserController {
     @GetMapping("check/nickname/{nickname}")
     public ResponseEntity<Map<String, Object>> checkNickname(
             @PathVariable String nickname) throws Exception {
-        logger.info("<<---------------(start)----------------||checkNickname||------------------------------------>>\n");
-        logger.info(">> request : nickname={}", nickname);
+        logger.debug(">> request : nickname={}", nickname);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isDuplicated = userService.existsByNickname(nickname);
         resultMap.put("isDuplicated", isDuplicated);
-        logger.info("<< response : isDuplicated={}", isDuplicated);
-        logger.info("<<---------------------------------------||checkNickname||---------------(end)--------------->>\n");
+        logger.debug("<< response : isDuplicated={}", isDuplicated);
+
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -216,21 +205,19 @@ public class UserController {
     @GetMapping("send/email/{email}")
     public ResponseEntity<Map<String, Object>> sendEmailCode(
             @PathVariable String email) throws Exception {
-        logger.info("<<---------------(start)----------------||sendEmailCode||------------------------------------>>\n");
-        logger.info(">> request : email={}", email);
+        logger.debug(">> request : email={}", email);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isExisted = userService.existsByEmailNotSocial(email);
         resultMap.put("isExisted", isExisted);
-        logger.info("<< response : isExisted={}", isExisted);
+        logger.debug("<< response : isExisted={}", isExisted);
 
         if (isExisted) {
             emailService.sendMessage(email, 2);
-            logger.info("<< response : email send");
+            logger.debug("<< response : email send");
         }
 
-        logger.info("<<---------------------------------------||sendEmailCode||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -239,16 +226,15 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> checkEmailCode(
             @PathVariable String email,
             @PathVariable String code) throws Exception {
-        logger.info("<<---------------(start)----------------||checkEmailCode||------------------------------------>>\n");
-        logger.info(">> request : email={}", email);
-        logger.info(">> request : code={}", code);
+        logger.debug(">> request : email={}", email);
+        logger.debug(">> request : code={}", code);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isCheck = emailService.checkEmailCode(email, code);
         resultMap.put("isCheck", isCheck);
-        logger.info("<< response : isCheck={}", isCheck);
-        logger.info("<<---------------------------------------||checkEmailCode||---------------(end)--------------->>\n");
+        logger.debug("<< response : isCheck={}", isCheck);
+
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -256,16 +242,15 @@ public class UserController {
     @PostMapping("password")
     public ResponseEntity<Void> changePassword(
             @RequestBody @Valid ChangePasswordRequest changePasswordRequest, Errors errors) throws Exception {
-        logger.info("<<---------------(start)----------------||changePassword||------------------------------------>>\n");
-        logger.info(">> request : changePasswordRequest={}", changePasswordRequest);
+        logger.debug(">> request : changePasswordRequest={}", changePasswordRequest);
 
         // ChangePasswordRequest 입력값 유효성 검사
         for (FieldError error : errors.getFieldErrors())
             throw new Exception(error.getDefaultMessage());
 
         userService.setPassword(changePasswordRequest);
-        logger.info("<< response : none");
-        logger.info("<<---------------------------------------||changePassword||---------------(end)--------------->>\n");
+        logger.debug("<< response : none");
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -274,16 +259,15 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> isLoginUser(
             @AuthenticationPrincipal User user,
             @PathVariable int userId) throws Exception {
-        logger.info("<<---------------(start)----------------||isLoginUser||------------------------------------>>\n");
-        logger.info(">> request : myEmail={}", user.getUsername());
-        logger.info(">> request : userId={}", userId);
+        logger.debug(">> request : myEmail={}", user.getUsername());
+        logger.debug(">> request : userId={}", userId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         boolean isLoginUser = userService.existsByEmailAndUserId(user.getUsername(), userId);
         resultMap.put("isLoginUser",isLoginUser);
-        logger.info("<< response : isLoginUser={}",isLoginUser);
-        logger.info("<<---------------------------------------||isLoginUser||---------------(end)--------------->>\n");
+        logger.debug("<< response : isLoginUser={}",isLoginUser);
+
         return new ResponseEntity<>(resultMap,HttpStatus.OK);
     }
 
@@ -292,12 +276,11 @@ public class UserController {
     public ResponseEntity<Void> logout(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        logger.info("<<---------------(start)----------------||logout||------------------------------------>>\n");
-        logger.info(">> request : none");
+        logger.debug(">> request : none");
 
         CookieUtil.deleteCookie(request,response,"refreshToken");
-        logger.info("<< response : none");
-        logger.info("<<---------------------------------------||logout||---------------(end)--------------->>\n");
+        logger.debug("<< response : none");
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -16,12 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("test")
@@ -37,7 +33,7 @@ public class TestController {
     private ResponseEntity<Void> insertRandomReview(
             @PathVariable int startIndex,
             @PathVariable int endIndex) throws Exception {
-        logger.info("<<---------------(start)----------------||insertRandomReview||------------------------------------>>\n");
+        logger.info("*** [start] *** insertRandomReview ***\n");
         Random rnd = new Random();
 
         String[] good_content = {" ", "문제 인테리어 연출 모두 훌륭하다", "문제는 어려웠는데 가이드가 친절해서 좋았어요!",
@@ -65,7 +61,7 @@ public class TestController {
         int goodSize = good_content.length;
         int badSize = bad_content.length;
 
-        System.out.println("*** ************((테마 불러오기))************* *** ");
+        logger.info("*** 테마 불러오기 ***");
         List<ThemeResponse> themes = themeRepository.findAll()
                 .stream()
                 .map(x -> new ThemeResponse(x))
@@ -82,11 +78,11 @@ public class TestController {
 
         // 1부터 userIndex까지의 유저
         for (int i = startIndex; i <= endIndex; i++) {
-            System.out.println("** ************((" + i + "번 유저))************* ** ");
-            User userEntity = userRepository.findById(i)
-                    .orElseThrow(() -> new RuntimeException("해당 유저를 찾을 수 없습니다."));
-            UserTestResponse userDto = new UserTestResponse(userEntity);
-            System.out.println("** user : " + userDto);
+            Optional<User> userEntity = userRepository.findById(i);
+            if(!userEntity.isPresent()) continue;
+
+            UserTestResponse userDto = new UserTestResponse(userEntity.get());
+            logger.info("** {}번 user : {}",i,userDto);
 
             List<String> userGenres = userDto.getUserGenres();
 
@@ -103,11 +99,11 @@ public class TestController {
 
                 // 해당 테마가 유저의 선호 장르라면 80%의 확률로 리뷰 작성
                 if (isContains && rnd.nextInt(10) + 1 <= 8) {
-                    System.out.println("* 선호 장르의 테마입니다!");
+                    logger.info("* 선호 장르의 테마입니다!");
                 }
                 // 선호 장르가 아니라면 30%의 확률로 리뷰를 작성
                 else if (!isContains && rnd.nextInt(10) + 1 <= 3) {
-                    System.out.println("* 선호 장르가 아닌 테마입니다!");
+                    logger.info("* 선호 장르가 아닌 테마입니다!");
                 } else {
                     continue;
                 }
@@ -145,12 +141,12 @@ public class TestController {
                         .userFear(userFear)
                         .userRating(userRating)
                         .build();
-                System.out.println("* review : " + createReviewRequest);
+                logger.info("* review : {}",createReviewRequest);
                 reviewService.addReview(userDto.getEmail(), createReviewRequest);
             }
         }
 
-        logger.info("<<---------------------------------------||insertRandomReview||---------------(end)--------------->>\n");
+        logger.info("*** [end] *** insertRandomReview ***\n");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -178,15 +174,15 @@ public class TestController {
     private ResponseEntity<Void> goCF(
             @PathVariable int startIndex,
             @PathVariable int endIndex) throws Exception {
-        logger.info(">> request : startIndex={}", startIndex);
-        logger.info(">> request : endIndex={}", endIndex);
+        logger.debug(">> request : startIndex={}", startIndex);
+        logger.debug(">> request : endIndex={}", endIndex);
 
         for(int i=startIndex;i<=endIndex;i++){
             Optional<User> user = userRepository.findById(i);
             if(user.isPresent()) otherService.recCF(user.get().getEmail());
         }
 
-        logger.info("<< response : none");
+        logger.debug("<< response : none");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

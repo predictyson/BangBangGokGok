@@ -29,9 +29,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest); // google의 회원 프로필 조회
 
         // code를 통해 구성한 정보
-        logger.info("userRequest clientRegistration : " + userRequest.getClientRegistration());
+        logger.debug("userRequest clientRegistration : " + userRequest.getClientRegistration());
         // token을 통해 응답받은 회원정보
-        logger.info("oAuth2User : " + oAuth2User);
+        logger.debug("oAuth2User : " + oAuth2User);
 
         return processOAuth2User(userRequest, oAuth2User);
     }
@@ -41,11 +41,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         // Attribute를 파싱해서 공통 객체로 묶는다. 관리가 편함.
         OAuth2UserInfo oAuth2UserInfo = null;
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
-            logger.info("구글 로그인 요청");
+            logger.debug("구글 로그인 요청");
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         }
         else if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")){
-            logger.info("카카오톡 로그인 요청");
+            logger.debug("카카오톡 로그인 요청");
             oAuth2UserInfo = new KakaoUserInfo((Map)oAuth2User.getAttributes());
         }else {
             logger.warn("지원하지 않는 로그인 요청입니다");
