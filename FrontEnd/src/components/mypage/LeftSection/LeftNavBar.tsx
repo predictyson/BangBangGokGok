@@ -68,6 +68,12 @@ export default function LeftNavBar() {
           <NavItemImg src={LikesIcon} />
           <span> Likes</span>
         </NavItem>
+        <NavItem
+          select={pathname === "/mypage/signout"}
+          onClick={() => navigate("likes")}
+        >
+          <span>Delete Account</span>
+        </NavItem>
       </NavWrapper>
     </Wrapper>
   );
@@ -132,6 +138,7 @@ const ProfileName = styled.h1`
 
 const NavWrapper = styled.div`
   display: flex;
+  border: solid 1px red;
   flex-direction: column;
   gap: 0.5rem;
   height: 100%;
@@ -148,7 +155,6 @@ const NavItem = styled.div<NavItemProps>`
   display: inline-flex;
   align-items: center;
   gap: 1rem;
-
   color: ${theme.colors.white};
   font-size: 3.5rem;
   @media (max-width: 1536px) {
@@ -164,6 +170,8 @@ const NavItem = styled.div<NavItemProps>`
   border-radius: 1.5rem;
   background-color: ${theme.colors.container};
   background-color: ${(props) => props.select && theme.colors.pink};
+  border: solid 1px green;
+  height: 3rem;
   &:hover {
     ${(props) =>
       !props.select &&

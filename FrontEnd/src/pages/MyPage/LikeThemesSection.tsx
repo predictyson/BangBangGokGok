@@ -11,7 +11,6 @@ import { getReviews } from "@/api/review";
 export default function LikeThemesSection() {
   const [interests, setInterests] = useState<UserInterestTheme[]>([]);
   const [loadComplete, setLoadComplete] = useState(false);
-
   const [open, setOpen] = useState(false);
   const [themeId, setThemeId] = useState(0);
   const [data, setData] = useState<IDetailData>({} as IDetailData);
@@ -57,19 +56,30 @@ export default function LikeThemesSection() {
     }
   };
 
-  useEffect(() => {
-    const fetchInterests = async () => {
-      const userId = Number(localStorage.getItem("userId"));
-      try {
-        const response = await getUserInterests(userId);
-        // console.log(response);
-        setInterests(response.data.interestThemes as UserInterestTheme[]);
-        setLoadComplete(true);
-      } catch (error) {
-        console.error(error);
+  const requsetUserInterest = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      if (userId === null) {
+        throw new Error();
       }
-    };
-    fetchInterests();
+      const res = await getUserInterests(+userId);
+      setInterests(res.data.interestThemes as UserInterestTheme[]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    // const fetchInterests = async () => {
+    //   const userId = Number(localStorage.getItem("userId"));
+    //   try {
+    //     const response = await getUserInterests(userId);
+    //     setInterests(response.data.interestThemes as UserInterestTheme[]);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
+    // fetchInterests();
+    requsetUserInterest();
   }, []);
 
   return (
@@ -106,6 +116,7 @@ export default function LikeThemesSection() {
               data={data}
               reviews={reviews}
               handleReviews={handleReviews}
+              handleInterests={requsetUserInterest}
             />
           )}
         </OverflowWrapper>

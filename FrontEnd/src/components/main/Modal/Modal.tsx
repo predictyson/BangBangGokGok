@@ -23,6 +23,7 @@ interface IProps {
   data: IDetailData;
   reviews: IReviewData[];
   handleReviews: (review: IReviewData) => Promise<void>;
+  handleInterests?: () => Promise<void>;
 }
 
 export default function DetailModal({
@@ -32,6 +33,7 @@ export default function DetailModal({
   data,
   reviews,
   handleReviews,
+  handleInterests,
 }: IProps) {
   const [childOpen, setChildOpen] = React.useState(false);
   const [isInterest, setIsInterest] = useState<boolean>(false);
@@ -58,6 +60,7 @@ export default function DetailModal({
         await deleteInterest(themeId);
         handleClick("error", "좋아요 해제 완료");
         requestLogindata(themeId);
+        handleInterests !== undefined && handleInterests();
       } catch (err) {
         console.log(err);
       }
@@ -71,13 +74,6 @@ export default function DetailModal({
     showToast({ type, message });
   };
 
-  const handlePostLikes = async () => {
-    try {
-      handleClick("success", "좋아요 등록 성공!");
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const handleOpen = () => {
     postLikes(themeId);
     setChildOpen(true);
