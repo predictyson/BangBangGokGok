@@ -63,7 +63,7 @@ def cbfAPI(request):
         for theme in res:
             theme_list.append(theme[0])
 
-    print("genre_list : " ,end = ' ')
+    #print("genre_list : " ,end = ' ')
     print(genre_list)
 
 
@@ -71,7 +71,7 @@ def cbfAPI(request):
     data = df[['지역(대)', '지역(소)', '매장명', '테마명', '장르', '난이도', '시간', '오픈일', '최소인원', '최대인원', '메인사진', '예약URL', '내용', '인원', '추천율', '유저_난이도', '유저_활동성', '유저_공포도']]
 
     select_theme_genre = ' '.join(genre_list)
-    print(select_theme_genre)
+    #print(select_theme_genre)
     data.loc[data.shape[0]] = ['', '', '', 'standard', select_theme_genre, '', '', '', '', '', '', '', '', '', '', '','','']
 
     from sklearn.feature_extraction.text import CountVectorizer
@@ -83,8 +83,17 @@ def cbfAPI(request):
     # 장르를 기준으로 유사도값을 계산한다
     from sklearn.metrics.pairwise import cosine_similarity
 
+    similarity_genre = cosine_similarity(c_vector_genres, c_vector_genres)
+    print()
+    print(">> 유사도값 추출(코사인유사도)")
+    print(similarity_genre)
+    print()
+
     # argsort를 이용해서 유사도가 높은 영화들의 index 추출
-    similarity_genre = cosine_similarity(c_vector_genres, c_vector_genres).argsort()[:, ::-1]
+    similarity_genre = similarity_genre.argsort()[:, ::-1]
+    print(">> 유사도값 추출(코사인유사도) - 유사도 순으로 정렬 후 index 추출")
+    print(similarity_genre)
+    print()
 
     # 장르기반의 유사도를 기준으로 영화를 추천해준다
     # top=10을 없애는게 맞음. 10개 모두 내가 관심목록으로해서 제외시키면 return이 0개기 때문에 아쉬운 상황을 방지하고자 top을 없애고 나중에 뿌릴 때 몇개 뿌릴지 설정
@@ -100,25 +109,29 @@ def cbfAPI(request):
             sim_index = sim_index[sim_index != seq]
         sim_index = sim_index[sim_index != target_theme_index]
 
-        # 추천결과 새로운 df생성, 평균평점(score)으로 정렬
+        print(">> 타켓 테마와 비슷한 코사인 유사도값 추출")
+        print(sim_index)
+        print()
 
         result = df.iloc[sim_index]
-
         return result
 
     # 이걸 DB에 저장하면 끄읏
     #recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[:10]
-    recommend_theme = recommend_theme_list(data, theme_title='standard')['테마명'][:15]
-
+    recommend_theme = recommend_theme_list(data, theme_title='standard')['테마명'][:30]
 
     temp_index= []
     temp = []
     for index, title in enumerate(recommend_theme):
+        if len(temp) == 10:
+            break
+
         if title not in temp:
             temp_index.append(recommend_theme.index.values[index])
             temp.append(title)
-    print(temp)
+    print(">> 추천 완료 - 중복 테마 제거")
     print(temp_index)
+    print(temp)
 
 
     # recommended_theme_of_user에 넣기전 이전 데이터를 삭제해야됨
@@ -242,11 +255,14 @@ def cfAPI(request):
         # 이걸 DB에 저장하면 끄읏
         #recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[11:20]
 
-        recommend_theme = recommend_theme_list(data, theme_title='standard')['테마명'][15:30]
+        recommend_theme = recommend_theme_list(data, theme_title='standard')['테마명'][15:45]
 
         temp_index = []
         temp = []
         for index, title in enumerate(recommend_theme):
+            if len(temp) == 10:
+                break
+
             if title not in temp:
                 temp_index.append(recommend_theme.index.values[index])
                 temp.append(title)
@@ -336,14 +352,6 @@ def cfAPI(request):
         ratings_pred = ratings_arr.dot(item_sim_arr) / np.array([np.abs(item_sim_arr).sum(axis=1)])
         return ratings_pred
 
-    # 개인화된 예측 평점 구하기
-    # 평점 value와 유사도 value만 뽑아서 대입
-    ratings_pred = predict_rating(user_movie_rating.values, item_based_collabor.values)
-    ratings_pred_matrix = pd.DataFrame(data=ratings_pred, index=user_movie_rating.index,
-                                       columns=user_movie_rating.columns)
-    # 개인별로 계산된 예측 평점
-    print(ratings_pred_matrix)
-
     # 우리가 예측한 평점과 실제 평점간의 차이를 MSE로 계산
     from sklearn.metrics import mean_squared_error
     def get_mse(pred, actual):
@@ -352,15 +360,29 @@ def cfAPI(request):
         actual = actual[actual.nonzero()].flatten()
         return mean_squared_error(pred, actual)
 
+    '''
+    # 개인화된 예측 평점 구하기
+    # 평점 value와 유사도 value만 뽑아서 대입
+    ratings_pred = predict_rating(user_movie_rating.values, item_based_collabor.values)
+    ratings_pred_matrix = pd.DataFrame(data=ratings_pred, index=user_movie_rating.index,
+                                       columns=user_movie_rating.columns)
+    # 개인별로 계산된 예측 평점
+    print(ratings_pred_matrix)
+
     print('===============================================')
     print(ratings_pred)
     print('아이템 기반 모든 최근접 이웃(KNN) MSE: ', get_mse(ratings_pred, user_movie_rating.values))
+    '''
 
 
+    print('>> 유저들의 평점을 고려한 테마들 코사인 유사도 측정')
+    print(item_based_collabor)
+    print()
     # 3개의 col까지만. 3개의 테마에 대해서 유사도가 큰 5개 선택
     top_n_items = [np.argsort(item_based_collabor.values[:, 3])[:-5:-1]]
+    print('>> 유사도 높은 N개 추출')
     print(top_n_items)
-
+    print()
     # 따라서 가장 비슷한 유사도를 가지는 테마만 유사도 벡터로 사용
     # 특정 테마와 비슷한 유사도를 가지는 테마 Top_N에 대해서만 적용 -> 시간오래걸림
     def predict_rating_topsim(ratings_arr, item_sim_arr, n):
@@ -378,17 +400,11 @@ def cfAPI(request):
         return pred
 
     ratings_pred = predict_rating_topsim(user_movie_rating.values, item_based_collabor.values, n=2)
-    print('===============================================')
+    print('>> 유사도 측정')
     print(ratings_pred)
 
     # N을 적절하게 해서 오차를 줄여야됨
     print('아이템 기반 최근접 TOP-N 이웃 MSE: ', get_mse(ratings_pred, user_movie_rating.values))
-
-    # 계산된 예측 평점 데이터는 DataFrame으로 재생성
-    ratings_pred_matrix = pd.DataFrame(data=ratings_pred, index=user_movie_rating.index,
-                                       columns=user_movie_rating.columns)
-
-    #print(ratings_pred_matrix)
 
     username = user_id
 
@@ -429,7 +445,7 @@ def cfAPI(request):
     not_tried = get_not_tried_theme(user_movie_rating, username)
 
     # 아이템 기반의 최근접 이웃 CF로 테마 추천
-    recomm_theme = recomm_theme_by_userid(ratings_pred_matrix, username, not_tried, top_n=20)
+    recomm_theme = recomm_theme_by_userid(ratings_pred_matrix, username, not_tried, top_n=30)
 
     recomm_theme = pd.DataFrame(data=recomm_theme.values, index=recomm_theme.index,
                                 columns=['예측평점'])
@@ -443,13 +459,19 @@ def cfAPI(request):
     # recommended_theme_of_user에 새로운 데이터 넣기
     sql = "insert into recommended_theme_of_user(created_date, modified_date, type, theme_id, user_id) values (now(), now(), 2, %s, %s)"
 
+
     temp = []
     temp_index = []
     for titles in recomm_theme.iterrows():
+        if len(temp) == 10:
+            break
+
         title, theme_id = titles[0].split('_')
         if title not in temp:
             temp.append(title)
             temp_index.append(theme_id)
+
+    print('>> 최종 추천 결과')
     print(temp)
 
     for theme_id in temp_index:
@@ -655,7 +677,7 @@ def groupsetAPI(request):
             not_tried = get_not_tried_theme(user_movie_rating, username)
 
             # 아이템 기반의 최근접 이웃 CF로 테마 추천
-            recomm_theme = recomm_theme_by_userid(ratings_pred_matrix, username, not_tried, top_n=10)
+            recomm_theme = recomm_theme_by_userid(ratings_pred_matrix, username, not_tried, top_n=20)
 
             recomm_theme = pd.DataFrame(data=recomm_theme.values, index=recomm_theme.index,
                                         columns=['예측평점'])
@@ -666,6 +688,9 @@ def groupsetAPI(request):
             temp = []
             temp_index = []
             for titles in recomm_theme.iterrows():
+                if len(temp) == 10:
+                    break
+
                 title, theme_id = titles[0].split('_')
                 if title not in temp:
                     temp_index.append(theme_id)
@@ -795,11 +820,14 @@ def groupsetAPI(request):
 
             # 이걸 DB에 저장하면 끄읏
             #recommend_theme = recommend_theme_list(data, theme_title='standard').index.values[:10]
-            recommend_theme = recommend_theme_list(data, theme_title='standard')['테마명'][:15]
+            recommend_theme = recommend_theme_list(data, theme_title='standard')['테마명'][:30]
 
             temp_index = []
             temp = []
             for index, title in enumerate(recommend_theme):
+                if len(temp) == 10:
+                    break
+
                 if title not in temp:
                     temp_index.append(recommend_theme.index.values[index])
                     temp.append(title)
