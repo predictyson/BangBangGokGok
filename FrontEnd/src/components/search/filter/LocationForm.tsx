@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { styled as mstyled } from "@mui/material/styles";
 import { getRegionSmall } from "@/api/others";
 import { ReducerAction, FilterValue } from "types/search";
+import { fontSize } from "@mui/system";
 
 interface LocationFormProps {
   filterValue: FilterValue;
@@ -140,12 +141,15 @@ const Wrapper = styled.div`
   color: white;
 `;
 
-const CustomInputLabel = mstyled(InputLabel)({
-  fontSize: "1.7rem",
-  fontWeight: "600",
-  color: "white",
-  marginRight: "1.5rem",
-});
+const CustomInputLabel = mstyled(InputLabel)`
+  font-size: 2.7rem;
+  @media (max-width: 1536px) {
+    font-size: 2.2rem;
+  }
+  font-weight: 600;
+  color: white;
+  margin-right: 1.5rem;
+`;
 
 const CustomSelect = mstyled(Select)({
   width: "11.5rem",

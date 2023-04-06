@@ -126,7 +126,7 @@ const FilterContainer = mstyled(Box)`
   flex-direction: column;
   font-size: 1.7rem;
   font-weight: 600;
-  width: 31rem;
+  width: 40rem;
   gap: 1.5rem;
   padding: 4rem;
   border: 0.2rem solid white;

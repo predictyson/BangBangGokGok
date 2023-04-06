@@ -70,9 +70,10 @@ export default function DifficultyForm(props: DifficultyFormProps) {
   return (
     <Wrapper>
       <div style={{ flexBasis: "15%" }}>
-        <InputLabel id="difficulty-slider" sx={labelStyle}>
+        <CustomInputLabel id="difficulty-slider">난이도</CustomInputLabel>
+        {/* <InputLabel id="difficulty-slider" sx={labelStyle}>
           난이도
-        </InputLabel>
+        </InputLabel> */}
       </div>
       <div style={{ flexBasis: "85%" }}>
         <div style={{ width: "100%" }}>
@@ -105,12 +106,15 @@ const Wrapper = styled.div`
   color: white;
 `;
 
-const labelStyle = {
-  fontSize: "1.7rem",
-  fontWeight: "600",
-  color: "white",
-  marginRight: "1rem",
-};
+const CustomInputLabel = mstyled(InputLabel)`
+  font-size: 2.7rem;
+  @media (max-width: 1536px) {
+    font-size: 2.2rem;
+  }
+  font-weight: 600;
+  color: white;
+  margin-right: 1.5rem;
+`;
 
 const CustomSlider = mstyled(Slider)({
   color: `${theme.colors.pink}`,
