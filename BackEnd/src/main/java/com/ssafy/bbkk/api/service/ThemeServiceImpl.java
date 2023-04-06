@@ -350,6 +350,63 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
+    public ThemeBundleResponse getFeelOrRegionThemesOfUser(String email) throws Exception {
+        ThemeBundleResponse result = null;
+        Random rnd = new Random();
+        if (rnd.nextBoolean()) {
+            // 체감 테마
+            ThemeBundleResponse feelBundle = getFeelBundle();
+            while (feelBundle == null){
+                feelBundle = getFeelBundle();
+            }
+            result = feelBundle;
+        } else {
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다."));
+            // 선호 지역 인기 테마
+            int regionId = user.getRegion().getId();
+            ThemeBundleResponse regionBundle = getRegionBundle(regionId);
+            while (regionBundle == null){
+                regionBundle = getRegionBundle(regionId);
+            }
+            result = regionBundle;
+        }
+
+        return result;
+    }
+
+    @Override
+    public ThemeBundleResponse getFeelThemes() throws Exception {
+        ThemeBundleResponse result = null;
+        Random rnd = new Random();
+        // 체감 테마
+        ThemeBundleResponse feelBundle = getFeelBundle();
+        while(feelBundle == null){
+            feelBundle = getFeelBundle();
+        }
+        result = feelBundle;
+        return result;
+    }
+
+    @Override
+    public ThemeBundleResponse getRegionThemes() throws Exception {
+        ThemeBundleResponse result = null;
+        Random rnd = new Random();
+
+        List<Region> regionList = regionRepository.findAll();
+        int idx = regionList.get(rnd.nextInt(regionList.size())).getId(); // 랜덤 지역 id
+        // 지역 인기 테마
+        ThemeBundleResponse regionBundle = getRegionBundle(idx);
+        while(regionBundle == null){
+            idx = regionList.get(rnd.nextInt(regionList.size())).getId(); // 랜덤 지역 id
+            regionBundle = getRegionBundle(idx);
+        }
+        result = regionBundle;
+
+        return result;
+    }
+
+    @Override
     public AwardThemeBundleResponse getAwardThemes() throws Exception {
         AwardThemeBundleResponse result = null;
         Random rnd = new Random();

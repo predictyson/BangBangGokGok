@@ -88,11 +88,56 @@ public class ThemeController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @GetMapping("user/default")
-    private ResponseEntity<Map<String, Object>> getDefaultThemeOfLoginUser(
+    @GetMapping("user/feel-or-region")
+    private ResponseEntity<Map<String, Object>> getFeelOrRegionThemeOfLoginUser(
             @AuthenticationPrincipal User user) throws Exception {
-        logger.info("<<---------------(start)----------------||getDefaultThemeOfLoginUser||------------------------------------>>\n");
+        logger.info("<<---------------(start)----------------||getFeelOrRegionThemeOfLoginUser||------------------------------------>>\n");
         logger.info(">> request : myEmail={}", user.getUsername());
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        ThemeBundleResponse feelOrRegionThemes = themeService.getFeelOrRegionThemesOfUser(user.getUsername());
+        resultMap.put("feelOrRegionThemes", feelOrRegionThemes);
+        logger.info("<< response : feelOrRegionThemes={}", feelOrRegionThemes);
+
+        logger.info("<<---------------------------------------||getFeelOrRegionThemeOfLoginUser||---------------(end)--------------->>\n");
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @GetMapping("guest/feel")
+    private ResponseEntity<Map<String, Object>> getFeelThemeOfGuest() throws Exception {
+        logger.info("<<---------------(start)----------------||getFeelThemeOfGuest||------------------------------------>>\n");
+        logger.info(">> request : none");
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        ThemeBundleResponse feelThemes = themeService.getFeelThemes();
+        resultMap.put("feelThemes", feelThemes);
+        logger.info("<< response : feelThemes={}", feelThemes);
+
+        logger.info("<<---------------------------------------||getFeelThemeOfGuest||---------------(end)--------------->>\n");
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @GetMapping("guest/region")
+    private ResponseEntity<Map<String, Object>> getRegionThemeOfGuest() throws Exception {
+        logger.info("<<---------------(start)----------------||getRegionThemeOfGuest||------------------------------------>>\n");
+        logger.info(">> request : none");
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        ThemeBundleResponse regionThemes = themeService.getRegionThemes();
+        resultMap.put("regionThemes", regionThemes);
+        logger.info("<< response : regionThemes={}", regionThemes);
+
+        logger.info("<<---------------------------------------||getRegionThemeOfGuest||---------------(end)--------------->>\n");
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @GetMapping("common/hot")
+    private ResponseEntity<Map<String, Object>> getHotTheme() throws Exception {
+        logger.info("<<---------------(start)----------------||getHotTheme||------------------------------------>>\n");
+        logger.info(">> request : none");
 
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -100,15 +145,22 @@ public class ThemeController {
         resultMap.put("hotThemes", hotThemes);
         logger.info("<< response : hotThemes={}", hotThemes);
 
-        List<ThemeBundleResponse> topThemes = themeService.getTopThemesOfUser(user.getUsername());
-        resultMap.put("topThemes", topThemes);
-        logger.info("<< response : topThemes={}", topThemes);
+        logger.info("<<---------------------------------------||getHotTheme||---------------(end)--------------->>\n");
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @GetMapping("common/award")
+    private ResponseEntity<Map<String, Object>> getAwardTheme() throws Exception {
+        logger.info("<<---------------(start)----------------||getAwardTheme||------------------------------------>>\n");
+        logger.info(">> request : none");
+
+        Map<String, Object> resultMap = new HashMap<>();
 
         AwardThemeBundleResponse awardThemes = themeService.getAwardThemes();
         resultMap.put("awardThemes", awardThemes);
-        logger.info("<< response : awardThemes={}", topThemes);
+        logger.info("<< response : awardThemes={}", awardThemes);
 
-        logger.info("<<---------------------------------------||getDefaultThemeOfLoginUser||---------------(end)--------------->>\n");
+        logger.info("<<---------------------------------------||getAwardTheme||---------------(end)--------------->>\n");
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
