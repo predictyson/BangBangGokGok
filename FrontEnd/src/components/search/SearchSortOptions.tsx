@@ -49,8 +49,14 @@ export default function SearchSortOptions(props: SearchSortOptionsProps) {
 }
 
 const OptionButton = mstyled(Button)`
-  font-size: 1.5rem;
-  border-radius: 20px;
+  font-size: 2rem;
+  @media (max-width: 1536px) {
+    font-size: 1.6rem;
+  }
+  @media (max-width: 1366px) {
+    font-size: 1.4rem;
+  }
+  border-radius: 2rem;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
   font-weight: 600;
   &.MuiButton-contained {

@@ -37,9 +37,9 @@ export default function TimeForm(props: TimeFormProps) {
           color="warning"
           onChange={handleTimeChange}
         >
-          <MenuItem value={0}>전체</MenuItem>
-          <MenuItem value={1}>60분 이하</MenuItem>
-          <MenuItem value={2}>60분 초과</MenuItem>
+          <CustomMenuItem value={0}>전체</CustomMenuItem>
+          <CustomMenuItem value={1}>60분 이하</CustomMenuItem>
+          <CustomMenuItem value={2}>60분 초과</CustomMenuItem>
         </CustomSelect>
       </div>
     </Wrapper>
@@ -57,20 +57,32 @@ const Wrapper = styled.div`
   color: white;
 `;
 
-const CustomInputLabel = mstyled(InputLabel)({
-  fontSize: "1.7rem",
-  fontWeight: "600",
-  color: "white",
-  marginRight: "1.5rem",
-});
+const CustomInputLabel = mstyled(InputLabel)`
+  font-size: 2.7rem;
+  @media (max-width: 1536px) {
+    font-size: 2.2rem;
+  }
+  font-weight: 600;
+  color: white;
+  margin-right: 1.5rem;
+`;
 
-const CustomSelect = mstyled(Select)({
-  width: "11.5rem",
-  height: "4rem",
-  fontSize: "1.2rem",
-  border: "1px solid white",
-  color: "white",
-  svg: {
-    color: "white",
-  },
-});
+const CustomSelect = mstyled(Select)`
+  height: 4rem;
+  font-size: 2rem;
+  @media (max-width: 1536px) {
+    font-size: 1.7rem;
+  }
+  border: 1px solid white;
+  color: white;
+  svg {
+    color: white;
+  }
+`;
+
+const CustomMenuItem = mstyled(MenuItem)`
+  font-size: 2rem;
+  @media (max-width: 1536px) {
+    font-size: 1.7rem;
+  }
+`;

@@ -69,9 +69,9 @@ const LocationForm = (props: LocationFormProps) => {
   // 소지역 옵션 렌더링
   const renderLocationOptions = () => {
     return regionSmallOptions.map((regionSmalloption) => (
-      <MenuItem value={regionSmalloption} key={regionSmalloption}>
+      <CustomMenuItem value={regionSmalloption} key={regionSmalloption}>
         {regionSmalloption}
-      </MenuItem>
+      </CustomMenuItem>
     ));
   };
 
@@ -106,9 +106,9 @@ const LocationForm = (props: LocationFormProps) => {
           onChange={handleBigInputValueChange}
         >
           {REGION_BIG_OPTIONS.map((option) => (
-            <MenuItem value={option} key={option}>
+            <CustomMenuItem value={option} key={option}>
               {option}
-            </MenuItem>
+            </CustomMenuItem>
           ))}
         </CustomSelect>
         <CustomInputLabel id="location-select"></CustomInputLabel>
@@ -119,7 +119,7 @@ const LocationForm = (props: LocationFormProps) => {
           onChange={handleSmallInputValueChange}
           disabled={!regionBigInputValue}
         >
-          <MenuItem value="전체">전체</MenuItem>
+          <CustomMenuItem value="전체">전체</CustomMenuItem>
           {renderLocationOptions()}
         </CustomSelect>
       </div>
@@ -140,20 +140,32 @@ const Wrapper = styled.div`
   color: white;
 `;
 
-const CustomInputLabel = mstyled(InputLabel)({
-  fontSize: "1.7rem",
-  fontWeight: "600",
-  color: "white",
-  marginRight: "1.5rem",
-});
+const CustomInputLabel = mstyled(InputLabel)`
+  font-size: 2.7rem;
+  @media (max-width: 1536px) {
+    font-size: 2.2rem;
+  }
+  font-weight: 600;
+  color: white;
+  margin-right: 1.5rem;
+`;
 
-const CustomSelect = mstyled(Select)({
-  width: "11.5rem",
-  height: "4rem",
-  fontSize: "1.2rem",
-  border: "1px solid white",
-  color: "white",
-  svg: {
-    color: "white",
-  },
-});
+const CustomSelect = mstyled(Select)`
+  height: 4rem;
+  font-size: 2rem;
+  @media (max-width: 1536px) {
+    font-size: 1.7rem;
+  }
+  border: 1px solid white;
+  color: white;
+  svg {
+    color: white;
+  }
+`;
+
+const CustomMenuItem = mstyled(MenuItem)`
+  font-size: 2rem;
+  @media (max-width: 1536px) {
+    font-size: 1.7rem;
+  }
+`;

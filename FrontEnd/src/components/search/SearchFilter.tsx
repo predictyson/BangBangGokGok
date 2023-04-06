@@ -55,7 +55,7 @@ export default function SearchFilter(props: SearchFilterProps) {
     <>
       <FilterButton onClick={filterOpenState ? closeFilter : openFilter}>
         <TuneIcon fontSize="inherit" />
-        <p>필터</p>
+        필터
       </FilterButton>
       <Modal
         open={filterOpenState}
@@ -105,15 +105,20 @@ const FilterButton = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  height: 4rem;
-  width: 8rem;
-  font-size: 1.8rem;
+  @media (max-width: 1536px) {
+    font-size: 2.5rem;
+  }
+  padding: 1rem 2rem;
+  font-size: 3rem;
   font-weight: 600;
   border-radius: 10px;
   color: white;
-  border: 1px solid white;
+  border: 0.3rem solid white;
   background: none;
   cursor: pointer;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 `;
 
 const FilterContainer = mstyled(Box)`
@@ -121,7 +126,7 @@ const FilterContainer = mstyled(Box)`
   flex-direction: column;
   font-size: 1.7rem;
   font-weight: 600;
-  width: 31rem;
+  width: 35rem;
   gap: 1.5rem;
   padding: 4rem;
   border: 0.2rem solid white;
@@ -158,6 +163,11 @@ const ButtonContainer = styled.div`
 `;
 
 const OkButton = styled.button`
+  font-size: 2.7rem;
+  @media (max-width: 1536px) {
+    font-size: 2.2rem;
+  }
+  font-weight: 600;
   color: ${theme.colors.white};
   background-color: ${theme.colors.pink};
   border-radius: 10px;
@@ -173,6 +183,11 @@ const OkButton = styled.button`
 `;
 
 const CancelButton = styled.button`
+  font-size: 2.7rem;
+  @media (max-width: 1536px) {
+    font-size: 2.2rem;
+  }
+  font-weight: 600;
   color: ${theme.colors.pink};
   background-color: ${theme.colors.white};
   border-radius: 10px;

@@ -102,7 +102,10 @@ const ProfileWrapper = styled.div`
 `;
 
 const SectionTitle = styled.h1`
-  font-size: 3rem;
+  font-size: 3.5rem;
+  @media (max-width: 1536px) {
+    font-size: 3rem;
+  }
   font-weight: ${theme.fontWeight.bold};
   color: ${theme.colors.white};
   margin: 0;
@@ -143,16 +146,21 @@ const ContentWrapper = styled.div`
 `;
 
 const ContentTitle = styled.h2`
-  /* flex-basis: 20%; */
-  font-size: 2rem;
+  font-size: 2.8rem;
+  @media (max-width: 1536px) {
+    font-size: 2.3rem;
+  }
   font-weight: ${theme.fontWeight.bold};
   color: ${theme.colors.white};
   margin: 0.5rem;
 `;
 
 const Content = styled.div`
-  /* flex-basis: 75%; */
-  font-size: 1.7rem;
+  font-size: 2.3rem;
+  @media (max-width: 1536px) {
+    font-size: 1.8rem;
+  }
+
   font-weight: ${theme.fontWeight.normal};
   color: ${theme.colors.white};
 `;
