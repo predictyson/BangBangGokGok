@@ -18,6 +18,7 @@ import com.ssafy.bbkk.db.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -148,10 +149,9 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void deleteUser(String email) throws Exception {
         // 유저 존재 확인
-        if(!userRepository.existsByEmail(email)){
-            throw new Exception("해당 사용자를 찾을 수 없습니다.");
-        }
-        // 이메일로 유저 삭제
-        userRepository.deleteByEmail(email);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(()->new Exception("해당 사용자를 찾을 수 없습니다."));
+        user.deleteUser();
+        userRepository.save(user);
     }
 }

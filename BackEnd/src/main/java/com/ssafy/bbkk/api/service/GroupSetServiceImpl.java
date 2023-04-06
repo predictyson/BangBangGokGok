@@ -21,7 +21,7 @@ public class GroupSetServiceImpl implements GroupSetService {
         List<PreviewUserResponse> result = new ArrayList<>();
         userRepository.findByEmailContainingOrNicknameContaining(emailOrNickname, emailOrNickname)
             .forEach(x->{
-                if(x.getEmail()!=null && x.getNickname()!=null){
+                if(x.getEmail()!=null && x.getNickname()!=null && !"(알수없음)".equals(x.getNickname())){
                     result.add(new PreviewUserResponse(x));
                 }
             });

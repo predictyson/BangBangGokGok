@@ -93,4 +93,16 @@ public class User extends BaseTimeEntity{
     public void setPassword(String password){
         this.password = password;
     }
+
+    public void deleteUser(){
+        this.email = "----------";
+        this.age = -1;
+        this.nickname = "(알수없음)";
+        this.password = null;
+        this.gender = null;
+        this.profileImageType = null;
+        this.region = null;
+        this.provider = null;
+        this.providerId = null;
+    }
 }
