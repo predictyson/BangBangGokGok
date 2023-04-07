@@ -118,6 +118,11 @@ const LocationForm = (props: LocationFormProps) => {
           color="warning"
           onChange={handleSmallInputValueChange}
           disabled={!regionBigInputValue}
+          MenuProps={{
+            style: {
+              maxHeight: "350px",
+            },
+          }}
         >
           <CustomMenuItem value="전체">전체</CustomMenuItem>
           {renderLocationOptions()}

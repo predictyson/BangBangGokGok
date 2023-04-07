@@ -82,6 +82,11 @@ export default function GenreForm(props: GenreFormProps) {
           value={genreInputValue}
           color="warning"
           onChange={handleGenreChange}
+          MenuProps={{
+            style: {
+              maxHeight: "350px",
+            },
+          }}
         >
           {genresOptions.map((genre) => (
             <CustomMenuItem value={genre.category} key={genre.genreId}>
