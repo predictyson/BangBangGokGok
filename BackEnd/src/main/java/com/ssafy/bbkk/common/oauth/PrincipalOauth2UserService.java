@@ -70,6 +70,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                 throw new OAuth2AuthenticationException("이미 가입한 회원입니다.");
             }
             else{
+                logger.debug("소셜 로그인");
                 // user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
                 user = new User(oAuth2UserInfo);
                 userRepository.save(user);
