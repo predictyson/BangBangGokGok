@@ -1,0 +1,18 @@
+# 제목은 최대 50글자까지 아래에 작성: ex) ⛏ fix: test convention
+
+# --- COMMIT TYPE ---  
+#   <타입> 리스트  
+# ⛏ fix: 내 코드베이스에서 발생한 버그를 수정했을 때
+# ✨ feat: 새로운 기능을 추가했을 때
+# 🔊 (ELEMENT)!: API를 바꿨을 때
+# 📝 docs: 문서 수정
+# 💡 refactor: 코드 리펙토링했을 때
+# 🧪 test: 테스트 코드 추가 또는 수정했을 때
+# 🎨 style: 코드 형식 바꿨을 때
+# 💫 chore: 그 외 기타사항
+# -------COMMIT LOGIC-----------  
+# 1. (fe-develop)]$ git fetch
+# 2. (fe-develop)]$ git checkout -b fe-feature/user-login-layout --track origin/fe-develop
+# 3. DO commit!
+# 4. (fe-feature/브랜치)]$ git pull --rebase origin fe-develop
+# 5. (fe-feature/user-login-layout)]$ git push origin fe-feature/브랜치
