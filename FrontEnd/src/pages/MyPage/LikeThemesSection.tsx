@@ -62,7 +62,9 @@ export default function LikeThemesSection() {
       if (userId === null) {
         throw new Error();
       }
+      console.log(+userId);
       const res = await getUserInterests(+userId);
+
       setInterests(res.data.interestThemes as UserInterestTheme[]);
     } catch (err) {
       console.log(err);
