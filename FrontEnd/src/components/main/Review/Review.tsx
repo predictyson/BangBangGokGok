@@ -36,7 +36,7 @@ export default function Review({
   isMyReview,
   handleMyReview,
 }: IProps) {
-  const CHARTDATA = [data.userActivity, data.userFear, data.userDifficulty];
+  const CHARTDATA = [data.userDifficulty, data.userFear, data.userActivity];
 
   const BARDATA: IBarData = {
     labels: ["체감 난이도", "체감 공포도", "체감 활동성"],
