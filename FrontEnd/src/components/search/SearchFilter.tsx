@@ -105,15 +105,15 @@ const FilterButton = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  font-size: 2.3rem;
   @media (max-width: 1536px) {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
   }
-  padding: 1rem 2rem;
-  font-size: 3rem;
+  padding: 1rem 1.5rem;
   font-weight: 600;
   border-radius: 10px;
   color: white;
-  border: 0.3rem solid white;
+  border: 0.1rem solid white;
   background: none;
   cursor: pointer;
   &:hover {
@@ -127,6 +127,9 @@ const FilterContainer = mstyled(Box)`
   font-size: 1.7rem;
   font-weight: 600;
   width: 35rem;
+  @media (max-width: 1536px) {
+    width: 33rem;
+  }
   gap: 1.5rem;
   padding: 4rem;
   border: 0.2rem solid white;
