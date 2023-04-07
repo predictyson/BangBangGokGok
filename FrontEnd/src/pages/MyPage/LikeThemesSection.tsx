@@ -59,13 +59,14 @@ export default function LikeThemesSection() {
   const requsetUserInterest = async () => {
     try {
       const userId = localStorage.getItem("userId");
+      console.log(userId);
       if (userId === null) {
         throw new Error();
       }
-      console.log(+userId);
       const res = await getUserInterests(+userId);
-
+      console.log(res.data.interestThemes);
       setInterests(res.data.interestThemes as UserInterestTheme[]);
+      setLoadComplete(true);
     } catch (err) {
       console.log(err);
     }

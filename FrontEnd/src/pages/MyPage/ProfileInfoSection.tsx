@@ -4,7 +4,7 @@ import { theme } from "@/styles/theme";
 import ProfileChart from "@components/mypage/RightSection/Profile/ProfileChart";
 import { getUserProfile, getUserPreferences } from "@/api/profile";
 import { UserProfile, UserPreference } from "types/mypage";
-
+import DeleteModal from "@components/main/Modal/DeleteAccountModal";
 const PROFILE_INFO_INIT_VALUE: UserProfile = {
   id: 0,
   nickname: "",
@@ -53,10 +53,22 @@ export default function ProfileInfoSection() {
 
     fetchUserProfile();
   }, []);
-
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    console.log("HANDLE CLOSE");
+    setOpen(false);
+  };
   return (
     <ProfileWrapper>
-      <SectionTitle>내 정보</SectionTitle>
+      <SectionTitle>
+        <> 내 정보 </>{" "}
+        <DeleteAccount onClick={() => handleOpen()}>
+          <span>회원 탈퇴</span>
+        </DeleteAccount>
+      </SectionTitle>
       <SectionContentWrapper>
         <SectionFirstColumn>
           <ContentWrapper>
@@ -89,10 +101,20 @@ export default function ProfileInfoSection() {
       </SectionContentWrapper>
       <SectionTitle>나의 장르 선호도</SectionTitle>
       {isFetched && <ProfileChart preferences={preferences} />}
+      <DeleteModal deleteModalOpen={open} handleClose={handleClose} />
     </ProfileWrapper>
   );
 }
-
+const DeleteAccount = styled.div`
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: ${theme.colors.pink};
+  margin-right: 1rem;
+  cursor: pointer;
+  &:hover {
+    color: white;
+  }
+`;
 const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -103,6 +125,9 @@ const ProfileWrapper = styled.div`
 
 const SectionTitle = styled.h1`
   font-size: 3.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   @media (max-width: 1536px) {
     font-size: 3rem;
   }
