@@ -3,6 +3,8 @@ import { Modal } from "@mui/material";
 import Box from "@mui/material/Box";
 import styled from "styled-components";
 import { deleteUserProfile } from "@/api/profile";
+import { requestLogout } from "@/api/auth";
+import { useNavigate } from "react-router-dom";
 interface DeleteModalProps {
   deleteModalOpen: boolean;
   handleClose: () => void;
@@ -12,10 +14,13 @@ export default function DeleteModal({
   deleteModalOpen,
   handleClose,
 }: DeleteModalProps) {
+  const navigate = useNavigate();
   const requestDeleteAccount = async () => {
     try {
       await deleteUserProfile();
       handleClose();
+      requestLogout();
+      navigate("/");
     } catch (err) {
       console.log(err);
     }

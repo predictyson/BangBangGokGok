@@ -76,7 +76,7 @@ export default function LeftNavBar(this: any) {
           <span> Likes</span>
         </NavItem>
         <DeleteAccount onClick={() => handleOpen()}>
-          <span>Delete Account</span>
+          <span> Delete Account</span>
         </DeleteAccount>
       </NavWrapper>
       <DeleteModal deleteModalOpen={open} handleClose={handleClose} />
@@ -84,10 +84,13 @@ export default function LeftNavBar(this: any) {
   );
 }
 const DeleteAccount = styled.div`
-  margin-top: 3rem;
-  font-size: 1.4rem;
+  margin: 2rem 0 1rem 1rem;
+  font-size: 1.6rem;
   font-weight: bold;
   cursor: pointer;
+  &:hover {
+    color: ${theme.colors.container};
+  }
 `;
 
 const Wrapper = styled.div`
