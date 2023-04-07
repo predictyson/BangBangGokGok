@@ -86,7 +86,25 @@ CREATE TABLE `genre_of_theme` (
   KEY `FKewof3woq0n2860y6arbbiktf0` (`theme_id`),
   CONSTRAINT `FKewof3woq0n2860y6arbbiktf0` FOREIGN KEY (`theme_id`) REFERENCES `theme` (`theme_id`),
   CONSTRAINT `FKhy5ji14y8661fpbavbuf7td49` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`genre_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2220 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2237 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `hot_theme`
+--
+
+DROP TABLE IF EXISTS `hot_theme`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hot_theme` (
+  `hot_theme_id` int NOT NULL AUTO_INCREMENT,
+  `created_date` datetime(6) DEFAULT NULL,
+  `modified_date` datetime(6) DEFAULT NULL,
+  `theme_id` int DEFAULT NULL,
+  PRIMARY KEY (`hot_theme_id`),
+  KEY `FKod3g3wr5cln9956d2kxos4el5` (`theme_id`),
+  CONSTRAINT `FKod3g3wr5cln9956d2kxos4el5` FOREIGN KEY (`theme_id`) REFERENCES `theme` (`theme_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +125,7 @@ CREATE TABLE `interested_theme_of_user` (
   KEY `FKck8o9j0x818akvxnff18b6l46` (`user_id`),
   CONSTRAINT `FKck8o9j0x818akvxnff18b6l46` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKex24c0srvw4145dhu3wssjxd` FOREIGN KEY (`theme_id`) REFERENCES `theme` (`theme_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=361 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +146,7 @@ CREATE TABLE `preferred_genre_of_user` (
   KEY `FKa3jn11j4g7yrk6rxyxrpjqkx3` (`user_id`),
   CONSTRAINT `FK36ovmgoog9o8961irrya31rjl` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`genre_id`),
   CONSTRAINT `FKa3jn11j4g7yrk6rxyxrpjqkx3` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=332 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=287 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +168,7 @@ CREATE TABLE `recommended_theme_of_user` (
   KEY `FKgpmr03ecky66hnypgajs2tkr5` (`user_id`),
   CONSTRAINT `FKgpmr03ecky66hnypgajs2tkr5` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `FKp83tpop7tefi2s670k6ggkwu4` FOREIGN KEY (`theme_id`) REFERENCES `theme` (`theme_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6753 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,9 +180,9 @@ DROP TABLE IF EXISTS `refresh_token`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `refresh_token` (
   `rt_key` varchar(255) NOT NULL,
-  `rt_value` varchar(255) DEFAULT NULL,
   `created_date` datetime(6) DEFAULT NULL,
   `modified_date` datetime(6) DEFAULT NULL,
+  `rt_value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`rt_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -183,7 +201,7 @@ CREATE TABLE `region` (
   `region_big` varchar(255) NOT NULL,
   `region_small` varchar(255) NOT NULL,
   PRIMARY KEY (`region_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,7 +217,6 @@ CREATE TABLE `review` (
   `modified_date` datetime(6) DEFAULT NULL,
   `content` varchar(2000) NOT NULL,
   `is_success` int NOT NULL,
-  `record` time DEFAULT NULL,
   `user_activity` double NOT NULL,
   `user_difficulty` double NOT NULL,
   `user_fear` double NOT NULL,
@@ -211,7 +228,7 @@ CREATE TABLE `review` (
   KEY `FKiyf57dy48lyiftdrf7y87rnxi` (`user_id`),
   CONSTRAINT `FK93mqko4fwbvslo5p41hwpwgh9` FOREIGN KEY (`theme_id`) REFERENCES `theme` (`theme_id`),
   CONSTRAINT `FKiyf57dy48lyiftdrf7y87rnxi` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10122 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39846 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,7 +261,7 @@ CREATE TABLE `theme` (
   PRIMARY KEY (`theme_id`),
   KEY `FKloqym7ujh7chmupi9506vhkae` (`region_id`),
   CONSTRAINT `FKloqym7ujh7chmupi9506vhkae` FOREIGN KEY (`region_id`) REFERENCES `region` (`region_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1732 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1744 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,7 +288,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_id`),
   KEY `FKt4enlxyfjstamura4y1p3wtor` (`region_id`),
   CONSTRAINT `FKt4enlxyfjstamura4y1p3wtor` FOREIGN KEY (`region_id`) REFERENCES `region` (`region_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -283,4 +300,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-03 15:45:57
+-- Dump completed on 2023-04-07  9:31:08
