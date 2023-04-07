@@ -184,11 +184,15 @@ export default function WriteReview({
               <div className="title">{data.title}</div>
             </div>
             <div className="info">
-              성공 여부 &nbsp;&nbsp;
+              <span style={{ marginLeft: "1rem", fontWeight: "bold" }}>
+                {" "}
+                성공 여부
+              </span>
               <ToggleButtonGroup
                 value={postdata.isSuccess}
                 exclusive
                 onChange={handleValueChange}
+                style={{ marginLeft: "6rem" }}
               >
                 <CustomToggleButton className="success" value={1}>
                   성공
@@ -303,15 +307,15 @@ const RatingWrapper = styled.div`
   flex-wrap: wrap;
 `;
 const ReviewBox = styled.div`
-  margin-top: 2rem;
   display: flex;
+  margin-top: 1rem;
   flex-direction: column;
   .title {
     font-size: 2rem;
     margin-right: 1.5rem;
   }
   .rating-title {
-    width: 25%;
+    width: 35%;
     font-size: 1.8rem;
   }
   .ratingItem {

@@ -73,17 +73,21 @@ export default function UpdateModal({
         </Header>
         <InfoBox>
           <div className="info">
-            테마명 :&nbsp;{" "}
+            <span style={{ width: "10.5rem" }}>테마명</span>{" "}
             <div className="title">
               {currentSelectedReviewData?.previewThemeResponse?.title}
             </div>
           </div>
           <div className="info">
-            성공 여부 &nbsp;&nbsp;
+            <span style={{ marginLeft: "1rem", fontWeight: "bold" }}>
+              {" "}
+              성공 여부
+            </span>
             <ToggleButtonGroup
               value={currentSelectedReviewData.isSuccess}
               exclusive
               onChange={handleValueChange}
+              style={{ marginLeft: "6rem" }}
             >
               <CustomToggleButton value={1}>성공</CustomToggleButton>
               <CustomToggleButton value={0}>실패</CustomToggleButton>
@@ -151,6 +155,10 @@ const InfoBox = styled.div`
     width: 50%;
     display: flex;
   }
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
 `;
 
 const CustomToggleButton = mstyled(ToggleButton)({
@@ -168,15 +176,16 @@ const CustomToggleButton = mstyled(ToggleButton)({
 });
 
 const ReviewBox = styled.div`
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   .title {
-    font-size: 1.6rem;
+    font-size: 2rem;
+    font-weight: bold;
     margin-right: 1.5rem;
   }
   .rating-title {
-    width: 25%;
+    width: 35%;
     font-size: 1.8rem;
   }
   .ratingItem {
